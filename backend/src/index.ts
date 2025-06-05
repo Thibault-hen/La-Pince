@@ -1,10 +1,14 @@
-import { Hono } from 'hono'
-import { handle } from 'hono/aws-lambda'
+import { serve } from '@hono/node-server';
+import { Hono } from 'hono';
 
-const app = new Hono()
+const app = new Hono();
 
 app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+  return c.text('Hello Hono!');
+});
 
-export const handler = handle(app)
+serve({
+  fetch: app.fetch,
+  port: 3000,
+  hostname: '0.0.0.0',
+});
