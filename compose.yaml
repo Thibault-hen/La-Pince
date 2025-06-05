@@ -23,7 +23,7 @@ services:
     depends_on:
       - db
 
-    # Commande de démarrage en développement (modifie "dev" selon ton script npm)
+    # Commandes
     command: npm run dev
 
   db:

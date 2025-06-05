@@ -14,3 +14,120 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  @@map("user")
+  
+  id              String   @id @default(cuid())
+  name            String
+  email           String   @unique
+  password        String
+  currency        String
+  alert           Boolean  @default(true)
+
+  createdAt DateTime @default(now())   @map("created_at")
+  updatedAt DateTime @updatedAt        @map("updated_at")
+
+  budgets           Budget[]
+  expences          Expense[]
+  incomes           Income[]
+  notifications     Notification[]
+  categories        Category[]
+}
+
+model Color {
+  @@map("color")
+  
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  value       String    @unique
+
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt      @map("updated_at")
+
+  categories  Category[]
+}
+
+model Category {
+  @@map("category")
+
+  id               String   @id @default(cuid())
+  title            String
+  userId           String   @map("user_id")
+  colorId          Int      @map("color_id")
+
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  user             User     @relation(fields: [userId], references: [id])
+  color            Color    @relation(fields: [colorId], references: [id])
+  budgets          Budget[]
+  
+  @@unique([title, userId])
+}
+
+model Budget {
+  @@map("budget")
+
+  id               String   @id @default(cuid())    
+  amount           String
+  limitAlert       Float    @map("limit_alert")
+  month            String
+  year             Int
+  categoryId       String     @map("category_id")
+  userId           String     @map("user_id")
+
+  createdAt        DateTime   @default(now()) @map("created_at")
+  updatedAt        DateTime   @updatedAt @map("updated_at")
+  
+  user             User       @relation(fields: [userId], references: [id])
+  category         Category   @relation(fields: [categoryId], references: [id])
+  expenses         Expense[]
+
+  @@unique([month, year, userId])
+}
+
+model Expense {
+  @@map("expense")
+
+  id               String   @id @default(cuid())
+  description      String
+  amount           Float
+  date             DateTime
+  budgetId         String   @map("budget_id")
+  userId           String   @map("user_id")
+
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  user             User     @relation(fields: [userId], references: [id])
+  budget           Budget   @relation(fields: [budgetId], references: [id])
+}
+
+model Notification {
+  @@map("notification")
+
+  id               String   @id @default(cuid())
+  content          String
+  isSeen           Boolean  @default(false) @map("is_seen")
+  userId           String   @map("user_id")
+
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  user             User     @relation(fields: [userId], references: [id])
+}
+
+model Income {
+  @@map("income")
+
+  id               String   @id @default(cuid())
+  value            Float
+  month            Int
+  year             Int
+  userId           String   @map("user_id")
+
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+  
+  user             User     @relation(fields: [userId], references: [id])
+}
