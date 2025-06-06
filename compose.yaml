@@ -23,9 +23,6 @@ services:
     depends_on:
       - db
 
-    # Commande de démarrage en développement (modifie "dev" selon ton script npm)
-    command: npm run dev
-
   db:
     # Image officielle de PostgreSQL légère
     image: postgres:17-alpine

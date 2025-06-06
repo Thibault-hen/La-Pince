@@ -6,7 +6,9 @@
     "build": "esbuild --bundle --outfile=./dist/index.js --platform=node --target=node20 ./src/index.ts",
     "zip": "zip -j lambda.zip dist/index.js",
     "update": "aws lambda update-function-code --zip-file fileb://lambda.zip --function-name hello",
-    "deploy": "run-s build zip update"
+    "db:deploy": "npx prisma migrate deploy && npx prisma generate",
+    "deploy": "run-s build zip update",
+    "db:seed": "tsx src/db/seeding.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -19,6 +21,8 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.14.3",
+    "@prisma/client": "^6.9.0",
+    "argon2": "^0.43.0",
     "hono": "^4.7.11"
   }
 }
