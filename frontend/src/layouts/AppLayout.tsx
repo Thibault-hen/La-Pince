@@ -7,12 +7,14 @@ import { Outlet } from 'react-router-dom'
 export const AppLayout = () => {
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <aside aria-label="navigation">
+        <AppSidebar collapsible="icon" />
+      </aside>
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 border-b">
           <div className="w-full flex items-center gap-2 px-3 justify-between">
             <div>
-              <SidebarTrigger />
+              <SidebarTrigger className="cursor-pointer hover:bg-secondary-color dark:hover:bg-secondary-color" />
             </div>
             <div className="flex gap-2">
               <ModeToggle />
