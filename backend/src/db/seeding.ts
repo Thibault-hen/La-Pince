@@ -1,45 +1,55 @@
-import { hash } from 'argon2';
+import argon2 from 'argon2';
 import prisma from './client';
 
 async function main() {
   console.log('Empty database ...');
 
   await prisma.color.deleteMany();
+  await prisma.budget.deleteMany();
+  await prisma.expense.deleteMany();
+  await prisma.user.deleteMany();
+  await prisma.notification.deleteMany();
+  await prisma.category.deleteMany();
+  await prisma.income.deleteMany();
 
   console.log('Start seeding ...');
+
+  const hashedPassword = await argon2.hash('password'); 
 
   // --- 1. Colors (no dependencies, IDs auto-incremented) ---
   // On peut les créer en premier et ensuite les récupérer par leur 'name' ou 'value' unique.
   await prisma.color.createMany({
     data: [
-      { name: 'Red', value: 'bg-red-500' },
-      { name: 'Green', value: 'bg-green-500' },
-      { name: 'Blue', value: 'bg-blue-500' },
-      { name: 'Yellow', value: 'bg-yellow-500' },
-      { name: 'Purple', value: 'bg-purple-500' },
+      { name: 'Blanc', value: 'bg-white' },
+      { name: 'Rouge', value: 'bg-red-500' },
+      { name: 'Vert', value: 'bg-green-500' },
+      { name: 'Bleu', value: 'bg-blue-500' },
+      { name: 'Jaune', value: 'bg-yellow-500' },
+      { name: 'Violet', value: 'bg-purple-500' },
       { name: 'Orange', value: 'bg-orange-500' },
-      { name: 'Pink', value: 'bg-pink-500' },
-      { name: 'Teal', value: 'bg-teal-500' },
+      { name: 'Rose', value: 'bg-pink-500' },
+      { name: 'Sarcelle', value: 'bg-teal-500' },
       { name: 'Indigo', value: 'bg-indigo-500' },
-      { name: 'Gray', value: 'bg-gray-500' },
+      { name: 'Gris', value: 'bg-gray-500' },
     ],
     skipDuplicates: true, // Au cas où tu relances le seed
   });
   console.log('Colors created.');
 
-  /* // Récupérer les couleurs pour les utiliser plus tard
-  const colorRouge = await prisma.color.findUniqueOrThrow({ where: { name: 'Rouge Vibrant' } });
-  const colorBleu = await prisma.color.findUniqueOrThrow({ where: { name: 'Bleu Ciel' } });
-  const colorVert = await prisma.color.findUniqueOrThrow({ where: { name: 'Vert Forêt' } });
-  const colorJaune = await prisma.color.findUniqueOrThrow({ where: { name: 'Jaune Soleil' } });
-  const colorOrange = await prisma.color.findUniqueOrThrow({ where: { name: 'Orange Doux' } });
+  // Récupérer les couleurs pour les utiliser plus tard
+  const colorRouge = await prisma.color.findUniqueOrThrow({ where: { name: 'Rouge' } });
+  const colorBleu = await prisma.color.findUniqueOrThrow({ where: { name: 'Bleu' } });
+  const colorVert = await prisma.color.findUniqueOrThrow({ where: { name: 'Vert' } });
+  const colorJaune = await prisma.color.findUniqueOrThrow({ where: { name: 'Jaune' } });
+  const colorOrange = await prisma.color.findUniqueOrThrow({ where: { name: 'Orange' } });
+  const colorWhite = await prisma.color.findUniqueOrThrow({ where: { name: 'Blanc' } });
 
   // --- 2. Users (no dependencies, IDs CUID auto-generated) ---
   const alice = await prisma.user.create({
     data: {
       name: 'Alice Dupont',
       email: 'alice.dupont@example.com',
-      password: 'hashed_password_alice', // Assure-toi de hasher les mots de passe dans un vrai scénario
+      password: hashedPassword, // Assure-toi de hasher les mots de passe dans un vrai scénario
       currency: 'EUR',
       alert: true,
       createdAt: new Date('2023-01-15T10:00:00.000Z'),
@@ -48,17 +58,17 @@ async function main() {
   });
   console.log(`Created user Alice with id: ${alice.id}`);
 
-  const bob = await prisma.user.create({
+  const john = await prisma.user.create({
     data: {
-      name: 'Bob Martin',
-      email: 'bob.martin@example.com',
-      password: 'hashed_password_bob',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      password: hashedPassword,
       currency: 'USD',
       alert: false,
       createdAt: new Date('2023-02-20T14:30:00.000Z'),
     },
   });
-  console.log(`Created user Bob with id: ${bob.id}`);
+  console.log(`Created user John with id: ${john.id}`);
 
   // --- 3. Categories (depends on User and Color) ---
   // Categories for Alice
@@ -66,7 +76,7 @@ async function main() {
     data: {
       title: 'Courses Alimentaires',
       userId: alice.id, // ou user: { connect: { id: alice.id } }
-      colorId: colorRouge.id, // ou color: { connect: { id: colorRouge.id } }
+      colorId: colorWhite.id, // ou color: { connect: { id: colorRouge.id } }
       createdAt: new Date('2023-01-16T10:00:00.000Z'),
     },
   });
@@ -76,7 +86,7 @@ async function main() {
     data: {
       title: 'Transport',
       user: { connect: { id: alice.id } },
-      color: { connect: { id: colorBleu.id } },
+      color: { connect: { id: colorWhite.id } },
       createdAt: new Date('2023-01-16T11:00:00.000Z'),
     },
   });
@@ -86,32 +96,32 @@ async function main() {
     data: {
       title: 'Loisirs',
       userId: alice.id,
-      colorId: colorJaune.id,
+      colorId: colorWhite.id,
       createdAt: new Date('2023-01-16T12:00:00.000Z'),
     },
   });
    console.log(`Created category 'Loisirs' for Alice with id: ${categoryLoisirsAlice.id}`);
 
-  // Categories for Bob
-  const categoryFacturesBob = await prisma.category.create({
+  // Categories for John
+  const categoryFacturesJohn = await prisma.category.create({
     data: {
       title: 'Factures Mensuelles',
-      userId: bob.id,
-      colorId: colorVert.id,
+      userId: john.id,
+      colorId: colorWhite.id,
       createdAt: new Date('2023-02-21T09:00:00.000Z'),
     },
   });
-  console.log(`Created category 'Factures Mensuelles' for Bob with id: ${categoryFacturesBob.id}`);
+  console.log(`Created category 'Factures Mensuelles' for John with id: ${john.id}`);
 
-  const categoryAlimentationBob = await prisma.category.create({
+  const categoryAlimentationJohn = await prisma.category.create({
     data: {
       title: 'Alimentation',
-      userId: bob.id,
-      colorId: colorOrange.id,
+      userId: john.id,
+      colorId: colorWhite.id,
       createdAt: new Date('2023-02-21T10:00:00.000Z'),
     },
   });
-  console.log(`Created category 'Alimentation' for Bob with id: ${categoryAlimentationBob.id}`);
+  console.log(`Created category 'Alimentation' for John with id: ${categoryAlimentationJohn.id}`);
 
   // --- 4. Incomes (depends on User) ---
   // Incomes for Alice
@@ -135,17 +145,17 @@ async function main() {
   });
   console.log('Incomes for Alice created.');
 
-  // Income for Bob
+  // Income for John
   await prisma.income.create({
     data: {
       value: 3200.00,
-      month: 7, // Juillet
+      month: 7, 
       year: 2023,
-      userId: bob.id,
+      userId: john.id,
       createdAt: new Date('2023-07-01T09:00:00.000Z'),
     },
   });
-  console.log('Income for Bob created.');
+  console.log('Income for John created.');
 
   // --- 5. Budgets (depends on User and Category) ---
   // Rappel: Budget @@unique([month, year, userId]), donc un seul budget "global" par mois/année par user,
@@ -161,7 +171,7 @@ async function main() {
     data: {
       amount: '450.00', // Le schéma indique String pour amount
       limitAlert: 0.8,
-      month: 'Juillet', // Le schéma indique String pour month
+      month: 7, // Le schéma indique String pour month
       year: 2023,
       categoryId: categoryCoursesAlice.id,
       userId: alice.id,
@@ -178,7 +188,7 @@ async function main() {
     data: {
       amount: '120.00',
       limitAlert: 0.9,
-      month: 'Août', // Changé en Août
+      month: 8, // Changé en Août
       year: 2023,
       categoryId: categoryTransportAlice.id,
       userId: alice.id,
@@ -187,19 +197,19 @@ async function main() {
   });
   console.log(`Created budget for 'Transport' (Alice, Août) with id: ${budgetTransportAliceAout.id}`);
 
-  // Budget for Bob - Juillet 2023 (Factures)
-  const budgetFacturesBobJuillet = await prisma.budget.create({
+  // Budget for John - Juillet 2023 (Factures)
+  const budgetFacturesJohnJuillet = await prisma.budget.create({
     data: {
       amount: '800.00',
       limitAlert: 0.85,
-      month: 'Juillet',
+      month: 7,
       year: 2023,
-      categoryId: categoryFacturesBob.id,
-      userId: bob.id,
+      categoryId: categoryFacturesJohn.id,
+      userId: john.id,
       createdAt: new Date('2023-07-01T12:00:00.000Z'),
     },
   });
-  console.log(`Created budget for 'Factures Mensuelles' (Bob, Juillet) with id: ${budgetFacturesBobJuillet.id}`);
+  console.log(`Created budget for 'Factures Mensuelles' (John, Juillet) with id: ${budgetFacturesJohnJuillet.id}`);
 
   // --- 6. Expenses (depends on User and Budget) ---
   // Remarque: le champ `expences` sur `User` est une relation, il sera peuplé automatiquement.
@@ -241,18 +251,18 @@ async function main() {
   });
   console.log('Expense for Alice (Transport Août) created.');
 
-  // Expense for Bob's "Factures Mensuelles" budget in July
+  // Expense for John's "Factures Mensuelles" budget in July
   await prisma.expense.create({
     data: {
       description: 'Loyer',
       amount: 650.00,
       date: new Date('2023-07-03T10:00:00.000Z'),
-      budgetId: budgetFacturesBobJuillet.id,
-      userId: bob.id,
+      budgetId: budgetFacturesJohnJuillet.id,
+      userId: john.id,
       createdAt: new Date('2023-07-03T10:01:00.000Z'),
     },
   });
-  console.log('Expense for Bob (Factures Juillet) created.');
+  console.log('Expense for John (Factures Juillet) created.');
 
   // --- 7. Notifications (depends on User) ---
   await prisma.notification.create({
@@ -265,14 +275,14 @@ async function main() {
   });
   await prisma.notification.create({
     data: {
-      content: 'Bienvenue Bob ! Configurez vos premières catégories et budgets.',
+      content: 'Bienvenue John ! Configurez vos premières catégories et budgets.',
       isSeen: true,
-      userId: bob.id,
+      userId: john.id,
       createdAt: new Date('2023-02-20T14:35:00.000Z'),
       updatedAt: new Date('2023-02-22T09:00:00.000Z'), // updatedAt peut être spécifié manuellement si besoin
     },
   });
-  console.log('Notifications created.'); */
+  console.log('Notifications created.');
 
   console.log('Seeding finished.');
 }
