@@ -57,8 +57,10 @@ model Category {
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
 
+
   user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   color            Color    @relation(fields: [colorId], references: [id], onDelete: Cascade)
+
   budgets          Budget[]
   
   @@unique([title, userId])
@@ -70,7 +72,9 @@ model Budget {
   id               String   @id @default(cuid())    
   amount           String
   limitAlert       Float    @map("limit_alert")
+
   month            Int
+
   year             Int
   categoryId       String     @map("category_id")
   userId           String     @map("user_id")
@@ -80,6 +84,7 @@ model Budget {
   
   user             User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   category         Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
   expenses         Expense[]
 
   @@unique([month, year, userId])

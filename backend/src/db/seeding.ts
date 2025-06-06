@@ -44,6 +44,7 @@ async function main() {
   const colorOrange = await prisma.color.findUniqueOrThrow({ where: { name: 'Orange' } });
   const colorWhite = await prisma.color.findUniqueOrThrow({ where: { name: 'Blanc' } });
 
+
   // --- 2. Users (no dependencies, IDs CUID auto-generated) ---
   const alice = await prisma.user.create({
     data: {
@@ -57,6 +58,7 @@ async function main() {
     },
   });
   console.log(`Created user Alice with id: ${alice.id}`);
+
 
   const john = await prisma.user.create({
     data: {
