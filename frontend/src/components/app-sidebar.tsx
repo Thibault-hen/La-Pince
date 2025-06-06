@@ -13,6 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  useSidebar,
 } from '@/components/ui/sidebar'
 import { NavLink, useLocation } from 'react-router-dom'
 
@@ -46,17 +47,20 @@ const items = [
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const location = useLocation()
+  const { open, openMobile } = useSidebar()
   return (
     <Sidebar {...props}>
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem className="flex items-center justify-center">
-            <img src={laPinceLogo} width={60} className="text-red-500" />
-            <SidebarGroupLabel className="tracking-wider font-bold text-xl">
+      <SidebarHeader className="flex items-center justify-center p-1">
+        {open || openMobile ? (
+          <div className="flex items-center gap-2">
+            <img src={laPinceLogo} width={60} />
+            <NavLink to="/" className="ml-3 text-xl font-bold tracking-wider">
               La Pince
-            </SidebarGroupLabel>
-          </SidebarMenuItem>
-        </SidebarMenu>
+            </NavLink>
+          </div>
+        ) : (
+          <img src={laPinceLogo} width={60} />
+        )}
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -82,15 +86,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <div className="px-4 py-2 text-xs text-muted-foreground border-t border-border gap-1 justify-center">
-          <div className="flex gap-2 mt-2">
-            <p className="mb-1">© 2025 La Pince</p>
-            <p className="mb-1">-</p>
-            <NavLink to="/terms" className="hover:underline">
-              Mentions légales
-            </NavLink>
+        {open || openMobile ? (
+          <div className="px-4 py-2 text-xs text-muted-foreground border-t border-border gap-1 justify-center">
+            <div className="flex gap-2 mt-2">
+              <p className="mb-1">© 2025 La Pince</p>
+              <p className="mb-1">-</p>
+              <NavLink to="/terms" className="hover:underline">
+                Mentions légales
+              </NavLink>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div></div>
+        )}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
