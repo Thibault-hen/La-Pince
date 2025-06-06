@@ -57,8 +57,10 @@ model Category {
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
 
-  user             User     @relation(fields: [userId], references: [id])
-  color            Color    @relation(fields: [colorId], references: [id])
+
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  color            Color    @relation(fields: [colorId], references: [id], onDelete: Cascade)
+
   budgets          Budget[]
   
   @@unique([title, userId])
@@ -70,7 +72,9 @@ model Budget {
   id               String   @id @default(cuid())    
   amount           String
   limitAlert       Float    @map("limit_alert")
-  month            String
+
+  month            Int
+
   year             Int
   categoryId       String     @map("category_id")
   userId           String     @map("user_id")
@@ -78,8 +82,9 @@ model Budget {
   createdAt        DateTime   @default(now()) @map("created_at")
   updatedAt        DateTime   @updatedAt @map("updated_at")
   
-  user             User       @relation(fields: [userId], references: [id])
-  category         Category   @relation(fields: [categoryId], references: [id])
+  user             User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category         Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
   expenses         Expense[]
 
   @@unique([month, year, userId])
@@ -98,8 +103,8 @@ model Expense {
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
 
-  user             User     @relation(fields: [userId], references: [id])
-  budget           Budget   @relation(fields: [budgetId], references: [id])
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  budget           Budget   @relation(fields: [budgetId], references: [id], onDelete: Cascade)
 }
 
 model Notification {
@@ -113,7 +118,7 @@ model Notification {
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
 
-  user             User     @relation(fields: [userId], references: [id])
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Income {
@@ -128,5 +133,5 @@ model Income {
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
   
-  user             User     @relation(fields: [userId], references: [id])
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
