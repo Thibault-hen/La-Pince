@@ -26,3 +26,4 @@ EXPOSE 3000
 
 # Commande de lancement de l'app
 CMD ["sh", "-c", "npm run db:deploy && npm run dev"]
+

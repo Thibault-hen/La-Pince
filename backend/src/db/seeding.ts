@@ -12,11 +12,16 @@ async function main() {
   // On peut les créer en premier et ensuite les récupérer par leur 'name' ou 'value' unique.
   await prisma.color.createMany({
     data: [
-      { name: 'Rouge Vibrant', value: '#FF0000' },
-      { name: 'Bleu Ciel', value: '#87CEEB' },
-      { name: 'Vert Forêt', value: '#228B22' },
-      { name: 'Jaune Soleil', value: '#FFD700' },
-      { name: 'Orange Doux', value: '#FFA500' },
+      { name: 'Red', value: 'bg-red-500' },
+      { name: 'Green', value: 'bg-green-500' },
+      { name: 'Blue', value: 'bg-blue-500' },
+      { name: 'Yellow', value: 'bg-yellow-500' },
+      { name: 'Purple', value: 'bg-purple-500' },
+      { name: 'Orange', value: 'bg-orange-500' },
+      { name: 'Pink', value: 'bg-pink-500' },
+      { name: 'Teal', value: 'bg-teal-500' },
+      { name: 'Indigo', value: 'bg-indigo-500' },
+      { name: 'Gray', value: 'bg-gray-500' },
     ],
     skipDuplicates: true, // Au cas où tu relances le seed
   });
