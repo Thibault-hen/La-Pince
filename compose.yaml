@@ -23,8 +23,6 @@ services:
     depends_on:
       - db
 
-    # Commandes
-    command: npm run dev
 
   db:
     # Image officielle de PostgreSQL légère
