@@ -76,7 +76,7 @@ export default function Contact() {
 	return (
 		<section
 			id="contact"
-			className=" pb-20 pt-20 md:pb-32 md:pt-32 container mx-auto"
+			className=" scroll-mt-8 pb-20 pt-20 md:pb-32 md:pt-32 md:m-10 container mx-auto"
 		>
 			<div className="align-middle grid grid-cols-1 p-10 md:grid-cols-2 gap-8">
 				<div className="mt-auto mb-auto pb-8 space-y-4 text-center">
@@ -84,7 +84,10 @@ export default function Contact() {
 						Une question sur notre solution ou notre entreprise ?
 					</h2>
 				</div>
-				<Card className="dark:bg-primary border-none shadow-md">
+				<Card className="dark:bg-primary  shadow-md">
+					<h2 className=" mt-1 font-bold tracking-wider text-primary-color text-lg text-center">
+						Contactez-nous
+					</h2>
 					<CardHeader className="text-primary text-2xl"> </CardHeader>
 					<CardContent>
 						<Form {...form}>
@@ -120,7 +123,6 @@ export default function Contact() {
 										)}
 									/>
 								</div>
-
 								<div className="flex flex-col gap-1.5">
 									<FormField
 										control={form.control}
@@ -140,7 +142,6 @@ export default function Contact() {
 										)}
 									/>
 								</div>
-
 								<div className="flex flex-col gap-1.5">
 									<FormField
 										control={form.control}
@@ -153,7 +154,7 @@ export default function Contact() {
 													defaultValue={field.value}
 												>
 													<FormControl>
-														<SelectTrigger>
+														<SelectTrigger className="w-full">
 															<SelectValue placeholder="Selectionner un sujet" />
 														</SelectTrigger>
 													</FormControl>
@@ -170,7 +171,6 @@ export default function Contact() {
 										)}
 									/>
 								</div>
-
 								<div className="flex flex-col gap-1.5">
 									<FormField
 										control={form.control}
@@ -192,7 +192,6 @@ export default function Contact() {
 										)}
 									/>
 								</div>
-
 								<Button variant="blue" className="mt-4">
 									Envoyer message
 								</Button>
