@@ -1,11 +1,22 @@
-import { z }  from "zod/v4";
+import { z }  from "zod";
 
-const userSelectSchema = z.object({
-  id: z.cuid(),
+export const userSelectSchema = z.object({
+  id: z.string().cuid(),
   name: z.string().min(1),
-  email: z.email(),
+  email: z.string().email(),
   currency: z.string().min(1),
   alert: z.boolean(),
   createdAt: z.string(),
   updatedAt: z.string(),
+})
+
+export const userRegisterSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  password: z.string().min(8),
+})
+
+export const userLoginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
 })
