@@ -6,10 +6,12 @@ import accountRouter from "./controllers/account";
 import expenseRouter from "./controllers/expense";
 import incomeRouter from "./controllers/income";
 import notificationRouter from "./controllers/notification";
+import { isAuthenticated } from "./middlewares/auth.middleware";
 
 const router = new Hono()
 
 router.route('/api/v1', authRouter)
+router.use('/api/v1/*', isAuthenticated);
 router.route('/api/v1', accountRouter)
 router.route('/api/v1', budgetRouter)
 router.route('/api/v1', categoryRouter)
