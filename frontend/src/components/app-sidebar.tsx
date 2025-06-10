@@ -1,13 +1,12 @@
 import * as React from 'react'
 import { HandCoins, Home, PiggyBank, Settings, Tags } from 'lucide-react'
-import laPinceLogo from '@/assets/logo1.png'
+import laPinceLogo from '@/assets/logo.webp'
 
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -50,11 +49,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { open, openMobile } = useSidebar()
   return (
     <Sidebar {...props}>
-      <SidebarHeader className="flex items-center justify-center p-1">
+      <SidebarHeader className="flex">
         {open || openMobile ? (
-          <div className="flex items-center gap-2">
-            <img src={laPinceLogo} width={60} />
-            <NavLink to="/" className="ml-3 text-xl font-bold tracking-wider">
+          <div className="flex items-center justify-center">
+            <img src={laPinceLogo} width={60} alt="Application logo" />
+            <NavLink to="/" className="flex text-xl tracking-wide font-bold">
               La Pince
             </NavLink>
           </div>

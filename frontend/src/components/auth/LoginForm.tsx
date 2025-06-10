@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import laPinceLogo from '@/assets/logo1.png'
+import laPinceLogo from '@/assets/logo.webp'
 import { NavLink } from 'react-router-dom'
 
 export function LoginForm({ className, ...props }: React.ComponentProps<'form'>) {
@@ -15,7 +15,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'form'>)
       {...props}
     >
       <div className="flex flex-col items-center gap-2 text-center">
-        <img src={laPinceLogo} width={100} />
+        <img src={laPinceLogo} width={100} alt="Application logo" />
       </div>
       <div className="grid gap-6">
         <h1 className="text-2xl font-semibold text-left">Se connecter</h1>
