@@ -1,6 +1,6 @@
 @import url(https://fonts.bunny.net/css?family=albert-sans:300);
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 @tailwind utilities;
@@ -124,7 +124,10 @@
   }
 }
 
-html,
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Albert Sans', sans-serif;
   transition:

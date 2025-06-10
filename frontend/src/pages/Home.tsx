@@ -1,10 +1,19 @@
+import Contact from "@/components/blocks/contact";
+import Footer01 from "@/components/blocks/footer-01";
+import Hero05 from "@/components/blocks/hero-05";
+import Problem01 from "@/components/blocks/problem-01";
+import Header from "@/components/homePage/header.tsx";
+
 export const Home = () => {
-  return (
-    <>
-      <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-        <h1 className="-4xl font-bold mb-4text text-indigo-500">Welcome to La Pince</h1>
-        <p className="text-lg text-gray-700">:)</p>
-      </div>
-    </>
-  )
-}
+	return (
+		<>
+			<div className="w-full place-items-center ">
+				<Header />
+				<Hero05 />
+				<Problem01 />
+				<Contact />
+				<Footer01 />
+			</div>
+		</>
+	);
+};
