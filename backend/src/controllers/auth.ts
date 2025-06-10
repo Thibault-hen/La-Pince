@@ -11,6 +11,7 @@ import 'dotenv/config'
 import { deleteCookie, getSignedCookie, setCookie } from 'hono/cookie';
 import { deleteUserCookie, generateToken } from '../lib/tokens';
 import { getEnv } from '../utils/env';
+import { verify } from 'hono/jwt';
 
 const authRouter = new Hono();
 
@@ -86,16 +87,18 @@ authRouter.basePath('/auth')
   }
 )
 .get('/logout', async (c) => {
-  const token = await getSignedCookie(c, getEnv().SECRET_JWT, 'auth_token');
+  const { TOKEN_NAME, SECRET_JWT } = getEnv();
+  const token = await getSignedCookie(c, SECRET_JWT, TOKEN_NAME);
   if (!token) {
     throw new HTTPException(401, {
       message: 'You are not logged in.',
     });
   }
 
-  deleteUserCookie(c, "auth_token");
+  deleteUserCookie(c);
 
   return c.json({ message: 'Logged out' }, 200);
-});
+})
+
 
 export default authRouter;

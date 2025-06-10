@@ -5,9 +5,11 @@ import { sign } from "hono/jwt";
 import { getEnv } from "../utils/env";
 
 export async function generateToken (id: string, c: Context): Promise<string> {
-  const { COOKIE_SECURE, SECRET_JWT } = getEnv();
+  const { COOKIE_SECURE, SECRET_JWT, TOKEN_NAME } = getEnv();
   const payload = {
-      sub: id,
+    jwtPayload: {
+      userId: id,
+    },
       //exp: Math.floor(Date.now() / 1000) + 60 * 5,
     }
 
@@ -19,22 +21,22 @@ export async function generateToken (id: string, c: Context): Promise<string> {
 
   const token = await sign(payload, SECRET_JWT);
 
-  await setSignedCookie(c, 'auth_token', token, SECRET_JWT, {
+  await setSignedCookie(c, TOKEN_NAME, token, SECRET_JWT, {
       httpOnly: true,
       //secure: process.env.NODE_ENV === 'production', // Mettre à true en production (nécessite HTTPS)
       secure: COOKIE_SECURE,
       sameSite: 'strict',
-      maxAge: 60 * 60, 
+      expires: new Date(Date.now() + 60 * 60 * 24 * 30), 
       path: '/',
   });
 
   return token;
 }
 
-export function deleteUserCookie(c: Context, cookieName: string) {
+export function deleteUserCookie(c: Context) {
   const { COOKIE_SECURE, DOMAIN_NAME } = getEnv();
 
-  deleteCookie(c, cookieName, {
+  deleteCookie(c, getEnv().TOKEN_NAME, {
     path: '/',
     secure: COOKIE_SECURE,
     domain: DOMAIN_NAME,

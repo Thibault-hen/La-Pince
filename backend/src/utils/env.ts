@@ -10,6 +10,7 @@ const envSchema = z.object({
     .default('true')
     .transform((val) => val === 'true'),
   DOMAIN_NAME: z.string().default('localhost'),
+  TOKEN_NAME: z.string().default('auth_token'),
 });
 
 export function getEnv() {
