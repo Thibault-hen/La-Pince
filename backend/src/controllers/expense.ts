@@ -127,10 +127,12 @@ expenseRouter.basePath('/expense')
   zValidator('param', paramsWithId),
   async (c) => {
     const expenseId = c.req.param('id');
+    const userId = c.get('jwtPayload').userId;
+
     const expense = await prisma.expense.findUnique({
       where: {
         id: expenseId,
-        userId: c.get('jwtPayload').userId,
+        userId,
       },
     });
 
@@ -141,11 +143,11 @@ expenseRouter.basePath('/expense')
     await prisma.expense.delete({
       where: {
         id: expenseId,
-        userId: c.get('jwtPayload').userId,
+        userId,
       },
     });
 
-    return c.status(204);
+    return c.json(204);
   }
 );
 
