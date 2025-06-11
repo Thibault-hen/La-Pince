@@ -1,7 +1,7 @@
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { describeRoute } from 'hono-openapi';
-import { response200, response201, response400, response404 } from '../utils/openapi';
+import { response200, response201, response204, response400, response404 } from '../utils/openapi';
 import { categoryCreateOrUpdateSchema, categorySelectSchema } from '../validators/category';
 import prisma from '../db/client';
 import { HTTPException } from 'hono/http-exception';
@@ -105,8 +105,43 @@ categoryRouter.basePath('/category')
       },
     });
 
-    return c.json(updateCategory, 201);
+    return c.json(updateCategory, 200);
   }
 )
+.delete('/:id',
+  describeRoute({
+    description: 'Delete an category',
+    tags: ['category'],
+    responses:{
+      204: response204(),
+      404: response404()
+    }
+  }),
+  zValidator('param', paramsWithId),
+  async (c) => {
+    const categoryId = c.req.param('id');
+    const userId = c.get('jwtPayload').userId;
+
+    const findCategory = await prisma.category.findUnique({
+      where: {
+        id: categoryId,
+        userId,
+      },
+    });
+
+    if (!findCategory) {
+      return c.json({ message: 'Expense not found' }, 404);
+    }
+
+    await prisma.category.delete({
+      where: {
+        id: categoryId,
+        userId,
+      },
+    });
+
+    return c.json(204);
+  }
+);
 
 export default categoryRouter;
