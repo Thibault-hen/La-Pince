@@ -36,8 +36,6 @@ app.use(
   })
 );
 
-//proteger les routes en récupérant le token JWT. SI non connecté, renvoyer une erreur 401. SI connecté, vérifier le token JWT prolonger la durée de vie du token JWT
-
 app.route('/', router);
 
 app.get(
