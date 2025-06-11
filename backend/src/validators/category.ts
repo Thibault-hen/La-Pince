@@ -11,5 +11,5 @@ export const categorySelectSchema = z.object({
 
 export const categoryCreateSchema = z.object({
   title: z.string().min(1),
-  //colorId
+  colorId: z.number(),
 })

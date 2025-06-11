@@ -50,19 +50,18 @@ categoryRouter.basePath('/category')
   async(c) => {
     const payload = c.get('jwtPayload');
     const userId = payload.userId;
-    const { title } = c.req.valid('json');
+    const { title, colorId } = c.req.valid('json');
     if (!userId) {
       throw new HTTPException(404, {
         message: 'UserId introuvable.',
       });
     }
     
-    //ColorID change en fonction de la bdd
     const category = await prisma.category.create({
       data: {
         title,
+        colorId,
         userId : userId,
-        colorId : 92
       },
     })
         
