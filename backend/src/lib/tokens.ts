@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import { Context } from 'hono';
 import { deleteCookie, setCookie, setSignedCookie } from 'hono/cookie';
 import { HTTPException } from 'hono/http-exception';
@@ -6,8 +7,13 @@ import { getEnv } from '../utils/env';
 
 export async function generateToken(id: string, c: Context): Promise<string> {
   const { COOKIE_SECURE, SECRET_JWT, TOKEN_NAME } = getEnv();
+  const csrfToken = generateRandomString();
+
+  console.log('csrfToken :>> ', csrfToken);
+
   const payload = {
     userId: id,
+    csrf_token: csrfToken
     //exp: Math.floor(Date.now() / 1000) + 60 * 5,
   };
 
@@ -40,3 +46,8 @@ export function deleteUserCookie(c: Context) {
     domain: DOMAIN_NAME,
   });
 }
+
+export function generateRandomString() {
+  return crypto.randomBytes(128).toString("base64");
+}
+
