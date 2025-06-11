@@ -12,7 +12,8 @@ import { authentify, isAuthenticated } from '../middlewares/auth.middleware';
 
 const accountRouter = new Hono();
 
-accountRouter.basePath('/account').get('/me',
+accountRouter.basePath('/account').get(
+  '/me',
   describeRoute({
     description: 'Get current user',
     tags: ['auth'],
@@ -20,10 +21,11 @@ accountRouter.basePath('/account').get('/me',
       200: response200(userSelectSchema),
       401: response400(z.literal('You are not logged in.')),
       500: response500(z.literal('JWT secret is not set.')),
-    }
+    },
   }),
-  async (c) => {   
-    const userId = c.get('jwtPayload').userId as string;
+  async (c) => {
+    const payload = c.get('jwtPayload');
+    const userId = payload.userId;
 
     const user = await prisma.user.findUnique({
       where: { id: userId },
@@ -46,6 +48,6 @@ accountRouter.basePath('/account').get('/me',
 
     return c.json(user, 200);
   }
-)
+);
 
 export default accountRouter;

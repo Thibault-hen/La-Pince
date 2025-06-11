@@ -14,8 +14,6 @@ app.use(
     origin(origin) {
       const allowedOrigins = getOrigins();
 
-      console.log('CORS Origin:', allowedOrigins);
-
       const isAllowed = allowedOrigins.some((o) => o === origin || o === '*');
 
       if (isAllowed) {
@@ -26,7 +24,7 @@ app.use(
       return '';
     },
     credentials: true,
-  }),
+  })
 );
 
 app.use(
@@ -35,12 +33,10 @@ app.use(
       const allowedOrigins = getOrigins();
       return allowedOrigins.some((o) => o === origin || o === '*');
     },
-  }),
+  })
 );
 
 //proteger les routes en récupérant le token JWT. SI non connecté, renvoyer une erreur 401. SI connecté, vérifier le token JWT prolonger la durée de vie du token JWT
-
-
 
 app.route('/', router);
 
