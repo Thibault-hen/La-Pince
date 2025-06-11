@@ -55,6 +55,10 @@ export const response201 = (schema: ZodSchema) => ({
   },
 });
 
+export const response204 = () => ({
+  description: 'Deleted successfully'
+});
+
 export const response500 = (schema: ZodSchema = z.literal('Server Error')) => ({
   description: 'Server Error',
   content: {
