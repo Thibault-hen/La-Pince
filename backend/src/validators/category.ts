@@ -8,3 +8,8 @@ export const categorySelectSchema = z.object({
   createdAt: z.string(),
   updatedAt: z.string(),
 })
+
+export const categoryCreateSchema = z.object({
+  title: z.string().min(1),
+  //colorId
+})
