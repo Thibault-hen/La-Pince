@@ -20,9 +20,9 @@ const TopMenu = [
 	{ name: "Fonctionnalités", to: "#features" },
 ];
 const topMenuButton = [
-	{ name: "Connexion", to: "/login" },
-	{ name: "Inscription", to: "/register" },
-];
+  { name: 'Connexion', to: '/login' },
+  { name: 'Inscription', to: '/register' },
+]
 
 export default function Header() {
 	return (
