@@ -9,7 +9,7 @@ export const categorySelectSchema = z.object({
   updatedAt: z.string(),
 })
 
-export const categoryCreateSchema = z.object({
+export const categoryCreateOrUpdateSchema = z.object({
   title: z.string().min(1),
   colorId: z.number(),
 })
