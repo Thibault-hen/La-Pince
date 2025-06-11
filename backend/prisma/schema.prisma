@@ -72,9 +72,7 @@ model Budget {
   id               String   @id @default(cuid())    
   amount           String
   limitAlert       Float    @map("limit_alert")
-
   month            Int
-
   year             Int
   categoryId       String     @map("category_id")
   userId           String     @map("user_id")
