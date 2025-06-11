@@ -5,17 +5,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuItem,
-} from '@/components/ui/dropdown-menu'
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+} from '@/components/ui/dropdown-menu';
+import { InitialAvatar } from './InitialAvatar';
 
 export const ProfileButton = () => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Avatar className="cursor-pointer w-8 h-8">
-          <AvatarImage className="rounded-full" src="https://github.com/shadcn.png" />
-          <AvatarFallback>JD</AvatarFallback>
-        </Avatar>
+      <DropdownMenuTrigger>
+        <InitialAvatar className="h-8 w-8 cursor-pointer" name={':)'} />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-48">
@@ -36,5 +33,5 @@ export const ProfileButton = () => {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
-}
+  );
+};
