@@ -27,7 +27,7 @@ model User {
   updatedAt DateTime @updatedAt        @map("updated_at")
 
   budgets           Budget[]
-  expences          Expense[]
+  expenses          Expense[]
   incomes           Income[]
   notifications     Notification[]
   categories        Category[]
