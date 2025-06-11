@@ -5,18 +5,15 @@ import { Link } from "react-router-dom";
 
 const footerLinks = {
 	product: [
-		{ name: "Features", href: "#features" },
-		{ name: "Pricing", href: "#pricing" },
+		{ name: "Fonctionnalités", href: "#features" },
+		{ name: "Tarifs", href: "#pricing" },
 		{ name: "FAQ", href: "#faq" },
 	],
-	company: [
-		{ name: "Blog", href: "/" },
-		{ name: "Contact", href: "/" },
-	],
+	company: [{ name: "Contact", href: "#contact" }],
 	legal: [
-		{ name: "Privacy", href: "/privacy-policy" },
-		{ name: "Terms", href: "/tos" },
-		{ name: "License", href: "/license" },
+		{ name: "Confidentialité", href: "/privacy-policy" },
+		{ name: "Conditions", href: "/tos" },
+		{ name: "Licence", href: "/license" },
 	],
 };
 
@@ -29,13 +26,13 @@ const socialLinks = [
 export default function Footer01() {
 	return (
 		<footer id="footer" className="container px-0 pt-20 md:pt-10 pb-10">
-			<div className="px-10 py-5 bg-primary-color rounded-lg md:bg-primary-color py-0 bg-primary/5">
+			<div className="px-10 py-5 bg-primary-color rounded-lg md:bg-primary-color py-0 ">
 				<div className="flex flex-col md:py-12">
 					<div className="flex flex-col gap-6 md:flex-row md:justify-between">
 						<div className="space-y-4">
 							<Link to="/" className="flex items-center gap-1 text-primary">
 								<img src={laPinceLogo} height={10} width={60} />
-								<span className="text-xl font-bold">La Pince</span>
+								<span className="text-xl font-bold text-white">La Pince</span>
 							</Link>
 						</div>
 						<div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
@@ -44,12 +41,12 @@ export default function Footer01() {
 								<ul className="space-y-2">
 									{footerLinks.product.map((link) => (
 										<li key={link.name}>
-											<Link
-												to={link.href}
+											<a
+												href={link.href}
 												className="text-sm text-white hover:text-foreground"
 											>
 												{link.name}
-											</Link>
+											</a>
 										</li>
 									))}
 								</ul>
@@ -59,18 +56,18 @@ export default function Footer01() {
 								<ul className="space-y-2">
 									{footerLinks.company.map((link) => (
 										<li key={link.name}>
-											<Link
-												to={link.href}
+											<a
+												href={link.href}
 												className="text-sm text-white hover:text-foreground"
 											>
 												{link.name}
-											</Link>
+											</a>
 										</li>
 									))}
 								</ul>
 							</div>
 							<div className="space-y-3">
-								<h4 className="text-white font-semibold">LEGAL</h4>
+								<h4 className="text-white font-semibold">LÉGAL</h4>
 								<ul className="space-y-2">
 									{footerLinks.legal.map((link) => (
 										<li key={link.name}>

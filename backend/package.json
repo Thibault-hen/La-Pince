@@ -21,9 +21,14 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.14.3",
+    "@hono/zod-validator": "^0.4.3",
     "@prisma/client": "^6.9.0",
+    "@scalar/hono-api-reference": "^0.8.2",
     "argon2": "^0.43.0",
+    "dotenv": "^16.5.0",
     "hono": "^4.7.11",
-    "zod": "^3.25.57"
+    "hono-openapi": "^0.4.6",
+    "zod": "^3.25.57",
+    "zod-openapi": "^4.2.4"
   }
 }

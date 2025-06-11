@@ -128,11 +128,13 @@ html {
   scroll-behavior: smooth;
 }
 
+* {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: 'Albert Sans', sans-serif;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+  font-family: "Albert Sans", sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Chrome, Edge, Safari */
