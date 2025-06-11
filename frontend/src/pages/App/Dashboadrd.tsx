@@ -3,5 +3,5 @@ export const Dashboard = () => {
     <>
       <p className="text-lg">Dashboard page</p>
     </>
-  )
-}
+  );
+};

@@ -1,6 +1,6 @@
 @import url(https://fonts.bunny.net/css?family=albert-sans:300);
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 @tailwind utilities;
@@ -135,7 +135,29 @@ body {
     color 0.3s ease;
 }
 
-::view-transition-old(main),
-::view-transition-new(main) {
-  animation: fade-in 300ms ease;
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d28f38;
+  border-radius: 10px;
+  border: 2px solid transparent;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #d28f38;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d28f38 transparent;
 }
