@@ -14,7 +14,7 @@ categoryRouter.basePath('/category')
 .get(
   '/',
   describeRoute({
-    description: 'Get all categories of a user',
+    description: 'Get all categories of a user with the ongoing budget',
     tags: ['category'],
     responses: {
       201: response201(categorySelectSchema),
@@ -24,15 +24,38 @@ categoryRouter.basePath('/category')
   async(c) => {
     const payload = c.get('jwtPayload');
     const userId = payload.userId;
+    const now = new Date()
+    const month = now.getMonth() + 1 
+    
     
     if (!userId) {
       throw new HTTPException(404, {
         message: 'UserId introuvable.',
       });
     }
-    
+
+
     const categories = await prisma.category.findMany({
       where: { userId: userId},
+      include:{
+        color:{
+          omit:{
+            id:true,
+            createdAt:true,
+            updatedAt:true
+          }
+        },
+        budgets:{
+          where:{
+            month:7,
+            userId:userId
+          },
+          omit:{
+            categoryId:true,
+            userId:true
+          }
+        }
+      }
     });
     
     return c.json(categories, 200);
@@ -57,6 +80,9 @@ categoryRouter.basePath('/category')
         message: 'UserId introuvable.',
       });
     }
+
+    //TODO verif si catégorie déjà existante : titre
+  
     
     const category = await prisma.category.create({
       data: {
@@ -110,7 +136,7 @@ categoryRouter.basePath('/category')
 )
 .delete('/:id',
   describeRoute({
-    description: 'Delete an category',
+    description: 'Delete a category',
     tags: ['category'],
     responses:{
       204: response204(),
@@ -130,7 +156,7 @@ categoryRouter.basePath('/category')
     });
 
     if (!findCategory) {
-      return c.json({ message: 'Expense not found' }, 404);
+      return c.json({ message: 'Category not found' }, 404);
     }
 
     await prisma.category.delete({
