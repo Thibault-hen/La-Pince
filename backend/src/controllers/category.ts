@@ -24,16 +24,15 @@ categoryRouter.basePath('/category')
   async(c) => {
     const payload = c.get('jwtPayload');
     const userId = payload.userId;
-    const now = new Date()
-    const month = now.getMonth() + 1 
-    
-    
+
     if (!userId) {
       throw new HTTPException(404, {
         message: 'UserId introuvable.',
       });
     }
 
+    const now = new Date()
+    const currentMonth = now.getMonth() + 1 
 
     const categories = await prisma.category.findMany({
       where: { userId: userId},
@@ -47,7 +46,7 @@ categoryRouter.basePath('/category')
         },
         budgets:{
           where:{
-            month:7,
+            month:currentMonth,
             userId:userId
           },
           omit:{
@@ -81,8 +80,20 @@ categoryRouter.basePath('/category')
       });
     }
 
-    //TODO verif si catégorie déjà existante : titre
-  
+    const categoryExist = await prisma.category.findUnique({
+      where: { 
+        title_userId: {
+          title,
+          userId,
+        },
+       },
+    });
+
+    if (categoryExist) {
+      throw new HTTPException(400, {
+          message: 'Category with the same title already exists.',
+        });
+    }
     
     const category = await prisma.category.create({
       data: {
