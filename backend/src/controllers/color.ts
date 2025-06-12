@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import { describeRoute } from 'hono-openapi';
-import { response201, response401 } from '../utils/openapi';
+import { response200, response201, response401 } from '../utils/openapi';
 import { colorSelectSchema } from '../validators/color';
 import prisma from '../db/client';
 
@@ -13,7 +13,7 @@ colorRouter.basePath('/color')
     description: 'Get list color',
     tags: ['color'],
     responses: {
-      200: response201(colorSelectSchema),
+      200: response200(colorSelectSchema),
     }
   }),
   async(c) => {
