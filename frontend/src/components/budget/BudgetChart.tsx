@@ -25,9 +25,9 @@ export const BudgetChart = () => {
 
   return (
     <div className="flex justify-around items-center w-full min-h-[350px]">
-      <Card className="dark:bg-primary flex overflow-hidden shadow-lg w-full h-full flex-col border-l-primary-color border-l-4">
+      <Card className="dark:bg-primary flex overflow-hidden shadow-lg w-full h-full flex-col">
         <CardHeader className="items-center pb-0">
-          <CardTitle>Vue d'ensemble</CardTitle>
+          <CardTitle className="border-l-4 border-primary-color p-2">Vue d'ensemble</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col md:flex-row pb-0 justify-center items-center gap-4">
           <div className="w-full max-w-[300px] md:w-1/2 mx-auto">

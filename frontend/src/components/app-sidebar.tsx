@@ -1,6 +1,6 @@
-import * as React from 'react'
-import { HandCoins, Home, PiggyBank, Settings, Tags } from 'lucide-react'
-import laPinceLogo from '@/assets/logo.webp'
+import * as React from 'react';
+import { HandCoins, Home, PiggyBank, Settings, Tags } from 'lucide-react';
+import laPinceLogo from '@/assets/logo.webp';
 
 import {
   Sidebar,
@@ -13,40 +13,40 @@ import {
   SidebarMenuItem,
   SidebarRail,
   useSidebar,
-} from '@/components/ui/sidebar'
-import { NavLink, useLocation } from 'react-router-dom'
+} from '@/components/ui/sidebar';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const items = [
   {
     title: 'Tableau de bord',
-    url: '/dashboard',
+    url: '/tableau-de-bord',
     icon: Home,
   },
   {
     title: 'Budgets',
-    url: '/dashboard/budgets',
+    url: '/tableau-de-bord/budgets',
     icon: PiggyBank,
   },
   {
     title: 'Dépenses',
-    url: '/dashboard/expenses',
+    url: '/tableau-de-bord/depenses',
     icon: HandCoins,
   },
   {
     title: 'Catégories',
-    url: '/dashboard/categories',
+    url: '/tableau-de-bord/categories',
     icon: Tags,
   },
   {
     title: 'Paramètres',
-    url: '/dashboard/settings',
+    url: '/tableau-de-bord/parametres',
     icon: Settings,
   },
-]
+];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const location = useLocation()
-  const { open, openMobile } = useSidebar()
+  const location = useLocation();
+  const { open, openMobile } = useSidebar();
   return (
     <Sidebar {...props}>
       <SidebarHeader className="flex">
@@ -65,7 +65,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarMenu>
             {items.map((item) => {
-              const isActive: boolean = item.url === location.pathname
+              const isActive: boolean = item.url === location.pathname;
               return (
                 <SidebarMenuItem key={item.title} className="my-1">
                   <SidebarMenuButton
@@ -79,7 +79,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-              )
+              );
             })}
           </SidebarMenu>
         </SidebarGroup>
@@ -101,5 +101,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

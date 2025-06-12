@@ -8,6 +8,7 @@ import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 
 export const Login = () => {
   const location = useLocation();
+
   return (
     <DefaultWrapper key={location.pathname}>
       <div className="grid min-h-svh lg:grid-cols-2">
@@ -27,7 +28,7 @@ export const Login = () => {
             </div>
           </div>
         </div>
-        <div className="bg-primary border-l border-l-secondary-color hidden lg:block min-h-screen">
+        <div className="bg-primary border-l border-l-primary-color hidden lg:block min-h-screen">
           <div className="relative w-full h-full">
             <img
               src={preview1}

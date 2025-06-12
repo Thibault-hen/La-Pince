@@ -14,14 +14,14 @@ const buttonVariants = cva(
         destructive:
           'bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
         outline:
-          'border bg-background shadow-xs hover:bg-secondary-color cursor-pointer hover:text-accent-foreground dark:border-input transition-colors duration-300',
+          'border bg-background shadow-xs hover:bg-secondary-color cursor-pointer hover:text-accent-foreground dark:border-input transition-colors duration-300 disabled:opacity-100 disabled:cursor-not-allowed',
         secondary: 'bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80',
         ghost: 'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
         link: 'text-primary underline-offset-4 hover:underline',
-        blue: 'bg-primary-color text-white shadow-xs hover:bg-secondary-color transition-colors duration-300 cursor-pointer',
+        blue: 'bg-primary-color text-white shadow-xs hover:bg-secondary-color transition-colors duration-300 cursor-pointer disabled:opacity-100 disabled:cursor-not-allowed',
         orange:
-          'bg-secondary-color text-white shadow-xs hover:bg-primary-color transition-colors duration-300 cursor-pointer',
-        red: 'bg-red-500 text-white shadow-xs transition-colors duration-300 cursor-pointer',
+          'bg-secondary-color text-white shadow-xs hover:bg-primary-color transition-colors duration-300 cursor-pointer disabled:opacity-100 disabled:cursor-not-allowed',
+        red: 'bg-red-500 text-white shadow-xs transition-colors duration-300 cursor-pointer disabled:opacity-100 disabled:cursor-not-allowed',
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',

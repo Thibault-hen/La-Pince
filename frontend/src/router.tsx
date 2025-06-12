@@ -1,14 +1,15 @@
-import { createBrowserRouter } from 'react-router-dom'
-import { Home } from './pages/Home'
-import { Dashboard } from './pages/App/Dashboadrd'
-import { Budget } from './pages/App/Budget'
-import { Category } from './pages/App/Category'
-import { Expense } from './pages/App/Expense'
-import { Settings } from './pages/App/Settings'
-import { AppLayout } from './layouts/AppLayout'
-import { Login } from './pages/Login'
-import { Register } from './pages/Register'
-import { Terms } from './pages/Terms'
+import { createBrowserRouter } from 'react-router-dom';
+import { Home } from './pages/Home';
+import { Dashboard } from './pages/App/Dashboard';
+import { Budget } from './pages/App/Budget';
+import { Category } from './pages/App/Category';
+import { Expense } from './pages/App/Expense';
+import { Settings } from './pages/App/Settings';
+import { AppLayout } from './layouts/AppLayout';
+import { Login } from './pages/Login';
+import { Register } from './pages/Register';
+import { Terms } from './pages/Terms';
+import { ProtectedRoutes } from './components/auth/ProtectedRoutes';
 
 export const router = createBrowserRouter([
   {
@@ -19,19 +20,20 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/login',
+        path: '/connexion',
         element: <Login />,
       },
       {
-        path: '/register',
+        path: '/inscription',
         element: <Register />,
       },
       {
-        path: '/terms',
+        path: '/mentions-legales',
         element: <Terms />,
       },
       {
-        path: '/dashboard',
+        path: '/tableau-de-bord',
+        element: <ProtectedRoutes />,
         children: [
           {
             element: <AppLayout />,
@@ -45,7 +47,7 @@ export const router = createBrowserRouter([
                 element: <Budget />,
               },
               {
-                path: 'expenses',
+                path: 'depenses',
                 element: <Expense />,
               },
               {
@@ -53,7 +55,7 @@ export const router = createBrowserRouter([
                 element: <Category />,
               },
               {
-                path: 'settings',
+                path: 'parametres',
                 element: <Settings />,
               },
             ],
@@ -62,4 +64,4 @@ export const router = createBrowserRouter([
       },
     ],
   },
-])
+]);
