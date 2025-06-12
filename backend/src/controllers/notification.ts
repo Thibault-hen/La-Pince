@@ -57,7 +57,7 @@ notificationRouter.basePath('/notification')
 .put(
   '/:id',
   describeRoute({
-    description: 'Create a notifications for a user',
+    description: 'Update a notifications for a user',
     tags: ['notification'],
     responses: {
       201: response201(notificationSelectSchema),
@@ -76,7 +76,7 @@ notificationRouter.basePath('/notification')
     });
     if (!notificationExist) {
         throw new HTTPException(404, {
-        message: 'Category not found.',
+        message: 'Notification not found.',
       });
     }
 
@@ -114,7 +114,7 @@ notificationRouter.basePath('/notification')
     });
     if (!notificationExist) {
         throw new HTTPException(404, {
-        message: 'Category not found.',
+        message: 'Notification not found.',
       });
     }
 
