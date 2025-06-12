@@ -65,7 +65,7 @@ categoryRouter.basePath('/category')
     const userId = c.get('jwtPayload').userId;
     const { title, colorId } = c.req.valid('json');
 
-    await verifyDuplicateCategory(userId, title);
+    await verifyDuplicateCategory(userId, title, false);
     
     const category = await prisma.category.create({
       data: {
@@ -91,21 +91,11 @@ categoryRouter.basePath('/category')
   async (c) => {
     const userId = c.get('jwtPayload').userId;
     const categoryId = c.req.param('id');
-    const categoryExist = await prisma.category.findUnique({
-      where: {
-        id: categoryId,
-        userId:userId 
-      },
-    });
-    if (!categoryExist) {
-      throw new HTTPException(404, {
-        message: 'Category not found.',
-      });
-    }
+    await verifyCategoryExist(categoryId, userId);
 
     const { title, colorId } = c.req.valid('json');
 
-    await verifyDuplicateCategory(userId, title);
+    await verifyDuplicateCategory(userId, title, true);
 
     const updateCategory = await prisma.category.update({
       data: {
@@ -134,15 +124,7 @@ categoryRouter.basePath('/category')
   async (c) => {
     const userId = c.get('jwtPayload').userId;
     const categoryId = c.req.param('id');
-    const categoryExist = await prisma.category.findUnique({
-      where: {
-        id: categoryId,
-        userId,
-      },
-    });
-    if (!categoryExist) {
-      return c.json({ message: 'Category not found' }, 404);
-    }
+    await verifyCategoryExist(categoryId, userId);
 
     await prisma.category.delete({
       where: {
@@ -156,13 +138,13 @@ categoryRouter.basePath('/category')
 );
 
 async function verifyDuplicateCategory(userId: string,
-  title: string,) {
-  const duplicateCategory = await prisma.category.findUnique({
+  title: string, isUpdate:boolean) {
+  const duplicateCategory = await prisma.category.findFirst({
     where: { 
-      title_userId: {
-        title,
-        userId,
-      },
+      title: isUpdate
+      ? { equals: title } 
+      : { equals: title, mode: 'insensitive'},
+    userId,
     },
   });
   if (duplicateCategory) {
