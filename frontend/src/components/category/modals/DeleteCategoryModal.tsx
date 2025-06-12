@@ -8,23 +8,32 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import type { IBudget } from '@/data/data';
 
-interface DeleteBudgetProps {
+interface DeleteCategoryProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  budget?: IBudget;
+  category?: {
+    id: string;
+    title: string;
+    color: string;
+    budget: {
+      id: string;
+      amount: number;
+      totalExpenses: number;
+    };
+  };
 }
 
-export const DeleteBudgetModal = (props: DeleteBudgetProps) => {
+export const DeleteCategoryModal = (props: DeleteCategoryProps) => {
   return (
     <AlertDialog open={props.open} onOpenChange={props.setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="font-medium text-xl">Supprimer un budget</AlertDialogTitle>
+          <AlertDialogTitle className="font-medium text-xl">
+            Supprimer une catégorie
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            Tu veux vraiment supprimer ton budget {props.budget?.title} de {props.budget?.amount} €
-            ?
+            Tu veux vraiment supprimer ta catégorie {props.category?.title} ?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

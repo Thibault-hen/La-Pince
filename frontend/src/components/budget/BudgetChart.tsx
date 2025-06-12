@@ -8,26 +8,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
+import { chartData } from '@/data/data';
 
 export const description = 'A donut chart with text';
-
-const chartData = [
-  { title: 'Nourriture', amount: 275, fill: '#4c51bf' },
-  { title: 'Voyages', amount: 200, fill: '#f56565' },
-  { title: 'Vêtements', amount: 287, fill: '#f97316' },
-  { title: 'Loisirs', amount: 173, fill: '#22c55e' },
-  { title: 'Autres', amount: 190, fill: '#a855f7' },
-  { title: 'Nourriture', amount: 275, fill: '#4c51bf' },
-  { title: 'Voyages', amount: 200, fill: '#f56565' },
-  { title: 'Vêtements', amount: 287, fill: '#f97316' },
-  { title: 'Loisirs', amount: 173, fill: '#22c55e' },
-  { title: 'Autres', amount: 190, fill: '#a855f7' },
-  { title: 'Nourriture', amount: 275, fill: '#4c51bf' },
-  { title: 'Voyages', amount: 200, fill: '#f56565' },
-  { title: 'Vêtements', amount: 287, fill: '#f97316' },
-  { title: 'Loisirs', amount: 173, fill: '#22c55e' },
-  { title: 'Autres', amount: 190, fill: '#a855f7' },
-];
 
 const chartConfig = {} satisfies ChartConfig;
 
@@ -71,9 +54,9 @@ export const BudgetChart = () => {
                             <tspan
                               x={viewBox.cx}
                               y={viewBox.cy}
-                              className="fill-foreground text-2xl font-bold"
+                              className="fill-foreground text-xl font-bold"
                             >
-                              {totalAmount.toLocaleString()} €
+                              {totalAmount.toFixed(2).toLocaleString()} €
                             </tspan>
                           </text>
                         );
@@ -94,7 +77,7 @@ export const BudgetChart = () => {
                   style={{ backgroundColor: item.fill }}
                 ></span>
                 <span>{item.title}</span>
-                <span className="font-bold text-md">{item.amount} €</span>
+                <span className="font-bold text-md">{item.amount.toFixed(2)} €</span>
                 <span>-</span>
                 <span className="font-bold text-md">{percentage(item.amount)}</span>
               </div>

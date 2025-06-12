@@ -19,17 +19,12 @@ import {
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import type { IBudget } from '@/data/data';
 
 interface EditBudgetProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  budget?: {
-    id: string;
-    title: string;
-    amount: number;
-    value: string;
-    totalExpense: number;
-  };
+  budget?: IBudget;
 }
 
 export const EditBudgetModal = (props: EditBudgetProps) => {
@@ -38,7 +33,7 @@ export const EditBudgetModal = (props: EditBudgetProps) => {
       <form>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Edite ton budget</DialogTitle>
+            <DialogTitle className="font-medium text-xl">Modifier un budget</DialogTitle>
             <DialogDescription>
               Modifie les informations de ton budget {props.budget?.title}
             </DialogDescription>
@@ -60,7 +55,11 @@ export const EditBudgetModal = (props: EditBudgetProps) => {
             </div>
             <div className="grid gap-3">
               <Label htmlFor="category">Categorie</Label>
-              <Select>
+              <Select
+                name="category"
+                defaultValue={(props.budget?.title ?? '').toLocaleLowerCase()}
+                required
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Sélectionne une catégorie" />
                 </SelectTrigger>
@@ -71,7 +70,7 @@ export const EditBudgetModal = (props: EditBudgetProps) => {
                     <SelectItem value="vêtements">Vêtements</SelectItem>
                     <SelectItem value="loisirs">Loisirs</SelectItem>
                     <SelectItem value="voyages">Voyages</SelectItem>
-                    <SelectItem value="Autres">Autres</SelectItem>
+                    <SelectItem value="autres">Autres</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -84,7 +83,7 @@ export const EditBudgetModal = (props: EditBudgetProps) => {
               </Button>
             </DialogClose>
             <Button type="submit" variant="blue">
-              Editer
+              Modifier
             </Button>
           </DialogFooter>
         </DialogContent>

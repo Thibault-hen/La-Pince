@@ -8,14 +8,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import type { IBudget } from '@/data/data';
 
 interface BudgetProps {
-  budget: {
-    title: string;
-    amount: number;
-    value: string;
-    totalExpense: number;
-  };
+  budget: IBudget;
   onOpenEditModal: () => void;
   onOpenDeleteModal: () => void;
 }
@@ -35,7 +31,20 @@ export const BudgetCard = (props: BudgetProps) => {
     return ColorStatus.alert;
   };
 
-  const percentage = ((props.budget.totalExpense / props.budget.amount) * 100).toFixed(1);
+  const getRemainingBudget = (): number | string => {
+    const remainingBudget = (props.budget.amount ?? 0) - (props?.budget?.totalExpenses ?? 0);
+
+    if (remainingBudget < 0) {
+      return 0;
+    }
+
+    return remainingBudget.toFixed(2);
+  };
+
+  const percentage = (
+    ((props.budget.totalExpenses ?? 0) / (props.budget.amount ?? 1)) *
+    100
+  ).toFixed(1);
   return (
     <Card className="flex justify-around p-4 dark:bg-primary hover:border-secondary-color transition-all duration-200 ease-in-out">
       <CardHeader className="p-0">
@@ -45,7 +54,7 @@ export const BudgetCard = (props: BudgetProps) => {
             style={{ borderLeftColor: props.budget.value }}
           >
             {props.budget.title}
-            {props.budget.totalExpense > props.budget.amount && (
+            {props.budget.totalExpenses > (props.budget.amount ?? 0) && (
               <TriangleAlert
                 size={30}
                 className="text-red-500 bg-red-500/20 p-1 rounded-xl border border-red-500"
@@ -87,44 +96,57 @@ export const BudgetCard = (props: BudgetProps) => {
       </CardHeader>
 
       <CardContent className="flex flex-col">
-        <CardDescription className="flex justify-between space-x-1 items-center">
-          <div className="flex gap-1 items-center">
-            <span className="text-xs text-muted-foreground">Dépenses totales</span>
-            <span
-              className="text-xs"
+        <CardDescription className="flex flex-col space-x-1 items-center">
+          <div className="flex justify-between w-full">
+            <div className="flex gap-1 items-center">
+              <span className="text-xs text-muted-foreground">Dépenses totales</span>
+              <span
+                className="text-xs"
+                style={
+                  {
+                    color: budgetStatusBarColor(
+                      props.budget.totalExpenses,
+                      props.budget.amount ?? 0
+                    ),
+                  } as React.CSSProperties
+                }
+              >
+                ({percentage}%)
+              </span>
+            </div>
+            <div className="flex items-center gap-1">
+              <span
+                className={`${props.budget.totalExpenses > (props.budget.amount ?? 0) ? 'text-red-500' : ''}`}
+              >
+                {(props.budget.totalExpenses ?? 0).toFixed(2)}
+              </span>
+              <span>/</span>
+              <span className="font-bold">{(props.budget.amount ?? 0).toFixed(2)} €</span>
+            </div>
+          </div>
+          <div className="flex w-full flex-col">
+            <Progress
+              value={
+                props.budget.totalExpenses > (props.budget.amount ?? 0)
+                  ? props.budget.amount
+                  : props.budget.totalExpenses
+              }
+              max={props.budget.amount}
+              className="w-full border [&>*]:bg-[var(--bg-color)] h-3 mt-2"
               style={
                 {
-                  color: budgetStatusBarColor(props.budget.totalExpense, props.budget.amount),
+                  '--bg-color': budgetStatusBarColor(
+                    props.budget.totalExpenses,
+                    props.budget.amount ?? 0
+                  ),
                 } as React.CSSProperties
               }
-            >
-              ({percentage}%)
+            />
+            <span className="flex self-end p-1 text-xs text-muted-foreground font-bold">
+              {getRemainingBudget()}€ restant
             </span>
-          </div>
-          <div className="flex items-center gap-1">
-            <span
-              className={`${props.budget.totalExpense > props.budget.amount ? 'text-red-500' : ''}`}
-            >
-              {props.budget.totalExpense}
-            </span>
-            <span>/</span>
-            <span className="font-bold">{props.budget.amount} €</span>
           </div>
         </CardDescription>
-        <Progress
-          value={
-            props.budget.totalExpense > props.budget?.amount
-              ? props.budget.amount
-              : props.budget.totalExpense
-          }
-          max={props.budget.amount}
-          className="w-full border [&>*]:bg-[var(--bg-color)] h-3 mt-2"
-          style={
-            {
-              '--bg-color': budgetStatusBarColor(props.budget.totalExpense, props.budget.amount),
-            } as React.CSSProperties
-          }
-        />
       </CardContent>
     </Card>
   );
