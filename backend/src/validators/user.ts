@@ -1,4 +1,4 @@
-import { z }  from "zod";
+import { z } from 'zod';
 
 export const userSelectSchema = z.object({
   id: z.string().cuid(),
@@ -8,15 +8,23 @@ export const userSelectSchema = z.object({
   alert: z.boolean(),
   createdAt: z.string(),
   updatedAt: z.string(),
-})
+});
 
 export const userRegisterSchema = z.object({
-  name: z.string().min(1),
-  email: z.string().email(),
-  password: z.string().min(8),
-})
+  name: z.string().trim().min(1),
+  email: z.string().trim().email(),
+  password: z.string().trim().min(8),
+});
 
 export const userLoginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-})
+  email: z.string().trim().email(),
+  password: z.string().trim().min(8),
+});
+
+export const updateUserSchema = z.object({
+  email: z.string().trim().email().optional(),
+  name: z.string().trim().min(1).max(100).optional(),
+  currency: z.string().trim().min(1).max(10).optional(),
+  alert: z.boolean().optional(),
+  password: z.string().trim().min(8).optional(),
+});

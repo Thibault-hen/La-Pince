@@ -37,6 +37,17 @@ export const response404 = (schema: ZodSchema = z.literal('Not found')) => ({
   },
 });
 
+export const response409 = (
+  schema: ZodSchema = z.literal('Already exist')
+) => ({
+  description: 'Already exists',
+  content: {
+    'text/plain': {
+      schema: resolver(schema),
+    },
+  },
+});
+
 export const response200 = (schema: ZodSchema) => ({
   description: 'Successful response',
   content: {
@@ -56,7 +67,7 @@ export const response201 = (schema: ZodSchema) => ({
 });
 
 export const response204 = () => ({
-  description: 'Deleted successfully'
+  description: 'Deleted successfully',
 });
 
 export const response500 = (schema: ZodSchema = z.literal('Server Error')) => ({

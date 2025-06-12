@@ -1,53 +1,106 @@
 import { Hono } from 'hono';
 import { HTTPException } from 'hono/http-exception';
-import { verify } from 'hono/jwt';
+import { zValidator } from '@hono/zod-validator';
+import argon2 from 'argon2';
 import prisma from '../db/client';
-import { getSignedCookie } from 'hono/cookie';
-import { getEnv } from '../utils/env';
-import { response200, response400, response500 } from '../utils/openapi';
+import {
+  response200,
+  response204,
+  response401,
+  response409,
+} from '../utils/openapi';
 import { userSelectSchema } from '../validators/user';
+import { updateUserSchema } from '../validators/user';
 import z from 'zod';
 import { describeRoute } from 'hono-openapi';
-import { authentify, isAuthenticated } from '../middlewares/auth.middleware';
+import { deleteUserCookie } from '../lib/tokens';
 
 const accountRouter = new Hono();
 
-accountRouter.basePath('/account').get(
-  '/me',
-  describeRoute({
-    description: 'Get current user',
-    tags: ['auth'],
-    responses: {
-      200: response200(userSelectSchema),
-      401: response400(z.literal('You are not logged in.')),
-      500: response500(z.literal('JWT secret is not set.')),
-    },
-  }),
-  async (c) => {
-    const payload = c.get('jwtPayload');
-    const userId = payload.userId;
-
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        currency: true,
-        alert: true,
-        createdAt: true,
-        updatedAt: true,
+accountRouter
+  .basePath('/account')
+  .get(
+    '/me',
+    describeRoute({
+      description: 'Get current user',
+      tags: ['account'],
+      responses: {
+        200: response200(userSelectSchema),
       },
-    });
+    }),
+    async (c) => {
+      const userId = c.get('jwtPayload').userId;
 
-    if (!user) {
-      throw new HTTPException(401, {
-        message: 'You are not logged in.',
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
       });
-    }
 
-    return c.json(user, 200);
-  }
-);
+      const { password: _, ...safeUser } = user;
+
+      return c.json(safeUser, 200);
+    }
+  )
+  .patch(
+    '/',
+    describeRoute({
+      description: 'Update current user info',
+      tags: ['account'],
+      responses: {
+        200: response200(userSelectSchema),
+        409: response409(z.literal('Email already in use.')),
+      },
+    }),
+    zValidator('json', updateUserSchema),
+    async (c) => {
+      const userId = c.get('jwtPayload').userId;
+      const data = c.req.valid('json');
+
+      if (data.email) {
+        const emailExist = await prisma.user.findUnique({
+          where: { email: data.email },
+        });
+
+        if (emailExist && emailExist.id !== userId) {
+          throw new HTTPException(409, {
+            message: 'Email already in use.',
+          });
+        }
+      }
+
+      if (data.password) {
+        data.password = await argon2.hash(data.password);
+      }
+
+      const updatedUser = await prisma.user.update({
+        where: { id: userId },
+        data,
+      });
+
+      const { password: _, ...safeUser } = updatedUser;
+
+      return c.json(safeUser, 200);
+    }
+  )
+  .delete(
+    '/',
+    describeRoute({
+      description: 'Delete current user account',
+      tags: ['account'],
+      responses: {
+        204: response204(),
+      },
+    }),
+    async (c) => {
+      const userId = c.get('jwtPayload').userId;
+
+      await prisma.user.delete({
+        where: { id: userId },
+      });
+
+      deleteUserCookie(c);
+
+      return c.body(null, 204);
+    }
+  );
 
 export default accountRouter;
