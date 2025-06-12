@@ -24,7 +24,6 @@ categoryRouter.basePath('/category')
   async(c) => {
     const payload = c.get('jwtPayload');
     const userId = payload.userId;
-
     if (!userId) {
       throw new HTTPException(404, {
         message: 'UserId introuvable.',
@@ -33,7 +32,6 @@ categoryRouter.basePath('/category')
 
     const now = new Date()
     const currentMonth = now.getMonth() + 1 
-
     const categories = await prisma.category.findMany({
       where: { userId: userId},
       include:{
@@ -88,7 +86,6 @@ categoryRouter.basePath('/category')
         },
        },
     });
-
     if (categoryExist) {
       throw new HTTPException(400, {
           message: 'Category with the same title already exists.',
@@ -119,7 +116,19 @@ categoryRouter.basePath('/category')
   async (c) => {
     const payload = c.get('jwtPayload');
     const userId = payload.userId;
+    if (!userId) {
+      throw new HTTPException(404, {
+        message: 'UserId not found.',
+      });
+    }
+
     const categoryId = c.req.param('id');
+    if (!categoryId) {
+      throw new HTTPException(404, {
+        message: 'Category not found.',
+      });
+    }
+
     const data = c.req.valid('json');
     const findCategory = await prisma.category.findUnique({
       where: {
@@ -128,10 +137,10 @@ categoryRouter.basePath('/category')
       },
     });
 
-    if (!findCategory) {
-      throw new HTTPException(404, {
-        message: 'Category not found',
-      });
+    if (findCategory) {
+      throw new HTTPException(400, {
+          message: 'Update failed, category with the same title already exists.',
+        });
     }
 
     const updateCategory = await prisma.category.update({
@@ -158,6 +167,11 @@ categoryRouter.basePath('/category')
   async (c) => {
     const categoryId = c.req.param('id');
     const userId = c.get('jwtPayload').userId;
+    if (!userId) {
+      throw new HTTPException(404, {
+        message: 'UserId not found.',
+      });
+    }
 
     const findCategory = await prisma.category.findUnique({
       where: {
@@ -165,7 +179,6 @@ categoryRouter.basePath('/category')
         userId,
       },
     });
-
     if (!findCategory) {
       return c.json({ message: 'Category not found' }, 404);
     }
