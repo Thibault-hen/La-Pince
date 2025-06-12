@@ -15,7 +15,6 @@ expenseRouter.basePath('/expense')
     tags: ['expense'],
     responses:{
       200: response200(expenseSelectSchema),
-      401: response401()
     }
   }),
   async (c) => {
@@ -26,36 +25,57 @@ expenseRouter.basePath('/expense')
       orderBy: {
         date: 'desc',
       },
+      omit:{
+        userId: true, 
+        budgetId: true, 
+      },
       include: {
         budget:{
           include:{
             category: {
+              omit:{
+                userId: true,
+                id: true,
+                colorId: true
+              },
               include: {
-                color: true
+                color: {
+                  omit: {
+                    id: true,
+                    createdAt: true,
+                    updatedAt: true,
+                  }
               }
             }
           }
         }
       }
+    }});
+
+    const formattedExpenses =  expenses.map(expense => {
+      const { budget, ...restOfExpense } = expense;
+      
+      return ({
+        ...restOfExpense,
+        category: budget.category, 
+      });
     });
 
-    return c.json(expenses);
-  }
-)
+  return c.json(formattedExpenses, 200);
+})
 .get('/:id', 
   describeRoute({
     description: 'Get expense by user ID and budget ID',
     tags: ['expense'],
     responses:{
       200: response200(expenseSelectSchema),
-      401: response401()
     }
   }),
   zValidator('param', paramsWithId),
   async (c) => {
     const budgetId = c.req.param('id');
     
-    const expenses = await prisma.expense.findMany({
+    const expense = await prisma.expense.findMany({
       where: {
         userId: c.get('jwtPayload').userId,
         budgetId: budgetId,
@@ -63,12 +83,27 @@ expenseRouter.basePath('/expense')
       orderBy: {
         date: 'desc',
       },
+      omit:{
+        userId: true, 
+        budgetId: true, 
+      },
       include: {
         budget:{
           include:{
             category: {
+              omit:{
+                userId: true,
+                id: true,
+                colorId: true
+              },
               include: {
-                color: true
+                color: {
+                  omit: {
+                    id: true,
+                    createdAt: true,
+                    updatedAt: true,
+                  }
+                }
               }
             }
           }
@@ -76,7 +111,7 @@ expenseRouter.basePath('/expense')
       }
     });
 
-    return c.json(expenses);
+    return c.json(expense, 200);
   }
 )
 .post('/', 
@@ -85,12 +120,23 @@ expenseRouter.basePath('/expense')
     tags: ['expense'],
     responses:{
       201: response201(expenseSelectSchema),
-      401: response401()
+      404: response404(),
     }
   }),
   zValidator('json', expenseCreateOrUpdateSchema),
   async (c) => {
     const expense = c.req.valid('json') as ExpenseCreateOrUpdate;
+
+    const budgetExists = await prisma.budget.findUnique({
+      where: {
+        id: expense.budgetId,
+        userId: c.get('jwtPayload').userId,
+      },
+    });
+
+    if (!budgetExists) {
+      return c.json({ message: 'Budget not found' }, 404);
+    }
 
     const createdExpense = await prisma.expense.create({
       data: {
@@ -115,6 +161,18 @@ expenseRouter.basePath('/expense')
   async (c) => {
     const expenseId = c.req.param('id');
     const expenseToUpdate = c.req.valid('json');
+
+    const budgetExists = await prisma.budget.findUnique({
+      where: {
+        id: expenseToUpdate.budgetId,
+        userId: c.get('jwtPayload').userId,
+      },
+    });
+
+    if (!budgetExists) {
+      return c.json({ message: 'Budget not found' }, 404);
+    }
+
     const expense = await prisma.expense.findUnique({
       where: {
         id: expenseId,
