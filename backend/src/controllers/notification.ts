@@ -18,7 +18,6 @@ notificationRouter.basePath('/notification')
     tags: ['notification'],
     responses: {
       200: response200(notificationSelectSchema),
-      401: response401()
     }
   }),
   async(c) => {
