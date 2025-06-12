@@ -70,7 +70,7 @@ model Budget {
   @@map("budget")
 
   id               String   @id @default(cuid())    
-  amount           String
+  amount           Float
   limitAlert       Float    @map("limit_alert")
   month            Int
   year             Int
@@ -85,7 +85,7 @@ model Budget {
 
   expenses         Expense[]
 
-  @@unique([month, year, userId])
+  @@unique([month, year, categoryId, userId])
 }
 
 model Expense {
