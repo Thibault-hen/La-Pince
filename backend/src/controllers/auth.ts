@@ -9,7 +9,7 @@ import { HTTPException } from 'hono/http-exception';
 import { z } from 'zod';
 import 'dotenv/config'
 import { getSignedCookie } from 'hono/cookie';
-import { deleteUserCookie, generateTokenJWT } from '../lib/tokens';
+import { deleteUserCookie, generateTokenCSRF, generateTokenJWT } from '../lib/tokens';
 import { getEnv } from '../utils/env';
 
 const authRouter = new Hono();
@@ -81,8 +81,9 @@ authRouter.basePath('/auth')
 
     //JWT 
     await generateTokenJWT(user.id, c);
+    const tokenCSRF = await generateTokenCSRF(c);
 
-    return c.json({ message: 'Login successful', user: safeUser }, 200);
+    return c.json({ message: 'success', user: safeUser, token: tokenCSRF }, 200);
   }
 )
 .get('/logout', async (c) => {
