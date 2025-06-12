@@ -22,14 +22,7 @@ categoryRouter.basePath('/category')
     }
   }),
   async(c) => {
-    const payload = c.get('jwtPayload');
-    const userId = payload.userId;
-    if (!userId) {
-      throw new HTTPException(404, {
-        message: 'UserId introuvable.',
-      });
-    }
-
+    const userId = c.get('jwtPayload').userId;
     const now = new Date()
     const currentMonth = now.getMonth() + 1 
     const categories = await prisma.category.findMany({
@@ -69,28 +62,10 @@ categoryRouter.basePath('/category')
   }),
   zValidator('json', categoryCreateOrUpdateSchema),
   async(c) => {
-    const payload = c.get('jwtPayload');
-    const userId = payload.userId;
+    const userId = c.get('jwtPayload').userId;
     const { title, colorId } = c.req.valid('json');
-    if (!userId) {
-      throw new HTTPException(404, {
-        message: 'UserId introuvable.',
-      });
-    }
 
-    const categoryExist = await prisma.category.findUnique({
-      where: { 
-        title_userId: {
-          title,
-          userId,
-        },
-       },
-    });
-    if (categoryExist) {
-      throw new HTTPException(400, {
-          message: 'Category with the same title already exists.',
-        });
-    }
+    await verifyDuplicateCategory(userId, title);
     
     const category = await prisma.category.create({
       data: {
@@ -114,14 +89,7 @@ categoryRouter.basePath('/category')
   zValidator('param', paramsWithId),
   zValidator('json', categoryCreateOrUpdateSchema),
   async (c) => {
-    const payload = c.get('jwtPayload');
-    const userId = payload.userId;
-    if (!userId) {
-      throw new HTTPException(404, {
-        message: 'UserId not found.',
-      });
-    }
-
+    const userId = c.get('jwtPayload').userId;
     const categoryId = c.req.param('id');
     const categoryExist = await prisma.category.findUnique({
       where: {
@@ -136,19 +104,8 @@ categoryRouter.basePath('/category')
     }
 
     const { title, colorId } = c.req.valid('json');
-    const duplicateCategory = await prisma.category.findUnique({
-       where: { 
-        title_userId: {
-          title,
-          userId,
-        },
-       },
-    });
-    if (duplicateCategory) {
-      throw new HTTPException(400, {
-          message: 'Update failed, category with the same title already exists.',
-        });
-    }
+
+    await verifyDuplicateCategory(userId, title);
 
     const updateCategory = await prisma.category.update({
       data: {
@@ -175,21 +132,15 @@ categoryRouter.basePath('/category')
   }),
   zValidator('param', paramsWithId),
   async (c) => {
-    const categoryId = c.req.param('id');
     const userId = c.get('jwtPayload').userId;
-    if (!userId) {
-      throw new HTTPException(404, {
-        message: 'UserId not found.',
-      });
-    }
-
-    const findCategory = await prisma.category.findUnique({
+    const categoryId = c.req.param('id');
+    const categoryExist = await prisma.category.findUnique({
       where: {
         id: categoryId,
         userId,
       },
     });
-    if (!findCategory) {
+    if (!categoryExist) {
       return c.json({ message: 'Category not found' }, 404);
     }
 
@@ -203,5 +154,37 @@ categoryRouter.basePath('/category')
     return c.json(204);
   }
 );
+
+async function verifyDuplicateCategory(userId: string,
+  title: string,) {
+  const duplicateCategory = await prisma.category.findUnique({
+    where: { 
+      title_userId: {
+        title,
+        userId,
+      },
+    },
+  });
+  if (duplicateCategory) {
+    throw new HTTPException(400, {
+      message: 'Category with the same title already exists.',
+    });
+  }
+}
+
+async function verifyCategoryExist(categoryId: string, userId: string) {
+  const categoryExist = await prisma.category.findUnique({
+      where: {
+        id: categoryId,
+        userId,
+      },
+    });
+  if (!categoryExist) {
+      throw new HTTPException(404, {
+      message: 'Category not found.',
+    });
+  } 
+}
+
 
 export default categoryRouter;
