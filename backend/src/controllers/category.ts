@@ -123,28 +123,38 @@ categoryRouter.basePath('/category')
     }
 
     const categoryId = c.req.param('id');
-    if (!categoryId) {
-      throw new HTTPException(404, {
-        message: 'Category not found.',
-      });
-    }
-
-    const data = c.req.valid('json');
-    const findCategory = await prisma.category.findUnique({
+    const categoryExist = await prisma.category.findUnique({
       where: {
         id: categoryId,
         userId:userId 
       },
     });
+    if (!categoryExist) {
+      throw new HTTPException(404, {
+        message: 'Category not found.',
+      });
+    }
 
-    if (findCategory) {
+    const { title, colorId } = c.req.valid('json');
+    const duplicateCategory = await prisma.category.findUnique({
+       where: { 
+        title_userId: {
+          title,
+          userId,
+        },
+       },
+    });
+    if (duplicateCategory) {
       throw new HTTPException(400, {
           message: 'Update failed, category with the same title already exists.',
         });
     }
 
     const updateCategory = await prisma.category.update({
-      data: data,
+      data: {
+        title,
+        colorId
+      },
       where: {
         id: categoryId,
         userId: userId,
