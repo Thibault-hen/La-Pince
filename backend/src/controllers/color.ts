@@ -6,14 +6,14 @@ import prisma from '../db/client';
 
 const colorRouter = new Hono();
 
-colorRouter.basePath('/test')
+colorRouter.basePath('/color')
 .get(
   '/',
   describeRoute({
     description: 'Get list color',
     tags: ['color'],
     responses: {
-      201: response201(colorSelectSchema),
+      200: response201(colorSelectSchema),
     }
   }),
   async(c) => {
