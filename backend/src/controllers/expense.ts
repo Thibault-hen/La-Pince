@@ -11,7 +11,7 @@ const expenseRouter = new Hono();
 expenseRouter.basePath('/expense')
 .get('/', 
   describeRoute({
-    description: 'Get expense by user ID',
+    description: 'Get expenses by user ID',
     tags: ['expense'],
     responses:{
       200: response200(expenseSelectSchema),
@@ -24,8 +24,19 @@ expenseRouter.basePath('/expense')
         userId: c.get('jwtPayload').userId
       },
       orderBy: {
-        createdAt: 'desc',
+        date: 'desc',
       },
+      include: {
+        budget:{
+          include:{
+            category: {
+              include: {
+                color: true
+              }
+            }
+          }
+        }
+      }
     });
 
     return c.json(expenses);
@@ -50,8 +61,19 @@ expenseRouter.basePath('/expense')
         budgetId: budgetId,
       },
       orderBy: {
-        createdAt: 'desc',
+        date: 'desc',
       },
+      include: {
+        budget:{
+          include:{
+            category: {
+              include: {
+                color: true
+              }
+            }
+          }
+        }
+      }
     });
 
     return c.json(expenses);
