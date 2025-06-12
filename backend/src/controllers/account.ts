@@ -13,7 +13,7 @@ import { userSelectSchema } from '../validators/user';
 import { updateUserSchema } from '../validators/user';
 import z from 'zod';
 import { describeRoute } from 'hono-openapi';
-import { deleteUserCookie } from '../lib/tokens';
+import { deleteUserCookie, generateTokenCSRF } from '../lib/tokens';
 
 const accountRouter = new Hono();
 
@@ -33,11 +33,14 @@ accountRouter
 
       const user = await prisma.user.findUnique({
         where: { id: userId },
+        omit: {
+          password: true
+        }
       });
 
-      const { password: _, ...safeUser } = user;
+      const tokenCSRF = await generateTokenCSRF(c);
 
-      return c.json(safeUser, 200);
+      return c.json({user: user, token: tokenCSRF}, 200);
     }
   )
   .patch(

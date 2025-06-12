@@ -5,16 +5,12 @@ import { HTTPException } from 'hono/http-exception';
 import { sign } from 'hono/jwt';
 import { getEnv } from '../utils/env';
 
-export async function generateToken(id: string, c: Context): Promise<string> {
-  const { COOKIE_SECURE, SECRET_JWT, TOKEN_NAME } = getEnv();
-  const csrfToken = generateRandomString();
-
-  console.log('csrfToken :>> ', csrfToken);
+export async function generateTokenJWT(id: string, c: Context): Promise<string> {
+  const { COOKIE_SECURE, SECRET_JWT, TOKEN_JWT_NAME } = getEnv();
 
   const payload = {
     userId: id,
-    csrf_token: csrfToken
-    //exp: Math.floor(Date.now() / 1000) + 60 * 5,
+    exp: Math.floor(Date.now() / 1000) + 60 * 5,
   };
 
   if (!SECRET_JWT) {
@@ -25,7 +21,7 @@ export async function generateToken(id: string, c: Context): Promise<string> {
 
   const token = await sign(payload, SECRET_JWT);
 
-  await setSignedCookie(c, TOKEN_NAME, token, SECRET_JWT, {
+  await setSignedCookie(c, TOKEN_JWT_NAME, token, SECRET_JWT, {
     httpOnly: true,
     //secure: process.env.NODE_ENV === 'production', // Mettre à true en production (nécessite HTTPS)
     secure: COOKIE_SECURE,
@@ -34,13 +30,39 @@ export async function generateToken(id: string, c: Context): Promise<string> {
     path: '/',
   });
 
-  return token;
+  return token ;
+}
+
+export async function generateTokenCSRF(c: Context): Promise<string> {
+  const { COOKIE_SECURE, TOKEN_CSRF_NAME } = getEnv();
+  const csrfToken = generateRandomString();
+
+  const payload = {
+    csrf_token: csrfToken,
+    exp: Math.floor(Date.now() / 1000) + 60 * 5,
+  };
+
+  setCookie(c, TOKEN_CSRF_NAME, csrfToken, {
+    httpOnly: true,
+    //secure: process.env.NODE_ENV === 'production', // Mettre à true en production (nécessite HTTPS)
+    secure: COOKIE_SECURE,
+    sameSite: 'strict',
+    expires: new Date(Date.now() + 60 * 60 * 24 * 30),
+  });
+
+  return  csrfToken;
 }
 
 export function deleteUserCookie(c: Context) {
   const { COOKIE_SECURE, DOMAIN_NAME } = getEnv();
 
-  deleteCookie(c, getEnv().TOKEN_NAME, {
+  deleteCookie(c, getEnv().TOKEN_JWT_NAME, {
+    path: '/',
+    secure: COOKIE_SECURE,
+    domain: DOMAIN_NAME,
+  });
+
+  deleteCookie(c, getEnv().TOKEN_CSRF_NAME, {
     path: '/',
     secure: COOKIE_SECURE,
     domain: DOMAIN_NAME,

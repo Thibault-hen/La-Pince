@@ -8,10 +8,9 @@ import { response200, response201, response400, response500 } from '../utils/ope
 import { HTTPException } from 'hono/http-exception';
 import { z } from 'zod';
 import 'dotenv/config'
-import { deleteCookie, getSignedCookie, setCookie } from 'hono/cookie';
-import { deleteUserCookie, generateToken } from '../lib/tokens';
+import { getSignedCookie } from 'hono/cookie';
+import { deleteUserCookie, generateTokenJWT } from '../lib/tokens';
 import { getEnv } from '../utils/env';
-import { verify } from 'hono/jwt';
 
 const authRouter = new Hono();
 
@@ -81,14 +80,14 @@ authRouter.basePath('/auth')
     const { password: _, ...safeUser } = user;
 
     //JWT 
-    await generateToken(user.id, c);
+    await generateTokenJWT(user.id, c);
 
-    return c.json({ message: 'Login successful', user: safeUser });
+    return c.json({ message: 'Login successful', user: safeUser }, 200);
   }
 )
 .get('/logout', async (c) => {
-  const { TOKEN_NAME, SECRET_JWT } = getEnv();
-  const token = await getSignedCookie(c, SECRET_JWT, TOKEN_NAME);
+  const { TOKEN_JWT_NAME, SECRET_JWT } = getEnv();
+  const token = await getSignedCookie(c, SECRET_JWT, TOKEN_JWT_NAME);
   if (!token) {
     throw new HTTPException(401, {
       message: 'You are not logged in.',
