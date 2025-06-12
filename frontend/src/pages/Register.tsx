@@ -1,13 +1,14 @@
-import { RegisterForm } from '@/components/auth/RegisterForm'
-import { ModeToggle } from '@/components/theme/theme-toggle'
-import { House } from 'lucide-react'
-import { NavLink, useLocation } from 'react-router-dom'
-import preview1 from '@/assets/preview1.png'
-import preview2 from '@/assets/preview2.png'
-import { DefaultWrapper } from '@/layouts/DefaultWrapper'
+import { RegisterForm } from '@/components/auth/RegisterForm';
+import { ModeToggle } from '@/components/theme/theme-toggle';
+import { House } from 'lucide-react';
+import { NavLink, useLocation } from 'react-router-dom';
+import preview1 from '@/assets/preview1.png';
+import preview2 from '@/assets/preview2.png';
+import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 
 export const Register = () => {
-  const location = useLocation()
+  const location = useLocation();
+
   return (
     <DefaultWrapper key={location.pathname}>
       <div className="grid min-h-svh lg:grid-cols-2">
@@ -45,5 +46,5 @@ export const Register = () => {
         </div>
       </div>
     </DefaultWrapper>
-  )
-}
+  );
+};

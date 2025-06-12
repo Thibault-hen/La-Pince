@@ -7,8 +7,24 @@ import {
   DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
 import { InitialAvatar } from './InitialAvatar';
+import { authService } from '@/services/auth';
+import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 export const ProfileButton = () => {
+  const queryClient = useQueryClient();
+  const naviguate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await authService.logout();
+      queryClient.clear();
+      naviguate('/', { replace: true });
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -26,7 +42,7 @@ export const ProfileButton = () => {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          onClick={() => console.log('Logout')}
+          onClick={async () => handleLogout()}
           className="cursor-pointer transition-all duration-150 ease-in-out"
         >
           Déconnexion
