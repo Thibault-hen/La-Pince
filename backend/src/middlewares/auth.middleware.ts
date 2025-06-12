@@ -31,7 +31,15 @@ export async function authentify(token: string, SECRET_JWT: string, c: Context) 
   }
 
   const csrfToken = c.req.header('csrf_token');
+
   if (!csrfToken) {
+    throw new HTTPException(401, {
+      message: 'Missing CSRF token.',
+    });
+  }
+
+  if (csrfToken !== decodedPayload.csrf_token) {
+    // If the CSRF token is not present or does not match, throw an error
     throw new HTTPException(401, {
       message: 'Invalid CSRF token.',
     });
