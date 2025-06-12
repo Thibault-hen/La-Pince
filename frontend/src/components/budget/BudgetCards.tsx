@@ -13,7 +13,7 @@ export const BudgetCards = () => {
 
         <div className="mt-4">
           <div className="text-2xl font-bold tracking-wider">
-            666 <span className="text-secondary-color">€</span>
+            666.00 <span className="text-secondary-color">€</span>
           </div>
         </div>
       </div>
@@ -27,7 +27,7 @@ export const BudgetCards = () => {
 
         <div className="mt-4">
           <div className="text-2xl font-bold tracking-wider">
-            200 <span className="text-secondary-color">€</span>
+            200.00 <span className="text-secondary-color">€</span>
           </div>
         </div>
       </div>
