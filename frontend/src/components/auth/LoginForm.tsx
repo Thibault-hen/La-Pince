@@ -22,7 +22,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'form'>)
   const [createdAccountMessage, setCreatedAccountMessage] = useState<createdAccountMessages | null>(
     location.state || null
   );
-  console.log('createdAccountMessage', createdAccountMessage);
+
   useEffect(() => {
     if (createdAccountMessage) {
       window.history.replaceState({}, document.title);
