@@ -18,6 +18,7 @@ export const authService = {
   async login(data: LoginUser): Promise<User> {
     await new Promise((resolve) => setTimeout(resolve, 3000));
     const response = await api.post('/auth/login', data);
+    api.defaults.headers.common['csrf_token'] = response.data.token;
     return response.data;
   },
 
@@ -33,6 +34,8 @@ export const authService = {
 
   async me(): Promise<User> {
     const response = await api.get('/account/me');
+    api.defaults.headers.common['csrf_token'] = response.data.token;
+    console.log('token', response.data.token);
     return response.data;
   },
 };
