@@ -63,7 +63,6 @@ budgetRouter
       tags: ['budget'],
       responses: {
         200: response200(budgetSelectSchema),
-        400: response400(z.literal('Budget ID is required')),
         404: response404(),
       },
     }),
@@ -71,10 +70,6 @@ budgetRouter
     async (c) => {
       const userId = c.get('jwtPayload').userId;
       const budgetId = c.req.param('id');
-
-      if (!budgetId) {
-        return c.json({ message: 'Budget ID is required' }, 400);
-      }
 
       const budget = await prisma.budget.findUnique({
         where: {
