@@ -12,7 +12,11 @@ import { Badge } from "@/components/ui/badge";
 export type IExpense = {
 	id: string;
 	title: string;
-	category: string;
+	category: {
+		title: string;
+		color: string;
+	};
+	color: string;
 	amount: number;
 	date: string;
 };
@@ -38,11 +42,19 @@ export const columns: ColumnDef<IExpense>[] = [
 		accessorKey: "category",
 		header: () => <div className="text-center">Categorie</div>,
 		cell: ({ row }) => {
-			const category = row.getValue("category");
+			const category: { title: string; color: string } =
+				row.getValue("category");
 			return (
 				<div className="flex justify-center">
-					<Badge className="w-25 align-center items-center bg-primary-color capitalize ">
-						<span className="text-white">{category}</span>
+					<Badge
+						className={
+							"border align-center items-center capitalize min-w-26 bg-white dark:bg-secondary"
+						}
+						style={{
+							border: "1px solid " + category.color,
+						}}
+					>
+						<span className="text-black dark:text-white">{category.title}</span>
 					</Badge>
 				</div>
 			);
@@ -51,6 +63,11 @@ export const columns: ColumnDef<IExpense>[] = [
 	{
 		accessorKey: "date",
 		header: "Date",
+		cell: ({ row }) => {
+			const date: string = row.getValue("date");
+			const formated = new Date(Date.parse(date));
+			return <span>{formated.toLocaleDateString()}</span>;
+		},
 	},
 	{
 		accessorKey: "amount",

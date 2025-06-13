@@ -9,36 +9,27 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart";
-import { useEffect, useMemo, useState } from "react";
-import type { IExpense } from "@/pages/App/table/columns";
-import { getData } from "@/pages/App/Expense";
+import { useMemo, useState } from "react";
+import { useExpenses } from "@/hooks/use-expenses";
 
 export const description = "An interactive bar chart";
 
 const chartConfig = {
 	amount: {
-		label: "Montant total",
+		label: "Montant total ",
 		color: "var(--chart-2)",
 	},
 } satisfies ChartConfig;
 
 export function ChartBarInteractive() {
-	const [data, setData] = useState<IExpense[]>([]);
 	const [activeChart, setActiveChart] =
 		useState<keyof typeof chartConfig>("amount");
 
-	useEffect(() => {
-		const fetchData = async () => {
-			const result = await getData();
-			setData(result);
-		};
-
-		fetchData();
-	}, []);
+	const { expenses } = useExpenses();
 
 	const total = useMemo(
 		() => ({
-			amount: data.reduce((acc, curr) => acc + curr.amount, 0),
+			amount: expenses.reduce((acc, curr) => acc + curr.amount, 0),
 		}),
 		[],
 	);
@@ -78,7 +69,7 @@ export function ChartBarInteractive() {
 				>
 					<BarChart
 						accessibilityLayer
-						data={data}
+						data={expenses}
 						margin={{
 							left: 12,
 							right: 12,

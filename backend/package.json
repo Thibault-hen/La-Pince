@@ -5,6 +5,7 @@
     "dev": "tsx watch src/index.ts",
     "build": "esbuild --bundle --outfile=./dist/index.js --platform=node --target=node20 ./src/index.ts",
     "zip": "zip -j lambda.zip dist/index.js",
+    "update": "aws lambda update-function-code --zip-file fileb://lambda.zip --function-name hello",
     "start": "npm run db:deploy && npm run db:seed && npm run dev",
     "db:deploy": "npx prisma migrate deploy && npx prisma generate",
     "deploy": "run-s build zip update",

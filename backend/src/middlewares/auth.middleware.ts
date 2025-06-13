@@ -8,6 +8,8 @@ import { Context } from 'hono';
 export const isAuthenticated = createMiddleware(async (c, next) => {
   const { SECRET_JWT } = getEnv();
   const token = await getSignedCookie(c, getEnv().SECRET_JWT, getEnv().TOKEN_JWT_NAME);
+  console.log({c, s:getEnv().SECRET_JWT, token: getEnv().TOKEN_JWT_NAME});
+  console.log({token})
 
   if (!token) {
     throw new HTTPException(401, {
