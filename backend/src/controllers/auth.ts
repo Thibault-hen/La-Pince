@@ -50,6 +50,7 @@ authRouter.basePath('/auth')
     });
 
     const { password: _, ...safeUser } = newUser;
+    await createListCategories(safeUser.id);
     
     return c.json({ message: 'User registered successfully', user: safeUser }, 201);
 })
@@ -100,5 +101,17 @@ authRouter.basePath('/auth')
   return c.json({ message: 'Logged out' }, 200);
 })
 
+
+async function createListCategories(userId: string){
+  const names = ["Alimentation", "Logement", "Transports"]
+
+  await prisma.category.createMany({
+    data: names.map(name => ({
+      title: name,
+      userId,
+      colorId: 1,
+    }))
+  });
+}
 
 export default authRouter;

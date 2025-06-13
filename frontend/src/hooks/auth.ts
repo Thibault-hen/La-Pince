@@ -21,7 +21,7 @@ export const useRegister = () => {
     mutationFn: authService.register,
     onSuccess: (data) => {
       navigate('/connexion', {
-        state: { messages: { successMessage: 'Compte crée avec succès', email: data.user.email } },
+        state: { messages: { successMessage: 'Compte créer avec succès', email: data.user.email } },
       });
     },
   });
