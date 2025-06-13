@@ -38,13 +38,6 @@ export const chartData = [
   { title: 'Nourriture', amount: 275, fill: '#4c51bf' },
   { title: 'Voyages', amount: 200, fill: '#f56565' },
   { title: 'Vêtements', amount: 287, fill: '#f97316' },
-  { title: 'Loisirs', amount: 173, fill: '#22c55e' },
-  { title: 'Autres', amount: 190, fill: '#a855f7' },
-  { title: 'Nourriture', amount: 275, fill: '#4c51bf' },
-  { title: 'Voyages', amount: 200, fill: '#f56565' },
-  { title: 'Vêtements', amount: 287, fill: '#f97316' },
-  { title: 'Loisirs', amount: 173, fill: '#22c55e' },
-  { title: 'Autres', amount: 190, fill: '#a855f7' },
 ];
 
 export const colors = [
