@@ -50,6 +50,31 @@ categoryRouter.basePath('/category')
     
     return c.json(categories, 200);
 })
+/* Route pour la création des catégories apres la validation du compte utilisateur
+.post(
+  '/default',
+  describeRoute({
+    description: 'Create a list of category for a new user',
+    tags: ['category'],
+    responses: {
+      201: response201(categorySelectSchema),
+      404: response404(z.literal('UserId not found')),
+    }
+  }),
+  async(c) => {
+    const userId = c.get('jwtPayload').userId;
+    const names = ["Alimentation", "Logement", "Transports"]
+
+    const newCategories = await prisma.category.createMany({
+      data: names.map(name => ({
+        title: name,
+        userId,
+        colorId: 1,
+      }))
+    });
+        
+    return c.json(newCategories, 200);
+})*/
 .post(
   '/',
   describeRoute({
