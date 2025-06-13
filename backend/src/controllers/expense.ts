@@ -160,7 +160,7 @@ expenseRouter.basePath('/expense')
   zValidator('json', expenseCreateOrUpdateSchema),
   async (c) => {
     const expenseId = c.req.param('id');
-    const expenseToUpdate = c.req.valid('json');
+    const expenseToUpdate = c.req.valid('json') as ExpenseCreateOrUpdate;
 
     const budgetExists = await prisma.budget.findUnique({
       where: {

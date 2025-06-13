@@ -16,13 +16,16 @@ incomeRouter.basePath('/income')
     tags: ['income'],
     responses: {
       200: response200(incomeSelectSchema),
-      401: response401(),
     },
   }),
   async (c) => {
     const incomes = await prisma.income.findMany({
       where: {
         userId: c.get('jwtPayload').userId,
+      },
+      omit: {
+        id: true,
+        userId: true,
       },
       orderBy: [
         {
@@ -41,8 +44,7 @@ incomeRouter.basePath('/income')
     description: 'Create an income entry',
     tags: ['income'],
     responses: {
-      200: response200(incomeSelectSchema),
-      401: response401(),
+      201: response200(incomeSelectSchema),
     },
   }),
   zValidator('json', incomeCreateOrUpdateSchema),
@@ -56,7 +58,7 @@ incomeRouter.basePath('/income')
       },
     });
 
-    return c.json(income);
+    return c.json(income, 201);
   })
   .put('/:id',
   describeRoute({
@@ -64,7 +66,6 @@ incomeRouter.basePath('/income')
     tags: ['income'],
     responses: {
       200: response200(incomeSelectSchema),
-      401: response401(),
       404: response404()
     },
   }),
@@ -119,7 +120,7 @@ incomeRouter.basePath('/income')
       return c.json({ message: 'Income not found' }, 404);
     }
 
-    const updatedIncome = await prisma.income.delete({
+    await prisma.income.delete({
       where: {
         id: incomeId,
         userId: c.get('jwtPayload').userId,

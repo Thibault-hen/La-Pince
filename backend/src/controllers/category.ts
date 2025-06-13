@@ -1,7 +1,7 @@
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { describeRoute } from 'hono-openapi';
-import { response200, response201, response204, response400, response404 } from '../utils/openapi';
+import { response200, response201, response204, response404 } from '../utils/openapi';
 import { categoryCreateOrUpdateSchema, categorySelectSchema } from '../validators/category';
 import prisma from '../db/client';
 import { HTTPException } from 'hono/http-exception';
