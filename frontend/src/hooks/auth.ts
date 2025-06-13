@@ -1,7 +1,7 @@
 import { authService } from '@/services/auth';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import { data, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const useLogin = () => {
   const queryClient = useQueryClient();
