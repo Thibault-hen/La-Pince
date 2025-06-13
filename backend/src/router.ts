@@ -8,6 +8,7 @@ import incomeRouter from "./controllers/income";
 import notificationRouter from "./controllers/notification";
 import { isAuthenticated } from "./middlewares/auth.middleware";
 import colorRouter from "./controllers/color";
+import dashboardRouter from "./controllers/dashboard";
 
 const router = new Hono()
 
@@ -16,10 +17,11 @@ router.use('/api/v1/*', isAuthenticated);
 router.route('/api/v1', accountRouter)
 router.route('/api/v1', budgetRouter)
 router.route('/api/v1', categoryRouter)
+router.route('/api/v1', colorRouter)
+router.route('/api/v1', dashboardRouter)
 router.route('/api/v1', expenseRouter)
 router.route('/api/v1', incomeRouter)
 router.route('/api/v1', notificationRouter)
-router.route('/api/v1', colorRouter)
 
 
 export default router;

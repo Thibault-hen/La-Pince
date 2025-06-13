@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import { describeRoute } from 'hono-openapi';
-import { response200, response201, response401 } from '../utils/openapi';
+import { response200 } from '../utils/openapi';
 import { colorSelectSchema } from '../validators/color';
 import prisma from '../db/client';
 

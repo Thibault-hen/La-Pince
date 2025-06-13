@@ -10,7 +10,7 @@ export async function generateTokenJWT(id: string, c: Context): Promise<string> 
 
   const payload = {
     userId: id,
-    exp: Math.floor(Date.now() / 1000) + 60 * 5,
+    exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7, 
   };
 
   if (!SECRET_JWT) {
@@ -39,7 +39,7 @@ export async function generateTokenCSRF(c: Context): Promise<string> {
 
   const payload = {
     csrf_token: csrfToken,
-    exp: Math.floor(Date.now() / 1000) + 60 * 5,
+    exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7,
   };
 
   setCookie(c, TOKEN_CSRF_NAME, csrfToken, {

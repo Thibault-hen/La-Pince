@@ -1,3 +1,4 @@
+-- SQLBook: Code
 -- CreateTable
 CREATE TABLE "user" (
     "id" TEXT NOT NULL,
