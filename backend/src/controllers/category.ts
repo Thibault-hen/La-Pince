@@ -62,7 +62,6 @@ categoryRouter.basePath('/category')
     }
   }),
   async(c) => {
-    console.log("Create default")
     const userId = c.get('jwtPayload').userId;
     const names = ["Alimentation", "Logement", "Transports"]
 
