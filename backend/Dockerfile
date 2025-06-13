@@ -25,4 +25,4 @@ RUN npx prisma generate
 EXPOSE 3000
 
 # Commande de lancement de l'app
-CMD ["sh", "-c", "npm run db:deploy && npm run dev && npm run db:seed"]
+CMD ["npm", "run", "start"]
