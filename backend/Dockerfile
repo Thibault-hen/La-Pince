@@ -25,4 +25,8 @@ RUN npx prisma generate
 EXPOSE 3000
 
 # Commande de lancement de l'app
+<<<<<<< Updated upstream
 CMD ["npm", "run", "start"]
+=======
+CMD ["npm", "run", "dev"]
+>>>>>>> Stashed changes

@@ -16,11 +16,6 @@ export const Budget = () => {
 
   return (
     <>
-      <BudgetHeader onOpenAddModal={() => setOpenAddBudget(true)} />
-      <div className="flex gap-2 flex-col xl:flex-row mb-4">
-        <BudgetChart />
-        <BudgetCards />
-      </div>
       <AddBudgetModal open={openAddBudget} setOpen={setOpenAddBudget} />
       <EditBudgetModal open={openEditBudget} setOpen={setOpenEditBudget} budget={selectedBudget} />
       <DeleteBudgetModal
@@ -28,22 +23,32 @@ export const Budget = () => {
         setOpen={setOpenDeleteBudget}
         budget={selectedBudget}
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-        {budgets.map((budget, idx) => (
-          <BudgetCard
-            key={idx}
-            budget={budget}
-            onOpenEditModal={() => {
-              setOpenEditBudget(true);
-              setSelectedBudget(budget);
-            }}
-            onOpenDeleteModal={() => {
-              setOpenDeleteBudget(true);
-              setSelectedBudget(budget);
-            }}
-          />
-        ))}
-      </div>
+      <section>
+        <BudgetHeader onOpenAddModal={() => setOpenAddBudget(true)} />
+        <div className="flex gap-2 flex-col lg:flex-row mb-4">
+          <BudgetChart />
+          <BudgetCards />
+        </div>
+      </section>
+      <section>
+        <h2 className="border-l-4 border-primary-color text-xl p-2 font-bold mb-4">Mes budgets</h2>
+        <div className="grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
+          {budgets.map((budget, idx) => (
+            <BudgetCard
+              key={idx}
+              budget={budget}
+              onOpenEditModal={() => {
+                setOpenEditBudget(true);
+                setSelectedBudget(budget);
+              }}
+              onOpenDeleteModal={() => {
+                setOpenDeleteBudget(true);
+                setSelectedBudget(budget);
+              }}
+            />
+          ))}
+        </div>
+      </section>
     </>
   );
 };
