@@ -1,5 +1,18 @@
 import { z } from 'zod';
 
+export const colorSchema = z.object({
+  id: z.string().cuid(),
+  name: z.string(),
+  hex: z.string(),
+});
+
+export const categorySchema = z.object({
+  id: z.string().cuid(),
+  name: z.string(),
+  colorId: z.string().cuid(),
+  color: colorSchema,
+});
+
 export const budgetSelectSchema = z.object({
   id: z.string().cuid(),
   amount: z.string(),
@@ -10,6 +23,11 @@ export const budgetSelectSchema = z.object({
   userId: z.string().cuid(),
   createdAt: z.string().datetime(),
   updatedAt: z.string().datetime(),
+  category: categorySchema,
+  totalExpense: z.number(),
+  budgetTotal: z.number(),
+  budgetCount: z.number(),
+  budgetRemaning: z.number(),
 });
 
 export const createBudgetSchema = z.object({

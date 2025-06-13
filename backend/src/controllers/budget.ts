@@ -12,7 +12,6 @@ import {
   response200,
   response201,
   response204,
-  response400,
   response404,
 } from '../utils/openapi';
 import { paramsWithId } from '../validators/utils';
@@ -24,7 +23,7 @@ budgetRouter
   .get(
     '/',
     describeRoute({
-      description: 'Get budgets by user ID',
+      description: 'Get budgets for the current user',
       tags: ['budget'],
       responses: {
         200: response200(budgetSelectSchema),
@@ -32,28 +31,76 @@ budgetRouter
     }),
     async (c) => {
       const userId = c.get('jwtPayload').userId;
-      console.log('Fetching budgets for user ID:', userId);
+      const now = new Date();
+      const year = c.req.query('year')
+        ? parseInt(c.req.query('year')!, 10)
+        : now.getFullYear();
+      const month = c.req.query('month')
+        ? parseInt(c.req.query('month')!, 10)
+        : now.getMonth() + 1;
 
       const budgets = await prisma.budget.findMany({
-        where: { userId: userId },
-        orderBy: [
-          {
-            month: 'desc',
-          },
-          {
-            year: 'desc',
-          },
-        ],
+        where: {
+          userId,
+          year,
+          month,
+        },
         include: {
           category: {
             include: {
               color: true,
             },
           },
+          expenses: {
+            select: {
+              amount: true,
+            },
+          },
         },
       });
 
-      return c.json(budgets, 200);
+      const budgetsWithTotalExpense = budgets.map(
+        (budget: (typeof budgets)[number]) => {
+          const totalExpense =
+            budget.expenses?.reduce(
+              (sum: number, exp: { amount: number }) => sum + exp.amount,
+              0
+            ) || 0;
+
+          const { expenses, ...budgetWithoutExpenses } = budget;
+          return {
+            ...budgetWithoutExpenses,
+            totalExpense,
+          };
+        }
+      );
+
+      const budgetCount = budgetsWithTotalExpense.length;
+
+      const budgetTotal = budgetsWithTotalExpense.reduce(
+        (sum: number, budget: (typeof budgetsWithTotalExpense)[number]) =>
+          sum + Number(budget.amount),
+        0
+      );
+
+      const totalExpenses = budgetsWithTotalExpense.reduce(
+        (sum: number, budget: (typeof budgetsWithTotalExpense)[number]) =>
+          sum + Number(budget.totalExpense),
+        0
+      );
+
+      const budgetRemaning = budgetTotal - totalExpenses;
+
+      return c.json(
+        {
+          budgets: budgetsWithTotalExpense,
+          budgetTotal,
+          budgetCount,
+          budgetRemaning,
+          totalExpenses,
+        },
+        200
+      );
     }
   )
   .get(
