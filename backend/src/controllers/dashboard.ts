@@ -8,14 +8,7 @@ const dashboardRouter  = new Hono();
 dashboardRouter
   .basePath('/dashboard')
   .get(
-    '/budget', 
-    describeRoute({
-      description: 'Get budgets for the current user',
-      tags: ['dashboard'],
-      responses: {
-        200: response200()
-      }
-    }),
+    '/budget',
     async (c) => {
     const userId = c.get('jwtPayload').userId;
     const now = new Date();
@@ -80,14 +73,7 @@ dashboardRouter
     return c.json({budgets, total}, 200);
   })
   .get(
-    '/income', 
-    describeRoute({
-      description: 'Get incomes for the current user',
-      tags: ['dashboard'],
-      responses: {
-        200: response200()
-      }
-    }),
+    '/income',
     async (c) => {
     const userId = c.get('jwtPayload').userId;
     const now = new Date();
@@ -123,14 +109,7 @@ dashboardRouter
     return c.json({incomes, total}, 200);
   })
   .get(
-    '/expense', 
-    describeRoute({
-      description: 'Get expenses for the current user',
-      tags: ['dashboard'],
-      responses: {
-        200: response200()
-      }
-    }),
+    '/expense',
     async (c) => {
     const userId = c.get('jwtPayload').userId;
     const year = c.req.query('year') ? parseInt(c.req.query('year')!, 10) : new Date().getFullYear();
