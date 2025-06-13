@@ -8,12 +8,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import type { IBudget } from '@/data/data';
+import type { Budget } from '@/services/budget';
 
 interface DeleteBudgetProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  budget?: IBudget;
+  budget?: Budget;
 }
 
 export const DeleteBudgetModal = (props: DeleteBudgetProps) => {
@@ -23,8 +23,8 @@ export const DeleteBudgetModal = (props: DeleteBudgetProps) => {
         <AlertDialogHeader>
           <AlertDialogTitle className="font-medium text-xl">Supprimer un budget</AlertDialogTitle>
           <AlertDialogDescription>
-            Tu veux vraiment supprimer ton budget {props.budget?.title} de {props.budget?.amount} €
-            ?
+            Tu veux vraiment supprimer ton budget {props.budget?.category.title} de{' '}
+            {props.budget?.amount} € ?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

@@ -5,17 +5,24 @@ import { BudgetHeader } from '@/components/budget/BudgetHeader';
 import { AddBudgetModal } from '@/components/budget/modals/AddBudgetModal';
 import { DeleteBudgetModal } from '@/components/budget/modals/DeleteBudgetModal';
 import { EditBudgetModal } from '@/components/budget/modals/EditBudgetModal';
-import { budgets, type IBudget } from '@/data/data';
+import { MainLoader } from '@/components/ui/MainLoader';
+import { useBudgets } from '@/hooks/use-budget';
+import { UserAppWrapper } from '@/layouts/UserAppWrapper';
+import type { Budget } from '@/services/budget';
 import { useState } from 'react';
 
-export const Budget = () => {
+export const BudgetPage = () => {
   const [openAddBudget, setOpenAddBudget] = useState(false);
   const [openEditBudget, setOpenEditBudget] = useState(false);
   const [openDeleteBudget, setOpenDeleteBudget] = useState(false);
-  const [selectedBudget, setSelectedBudget] = useState<IBudget>();
+  const [selectedBudget, setSelectedBudget] = useState<Budget>();
+
+  const { data: budgets, isLoading } = useBudgets();
+
+  if (isLoading) return <MainLoader />;
 
   return (
-    <>
+    <UserAppWrapper key={String(isLoading)}>
       <AddBudgetModal open={openAddBudget} setOpen={setOpenAddBudget} />
       <EditBudgetModal open={openEditBudget} setOpen={setOpenEditBudget} budget={selectedBudget} />
       <DeleteBudgetModal
@@ -26,16 +33,20 @@ export const Budget = () => {
       <section>
         <BudgetHeader onOpenAddModal={() => setOpenAddBudget(true)} />
         <div className="flex gap-2 flex-col lg:flex-row mb-4">
-          <BudgetChart />
-          <BudgetCards />
+          <BudgetChart budgets={budgets} />
+          <BudgetCards
+            totalBudget={budgets?.budgetTotal}
+            activeBudget={budgets?.budgetCount}
+            remainingBudget={budgets?.budgetRemaning}
+          />
         </div>
       </section>
       <section>
         <h2 className="border-l-4 border-primary-color text-xl p-2 font-bold mb-4">Mes budgets</h2>
         <div className="grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
-          {budgets.map((budget, idx) => (
+          {budgets?.budgets?.map((budget) => (
             <BudgetCard
-              key={idx}
+              key={budget.id}
               budget={budget}
               onOpenEditModal={() => {
                 setOpenEditBudget(true);
@@ -49,6 +60,6 @@ export const Budget = () => {
           ))}
         </div>
       </section>
-    </>
+    </UserAppWrapper>
   );
 };

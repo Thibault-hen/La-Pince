@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import laPinceLogo from '@/assets/logo.webp';
 import { NavLink, useLocation } from 'react-router-dom';
-import { useLogin } from '@/hooks/auth';
+import { useLogin } from '@/hooks/use-auth';
 import { useForm } from '@tanstack/react-form';
 import { loginSchema } from '@/schemas/auth.schemas';
 import { Loader } from '../ui/loader';

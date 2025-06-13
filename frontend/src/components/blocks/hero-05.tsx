@@ -6,7 +6,7 @@ export default function Hero05() {
       <div className="container mx-auto sm:px-6 lg:px-8">
         <div className="grid items-center grid-cols-1 gap-20 lg:grid-cols-2">
           {/* Left Content */}
-          <div>
+          <div className="relative flex flex-col items-center justify-center gap-6 text-center lg:text-left">
             <h1 className="font-bold text-left text-4xl md:text-7xl tracking-tighter">
               Maîtrisez vos finances, simplement.{' '}
               <div className="relative inline-flex">
@@ -14,6 +14,9 @@ export default function Hero05() {
                 <span className="relative"></span>
               </div>
             </h1>
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-primary-color/20 via-primary-color/40 to-primary-color/20 rounded-full blur-3xl"></div>
+            </div>
             <p className="mt-4 text-center md:text-left text-base sm:text-xl">
               Avec La Pince, suivez vos dépenses, gérez vos budgets et recevez des alertes avant les
               dépassements. Une application claire et efficace pour reprendre le contrôle de votre

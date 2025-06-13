@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { Dashboard } from './pages/App/Dashboard';
-import { Budget } from './pages/App/Budget';
+import { BudgetPage } from './pages/App/Budget';
 import { Category } from './pages/App/Category';
 import { Expense } from './pages/App/Expense';
 import { Settings } from './pages/App/Settings';
@@ -44,7 +44,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: 'budgets',
-                element: <Budget />,
+                element: <BudgetPage />,
               },
               {
                 path: 'depenses',

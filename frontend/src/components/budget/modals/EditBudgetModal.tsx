@@ -19,23 +19,23 @@ import {
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import type { IBudget } from '@/data/data';
+import type { Budget } from '@/services/budget';
 
 interface EditBudgetProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  budget?: IBudget;
+  budget?: Budget;
 }
 
-export const EditBudgetModal = (props: EditBudgetProps) => {
+export const EditBudgetModal = ({ budget, open, setOpen }: EditBudgetProps) => {
   return (
-    <Dialog open={props.open} onOpenChange={props.setOpen}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle className="font-medium text-xl">Modifier un budget</DialogTitle>
             <DialogDescription>
-              Modifie les informations de ton budget {props.budget?.title}
+              Modifie les informations de ton budget {budget?.category.title}
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
@@ -46,18 +46,24 @@ export const EditBudgetModal = (props: EditBudgetProps) => {
                 name="limit"
                 placeholder="200"
                 type="number"
-                value={props.budget?.amount}
+                value={budget?.amount}
               />
             </div>
             <div className="grid gap-3">
               <Label htmlFor="alertLimit">Seuil d'alerte</Label>
-              <Input id="alertLimit" name="alertLimit" placeholder="170" type="number" />
+              <Input
+                value={budget?.limitAlert}
+                id="alertLimit"
+                name="alertLimit"
+                placeholder="170"
+                type="number"
+              />
             </div>
             <div className="grid gap-3">
               <Label htmlFor="category">Categorie</Label>
               <Select
                 name="category"
-                defaultValue={(props.budget?.title ?? '').toLocaleLowerCase()}
+                defaultValue={budget?.category.title.toLocaleLowerCase()}
                 required
               >
                 <SelectTrigger className="w-full">

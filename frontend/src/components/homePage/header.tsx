@@ -13,7 +13,7 @@ import { Suspense } from 'react';
 import { ModeToggle } from '@/components/theme/theme-toggle.tsx';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { useAuthUser } from '@/hooks/auth';
+import { useAuthUser } from '@/hooks/use-auth';
 
 const TopMenu = [
   { name: 'Nous contacter', to: '#contact' },
