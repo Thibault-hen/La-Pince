@@ -45,7 +45,7 @@ export default function Header() {
             <div className="flex items-center gap-4">
               {!userData ? (
                 <>
-                  <Button variant="blue">
+                  <Button variant="blue" asChild>
                     <Link to="/connexion">Connexion</Link>
                   </Button>
                   <Button variant="blue">
@@ -53,7 +53,7 @@ export default function Header() {
                   </Button>
                 </>
               ) : (
-                <Button variant="blue">
+                <Button variant="blue" asChild>
                   <Link to="/tableau-de-bord">Mon espace</Link>
                 </Button>
               )}
@@ -66,7 +66,7 @@ export default function Header() {
 
         {/* Mobile Menu */}
         <div className="  block lg:hidden container ">
-          <div className="flex items-center items-center justify-between">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-6">
               <Link to="/" className="flex items-center gap-1">
                 <img src={laPinceLogo} width={60} className="text-red-500" />

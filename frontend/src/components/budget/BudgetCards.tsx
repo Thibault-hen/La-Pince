@@ -11,9 +11,9 @@ type BudgetCardsProps = {
   remainingBudget?: number;
 };
 export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: BudgetCardsProps) => {
-  const [displayTotal, setDisplayTotal] = useState<number>();
-  const [displayCount, setDisplayCount] = useState<number>();
-  const [displayRemaining, setDisplayRemaining] = useState<number>();
+  const [displayTotal, setDisplayTotal] = useState<string>();
+  const [displayCount, setDisplayCount] = useState<string>();
+  const [displayRemaining, setDisplayRemaining] = useState<string>();
 
   const total = useSpring(0, {
     bounce: 0,
@@ -31,22 +31,22 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
   });
 
   total.on('change', (value) => {
-    setDisplayTotal(Math.round(value));
+    setDisplayTotal(value.toFixed(2));
   });
 
   count.on('change', (value) => {
-    setDisplayCount(Math.round(value));
+    setDisplayCount(value.toFixed(0));
   });
 
   remaining.on('change', (value) => {
-    setDisplayRemaining(Math.round(value));
+    setDisplayRemaining(value < 0 ? '0' : value.toFixed(2));
   });
 
   useEffect(() => {
     total.set(totalBudget ?? 0);
     count.set(activeBudget ?? 0);
     remaining.set(remainingBudget ?? 0);
-  }, []);
+  }, [totalBudget, activeBudget, remainingBudget]);
 
   return (
     <div className="flex flex-col gap-4 w-full xl:w-120">
@@ -110,7 +110,7 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
             <div className="mt-3">
               <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
                 <span>Utilisé</span>
-                <span>{getPercentage(remainingBudget ?? 0, totalBudget ?? 0)}</span>
+                <span>{getPercentage(totalBudget ?? 0, remainingBudget ?? 0)}</span>
               </div>
               <Progress
                 value={remainingBudget}

@@ -1,13 +1,5 @@
 import { api } from '@/utils/api';
-
-export type Category = {
-  id: string;
-  title: string;
-  userId: string;
-  colorId: number;
-  createdAt: string;
-  color: Color;
-};
+import type { Category } from './category';
 
 export type Color = {
   id: string;
@@ -30,9 +22,21 @@ export type Budget = {
   totalExpense: number;
 };
 
+export type CreateBudget = {
+  amount: number;
+  categoryId: string;
+  limitAlert: number;
+};
+
+export type UpdateBudget = {
+  amount?: number;
+  categoryId?: string;
+  limitAlert?: number;
+};
+
 export type BudgetResponse = {
   budgetCount: number;
-  budgetRemaning: number;
+  budgetRemaining: number;
   budgetTotal: number;
   budgets: Budget[];
 };
@@ -40,6 +44,21 @@ export type BudgetResponse = {
 export const budgetService = {
   async getAllBudgets(): Promise<BudgetResponse> {
     const response = await api.get('/budget');
+    return response.data;
+  },
+
+  async createBudget(data: CreateBudget): Promise<Budget> {
+    const response = await api.post('/budget', data);
+    return response.data;
+  },
+
+  async updateBudget(id: string, data: UpdateBudget): Promise<Budget> {
+    const response = await api.patch(`/budget/${id}`, data);
+    return response.data;
+  },
+
+  async deleteBudget(id: string): Promise<Budget> {
+    const response = await api.delete(`/budget/${id}`);
     return response.data;
   },
 };

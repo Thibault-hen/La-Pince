@@ -25,7 +25,16 @@ export const AppLayout = () => {
             </div>
             <div className="flex gap-2 items-center justify-between w-full">
               <div>
-                <span className="tracking-wide">Salut {userData?.user.name}</span>
+                <h2 className="text-lg font-bold text-foreground">
+                  Salut, {userData?.user.name} 👋
+                </h2>
+                <p className="text-xs text-muted-foreground">
+                  {new Date().toLocaleDateString('fr-FR', {
+                    weekday: 'long',
+                    day: 'numeric',
+                    month: 'long',
+                  })}
+                </p>
               </div>
               <div className="flex items-center gap-3">
                 <ModeToggle />

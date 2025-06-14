@@ -8,6 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { useDeleteBudget } from '@/hooks/use-budget';
 import type { Budget } from '@/services/budget';
 
 interface DeleteBudgetProps {
@@ -16,20 +17,27 @@ interface DeleteBudgetProps {
   budget?: Budget;
 }
 
-export const DeleteBudgetModal = (props: DeleteBudgetProps) => {
+export const DeleteBudgetModal = ({ open, setOpen, budget }: DeleteBudgetProps) => {
+  const { mutateAsync: deleteBudget } = useDeleteBudget();
+
+  const handleDeleteBudget = async () => {
+    if (budget?.id) {
+      await deleteBudget(budget.id);
+      setOpen(false);
+    }
+  };
   return (
-    <AlertDialog open={props.open} onOpenChange={props.setOpen}>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className="font-medium text-xl">Supprimer un budget</AlertDialogTitle>
           <AlertDialogDescription>
-            Tu veux vraiment supprimer ton budget {props.budget?.category.title} de{' '}
-            {props.budget?.amount} € ?
+            Tu veux vraiment supprimer ton budget {budget?.category.title} de {budget?.amount} € ?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel className="cursor-pointer">Annuler</AlertDialogCancel>
-          <AlertDialogAction>Supprimer</AlertDialogAction>
+          <AlertDialogAction onClick={handleDeleteBudget}>Supprimer</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
