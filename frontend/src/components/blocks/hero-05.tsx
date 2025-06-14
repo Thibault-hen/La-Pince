@@ -7,7 +7,7 @@ export default function Hero05() {
         <div className="grid items-center grid-cols-1 gap-20 lg:grid-cols-2">
           {/* Left Content */}
           <div className="relative flex flex-col items-center justify-center gap-6 text-center lg:text-left">
-            <h1 className="font-bold text-left text-4xl md:text-7xl tracking-tighter">
+            <h1 className="bg-gradient-to-r from-primary-color via-secondary-color to-primary-color inline-block bg-clip-text text-transparent font-bold text-left text-4xl md:text-7xl tracking-tighter bg">
               Maîtrisez vos finances, simplement.{' '}
               <div className="relative inline-flex">
                 <span className="absolute inset-x-0 bottom-0 border-b-[30px] border-primary"></span>

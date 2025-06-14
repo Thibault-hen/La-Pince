@@ -10,5 +10,6 @@ export const useBudgets = () => {
       const budgets = await budgetService.getAllBudgets();
       return budgets;
     },
+    staleTime: 1000 * 60 * 5,
   });
 };

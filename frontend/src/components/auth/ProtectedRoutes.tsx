@@ -1,12 +1,14 @@
-import { useAuthUser } from '@/hooks/use-auth';
+import { useQueryClient } from '@tanstack/react-query';
 import { Navigate, Outlet } from 'react-router-dom';
+import type { User } from '@/services/auth';
 
 export const ProtectedRoutes = () => {
-  const { authUser, status } = useAuthUser();
+  const queryClient = useQueryClient();
+  const authUser = queryClient.getQueryData<User>(['authUser']);
 
-  if (status === 'pending') return null;
+  const isError = queryClient.getQueryState(['authUser'])?.error;
 
-  if (!authUser) return <Navigate to="/connexion" replace />;
+  if (!authUser || isError) return <Navigate to="/connexion" replace />;
 
   return <Outlet />;
 };

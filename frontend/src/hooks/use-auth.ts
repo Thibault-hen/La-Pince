@@ -27,23 +27,15 @@ export const useRegister = () => {
   });
 };
 
-export const useAuthUser = (redirectOnError = true) => {
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
+export const useAuthUser = () => {
   const { data: authUser, ...others } = useQuery({
     queryKey: ['authUser'],
     queryFn: authService.me,
     refetchInterval: 1000 * 60 * 5,
     retry: false,
     staleTime: 1000 * 60 * 2,
+    refetchOnWindowFocus: false,
   });
-
-  useEffect(() => {
-    if (others.isError && redirectOnError) {
-      queryClient.removeQueries({ queryKey: ['authUser'] });
-      navigate('/connexion', { replace: true });
-    }
-  }, [others.isError, navigate, queryClient]);
 
   return {
     authUser,

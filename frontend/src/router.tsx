@@ -10,10 +10,12 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Terms } from './pages/Terms';
 import { ProtectedRoutes } from './components/auth/ProtectedRoutes';
+import { RootLayout } from './layouts/RootLayout';
 
 export const router = createBrowserRouter([
   {
     path: '/',
+    element: <RootLayout />,
     children: [
       {
         index: true,

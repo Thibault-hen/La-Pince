@@ -59,7 +59,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'form'>)
         <img src={laPinceLogo} width={100} alt="Application logo" />
       </div>
       <div className="grid gap-6">
-        <h1 className="text-2xl font-semibold text-left">Se connecter</h1>
+        <h1 className="text-2xl font-semibold text-left">Connexion</h1>
         <form.Field
           name="email"
           children={(field) => (

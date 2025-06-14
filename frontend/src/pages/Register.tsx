@@ -11,7 +11,7 @@ export const Register = () => {
 
   return (
     <DefaultWrapper key={location.pathname}>
-      <div className="grid min-h-svh lg:grid-cols-2">
+      <div className="grid min-h-svh xl:grid-cols-2">
         <div className="flex flex-col gap-4 p-6 md:p-10">
           <div className="flex gap-2 justify-start">
             <NavLink
@@ -28,7 +28,7 @@ export const Register = () => {
             </div>
           </div>
         </div>
-        <div className="bg-primary border-l border-l-secondary-color hidden lg:block min-h-screen">
+        <div className="bg-primary border-l border-l-secondary-color hidden xl:block min-h-screen">
           <div className="relative w-full h-full">
             <img
               src={preview1}

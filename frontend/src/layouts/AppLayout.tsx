@@ -35,7 +35,7 @@ export const AppLayout = () => {
           </div>
         </header>
         <DefaultWrapper key={location.pathname}>
-          <main className="p-4">
+          <main className="p-4 3xl:py-4 3xl:px-26">
             <Outlet />
           </main>
         </DefaultWrapper>

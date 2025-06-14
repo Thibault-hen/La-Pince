@@ -54,7 +54,7 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
         <div className="relative bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
             <div className="p-2 dark:bg-primary-color/20 bg-primary-color/30 border border-primary-color rounded-lg">
-              <Euro className="h-5 w-5 text-primary-color" />
+              <Euro className="h-4 w-4 md:h-5 md:w-5 text-primary-color" />
             </div>
             <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
               TOTAL
@@ -62,7 +62,7 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
           </div>
 
           <div className="space-y-1">
-            <div className="text-3xl font-bold text-gray-900 dark:text-white">
+            <div className="text-xl md:text-3xl font-bold text-gray-900 dark:text-white">
               {displayTotal}
               <span className="text-lg text-gray-500 dark:text-gray-400 ml-1">€</span>
             </div>
@@ -75,7 +75,7 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
         <div className="relative bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
             <div className="p-2 dark:bg-primary-color/20 bg-primary-color/30 border border-primary-color rounded-lg">
-              <Hash className="h-5 w-5 text-primary-color" />
+              <Hash className="h-4 w-4 md:h-5 md:w-5 text-primary-color" />
             </div>
             <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Budgets
@@ -83,7 +83,7 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
           </div>
 
           <div className="space-y-1">
-            <div className="text-3xl font-bold text-gray-900 dark:text-white">{displayCount}</div>
+            <div className="text-xl md:text-3xl font-bold">{displayCount}</div>
             <p className="text-sm text-muted-foreground">Budget actifs</p>
           </div>
         </div>
@@ -93,7 +93,7 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
         <div className="relative bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
             <div className="p-2 dark:bg-secondary-color/10 bg-secondary-color/30 border border-secondary-color rounded-lg">
-              <TrendingUp className="h-5 w-5 text-secondary-color" />
+              <TrendingUp className="h-4 w-4 md:h-5 md:w-5 text-secondary-color" />
             </div>
             <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Restant
@@ -101,7 +101,7 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
           </div>
 
           <div className="space-y-1">
-            <div className="text-3xl font-bold text-gray-900 dark:text-white">
+            <div className="text-xl md:text-3xl font-bold ">
               {displayRemaining}
               <span className="text-lg text-gray-500 dark:text-gray-400 ml-1">€</span>
             </div>

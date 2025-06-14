@@ -43,7 +43,7 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
         <img src={laPinceLogo} width={100} alt="Application logo" />
       </div>
       <div className="grid gap-6">
-        <h1 className="text-2xl font-semibold text-left">S'inscrire</h1>
+        <h1 className="text-2xl font-semibold text-left">Inscription</h1>
         <form.Field
           name="name"
           children={(field) => (
