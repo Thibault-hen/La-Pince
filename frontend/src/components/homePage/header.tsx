@@ -13,7 +13,8 @@ import { Suspense } from 'react';
 import { ModeToggle } from '@/components/theme/theme-toggle.tsx';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { useAuthUser } from '@/hooks/auth';
+import { useQueryClient } from '@tanstack/react-query';
+import type { User } from '@/services/auth';
 
 const TopMenu = [
   { name: 'Nous contacter', to: '#contact' },
@@ -21,7 +22,8 @@ const TopMenu = [
 ];
 
 export default function Header() {
-  const { authUser } = useAuthUser(false);
+  const queryClient = useQueryClient();
+  const userData = queryClient.getQueryData<User>(['authUser']);
   return (
     <header className="sticky top-5 z-50 flex justify-center container ">
       <div className="min-w-full border rounded-md  w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-2.5 px-4 ">
@@ -41,9 +43,9 @@ export default function Header() {
           </div>
           <div className="items-center flex gap-6">
             <div className="flex items-center gap-4">
-              {!authUser ? (
+              {!userData ? (
                 <>
-                  <Button variant="blue">
+                  <Button variant="blue" asChild>
                     <Link to="/connexion">Connexion</Link>
                   </Button>
                   <Button variant="blue">
@@ -51,7 +53,7 @@ export default function Header() {
                   </Button>
                 </>
               ) : (
-                <Button variant="blue">
+                <Button variant="blue" asChild>
                   <Link to="/tableau-de-bord">Mon espace</Link>
                 </Button>
               )}
@@ -64,7 +66,7 @@ export default function Header() {
 
         {/* Mobile Menu */}
         <div className="  block lg:hidden container ">
-          <div className="flex items-center items-center justify-between">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-6">
               <Link to="/" className="flex items-center gap-1">
                 <img src={laPinceLogo} width={60} className="text-red-500" />
@@ -72,7 +74,7 @@ export default function Header() {
               </Link>
             </div>
             <div className="items-center my-4 flex  gap-0">
-              {!authUser ? (
+              {!userData ? (
                 <>
                   <Button variant="blue" className="font-semibold text-sm m-2 p-5 justify-end">
                     <Link to="/connexion">Connexion</Link>

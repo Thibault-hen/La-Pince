@@ -35,6 +35,7 @@ export const useExpenses: () => { expenses: Expense[]; isLoading: boolean } = ()
         };
       });
     },
+    staleTime: 1000 * 60 * 5,
   });
 
   return {

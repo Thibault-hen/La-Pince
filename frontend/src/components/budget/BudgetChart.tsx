@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Label, Pie, PieChart } from 'recharts';
+import { Cell, Label, Pie, PieChart } from 'recharts';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -8,20 +8,24 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
-import { chartData } from '@/data/data';
 import { TrendingUp } from 'lucide-react';
+import type { BudgetResponse } from '@/services/budget';
 
 export const description = 'A donut chart with text';
 
 const chartConfig = {} satisfies ChartConfig;
 
-export const BudgetChart = () => {
+interface BudgetChartProps {
+  budgets?: BudgetResponse;
+}
+
+export const BudgetChart = ({ budgets }: BudgetChartProps) => {
   const totalAmount = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.amount, 0);
+    return budgets?.budgets.reduce((acc, curr) => acc + curr.amount, 0);
   }, []);
 
   const percentage = (amount: number): string => {
-    return ((amount / totalAmount) * 100).toFixed(1) + '%';
+    return ((amount / (totalAmount ?? 0)) * 100).toFixed(1) + '%';
   };
 
   return (
@@ -45,14 +49,18 @@ export const BudgetChart = () => {
               <PieChart>
                 <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
                 <Pie
-                  data={chartData}
+                  data={budgets?.budgets}
                   dataKey="amount"
-                  nameKey="title"
+                  nameKey="category.title"
                   innerRadius={70}
                   outerRadius={120}
                   strokeWidth={3}
                   stroke="rgba(255,255,255,0.1)"
                 >
+                  {budgets?.budgets.map((budget) => (
+                    <Cell key={`cell-${budget.id}`} fill={budget.category.color.value} />
+                  ))}
+
                   <Label
                     content={({ viewBox }) => {
                       if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
@@ -65,7 +73,7 @@ export const BudgetChart = () => {
                               dominantBaseline="middle"
                               className="fill-gray-900 dark:fill-white text-2xl font-bold"
                             >
-                              {totalAmount.toLocaleString('fr-FR', {
+                              {budgets?.budgetTotal.toLocaleString('fr-FR', {
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2,
                               })}{' '}
@@ -93,30 +101,30 @@ export const BudgetChart = () => {
 
           {/* Legend Section */}
           <div className="flex flex-col gap-3 max-h-[280px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
-            {chartData.map((item, key) => {
-              const itemPercentage = percentage(item.amount);
+            {budgets?.budgets.map((budget) => {
+              const itemPercentage = percentage(budget.amount);
               return (
                 <div
-                  key={key}
+                  key={budget.id}
                   className="flex items-center gap-4 p-3 rounded-lg dark:bg-background transition-colors duration-200 min-w-[280px]"
                 >
                   <div className="relative">
                     <span
                       className="block h-4 w-4 rounded-full shadow-sm"
                       style={{
-                        backgroundColor: item.fill,
+                        backgroundColor: budget.category.color.value,
                       }}
                     ></span>
                   </div>
 
                   <div className="flex-1 flex items-center justify-between">
                     <span className="font-medium text-gray-700 dark:text-gray-300 text-sm">
-                      {item.title}
+                      {budget.category.title}
                     </span>
 
                     <div className="flex items-center gap-3">
                       <span className="font-bold text-gray-900 dark:text-white">
-                        {item.amount.toLocaleString('fr-FR', {
+                        {budget.amount.toLocaleString('fr-FR', {
                           minimumFractionDigits: 2,
                           maximumFractionDigits: 2,
                         })}{' '}
@@ -126,8 +134,8 @@ export const BudgetChart = () => {
                       <span
                         className="text-xs font-semibold px-2 py-1 rounded-full"
                         style={{
-                          backgroundColor: `${item.fill}20`,
-                          color: item.fill,
+                          backgroundColor: `${budget.category.color.value}20`,
+                          color: budget.category.color.value,
                         }}
                       >
                         {itemPercentage}

@@ -8,53 +8,35 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import type { IBudget } from '@/data/data';
+import type { Budget } from '@/services/budget';
+import { getColorStatus } from '@/utils/colorStatus';
+import { getPercentage } from '@/utils/percentage';
 
 interface BudgetProps {
-  budget: IBudget;
+  budget: Budget;
   onOpenEditModal: () => void;
   onOpenDeleteModal: () => void;
 }
 
-const ColorStatus = {
-  ok: '#34eb74',
-  warning: '#eb8c34',
-  alert: '#FF0000',
-};
-
-export const BudgetCard = (props: BudgetProps) => {
-  const budgetStatusBarColor = (value: number, max: number): string => {
-    const percentage = (value / max) * 100;
-
-    if (percentage < 60) return ColorStatus.ok;
-    if (percentage < 90) return ColorStatus.warning;
-    return ColorStatus.alert;
-  };
-
-  const getRemainingBudget = (): number | string => {
-    const remainingBudget = (props.budget.amount ?? 0) - (props?.budget?.totalExpenses ?? 0);
-
-    if (remainingBudget < 0) {
+export const BudgetCard = ({ budget, onOpenEditModal, onOpenDeleteModal }: BudgetProps) => {
+  const getRemainingBudget = () => {
+    if (budget.amount === undefined || budget.totalExpense === undefined) {
       return 0;
     }
-
-    return remainingBudget.toFixed(2);
+    const remaining = budget.amount - budget.totalExpense;
+    return remaining < 0 ? 0 : remaining.toFixed(2);
   };
 
-  const percentage = (
-    ((props.budget.totalExpenses ?? 0) / (props.budget.amount ?? 1)) *
-    100
-  ).toFixed(1);
   return (
     <Card className="flex justify-around p-4 dark:bg-primary hover:border-secondary-color transition-all duration-200 ease-in-out">
       <CardHeader className="p-0">
         <div className="flex items-center justify-between">
           <CardTitle
             className="border-l-4 px-2 flex gap-2 items-center"
-            style={{ borderLeftColor: props.budget.value }}
+            style={{ borderLeftColor: budget.category.color.value }}
           >
-            {props.budget.title}
-            {props.budget.totalExpenses > (props.budget.amount ?? 0) && (
+            {budget.category.title}
+            {budget.totalExpense > (budget.amount ?? 0) && (
               <TriangleAlert
                 size={30}
                 className="text-red-500 bg-red-500/20 p-1 rounded-xl border border-red-500"
@@ -77,14 +59,14 @@ export const BudgetCard = (props: BudgetProps) => {
               <DropdownMenuContent align="end">
                 <DropdownMenuItem
                   className="p-2 dark:bg-primary cursor-pointer hover:!bg-secondary-color transition-all duration-150 ease-in-out"
-                  onClick={props.onOpenEditModal}
+                  onClick={onOpenEditModal}
                 >
                   <Pencil className="dark:text-white text-dark" />
                   <span>Editer</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="p-2 dark:bg-primary cursor-pointer hover:!bg-red-500 dark:hover:bg-red-700/20 transition-all duration-150 ease-in-out"
-                  onClick={props.onOpenDeleteModal}
+                  onClick={onOpenDeleteModal}
                 >
                   <Trash2 className="dark:text-white text-dark" />
                   <span>Supprimer</span>
@@ -104,41 +86,29 @@ export const BudgetCard = (props: BudgetProps) => {
                 className="text-xs"
                 style={
                   {
-                    color: budgetStatusBarColor(
-                      props.budget.totalExpenses,
-                      props.budget.amount ?? 0
-                    ),
+                    color: getColorStatus(budget.totalExpense, budget.amount),
                   } as React.CSSProperties
                 }
               >
-                ({percentage}%)
+                ({getPercentage(budget.totalExpense, budget.amount)})
               </span>
             </div>
             <div className="flex items-center gap-1">
-              <span
-                className={`${props.budget.totalExpenses > (props.budget.amount ?? 0) ? 'text-red-500' : ''}`}
-              >
-                {(props.budget.totalExpenses ?? 0).toFixed(2)}
+              <span className={`${budget.totalExpense > budget.amount ? 'text-red-500' : ''}`}>
+                {budget.totalExpense.toFixed(2)}
               </span>
               <span>/</span>
-              <span className="font-bold">{(props.budget.amount ?? 0).toFixed(2)} €</span>
+              <span className="font-bold">{budget.amount.toFixed(2)} €</span>
             </div>
           </div>
           <div className="flex w-full flex-col">
             <Progress
-              value={
-                props.budget.totalExpenses > (props.budget.amount ?? 0)
-                  ? props.budget.amount
-                  : props.budget.totalExpenses
-              }
-              max={props.budget.amount}
+              value={budget.totalExpense > budget.amount ? budget.amount : budget.totalExpense}
+              max={budget.amount}
               className="w-full border [&>*]:bg-[var(--bg-color)] h-3 mt-2"
               style={
                 {
-                  '--bg-color': budgetStatusBarColor(
-                    props.budget.totalExpenses,
-                    props.budget.amount ?? 0
-                  ),
+                  '--bg-color': getColorStatus(budget.totalExpense, budget.amount),
                 } as React.CSSProperties
               }
             />

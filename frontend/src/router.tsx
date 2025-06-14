@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { Dashboard } from './pages/App/Dashboard';
-import { Budget } from './pages/App/Budget';
+import { BudgetPage } from './pages/App/Budget';
 import { Category } from './pages/App/Category';
 import { Expense } from './pages/App/Expense';
 import { Settings } from './pages/App/Settings';
@@ -10,10 +10,12 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Terms } from './pages/Terms';
 import { ProtectedRoutes } from './components/auth/ProtectedRoutes';
+import { RootLayout } from './layouts/RootLayout';
 
 export const router = createBrowserRouter([
   {
     path: '/',
+    element: <RootLayout />,
     children: [
       {
         index: true,
@@ -44,7 +46,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: 'budgets',
-                element: <Budget />,
+                element: <BudgetPage />,
               },
               {
                 path: 'depenses',

@@ -83,6 +83,9 @@
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
 }
+@theme {
+  --breakpoint-3xl: 120rem;
+}
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -143,8 +146,10 @@ html {
 }
 
 body {
-  font-family: "Albert Sans", sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: 'Albert Sans', sans-serif;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 /* Chrome, Edge, Safari */

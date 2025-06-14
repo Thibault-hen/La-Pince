@@ -24,16 +24,7 @@ app.use(
       return '';
     },
     credentials: true,
-  })
-);
-
-app.use(
-  csrf({
-    origin: (origin) => {
-      const allowedOrigins = getOrigins();
-      return allowedOrigins.some((o) => o === origin || o === '*');
-    },
-  })
+  }),
 );
 
 app.route('/', router);
@@ -49,7 +40,7 @@ app.get(
       },
       servers: [{ url: 'http://localhost:3000', description: 'Local Server' }],
     },
-  })
+  }),
 );
 
 app.get(
@@ -57,7 +48,7 @@ app.get(
   Scalar({
     url: '/openapi',
     theme: 'saturn',
-  })
+  }),
 );
 
 serve({

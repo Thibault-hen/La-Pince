@@ -19,75 +19,162 @@ import {
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import type { IBudget } from '@/data/data';
+import { useCategories } from '@/hooks/use-category';
+import { useUpdateBudget } from '@/hooks/use-budget';
+import { useForm } from '@tanstack/react-form';
+import { updateBudgetSchema } from '@/schemas/budget.schemas';
+import { Loader } from '@/components/ui/loader';
+import type { Budget } from '@/services/budget';
 
-interface EditBudgetProps {
+interface AddBudgetProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  budget?: IBudget;
+  budget?: Budget;
 }
 
-export const EditBudgetModal = (props: EditBudgetProps) => {
+export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
+  const { data: categories } = useCategories();
+  const { mutateAsync: updateBudget } = useUpdateBudget();
+
+  const form = useForm({
+    defaultValues: {
+      amount: budget?.amount ?? 0,
+      limitAlert: budget?.limitAlert ?? 0,
+      categoryId: budget?.categoryId ?? '',
+    },
+    validators: {
+      onSubmit: updateBudgetSchema,
+    },
+    async onSubmit({ value }) {
+      if (!budget?.id) return;
+      console.log('Form submitted with values:', value);
+      await updateBudget({ id: budget.id, data: value });
+      setOpen(false);
+    },
+  });
+
+  if (!budget) return null;
+
   return (
-    <Dialog open={props.open} onOpenChange={props.setOpen}>
-      <form>
-        <DialogContent className="sm:max-w-[425px]">
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="sm:max-w-[425px]">
+        <form
+          onSubmit={async (e) => {
+            console.log('Form submitted:');
+            e.preventDefault();
+            form.handleSubmit();
+          }}
+        >
           <DialogHeader>
-            <DialogTitle className="font-medium text-xl">Modifier un budget</DialogTitle>
-            <DialogDescription>
-              Modifie les informations de ton budget {props.budget?.title}
-            </DialogDescription>
+            <DialogTitle className="font-medium text-xl">
+              Modifie ton budget {budget?.category?.title}
+            </DialogTitle>
+            <DialogDescription>Entre les nouvelles informations de ton budget</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
-            <div className="grid gap-3">
-              <Label htmlFor="limit">Limite</Label>
-              <Input
-                id="limit"
-                name="limit"
-                placeholder="200"
-                type="number"
-                value={props.budget?.amount}
-              />
-            </div>
-            <div className="grid gap-3">
-              <Label htmlFor="alertLimit">Seuil d'alerte</Label>
-              <Input id="alertLimit" name="alertLimit" placeholder="170" type="number" />
-            </div>
-            <div className="grid gap-3">
-              <Label htmlFor="category">Categorie</Label>
-              <Select
-                name="category"
-                defaultValue={(props.budget?.title ?? '').toLocaleLowerCase()}
-                required
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Sélectionne une catégorie" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Catégories</SelectLabel>
-                    <SelectItem value="nourriture">Nourriture</SelectItem>
-                    <SelectItem value="vêtements">Vêtements</SelectItem>
-                    <SelectItem value="loisirs">Loisirs</SelectItem>
-                    <SelectItem value="voyages">Voyages</SelectItem>
-                    <SelectItem value="autres">Autres</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
+            <form.Field
+              name="amount"
+              children={(field) => (
+                <div className="grid gap-3">
+                  <Label htmlFor={field.name}>Montant</Label>
+                  <Input
+                    id={field.name}
+                    placeholder="800"
+                    type="number"
+                    required
+                    defaultValue={budget.amount}
+                    value={field.state.value}
+                    onChange={(e) => {
+                      field.handleChange(Number(e.target.value));
+                    }}
+                  />
+                  {field.state.meta.errors.length > 0 && (
+                    <span className="text-red-500 text-sm">
+                      {field.state.meta.errors[0]?.message}
+                    </span>
+                  )}
+                </div>
+              )}
+            />
+            <form.Field
+              name="limitAlert"
+              children={(field) => (
+                <div className="grid gap-3">
+                  <Label htmlFor={field.name}>Alerte limite</Label>
+                  <Input
+                    id={field.name}
+                    placeholder="600"
+                    type="number"
+                    required
+                    defaultValue={budget.limitAlert}
+                    value={field.state.value}
+                    onChange={(e) => {
+                      field.handleChange(Number(e.target.value));
+                    }}
+                  />
+                  {field.state.meta.errors.length > 0 && (
+                    <span className="text-red-500 text-sm">
+                      {field.state.meta.errors[0]?.message}
+                    </span>
+                  )}
+                </div>
+              )}
+            />
+            <form.Field
+              name="categoryId"
+              children={(field) => {
+                const selectedCategory = categories?.find(
+                  (category) => category.id === budget.categoryId
+                );
+                return (
+                  <div className="grid gap-3">
+                    <Label htmlFor={field.name}>Categorie</Label>
+                    <Select
+                      name={field.name}
+                      onValueChange={(value) => field.handleChange(value)}
+                      value={field.state.value}
+                      defaultValue={selectedCategory?.id}
+                      required
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Sélectionne une catégorie" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Catégories</SelectLabel>
+                          {categories?.map((category) => (
+                            <SelectItem key={category.id} value={category.id}>
+                              {category.title}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                    {field.state.meta.errors.length > 0 && (
+                      <span className="text-red-500 text-sm">
+                        {field.state.meta.errors[0]?.message}
+                      </span>
+                    )}
+                  </div>
+                );
+              }}
+            />
           </div>
-          <DialogFooter>
+          <DialogFooter className="flex justify-between items-center mt-4">
             <DialogClose asChild>
-              <Button className="hover:bg-secondary-color" variant="outline">
-                Annuler
-              </Button>
+              <Button variant="outline">Annuler</Button>
             </DialogClose>
-            <Button type="submit" variant="blue">
-              Modifier
-            </Button>
+            <form.Subscribe
+              selector={(state) => [state.isSubmitting]}
+              children={([isSubmiting]) => (
+                <Button type="submit" variant="blue">
+                  {isSubmiting ? <Loader /> : 'Créer'}
+                </Button>
+              )}
+            />
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   );
 };

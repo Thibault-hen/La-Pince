@@ -31,14 +31,16 @@ budgetRouter
     }),
     async (c) => {
       const userId = c.get('jwtPayload').userId;
-      const now = new Date();
-      const year = c.req.query('year')
-        ? parseInt(c.req.query('year')!, 10)
-        : now.getFullYear();
-      const month = c.req.query('month')
-        ? parseInt(c.req.query('month')!, 10)
-        : now.getMonth() + 1;
+      // const now = new Date();
+      // const year = c.req.query('year')
+      //   ? parseInt(c.req.query('year')!, 10)
+      //   : now.getFullYear();
+      // const month = c.req.query('month')
+      //   ? parseInt(c.req.query('month')!, 10)
+      //   : now.getMonth() + 1;
 
+      const month = 8;
+      const year = 2023;
       const budgets = await prisma.budget.findMany({
         where: {
           userId,
@@ -64,7 +66,7 @@ budgetRouter
           const totalExpense =
             budget.expenses?.reduce(
               (sum: number, exp: { amount: number }) => sum + exp.amount,
-              0
+              0,
             ) || 0;
 
           const { expenses, ...budgetWithoutExpenses } = budget;
@@ -72,7 +74,7 @@ budgetRouter
             ...budgetWithoutExpenses,
             totalExpense,
           };
-        }
+        },
       );
 
       const budgetCount = budgetsWithTotalExpense.length;
@@ -80,13 +82,13 @@ budgetRouter
       const budgetTotal = budgetsWithTotalExpense.reduce(
         (sum: number, budget: (typeof budgetsWithTotalExpense)[number]) =>
           sum + Number(budget.amount),
-        0
+        0,
       );
 
       const totalExpenses = budgetsWithTotalExpense.reduce(
         (sum: number, budget: (typeof budgetsWithTotalExpense)[number]) =>
           sum + Number(budget.totalExpense),
-        0
+        0,
       );
 
       const budgetRemaning = budgetTotal - totalExpenses;
@@ -99,9 +101,9 @@ budgetRouter
           budgetRemaning,
           totalExpenses,
         },
-        200
+        200,
       );
-    }
+    },
   )
   .get(
     '/:id',
@@ -137,7 +139,7 @@ budgetRouter
       }
 
       return c.json(budget, 200);
-    }
+    },
   )
   .post(
     '/',
@@ -178,7 +180,7 @@ budgetRouter
       });
 
       return c.json(createBudget, 201);
-    }
+    },
   )
   .patch(
     '/:id',
@@ -210,7 +212,7 @@ budgetRouter
       if (budgetData.categoryId) {
         console.log(
           'Checking if category exists for ID:',
-          budgetData.categoryId
+          budgetData.categoryId,
         );
 
         const categoryExists = await prisma.category.findUnique({
@@ -240,7 +242,7 @@ budgetRouter
       });
 
       return c.json(updatedBudget, 200);
-    }
+    },
   )
   .delete(
     '/:id',
@@ -274,7 +276,7 @@ budgetRouter
       });
 
       return c.body(null, 204);
-    }
+    },
   );
 
 export default budgetRouter;
