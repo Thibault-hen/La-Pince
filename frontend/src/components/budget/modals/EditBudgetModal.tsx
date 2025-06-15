@@ -144,7 +144,11 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
                           <SelectLabel>Catégories</SelectLabel>
                           {categories?.map((category) => (
                             <SelectItem key={category.id} value={category.id}>
-                              {category.title}
+                              <span>{category.title}</span>
+                              <div
+                                style={{ backgroundColor: category?.color.value }}
+                                className="h-3 w-3 rounded-lg"
+                              ></div>
                             </SelectItem>
                           ))}
                         </SelectGroup>

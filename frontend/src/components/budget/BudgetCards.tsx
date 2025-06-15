@@ -10,6 +10,7 @@ type BudgetCardsProps = {
   activeBudget?: number;
   remainingBudget?: number;
 };
+
 export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: BudgetCardsProps) => {
   const [displayTotal, setDisplayTotal] = useState<string>();
   const [displayCount, setDisplayCount] = useState<string>();
