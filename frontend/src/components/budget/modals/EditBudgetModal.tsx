@@ -24,7 +24,7 @@ import { useUpdateBudget } from '@/hooks/use-budget';
 import { useForm } from '@tanstack/react-form';
 import { updateBudgetSchema } from '@/schemas/budget.schemas';
 import { Loader } from '@/components/ui/loader';
-import type { Budget } from '@/services/budget';
+import type { Budget } from '@/types/budget';
 
 interface AddBudgetProps {
   open: boolean;
@@ -47,8 +47,8 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
     },
     async onSubmit({ value }) {
       if (!budget?.id) return;
-      console.log('Form submitted with values:', value);
       await updateBudget({ id: budget.id, data: value });
+      form.reset();
       setOpen(false);
     },
   });
@@ -65,11 +65,11 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
             form.handleSubmit();
           }}
         >
-          <DialogHeader>
+          <DialogHeader className="mb-4">
             <DialogTitle className="font-medium text-xl">
               Modifie ton budget {budget?.category?.title}
             </DialogTitle>
-            <DialogDescription>Entre les nouvelles informations de ton budget</DialogDescription>
+            <DialogDescription>Modifie les informations de ton budget</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <form.Field
@@ -82,8 +82,7 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
                     placeholder="800"
                     type="number"
                     required
-                    defaultValue={budget.amount}
-                    value={field.state.value}
+                    value={field.state.value || ''}
                     onChange={(e) => {
                       field.handleChange(Number(e.target.value));
                     }}
@@ -106,8 +105,7 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
                     placeholder="600"
                     type="number"
                     required
-                    defaultValue={budget.limitAlert}
-                    value={field.state.value}
+                    value={field.state.value || ''}
                     onChange={(e) => {
                       field.handleChange(Number(e.target.value));
                     }}
@@ -172,7 +170,7 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
               selector={(state) => [state.isSubmitting]}
               children={([isSubmiting]) => (
                 <Button type="submit" variant="blue">
-                  {isSubmiting ? <Loader /> : 'Créer'}
+                  {isSubmiting ? <Loader /> : 'Modifier'}
                 </Button>
               )}
             />

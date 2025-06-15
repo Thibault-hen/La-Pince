@@ -9,7 +9,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useDeleteBudget } from '@/hooks/use-budget';
-import type { Budget } from '@/services/budget';
+import type { Budget } from '@/types/budget';
 
 interface DeleteBudgetProps {
   open: boolean;

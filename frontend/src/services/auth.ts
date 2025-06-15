@@ -12,27 +12,28 @@ export type User = {
     createdAt: string;
     updatedAt: string;
   };
+  token: string;
 };
 
 export const authService = {
   async login(data: LoginUser): Promise<User> {
-    const response = await api.post('/auth/login', data);
+    const response = await api.post<User>('/auth/login', data);
     api.defaults.headers.common['csrf_token'] = response.data.token;
     return response.data;
   },
 
   async register(data: RegisterUser): Promise<User> {
-    const response = await api.post('/auth/register', data);
+    const response = await api.post<User>('/auth/register', data);
     return response.data;
   },
 
   async logout(): Promise<GenericMessageResponse> {
-    const response = await api.get('/auth/logout');
+    const response = await api.get<GenericMessageResponse>('/auth/logout');
     return response.data;
   },
 
   async me(): Promise<User> {
-    const response = await api.get('/account/me');
+    const response = await api.get<User>('/account/me');
     api.defaults.headers.common['csrf_token'] = response.data.token;
     return response.data;
   },

@@ -26,8 +26,8 @@ export type Expense = {
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const useExpenses: () => { expenses: Expense[]; isLoading: boolean } = () => {
-  const { data = [], isLoading } = useQuery({
+export const useExpenses = () => {
+  const { data: expenses, isLoading } = useQuery({
     queryKey: ['expenses'],
     queryFn: async () => {
       await delay(1000);
@@ -51,7 +51,7 @@ export const useExpenses: () => { expenses: Expense[]; isLoading: boolean } = ()
   });
 
   return {
-    expenses: data,
+    expenses,
     isLoading: isLoading,
   };
 };

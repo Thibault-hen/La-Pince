@@ -8,7 +8,7 @@ import { EditBudgetModal } from '@/components/budget/modals/EditBudgetModal';
 import { MainLoader } from '@/components/ui/MainLoader';
 import { useBudgets } from '@/hooks/use-budget';
 import { UserAppWrapper } from '@/layouts/UserAppWrapper';
-import type { Budget } from '@/services/budget';
+import type { Budget } from '@/types/budget';
 import { useState } from 'react';
 
 export const BudgetPage = () => {
@@ -37,7 +37,7 @@ export const BudgetPage = () => {
           <BudgetCards
             totalBudget={budgets?.budgetTotal}
             activeBudget={budgets?.budgetCount}
-            remainingBudget={budgets?.budgetRemaining}
+            remainingBudget={budgets?.budgetRemaning}
           />
         </div>
       </section>
