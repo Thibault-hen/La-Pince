@@ -19,6 +19,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { useCategory } from '@/hooks/use-category';
 
 type ExpenseAddModalProps = {
   isModalOpen: boolean;
@@ -26,6 +27,7 @@ type ExpenseAddModalProps = {
 };
 
 export default function ExpenseAddModal({ isModalOpen, handleClose }: ExpenseAddModalProps) {
+  const { categories, isLoading } = useCategory();
   return (
     <Dialog
       open={isModalOpen}
@@ -66,11 +68,11 @@ export default function ExpenseAddModal({ isModalOpen, handleClose }: ExpenseAdd
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Catégories</SelectLabel>
-                    <SelectItem value="nourriture">Nourriture</SelectItem>
-                    <SelectItem value="vêtements">Vêtements</SelectItem>
-                    <SelectItem value="loisirs">Loisirs</SelectItem>
-                    <SelectItem value="voyages">Voyages</SelectItem>
-                    <SelectItem value="Autres">Autres</SelectItem>
+                    {categories.map((category) => (
+                      <SelectItem key={category.id} value={category.id}>
+                        {category.title}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>

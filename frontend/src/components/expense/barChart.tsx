@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 'use client';
 
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 
+=======
+import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
+
+>>>>>>> d83bc470a51624f7f9803acdc14cac8b2f7167d8
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   type ChartConfig,
@@ -28,7 +33,11 @@ export function ChartBarInteractive() {
 
   const total = useMemo(
     () => ({
+<<<<<<< HEAD
       amount: (expenses ?? []).reduce((acc, curr) => acc + curr.amount, 0),
+=======
+      amount: expenses.reduce((acc, curr) => acc + curr.amount, 0),
+>>>>>>> d83bc470a51624f7f9803acdc14cac8b2f7167d8
     }),
     []
   );

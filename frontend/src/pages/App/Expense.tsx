@@ -3,9 +3,9 @@ import { columns } from './table/columns';
 import { DataTable } from './table/data-table';
 import { Button } from '@/components/ui/button';
 import ExpenseAddModal from '@/components/expense/modals/expenseAddModal';
-import { ChartBarInteractive } from '@/components/expense/barChart';
 import { useExpenses } from '@/hooks/use-expenses';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ChartBarInteractive } from '@/components/expense/barChart';
 
 export function Expense() {
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -1,17 +1,5 @@
-import { expenseService } from '@/services/expenses';
+import { expenseService, type GetExpensesResponse } from '@/services/expenses';
 import { useQuery } from '@tanstack/react-query';
-export type GetExpensesResponse = {
-  id: string;
-  description: string;
-  amount: number;
-  date: string;
-  category: {
-    title: string;
-    color: {
-      value: string;
-    };
-  };
-}[];
 
 export type Expense = {
   id: string;
@@ -26,8 +14,8 @@ export type Expense = {
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const useExpenses = () => {
-  const { data: expenses, isLoading } = useQuery({
+export const useExpenses: () => { expenses: Expense[]; isLoading: boolean } = () => {
+  const { data = [], isLoading } = useQuery({
     queryKey: ['expenses'],
     queryFn: async () => {
       await delay(1000);
@@ -51,7 +39,7 @@ export const useExpenses = () => {
   });
 
   return {
-    expenses,
+    expenses: data,
     isLoading: isLoading,
   };
 };
