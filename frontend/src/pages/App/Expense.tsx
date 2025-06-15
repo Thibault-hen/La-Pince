@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import ExpenseAddModal from '@/components/expense/modals/expenseAddModal';
 import { useExpenses } from '@/hooks/use-expenses';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ChartBarInteractive } from '@/components/expense/barChart';
+import { ChartBarInteractive } from '@/components/expense/BarChart';
 
 export function Expense() {
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -19,10 +19,25 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
+function getExpensesThisMonth<T extends { date: string }>(expenses: T[]): T[] {
+  const date = new Date()
+  const month = date.getMonth() + 2
+  const year = date.getFullYear() - 2
+
+  return expenses.filter((expense) => {
+    const expenseDate = new Date(expense.date);
+
+    return expenseDate.getMonth() === month && expenseDate.getFullYear() === year;
+  })
+}
+
 export function ChartBarInteractive() {
   const [activeChart, setActiveChart] = useState<keyof typeof chartConfig>('amount');
 
   const { expenses } = useExpenses();
+
+
+  const expensesThisMonth = useMemo(() => getExpensesThisMonth(expenses), [expenses]);
 
   const total = useMemo(
     () => ({
@@ -61,7 +76,7 @@ export function ChartBarInteractive() {
         <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
           <BarChart
             accessibilityLayer
-            data={expenses}
+            data={expensesThisMonth}
             margin={{
               left: 12,
               right: 12,
@@ -70,7 +85,7 @@ export function ChartBarInteractive() {
             <CartesianGrid vertical={true} />
             <XAxis
               dataKey="date"
-              tickLine={true}
+              tickLine={false}
               axisLine={false}
               tickMargin={8}
               minTickGap={32}
