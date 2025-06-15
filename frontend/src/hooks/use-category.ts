@@ -2,8 +2,10 @@ import { categoryService } from '@/services/category';
 import { useQuery } from '@tanstack/react-query';
 
 export const useCategories = () => {
-  return useQuery({
+  const { data: categories = [] } = useQuery({
     queryKey: ['categories'],
     queryFn: categoryService.getAll,
   });
+
+  return { categories };
 };

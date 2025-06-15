@@ -1,4 +1,4 @@
-import { expenseService, type GetExpensesResponse } from '@/services/expenses';
+import { expenseService } from '@/services/expenses';
 import { useQuery } from '@tanstack/react-query';
 
 export type Expense = {
@@ -22,7 +22,7 @@ export const useExpenses: () => { expenses: Expense[]; isLoading: boolean } = ()
       return expenseService.getAll();
     },
     select: (data) => {
-      return data.map((expense: GetExpensesResponse) => {
+      return data.map((expense) => {
         return {
           id: expense.id,
           title: expense.description,

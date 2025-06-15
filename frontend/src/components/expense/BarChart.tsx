@@ -21,8 +21,8 @@ const chartConfig = {
 
 function getExpensesThisMonth<T extends { date: string }>(expenses: T[]): T[] {
   const date = new Date()
-  const month = date.getMonth() + 2
-  const year = date.getFullYear() - 2
+  const month = date.getMonth()
+  const year = date.getFullYear()
 
   return expenses.filter((expense) => {
     const expenseDate = new Date(expense.date);

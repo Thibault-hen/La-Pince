@@ -4,7 +4,6 @@ import { DataTable } from './table/data-table';
 import { Button } from '@/components/ui/button';
 import ExpenseAddModal from '@/components/expense/modals/expenseAddModal';
 import { useExpenses } from '@/hooks/use-expenses';
-import { Skeleton } from '@/components/ui/skeleton';
 import { ChartBarInteractive } from '@/components/expense/BarChart';
 
 export function Expense() {
@@ -18,21 +17,16 @@ export function Expense() {
       )}
       <ChartBarInteractive />
       <div className="container mx-auto py-10">
-        {isLoading ? (
-          <>
-            <Skeleton className="block bg-secondary h-full  w-full rounded-full m-2" />
-          </>
-        ) : (
-          <DataTable
-            children={
-              <Button variant="blue" onClick={() => setIsModalOpen(true)}>
-                <span className="max-w-sm block text-sm m-2">Ajouter une dépense</span>
-              </Button>
-            }
-            columns={columns}
-            data={expenses}
-          />
-        )}
+        <DataTable
+          children={
+            <Button variant="blue" onClick={() => setIsModalOpen(true)}>
+              <span className="max-w-sm block text-sm m-2">Ajouter une dépense</span>
+            </Button>
+          }
+          columns={columns}
+          data={expenses}
+          isLoading={isLoading}
+        />
       </div>
     </>
   );

@@ -1,4 +1,3 @@
-import type { GetExpensesResponse } from '@/hooks/use-expenses';
 import { api } from '@/utils/api';
 
 export type GetExpensesResponse = {
