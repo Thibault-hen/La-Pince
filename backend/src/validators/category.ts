@@ -11,5 +11,5 @@ export const categorySelectSchema = z.object({
 
 export const categoryCreateOrUpdateSchema = z.object({
   title: z.string().trim().min(1),
-  colorId: z.number().int().positive(),
+  colorId: z.string().cuid(),
 })

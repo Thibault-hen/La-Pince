@@ -124,7 +124,7 @@ categoryRouter.basePath('/category')
 
     const { title, colorId } = c.req.valid('json');
 
-    await verifyDuplicateCategory(userId, title, true);
+    await verifyDuplicateCategory(userId, title, true, categoryId);
 
     const updateCategory = await prisma.category.update({
       data: {
@@ -166,14 +166,17 @@ categoryRouter.basePath('/category')
   }
 );
 
-async function verifyDuplicateCategory(userId: string,
-  title: string, isUpdate:boolean) {
+async function verifyDuplicateCategory(
+  userId: string,
+  title: string,
+  isUpdate: boolean,
+  categoryId?: string,
+) {
   const duplicateCategory = await prisma.category.findFirst({
-    where: { 
-      title: isUpdate
-      ? { equals: title } 
-      : { equals: title, mode: 'insensitive'},
-    userId,
+    where: {
+      title: { equals: title, mode: 'insensitive' },
+      userId,
+      ...(isUpdate ? { NOT: { id: categoryId } } : {}),
     },
   });
   if (duplicateCategory) {

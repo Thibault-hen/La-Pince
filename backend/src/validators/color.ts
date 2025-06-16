@@ -1,7 +1,7 @@
 import { z }  from "zod";
 
 export const colorSelectSchema = z.object({
-  id: z.number(),
+  id: z.string().cuid(),
   name: z.string(),
   value : z.string(),
   createdAt: z.string().datetime(),
