@@ -27,7 +27,7 @@ type ExpenseAddModalProps = {
 };
 
 export default function ExpenseAddModal({ isModalOpen, handleClose }: ExpenseAddModalProps) {
-  const { categories } = useCategories();
+  const { data: categories } = useCategories();
 
   return (
     <Dialog
@@ -69,7 +69,7 @@ export default function ExpenseAddModal({ isModalOpen, handleClose }: ExpenseAdd
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Catégories</SelectLabel>
-                    {categories.map((category) => (
+                    {categories?.map((category) => (
                       <SelectItem key={category.id} value={category.id}>
                         {category.title}
                       </SelectItem>

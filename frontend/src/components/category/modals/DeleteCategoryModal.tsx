@@ -8,37 +8,39 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { useDeleteCategory } from '@/hooks/use-category';
+import type { Budget } from '@/types/budget';
+import type { Category } from '@/types/category';
 
-interface DeleteCategoryProps {
+interface DeleteBudgetProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  category?: {
-    id: string;
-    title: string;
-    color: string;
-    budget: {
-      id: string;
-      amount: number;
-      totalExpenses: number;
-    };
+  category?: Category & {
+    budgets?: Budget[];
   };
 }
 
-export const DeleteCategoryModal = (props: DeleteCategoryProps) => {
+export const DeleteCategoryModal = ({ open, setOpen, category }: DeleteBudgetProps) => {
+  const { mutateAsync: deleteCategory } = useDeleteCategory();
+
+  const handleDeleteBudget = async () => {
+    if (!category?.id) return;
+    await deleteCategory(category.id);
+    setOpen(false);
+  };
   return (
-    <AlertDialog open={props.open} onOpenChange={props.setOpen}>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="font-medium text-xl">
-            Supprimer une catégorie
-          </AlertDialogTitle>
+          <AlertDialogTitle className="font-medium text-xl">Supprimer un budget</AlertDialogTitle>
           <AlertDialogDescription>
-            Tu veux vraiment supprimer ta catégorie {props.category?.title} ?
+            Tu veux vraiment supprimer ton budget {category?.title} de{' '}
+            {category?.budgets?.reduce((total, budget) => total + budget.amount, 0).toFixed(2)}€ ?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel className="cursor-pointer">Annuler</AlertDialogCancel>
-          <AlertDialogAction>Supprimer</AlertDialogAction>
+          <AlertDialogAction onClick={handleDeleteBudget}>Supprimer</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

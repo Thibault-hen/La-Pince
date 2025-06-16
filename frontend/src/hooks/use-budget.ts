@@ -1,11 +1,10 @@
 import { budgetService } from '@/services/budget';
-import type { UpdateBudget } from '@/types/budget';
+import type { BudgetResponse, UpdateBudget } from '@/types/budget';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const useBudgets = () => {
-  return useQuery({
+  return useQuery<BudgetResponse>({
     queryKey: ['budgets'],
     queryFn: budgetService.getAllBudgets,
     staleTime: 1000 * 60 * 5,

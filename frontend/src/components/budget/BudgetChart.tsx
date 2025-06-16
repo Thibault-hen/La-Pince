@@ -9,7 +9,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { TrendingUp } from 'lucide-react';
-import type { BudgetResponse } from '@/services/budget';
+import type { BudgetResponse } from '@/types/budget';
 
 export const description = 'A donut chart with text';
 
@@ -22,7 +22,7 @@ interface BudgetChartProps {
 export const BudgetChart = ({ budgets }: BudgetChartProps) => {
   const totalAmount = React.useMemo(() => {
     return budgets?.budgets.reduce((acc, curr) => acc + curr.amount, 0);
-  }, []);
+  }, [budgets?.budgets]);
 
   const percentage = (amount: number): string => {
     return ((amount / (totalAmount ?? 0)) * 100).toFixed(1) + '%';

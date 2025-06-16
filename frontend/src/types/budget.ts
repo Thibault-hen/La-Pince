@@ -28,7 +28,7 @@ export type UpdateBudget = {
 
 export type BudgetResponse = {
   budgetCount: number;
-  budgetRemaning: number;
+  budgetRemaining: number;
   budgetTotal: number;
   budgets: Budget[];
 };

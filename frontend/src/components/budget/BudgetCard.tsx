@@ -8,9 +8,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import type { Budget } from '@/services/budget';
 import { getColorStatus } from '@/utils/colorStatus';
 import { getPercentage } from '@/utils/percentage';
+import type { Budget } from '@/types/budget';
 
 interface BudgetProps {
   budget: Budget;
@@ -33,7 +33,7 @@ export const BudgetCard = ({ budget, onOpenEditModal, onOpenDeleteModal }: Budge
         <div className="flex items-center justify-between">
           <CardTitle
             className="border-l-4 px-2 flex gap-2 items-center"
-            style={{ borderLeftColor: budget.category.color.value }}
+            style={{ borderLeftColor: budget.category.color?.value }}
           >
             {budget.category.title}
             {budget.totalExpense > (budget.amount ?? 0) && (

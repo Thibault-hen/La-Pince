@@ -37,7 +37,7 @@ export const BudgetPage = () => {
           <BudgetCards
             totalBudget={budgets?.budgetTotal}
             activeBudget={budgets?.budgetCount}
-            remainingBudget={budgets?.budgetRemaning}
+            remainingBudget={budgets?.budgetRemaining}
           />
         </div>
       </section>

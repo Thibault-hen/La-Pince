@@ -25,6 +25,7 @@ import { useForm } from '@tanstack/react-form';
 import { updateBudgetSchema } from '@/schemas/budget.schemas';
 import { Loader } from '@/components/ui/loader';
 import type { Budget } from '@/types/budget';
+import { useEffect } from 'react';
 
 interface AddBudgetProps {
   open: boolean;
@@ -35,6 +36,10 @@ interface AddBudgetProps {
 export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
   const { data: categories } = useCategories();
   const { mutateAsync: updateBudget } = useUpdateBudget();
+
+  useEffect(() => {
+    form.reset();
+  }, [budget]);
 
   const form = useForm({
     defaultValues: {
@@ -48,7 +53,6 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
     async onSubmit({ value }) {
       if (!budget?.id) return;
       await updateBudget({ id: budget.id, data: value });
-      form.reset();
       setOpen(false);
     },
   });
@@ -60,7 +64,6 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
       <DialogContent className="sm:max-w-[425px]">
         <form
           onSubmit={async (e) => {
-            console.log('Form submitted:');
             e.preventDefault();
             form.handleSubmit();
           }}
@@ -144,7 +147,7 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
                             <SelectItem key={category.id} value={category.id}>
                               <span>{category.title}</span>
                               <div
-                                style={{ backgroundColor: category?.color.value }}
+                                style={{ backgroundColor: category.color?.value }}
                                 className="h-3 w-3 rounded-lg"
                               ></div>
                             </SelectItem>
