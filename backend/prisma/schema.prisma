@@ -36,7 +36,7 @@ model User {
 model Color {
   @@map("color")
   
-  id          Int       @id @default(autoincrement())
+  id          String   @id @default(cuid())
   name        String    @unique
   value       String    @unique
 
@@ -52,7 +52,7 @@ model Category {
   id               String   @id @default(cuid())
   title            String
   userId           String   @map("user_id")
-  colorId          Int      @map("color_id")
+  colorId          String   @map("color_id")
 
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
