@@ -8,29 +8,24 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { Badge } from '../ui/badge';
+import type { Category } from '@/types/category';
+import type { Budget } from '@/types/budget';
 
 interface ICategoryProps {
-  category?: {
-    id: string;
-    title: string;
-    color: string;
-    budget: {
-      id: string;
-      amount: number;
-      totalExpenses: number;
-    };
+  category?: Category & {
+    budgets?: Budget[];
   };
   onOpenEditModal: () => void;
   onOpenDeleteModal: () => void;
 }
 
-export const CategoryCard = (props: ICategoryProps) => {
+export const CategoryCard = ({ category, onOpenDeleteModal, onOpenEditModal }: ICategoryProps) => {
   return (
     <Card
       className="flex justify-around p-4 dark:bg-primary hover:border-secondary-color transition-all duration-200 ease-in-out gap-1 shadow"
       style={
         {
-          '--hover-card': props.category?.color,
+          '--hover-card': category?.color,
         } as React.CSSProperties
       }
     >
@@ -38,9 +33,11 @@ export const CategoryCard = (props: ICategoryProps) => {
         <div className="flex items-center justify-between">
           <CardTitle
             className="border-l-4 px-2 flex gap-2 items-center"
-            style={{ borderLeftColor: props.category?.color }}
+            style={{
+              borderLeftColor: category?.color.value as React.CSSProperties['borderLeftColor'],
+            }}
           >
-            {props.category?.title}
+            {category?.title}
           </CardTitle>
           <CardDescription className="flex gap-1">
             <DropdownMenu>
@@ -58,14 +55,14 @@ export const CategoryCard = (props: ICategoryProps) => {
               <DropdownMenuContent align="end">
                 <DropdownMenuItem
                   className="p-2 dark:bg-primary cursor-pointer hover:!bg-secondary-color transition-all duration-150 ease-in-out"
-                  onClick={props.onOpenEditModal}
+                  onClick={onOpenEditModal}
                 >
                   <Pencil className="dark:text-white text-dark" />
                   <span>Editer</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="p-2 dark:bg-primary cursor-pointer hover:!bg-red-500 dark:hover:bg-red-700/20 transition-all duration-150 ease-in-out"
-                  onClick={props.onOpenDeleteModal}
+                  onClick={onOpenDeleteModal}
                 >
                   <Trash2 className="dark:text-white text-dark" />
                   <span>Supprimer</span>
@@ -77,12 +74,16 @@ export const CategoryCard = (props: ICategoryProps) => {
       </CardHeader>
       <CardContent className="p-0 mx-4">
         <CardDescription>
-          <span>Budget en cours : </span>
+          <span className="mr-2">Budget en cours</span>
           <Badge
             variant="outline"
             className="font-bold items-center hover:bg-secondary-color transition-all duration-200 ease-in-out"
           >
-            {props.category?.budget.amount.toFixed(2).toLocaleString()} €
+            {category?.budgets
+              ?.reduce((total, budget) => total + budget.amount, 0)
+              .toFixed(2)
+              .toLocaleString()}{' '}
+            €
           </Badge>
         </CardDescription>
       </CardContent>

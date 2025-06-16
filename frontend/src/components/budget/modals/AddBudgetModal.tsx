@@ -54,7 +54,6 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
       <DialogContent className="sm:max-w-[425px]">
         <form
           onSubmit={async (e) => {
-            console.log('Form submitted:');
             e.preventDefault();
             form.handleSubmit();
           }}
@@ -128,7 +127,7 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
                           <SelectItem key={category.id} value={category.id}>
                             <span>{category.title}</span>
                             <div
-                              style={{ backgroundColor: category?.color.value }}
+                              style={{ backgroundColor: category?.color?.value }}
                               className="h-3 w-3 rounded-lg"
                             ></div>
                           </SelectItem>

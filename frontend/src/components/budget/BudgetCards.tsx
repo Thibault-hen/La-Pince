@@ -111,15 +111,25 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
             <div className="mt-3">
               <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
                 <span>Utilisé</span>
-                <span>{getPercentage(totalBudget ?? 0, remainingBudget ?? 0)}</span>
+                <span>
+                  {remainingBudget === totalBudget
+                    ? '0%'
+                    : getPercentage((totalBudget ?? 0) - (remainingBudget ?? 0), totalBudget ?? 0)}
+                </span>
               </div>
               <Progress
-                value={remainingBudget}
+                value={(totalBudget ?? 0) - (remainingBudget ?? 0)}
                 max={totalBudget}
                 className="w-full border [&>*]:bg-[var(--bg-color)] h-3 mt-2"
                 style={
                   {
-                    '--bg-color': getColorStatus(200, 800),
+                    '--bg-color':
+                      remainingBudget === totalBudget
+                        ? ''
+                        : getColorStatus(
+                            (totalBudget ?? 0) - (remainingBudget ?? 0),
+                            totalBudget ?? 0
+                          ),
                   } as React.CSSProperties
                 }
               />

@@ -33,7 +33,7 @@ export const BudgetCard = ({ budget, onOpenEditModal, onOpenDeleteModal }: Budge
         <div className="flex items-center justify-between">
           <CardTitle
             className="border-l-4 px-2 flex gap-2 items-center"
-            style={{ borderLeftColor: budget.category.color.value }}
+            style={{ borderLeftColor: budget.category.color?.value }}
           >
             {budget.category.title}
             {budget.totalExpense > (budget.amount ?? 0) && (

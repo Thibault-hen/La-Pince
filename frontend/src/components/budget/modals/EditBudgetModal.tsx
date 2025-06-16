@@ -38,11 +38,7 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
   const { mutateAsync: updateBudget } = useUpdateBudget();
 
   useEffect(() => {
-    form.reset({
-      amount: budget?.amount ?? 0,
-      limitAlert: budget?.limitAlert ?? 0,
-      categoryId: budget?.categoryId ?? '',
-    });
+    form.reset();
   }, [budget]);
 
   const form = useForm({
@@ -151,7 +147,7 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
                             <SelectItem key={category.id} value={category.id}>
                               <span>{category.title}</span>
                               <div
-                                style={{ backgroundColor: category?.color.value }}
+                                style={{ backgroundColor: category.color?.value }}
                                 className="h-3 w-3 rounded-lg"
                               ></div>
                             </SelectItem>

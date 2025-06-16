@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { Dashboard } from './pages/App/Dashboard';
 import { BudgetPage } from './pages/App/Budget';
-import { Category } from './pages/App/Category';
+import { CategoryPage } from './pages/App/Category';
 import { Expense } from './pages/App/Expense';
 import { Settings } from './pages/App/Settings';
 import { AppLayout } from './layouts/AppLayout';
@@ -54,7 +54,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: 'categories',
-                element: <Category />,
+                element: <CategoryPage />,
               },
               {
                 path: 'parametres',

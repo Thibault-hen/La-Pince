@@ -21,10 +21,9 @@ export const DeleteBudgetModal = ({ open, setOpen, budget }: DeleteBudgetProps) 
   const { mutateAsync: deleteBudget } = useDeleteBudget();
 
   const handleDeleteBudget = async () => {
-    if (budget?.id) {
-      await deleteBudget(budget.id);
-      setOpen(false);
-    }
+    if (!budget?.id) return;
+    await deleteBudget(budget.id);
+    setOpen(false);
   };
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
