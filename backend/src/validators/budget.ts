@@ -27,21 +27,17 @@ export const budgetSelectSchema = z.object({
   totalExpense: z.number(),
   budgetTotal: z.number(),
   budgetCount: z.number(),
-  budgetRemaning: z.number(),
+  budgetRemaining: z.number(),
 });
 
 export const createBudgetSchema = z.object({
   amount: z.number().positive(),
   limitAlert: z.number().positive(),
-  month: z.number().int().min(1).max(12),
-  year: z.number().int().min(2020).max(30000),
   categoryId: z.string().cuid(),
 });
 
 export const updateBudgetSchema = z.object({
   amount: z.number().positive().optional(),
   limitAlert: z.number().positive().optional(),
-  month: z.number().int().min(1).max(12).optional(),
-  year: z.number().int().min(2020).max(30000).optional(),
   categoryId: z.string().cuid().optional(),
 });
