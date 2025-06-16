@@ -14,7 +14,7 @@ import {
   response204,
   response404,
 } from '../utils/openapi';
-import { paramsWithId } from '../validators/utils';
+import { paramsWithId, zodValidatorMessage } from '../validators/utils';
 import { HTTPException } from 'hono/http-exception';
 
 const budgetRouter = new Hono();
@@ -120,6 +120,9 @@ budgetRouter
       },
     }),
     zValidator('json', createBudgetSchema),
+    zValidator('json', createBudgetSchema, (result, c) =>
+      zodValidatorMessage(result, c)
+    ),
     async (c) => {
       const userId = c.get('jwtPayload').userId;
       const budget = c.req.valid('json');
@@ -165,7 +168,9 @@ budgetRouter
       },
     }),
     zValidator('param', paramsWithId),
-    zValidator('json', updateBudgetSchema),
+    zValidator('json', updateBudgetSchema, (result, c) =>
+      zodValidatorMessage(result, c)
+    ),
     async (c) => {
       const userId = c.get('jwtPayload').userId;
       const budgetId = c.req.param('id');
