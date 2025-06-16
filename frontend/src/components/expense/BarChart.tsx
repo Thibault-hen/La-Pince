@@ -1,12 +1,5 @@
-<<<<<<< HEAD
-'use client';
-
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 
-=======
-import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
-
->>>>>>> d83bc470a51624f7f9803acdc14cac8b2f7167d8
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   type ChartConfig,
@@ -27,15 +20,15 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 function getExpensesThisMonth<T extends { date: string }>(expenses: T[]): T[] {
-  const date = new Date()
-  const month = date.getMonth()
-  const year = date.getFullYear()
+  const date = new Date();
+  const month = date.getMonth();
+  const year = date.getFullYear();
 
   return expenses.filter((expense) => {
     const expenseDate = new Date(expense.date);
 
     return expenseDate.getMonth() === month && expenseDate.getFullYear() === year;
-  })
+  });
 }
 
 export function ChartBarInteractive() {
@@ -43,16 +36,11 @@ export function ChartBarInteractive() {
 
   const { expenses } = useExpenses();
 
-
   const expensesThisMonth = useMemo(() => getExpensesThisMonth(expenses), [expenses]);
 
   const total = useMemo(
     () => ({
-<<<<<<< HEAD
-      amount: (expenses ?? []).reduce((acc, curr) => acc + curr.amount, 0),
-=======
       amount: expenses.reduce((acc, curr) => acc + curr.amount, 0),
->>>>>>> d83bc470a51624f7f9803acdc14cac8b2f7167d8
     }),
     []
   );

@@ -1,4 +1,5 @@
-import { budgetService, type UpdateBudget } from '@/services/budget';
+import { budgetService } from '@/services/budget';
+import type { UpdateBudget } from '@/types/budget';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
