@@ -20,7 +20,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import type { Color } from '@/types/color';
-import { useCreateCategory, useUpdateCategory } from '@/hooks/use-category';
+import {  useUpdateCategory } from '@/hooks/categories';
 import { useForm } from '@tanstack/react-form';
 import { createCategorySchema } from '@/schemas/category.schemas';
 import type { Category } from '@/types/category';

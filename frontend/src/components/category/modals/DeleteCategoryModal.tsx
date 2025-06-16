@@ -8,7 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { useDeleteCategory } from '@/hooks/use-category';
+import { useDeleteCategory } from '@/hooks/categories';
 import type { Budget } from '@/types/budget';
 import type { Category } from '@/types/category';
 

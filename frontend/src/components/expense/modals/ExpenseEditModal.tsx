@@ -19,62 +19,83 @@ import {
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useUpdateBudget } from '@/hooks/use-budget';
+import { useUpdateExpense, type Expense } from '@/hooks/expenses';
 import { useForm } from '@tanstack/react-form';
-import { updateBudgetSchema } from '@/schemas/budget.schemas';
+import { updateExpenseSchema } from '@/schemas/expense.schemas';
 import { Loader } from '@/components/ui/loader';
-import type { Budget } from '@/types/budget';
-import { useEffect } from 'react';
-import { useCategories } from '@/hooks/categories.ts';
+import { useBudgets } from '@/hooks/use-budget';
+import { DatePicker } from '../DatePicker';
 
-interface AddBudgetProps {
+interface ExpenseEditModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  budget?: Budget;
+  expense?: Expense;
 }
 
-export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
-  const { data: categories } = useCategories();
-  const { mutateAsync: updateBudget } = useUpdateBudget();
-
-  useEffect(() => {
-    form.reset();
-  }, [budget]);
+export const ExpenseEditModal = ({ expense, open, setOpen }: ExpenseEditModalProps) => {
+  const { data: { budgets = [] } = {}, isLoading: isLoadingBudget } = useBudgets();
+  const { mutateAsync: updateExpense } = useUpdateExpense();
 
   const form = useForm({
     defaultValues: {
-      amount: budget?.amount ?? 0,
-      limitAlert: budget?.limitAlert ?? 0,
-      categoryId: budget?.categoryId ?? '',
+      description: expense?.title ?? '',
+      amount: expense?.amount ?? 0,
+      budgetId: expense?.budgetId ?? '',
+      date: expense?.date ?? '',
     },
     validators: {
-      onSubmit: updateBudgetSchema,
+      onSubmit: updateExpenseSchema,
     },
     async onSubmit({ value }) {
-      if (!budget?.id) return;
-      await updateBudget({ id: budget.id, data: value });
+      console.log('Form submitted with values:', value);
+      if (!expense?.id) return;
+      await updateExpense({ id: expense?.id, data: { ...value } });
       setOpen(false);
     },
   });
 
-  if (!budget) return null;
+  if (!expense) return null;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <form
           onSubmit={async (e) => {
+            console.log('Form submitted:');
             e.preventDefault();
             form.handleSubmit();
           }}
         >
-          <DialogHeader className="mb-4">
+          <DialogHeader>
             <DialogTitle className="font-medium text-xl">
-              Modifie ton budget {budget?.category?.title}
+              Modifie ta dépense: {expense?.title}
             </DialogTitle>
-            <DialogDescription>Modifie les informations de ton budget</DialogDescription>
+            <DialogDescription>Entre les nouvelles informations de ta dépense</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
+            <form.Field
+              name="description"
+              children={(field) => (
+                <div className="grid gap-3">
+                  <Label htmlFor={field.name}>Titre</Label>
+                  <Input
+                    id={field.name}
+                    placeholder="Titre de votre dépense"
+                    type="text"
+                    required
+                    value={field.state.value}
+                    onChange={(e) => {
+                      field.handleChange(e.target.value);
+                    }}
+                  />
+                  {field.state.meta.errors.length > 0 && (
+                    <span className="text-red-500 text-sm">
+                      {field.state.meta.errors[0]?.message}
+                    </span>
+                  )}
+                </div>
+              )}
+            />
             <form.Field
               name="amount"
               children={(field) => (
@@ -82,10 +103,10 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
                   <Label htmlFor={field.name}>Montant</Label>
                   <Input
                     id={field.name}
-                    placeholder="800"
+                    placeholder="200"
                     type="number"
                     required
-                    value={field.state.value || ''}
+                    value={field.state.value}
                     onChange={(e) => {
                       field.handleChange(Number(e.target.value));
                     }}
@@ -99,57 +120,26 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
               )}
             />
             <form.Field
-              name="limitAlert"
-              children={(field) => (
-                <div className="grid gap-3">
-                  <Label htmlFor={field.name}>Alerte limite</Label>
-                  <Input
-                    id={field.name}
-                    placeholder="600"
-                    type="number"
-                    required
-                    value={field.state.value || ''}
-                    onChange={(e) => {
-                      field.handleChange(Number(e.target.value));
-                    }}
-                  />
-                  {field.state.meta.errors.length > 0 && (
-                    <span className="text-red-500 text-sm">
-                      {field.state.meta.errors[0]?.message}
-                    </span>
-                  )}
-                </div>
-              )}
-            />
-            <form.Field
-              name="categoryId"
+              name="budgetId"
               children={(field) => {
-                const selectedCategory = categories?.find(
-                  (category) => category.id === budget.categoryId
-                );
                 return (
                   <div className="grid gap-3">
-                    <Label htmlFor={field.name}>Categorie</Label>
+                    <Label htmlFor={field.name}>Budget</Label>
                     <Select
                       name={field.name}
                       onValueChange={(value) => field.handleChange(value)}
-                      value={field.state.value}
-                      defaultValue={selectedCategory?.id}
+                      value={budgets.length ? field.state.value : ''}
                       required
                     >
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Sélectionne une catégorie" />
+                        <SelectValue placeholder="Sélectionne un budget" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectLabel>Catégories</SelectLabel>
-                          {categories?.map((category) => (
-                            <SelectItem key={category.id} value={category.id}>
-                              <span>{category.title}</span>
-                              <div
-                                style={{ backgroundColor: category.color?.value }}
-                                className="h-3 w-3 rounded-lg"
-                              ></div>
+                          <SelectLabel>Budgets</SelectLabel>
+                          {budgets?.map((budget) => (
+                            <SelectItem key={budget.id} value={budget.id}>
+                              {budget.category.title} - {budget.amount}€
                             </SelectItem>
                           ))}
                         </SelectGroup>
@@ -163,6 +153,25 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
                   </div>
                 );
               }}
+            />
+            <form.Field
+              name="date"
+              children={(field) => (
+                <div className="grid gap-3">
+                  <Label htmlFor={field.name}>Date</Label>
+                  <DatePicker
+                    name={field.name}
+                    required
+                    value={new Date(field.state.value)}
+                    onChange={(date) => { field.handleChange(date.toISOString()); }}
+                  />
+                  {field.state.meta.errors.length > 0 && (
+                    <span className="text-red-500 text-sm">
+                      {field.state.meta.errors[0]?.message}
+                    </span>
+                  )}
+                </div>
+              )}
             />
           </div>
           <DialogFooter className="flex justify-between items-center mt-4">

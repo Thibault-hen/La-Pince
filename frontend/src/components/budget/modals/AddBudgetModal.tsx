@@ -19,11 +19,11 @@ import {
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useCategories } from '@/hooks/use-category';
 import { useCreateBudget } from '@/hooks/use-budget';
 import { useForm } from '@tanstack/react-form';
 import { createBudgetSchema } from '@/schemas/budget.schemas';
 import { Loader } from '@/components/ui/loader';
+import { useCategories } from '@/hooks/categories';
 
 interface AddBudgetProps {
   open: boolean;
@@ -31,7 +31,7 @@ interface AddBudgetProps {
 }
 
 export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
-  const { data: categories } = useCategories();
+  const { data : categories } = useCategories();
   const { mutateAsync: createBudget } = useCreateBudget();
 
   const form = useForm({
