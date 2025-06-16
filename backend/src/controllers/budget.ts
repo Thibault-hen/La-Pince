@@ -242,7 +242,7 @@ budgetRouter
         },
       });
       if (!budgetExists) {
-        return c.json({ message: 'Budget not found' }, 404);
+        throw new HTTPException(404, { message: 'Budget not found' });
       }
 
       await prisma.budget.delete({
