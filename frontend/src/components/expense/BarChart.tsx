@@ -20,22 +20,21 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 function getExpensesThisMonth<T extends { date: string }>(expenses: T[]): T[] {
-  const date = new Date()
-  const month = date.getMonth()
-  const year = date.getFullYear()
+  const date = new Date();
+  const month = date.getMonth();
+  const year = date.getFullYear();
 
   return expenses.filter((expense) => {
     const expenseDate = new Date(expense.date);
 
     return expenseDate.getMonth() === month && expenseDate.getFullYear() === year;
-  })
+  });
 }
 
 export function ChartBarInteractive() {
   const [activeChart, setActiveChart] = useState<keyof typeof chartConfig>('amount');
 
   const { expenses } = useExpenses();
-
 
   const expensesThisMonth = useMemo(() => getExpensesThisMonth(expenses), [expenses]);
 

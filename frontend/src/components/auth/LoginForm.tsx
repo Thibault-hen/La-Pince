@@ -16,6 +16,7 @@ type createdAccountMessages = {
     email: string;
   };
 };
+
 export function LoginForm({ className, ...props }: React.ComponentProps<'form'>) {
   const { mutateAsync: login, error } = useLogin();
   const location = useLocation();

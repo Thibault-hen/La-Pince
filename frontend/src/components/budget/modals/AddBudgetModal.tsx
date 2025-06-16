@@ -59,7 +59,7 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
             form.handleSubmit();
           }}
         >
-          <DialogHeader>
+          <DialogHeader className="mb-4">
             <DialogTitle className="font-medium text-xl">Créer un nouveau budget</DialogTitle>
             <DialogDescription>Entre les informations de ton nouveau budget</DialogDescription>
           </DialogHeader>
@@ -126,7 +126,11 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
                         <SelectLabel>Catégories</SelectLabel>
                         {categories?.map((category) => (
                           <SelectItem key={category.id} value={category.id}>
-                            {category.title}
+                            <span>{category.title}</span>
+                            <div
+                              style={{ backgroundColor: category?.color.value }}
+                              className="h-3 w-3 rounded-lg"
+                            ></div>
                           </SelectItem>
                         ))}
                       </SelectGroup>
