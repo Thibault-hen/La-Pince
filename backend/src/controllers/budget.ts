@@ -15,6 +15,7 @@ import {
   response404,
 } from '../utils/openapi';
 import { paramsWithId } from '../validators/utils';
+import { HTTPException } from 'hono/http-exception';
 
 const budgetRouter = new Hono();
 
@@ -34,10 +35,6 @@ budgetRouter
       const now = new Date();
       const month = now.getMonth() + 1;
       const year = now.getFullYear();
-
-      console.log(
-        `Fetching budgets for userId: ${userId}, month: ${month}, year: ${year}`
-      );
 
       const budgets = await prisma.budget.findMany({
         where: {
@@ -59,7 +56,6 @@ budgetRouter
         },
       });
 
-      // Fonction d'arrondi pour les floats (2 décimales)
       const round = (value: number, decimals = 2) => {
         return Number(
           Math.round(Number(value + 'e' + decimals)) + 'e-' + decimals
@@ -136,7 +132,7 @@ budgetRouter
         },
       });
       if (!categoryExists) {
-        return c.json({ message: 'Category not found' }, 404);
+        throw new HTTPException(404, { message: 'Category not found' });
       }
 
       const createBudget = await prisma.budget.create({
@@ -183,7 +179,7 @@ budgetRouter
         },
       });
       if (!budgetExists) {
-        return c.json({ message: 'Budget not found' }, 404);
+        throw new HTTPException(404, { message: 'Budget not found' });
       }
 
       if (budgetData.categoryId) {
@@ -199,7 +195,7 @@ budgetRouter
           },
         });
         if (!categoryExists) {
-          return c.json({ message: 'Category not found' }, 404);
+          throw new HTTPException(404, { message: 'Category not found' });
         }
       }
 
