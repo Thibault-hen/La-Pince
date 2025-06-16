@@ -6,6 +6,8 @@ import { Scalar } from '@scalar/hono-api-reference';
 import { csrf } from 'hono/csrf';
 import { cors } from 'hono/cors';
 import { getOrigins } from './utils/env';
+import { HTTPException } from 'hono/http-exception';
+import { ZodError } from 'zod';
 
 const app = new Hono();
 
@@ -26,6 +28,30 @@ app.use(
     credentials: true,
   }),
 );
+
+app.onError((err, c) => {
+  if (err instanceof HTTPException) {
+    return err.getResponse()
+  }
+
+  if (err instanceof ZodError) {
+    return c.json(
+      {
+        message: 'Validation Error',
+        errors: err.errors,
+      },
+      400,
+    );
+  }
+  
+  return c.json(
+    {
+      message: 'Internal Server Error',
+      error: err.message,
+    },
+    500,
+  );  
+})
 
 app.route('/', router);
 

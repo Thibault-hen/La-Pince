@@ -6,7 +6,7 @@ import { categoryCreateOrUpdateSchema, categorySelectSchema } from '../validator
 import prisma from '../db/client';
 import { HTTPException } from 'hono/http-exception';
 import z from 'zod';
-import { paramsWithId } from '../validators/utils';
+import { paramsWithId, zodValidatorMessage } from '../validators/utils';
 
 const categoryRouter = new Hono();
 
@@ -85,7 +85,9 @@ categoryRouter.basePath('/category')
       404: response404(z.literal('UserId not found')),
     }
   }),
-  zValidator('json', categoryCreateOrUpdateSchema),
+  zValidator('json', categoryCreateOrUpdateSchema, (result, c) => 
+      zodValidatorMessage(result, c)
+),
   async(c) => {
     const userId = c.get('jwtPayload').userId;
     const { title, colorId } = c.req.valid('json');
@@ -112,7 +114,9 @@ categoryRouter.basePath('/category')
     }
   }),
   zValidator('param', paramsWithId),
-  zValidator('json', categoryCreateOrUpdateSchema),
+  zValidator('json', categoryCreateOrUpdateSchema, (result, c) => 
+    zodValidatorMessage(result, c)
+),
   async (c) => {
     const userId = c.get('jwtPayload').userId;
     const categoryId = c.req.param('id');

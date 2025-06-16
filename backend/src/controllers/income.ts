@@ -5,7 +5,7 @@ import { response200, response204, response404 } from '../utils/openapi';
 import { type IncomeCreateOrUpdate, incomeCreateOrUpdateSchema, incomeSelectSchema } from '../validators/income';
 import { zValidator } from '@hono/zod-validator';
 import prisma from '../db/client';
-import { paramsWithId } from '../validators/utils';
+import { paramsWithId, zodValidatorMessage } from '../validators/utils';
 import { HTTPException } from 'hono/http-exception';
 
 const incomeRouter = new Hono();
@@ -48,7 +48,9 @@ incomeRouter.basePath('/income')
       201: response200(incomeSelectSchema),
     },
   }),
-  zValidator('json', incomeCreateOrUpdateSchema),
+  zValidator('json', incomeCreateOrUpdateSchema, (result, c) => 
+      zodValidatorMessage(result, c)
+),
   async (c) => {
     const incomeData = c.req.valid('json') as IncomeCreateOrUpdate;
 
@@ -71,7 +73,9 @@ incomeRouter.basePath('/income')
     },
   }),
   zValidator('param', paramsWithId),
-  zValidator('json', incomeCreateOrUpdateSchema),
+  zValidator('json', incomeCreateOrUpdateSchema, (result, c) => 
+    zodValidatorMessage(result, c)
+),
   async (c) => {
     const incomeId = c.req.param('id');
     const data = c.req.valid('json') as IncomeCreateOrUpdate;

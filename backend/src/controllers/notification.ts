@@ -4,7 +4,7 @@ import { response200, response201, response204, response401, response404 } from 
 import prisma from '../db/client';
 import { notificationCreateOrUpdateSchema, notificationSelectSchema } from '../validators/notification';
 import { zValidator } from '@hono/zod-validator';
-import { paramsWithId } from '../validators/utils';
+import { paramsWithId, zodValidatorMessage } from '../validators/utils';
 import { HTTPException } from 'hono/http-exception';
 
 const notificationRouter = new Hono();
@@ -37,7 +37,9 @@ notificationRouter.basePath('/notification')
       401: response401()
     }
   }),
-  zValidator('json', notificationCreateOrUpdateSchema),
+  zValidator('json', notificationCreateOrUpdateSchema, (result, c) => 
+      zodValidatorMessage(result, c)
+),
   async(c) => {
     const userId = c.get('jwtPayload').userId;
     const { content, isSeen } = c.req.valid('json');

@@ -1,11 +1,12 @@
 import { zValidator } from '@hono/zod-validator';
-import { Hono } from 'hono';
-import { paramsWithId } from '../validators/utils';
+import { Context, Env, Hono } from 'hono';
+import { paramsWithId, zodValidatorMessage } from '../validators/utils';
 import { describeRoute } from 'hono-openapi';
 import { response200, response201, response204, response404 } from '../utils/openapi';
 import { ExpenseCreateOrUpdate, expenseCreateOrUpdateSchema, expenseSelectSchema } from '../validators/expense';
 import prisma from '../db/client';
 import { HTTPException } from 'hono/http-exception';
+import { ZodError } from 'zod';
 
 const expenseRouter = new Hono();
 
@@ -124,7 +125,9 @@ expenseRouter.basePath('/expense')
       404: response404(),
     }
   }),
-  zValidator('json', expenseCreateOrUpdateSchema),
+  zValidator('json', expenseCreateOrUpdateSchema, (result, c) => 
+    zodValidatorMessage(result, c)
+  ),
   async (c) => {
     const expense = c.req.valid('json') as ExpenseCreateOrUpdate;
 
@@ -158,7 +161,9 @@ expenseRouter.basePath('/expense')
     }
   }),
   zValidator('param', paramsWithId),
-  zValidator('json', expenseCreateOrUpdateSchema),
+  zValidator('json', expenseCreateOrUpdateSchema, (result, c) => 
+    zodValidatorMessage(result, c)
+),
   async (c) => {
     const expenseId = c.req.param('id');
     const expenseToUpdate = c.req.valid('json') as ExpenseCreateOrUpdate;
