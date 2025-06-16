@@ -1,7 +1,6 @@
 import { Hono } from 'hono';
 import { describeRoute } from 'hono-openapi';
 import { response200, response201, response204, response401, response404 } from '../utils/openapi';
-import z from 'zod';
 import prisma from '../db/client';
 import { notificationCreateOrUpdateSchema, notificationSelectSchema } from '../validators/notification';
 import { zValidator } from '@hono/zod-validator';

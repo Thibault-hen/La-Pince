@@ -2,9 +2,10 @@ import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { paramsWithId } from '../validators/utils';
 import { describeRoute } from 'hono-openapi';
-import { response200, response201, response204, response401, response404 } from '../utils/openapi';
+import { response200, response201, response204, response404 } from '../utils/openapi';
 import { ExpenseCreateOrUpdate, expenseCreateOrUpdateSchema, expenseSelectSchema } from '../validators/expense';
 import prisma from '../db/client';
+import { HTTPException } from 'hono/http-exception';
 
 const expenseRouter = new Hono();
 
@@ -135,7 +136,7 @@ expenseRouter.basePath('/expense')
     });
 
     if (!budgetExists) {
-      return c.json({ message: 'Budget not found' }, 404);
+      throw new HTTPException(404, { message : 'Budget not found' });
     }
 
     const createdExpense = await prisma.expense.create({
@@ -170,7 +171,7 @@ expenseRouter.basePath('/expense')
     });
 
     if (!budgetExists) {
-      return c.json({ message: 'Budget not found' }, 404);
+      throw new HTTPException(404, { message : 'Budget not found' });
     }
 
     const expense = await prisma.expense.findUnique({
@@ -181,7 +182,7 @@ expenseRouter.basePath('/expense')
     });
 
     if (!expense) {
-      return c.json({ message: 'Expense not found' }, 404);
+      throw new HTTPException(404, { message : 'Expense not found' });
     }
 
     const updatedExpense = await prisma.expense.update({
@@ -217,7 +218,7 @@ expenseRouter.basePath('/expense')
     });
 
     if (!expense) {
-      return c.json({ message: 'Expense not found' }, 404);
+      throw new HTTPException(404, { message : 'Expense not found' });
     }
 
     await prisma.expense.delete({

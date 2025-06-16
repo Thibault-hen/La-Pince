@@ -1,11 +1,12 @@
 import { Hono } from 'hono';
 import { describeRoute } from 'hono-openapi';
 import { describe } from 'node:test';
-import { response200, response204, response401, response404 } from '../utils/openapi';
+import { response200, response204, response404 } from '../utils/openapi';
 import { type IncomeCreateOrUpdate, incomeCreateOrUpdateSchema, incomeSelectSchema } from '../validators/income';
 import { zValidator } from '@hono/zod-validator';
 import prisma from '../db/client';
 import { paramsWithId } from '../validators/utils';
+import { HTTPException } from 'hono/http-exception';
 
 const incomeRouter = new Hono();
 
@@ -83,7 +84,7 @@ incomeRouter.basePath('/income')
     });
 
     if (!income) {
-      return c.json({ message: 'Income not found' }, 404);
+      throw new HTTPException(404, { message : 'Income not found' });
     }
 
     const updatedIncome = await prisma.income.update({
@@ -117,7 +118,7 @@ incomeRouter.basePath('/income')
     });
 
     if (!income) {
-      return c.json({ message: 'Income not found' }, 404);
+      throw new HTTPException(404, { message : 'Income not found' });
     }
 
     await prisma.income.delete({
