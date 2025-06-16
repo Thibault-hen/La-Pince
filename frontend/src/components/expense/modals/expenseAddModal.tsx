@@ -19,7 +19,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { useCategory } from '@/hooks/use-category';
+import { useCategories } from '@/hooks/use-category';
 
 type ExpenseAddModalProps = {
   isModalOpen: boolean;
@@ -27,7 +27,8 @@ type ExpenseAddModalProps = {
 };
 
 export default function ExpenseAddModal({ isModalOpen, handleClose }: ExpenseAddModalProps) {
-  const { categories, isLoading } = useCategory();
+  const { categories } = useCategories();
+
   return (
     <Dialog
       open={isModalOpen}

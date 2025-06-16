@@ -1,4 +1,4 @@
-import { expenseService, type GetExpensesResponse } from '@/services/expenses';
+import { expenseService } from '@/services/expenses';
 import { useQuery } from '@tanstack/react-query';
 
 export type Expense = {
