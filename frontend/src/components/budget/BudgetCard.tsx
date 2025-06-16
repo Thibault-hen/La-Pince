@@ -8,9 +8,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import type { Budget } from '@/services/budget';
 import { getColorStatus } from '@/utils/colorStatus';
 import { getPercentage } from '@/utils/percentage';
+import type { Budget } from '@/types/budget';
 
 interface BudgetProps {
   budget: Budget;
