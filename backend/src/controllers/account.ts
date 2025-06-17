@@ -6,10 +6,12 @@ import prisma from '../db/client';
 import {
   response200,
   response204,
+  response400,
   response401,
+  response404,
   response409,
 } from '../utils/openapi';
-import { userSelectSchema } from '../validators/user';
+import { updateUserPasswordSchema, userSelectSchema } from '../validators/user';
 import { updateUserSchema } from '../validators/user';
 import z from 'zod';
 import { describeRoute } from 'hono-openapi';
@@ -34,13 +36,13 @@ accountRouter
       const user = await prisma.user.findUnique({
         where: { id: userId },
         omit: {
-          password: true
-        }
+          password: true,
+        },
       });
 
       const tokenCSRF = await generateTokenCSRF(c);
 
-      return c.json({user: user, token: tokenCSRF}, 200);
+      return c.json({ user: user, token: tokenCSRF }, 200);
     }
   )
   .patch(
@@ -70,13 +72,71 @@ accountRouter
         }
       }
 
-      if (data.password) {
-        data.password = await argon2.hash(data.password);
-      }
-
       const updatedUser = await prisma.user.update({
         where: { id: userId },
         data,
+      });
+
+      const { password: _, ...safeUser } = updatedUser;
+
+      return c.json(safeUser, 200);
+    }
+  )
+  .patch(
+    '/reset-password',
+    describeRoute({
+      description: 'Update current user password',
+      tags: ['account'],
+      responses: {
+        200: response200(updateUserPasswordSchema),
+        400: response400(
+          z.union([
+            z.literal('Current and new password are required'),
+            z.literal('Current password is incorrect'),
+          ])
+        ),
+        404: response404(z.literal('User not found')),
+      },
+    }),
+    zValidator('json', updateUserPasswordSchema),
+    async (c) => {
+      const userId = c.get('jwtPayload').userId;
+      const data = c.req.valid('json');
+
+      if (!data.currentPassword || !data.newPassword) {
+        throw new HTTPException(400, {
+          message: 'Current and new password are required',
+        });
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+
+      if (!user) {
+        throw new HTTPException(404, { message: 'User not found' });
+      }
+
+      const isPasswordValid = await argon2.verify(
+        user.password,
+        data.currentPassword
+      );
+      if (!isPasswordValid) {
+        throw new HTTPException(400, {
+          message: 'Current password is incorrect',
+        });
+      }
+
+      const hashedNewPassword = await argon2.hash(data.newPassword);
+      const updateData = {
+        password: hashedNewPassword,
+      };
+
+      const updatedUser = await prisma.user.update({
+        where: { id: userId },
+        data: {
+          password: hashedNewPassword,
+        },
       });
 
       const { password: _, ...safeUser } = updatedUser;
