@@ -1,5 +1,5 @@
 import { Separator } from "@/components/ui/separator";
-import { Rocket, Twitter, Instagram, Youtube } from "lucide-react";
+import {  Twitter, Instagram, Youtube } from "lucide-react";
 import laPinceLogo from "@/assets/logo.png";
 import { Link } from "react-router-dom";
 

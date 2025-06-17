@@ -1,7 +1,10 @@
 import { CirclePlus, PiggyBank } from 'lucide-react';
 import { Button } from '../ui/button';
+import { useTranslation } from 'react-i18next';
 
 export const BudgetHeader = ({ onOpenAddModal }: { onOpenAddModal: () => void }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex items-center justify-between mb-6">
       <div className="flex items-center gap-3">

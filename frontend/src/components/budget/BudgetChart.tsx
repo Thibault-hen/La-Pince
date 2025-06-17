@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/chart';
 import { TrendingUp } from 'lucide-react';
 import type { BudgetResponse } from '@/types/budget';
+import { useTranslation } from 'react-i18next';
 
 export const description = 'A donut chart with text';
 
@@ -20,6 +21,8 @@ interface BudgetChartProps {
 }
 
 export const BudgetChart = ({ budgets }: BudgetChartProps) => {
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language === 'en' ? 'en-US' : 'fr-FR';
   const totalAmount = React.useMemo(() => {
     return budgets?.budgets.reduce((acc, curr) => acc + curr.amount, 0);
   }, [budgets?.budgets]);
@@ -37,7 +40,7 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
               <TrendingUp className="h-5 w-5 text-primary-color" />
             </div>
           </div>
-          <CardTitle className="text-xl font-bold">Vue d'ensemble des budgets</CardTitle>
+          <CardTitle className="text-xl font-bold">{t('budget.chart.title')}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col lg:flex-row items-center justify-center gap-8 p-6">
           {/* Chart Section */}
@@ -73,7 +76,7 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
                               dominantBaseline="middle"
                               className="fill-gray-900 dark:fill-white text-2xl font-bold"
                             >
-                              {budgets?.budgetTotal.toLocaleString('fr-FR', {
+                              {budgets?.budgetTotal.toLocaleString(locale, {
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2,
                               })}{' '}
@@ -86,7 +89,7 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
                               dominantBaseline="middle"
                               className="fill-gray-500 dark:fill-gray-400 text-sm"
                             >
-                              Budget total
+                              {t('budget.chart.totalLabel')}
                             </text>
                           </g>
                         );

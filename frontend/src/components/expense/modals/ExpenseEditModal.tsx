@@ -19,75 +19,96 @@ import {
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useUpdateBudget } from '@/hooks/use-budget';
+import { useUpdateExpense, type Expense } from '@/hooks/expenses';
 import { useForm } from '@tanstack/react-form';
-import { updateBudgetSchema } from '@/schemas/budget.schemas';
+import { updateExpenseSchema } from '@/schemas/expense.schemas';
 import { Loader } from '@/components/ui/loader';
-import type { Budget } from '@/types/budget';
-import { useEffect } from 'react';
-import { useCategories } from '@/hooks/categories.ts';
+import { useBudgets } from '@/hooks/use-budget';
+import { DatePicker } from '../DatePicker';
 import { useTranslation } from 'react-i18next';
 
-interface AddBudgetProps {
+interface ExpenseEditModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  budget?: Budget;
+  expense?: Expense;
 }
 
-export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
-  const { data: categories } = useCategories();
-  const { mutateAsync: updateBudget } = useUpdateBudget();
+export const ExpenseEditModal = ({ expense, open, setOpen }: ExpenseEditModalProps) => {
+  const { data: { budgets = [] } = {} } = useBudgets();
+  const { mutateAsync: updateExpense } = useUpdateExpense();
   const { t } = useTranslation();
-
-  useEffect(() => {
-    form.reset();
-  }, [budget]);
 
   const form = useForm({
     defaultValues: {
-      amount: budget?.amount ?? 0,
-      limitAlert: budget?.limitAlert ?? 0,
-      categoryId: budget?.categoryId ?? '',
+      description: expense?.title ?? '',
+      amount: expense?.amount ?? 0,
+      budgetId: expense?.budgetId ?? '',
+      date: expense?.date ?? '',
     },
     validators: {
-      onSubmit: updateBudgetSchema,
+      onSubmit: updateExpenseSchema,
     },
     async onSubmit({ value }) {
-      if (!budget?.id) return;
-      await updateBudget({ id: budget.id, data: value });
+      console.log('Form submitted with values:', value);
+      if (!expense?.id) return;
+      await updateExpense({ id: expense?.id, data: { ...value } });
       setOpen(false);
     },
   });
 
-  if (!budget) return null;
+  if (!expense) return null;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <form
           onSubmit={async (e) => {
+            console.log('Form submitted:');
             e.preventDefault();
             form.handleSubmit();
           }}
         >
-          <DialogHeader className="mb-4">
+          <DialogHeader>
             <DialogTitle className="font-medium text-xl">
-              {t('budget.edit.title', { title: budget?.category?.title || 'Budget' })}
+              {t('expenses.edit.title', { title: expense?.title })}
             </DialogTitle>
-            <DialogDescription>{t('budget.edit.description')}</DialogDescription>
+            <DialogDescription>{t('expenses.edit.description')}</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
+            <form.Field
+              name="description"
+              children={(field) => (
+                <div className="grid gap-3">
+                  <Label htmlFor={field.name}>{t('expenses.edit.form.title')}</Label>
+                  <Input
+                    id={field.name}
+                    placeholder={t('expenses.edit.form.titlePlaceholder')}
+                    type="text"
+                    required
+                    value={field.state.value}
+                    onChange={(e) => {
+                      field.handleChange(e.target.value);
+                    }}
+                  />
+                  {field.state.meta.errors.length > 0 && (
+                    <span className="text-red-500 text-sm">
+                      {field.state.meta.errors[0]?.message}
+                    </span>
+                  )}
+                </div>
+              )}
+            />
             <form.Field
               name="amount"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>{t('budget.edit.form.amount')}</Label>
+                  <Label htmlFor={field.name}>{t('expenses.edit.form.amount')}</Label>
                   <Input
                     id={field.name}
-                    placeholder={t('budget.edit.form.amountPlaceholder')}
+                    placeholder={t('expenses.edit.form.amountPlaceholder')}
                     type="number"
                     required
-                    value={field.state.value || ''}
+                    value={field.state.value}
                     onChange={(e) => {
                       field.handleChange(Number(e.target.value));
                     }}
@@ -101,57 +122,26 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
               )}
             />
             <form.Field
-              name="limitAlert"
-              children={(field) => (
-                <div className="grid gap-3">
-                  <Label htmlFor={field.name}>{t('budget.edit.form.limitAlert')}</Label>
-                  <Input
-                    id={field.name}
-                    placeholder={t('budget.edit.form.limitAlertPlaceholder')}
-                    type="number"
-                    required
-                    value={field.state.value || ''}
-                    onChange={(e) => {
-                      field.handleChange(Number(e.target.value));
-                    }}
-                  />
-                  {field.state.meta.errors.length > 0 && (
-                    <span className="text-red-500 text-sm">
-                      {field.state.meta.errors[0]?.message}
-                    </span>
-                  )}
-                </div>
-              )}
-            />
-            <form.Field
-              name="categoryId"
+              name="budgetId"
               children={(field) => {
-                const selectedCategory = categories?.find(
-                  (category) => category.id === budget.categoryId
-                );
                 return (
                   <div className="grid gap-3">
-                    <Label htmlFor={field.name}>{t('budget.edit.form.category')}</Label>
+                    <Label htmlFor={field.name}>{t('expenses.edit.form.budget')}</Label>
                     <Select
                       name={field.name}
                       onValueChange={(value) => field.handleChange(value)}
-                      value={field.state.value}
-                      defaultValue={selectedCategory?.id}
+                      value={budgets.length ? field.state.value : ''}
                       required
                     >
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder={t('budget.edit.form.categoryPlaceholder')} />
+                        <SelectValue placeholder={t('expenses.edit.form.budgetPlaceholder')} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectLabel>{t('budget.edit.form.categoryLabel')}</SelectLabel>
-                          {categories?.map((category) => (
-                            <SelectItem key={category.id} value={category.id}>
-                              <span>{category.title}</span>
-                              <div
-                                style={{ backgroundColor: category.color?.value }}
-                                className="h-3 w-3 rounded-lg"
-                              ></div>
+                          <SelectLabel>{t('expenses.edit.form.budgetLabel')}</SelectLabel>
+                          {budgets?.map((budget) => (
+                            <SelectItem key={budget.id} value={budget.id}>
+                              {budget.category.title} - {budget.amount}€
                             </SelectItem>
                           ))}
                         </SelectGroup>
@@ -166,16 +156,37 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
                 );
               }}
             />
+            <form.Field
+              name="date"
+              children={(field) => (
+                <div className="grid gap-3">
+                  <Label htmlFor={field.name}>{t('expenses.edit.form.date')}</Label>
+                  <DatePicker
+                    name={field.name}
+                    required
+                    value={new Date(field.state.value)}
+                    onChange={(date) => {
+                      field.handleChange(date.toISOString());
+                    }}
+                  />
+                  {field.state.meta.errors.length > 0 && (
+                    <span className="text-red-500 text-sm">
+                      {field.state.meta.errors[0]?.message}
+                    </span>
+                  )}
+                </div>
+              )}
+            />
           </div>
           <DialogFooter className="flex justify-between items-center mt-4">
             <DialogClose asChild>
-              <Button variant="outline">{t('budget.edit.form.cancel')}</Button>
+              <Button variant="outline">{t('expenses.edit.form.cancel')}</Button>
             </DialogClose>
             <form.Subscribe
               selector={(state) => [state.isSubmitting]}
               children={([isSubmiting]) => (
                 <Button type="submit" variant="blue">
-                  {isSubmiting ? <Loader /> : t('budget.edit.form.update')}
+                  {isSubmiting ? <Loader /> : t('expenses.edit.form.update')}
                 </Button>
               )}
             />

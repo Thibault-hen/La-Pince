@@ -20,11 +20,12 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import type { Color } from '@/types/color';
-import { useCreateCategory, useUpdateCategory } from '@/hooks/use-category';
+import { useUpdateCategory } from '@/hooks/categories';
 import { useForm } from '@tanstack/react-form';
 import { createCategorySchema } from '@/schemas/category.schemas';
 import type { Category } from '@/types/category';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface AddCategoryProps {
   open: boolean;
@@ -35,6 +36,7 @@ interface AddCategoryProps {
 
 export const EditCategoryModal = ({ category, colors, open, setOpen }: AddCategoryProps) => {
   const { mutateAsync: updateCategory } = useUpdateCategory();
+  const { t } = useTranslation();
 
   useEffect(() => {
     form.reset();
@@ -68,23 +70,23 @@ export const EditCategoryModal = ({ category, colors, open, setOpen }: AddCatego
         >
           <DialogHeader className="mb-4">
             <DialogTitle className="font-medium text-xl">
-              Modifie ta catégorie {category?.title}
+              {t('category.edit.title', { title: category?.title || 'Category' })}
             </DialogTitle>
-            <DialogDescription>Modifie les informations de ton budget</DialogDescription>
+            <DialogDescription>{t('category.edit.description')}</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <form.Field
               name="title"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>Titre</Label>
+                  <Label htmlFor={field.name}>{t('category.edit.form.title')}</Label>
                   <Input
                     id={field.name}
                     onChange={(e) => {
                       field.handleChange(e.target.value);
                     }}
                     value={field.state.value || ''}
-                    placeholder="Loisirs"
+                    placeholder={t('category.edit.form.titlePlaceholder')}
                     type="text"
                     required
                   />
@@ -102,7 +104,7 @@ export const EditCategoryModal = ({ category, colors, open, setOpen }: AddCatego
                 const selectedColor = colors?.find((color) => color.id === category?.colorId);
                 return (
                   <div className="grid gap-3">
-                    <Label htmlFor={field.name}>Couleurs</Label>
+                    <Label htmlFor={field.name}>{t('category.edit.form.color')}</Label>
                     <Select
                       name={field.name}
                       onValueChange={(value) => field.handleChange(value)}
@@ -111,11 +113,11 @@ export const EditCategoryModal = ({ category, colors, open, setOpen }: AddCatego
                       value={field.state.value}
                     >
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Sélectionne une couleur" />
+                        <SelectValue placeholder={t('category.edit.form.colorPlaceholder')} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectLabel>Couleurs</SelectLabel>
+                          <SelectLabel>{t('category.edit.form.colorLabel')}</SelectLabel>
                           {colors?.map((color) => (
                             <SelectItem key={color.id} value={color.id ?? ''} className="flex">
                               <span>{color.name}</span>
@@ -135,10 +137,10 @@ export const EditCategoryModal = ({ category, colors, open, setOpen }: AddCatego
           </div>
           <DialogFooter className="mt-4 flex justify-between items-center">
             <DialogClose asChild>
-              <Button variant="outline">Annuler</Button>
+              <Button variant="outline">{t('category.edit.form.cancel')}</Button>
             </DialogClose>
             <Button type="submit" variant="blue">
-              Modifier
+              {t('category.edit.form.update')}
             </Button>
           </DialogFooter>
         </form>

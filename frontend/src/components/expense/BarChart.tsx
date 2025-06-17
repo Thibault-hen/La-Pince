@@ -8,13 +8,14 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { useMemo, useState } from 'react';
-import { useExpenses } from '@/hooks/use-expenses';
+import { useExpenses } from '@/hooks/expenses';
+import { useTranslation } from 'react-i18next';
 
 export const description = 'An interactive bar chart';
 
 const chartConfig = {
   amount: {
-    label: 'Montant total ',
+    label: 'expenses.chart.header.totalAmount',
     color: 'var(--chart-2)',
   },
 } satisfies ChartConfig;
@@ -33,23 +34,23 @@ function getExpensesThisMonth<T extends { date: string }>(expenses: T[]): T[] {
 
 export function ChartBarInteractive() {
   const [activeChart, setActiveChart] = useState<keyof typeof chartConfig>('amount');
-
   const { expenses } = useExpenses();
-
   const expensesThisMonth = useMemo(() => getExpensesThisMonth(expenses), [expenses]);
-
   const total = useMemo(
     () => ({
       amount: expenses.reduce((acc, curr) => acc + curr.amount, 0),
     }),
     []
   );
+  const { t, i18n } = useTranslation();
+
+  const locale = i18n.language === 'en' ? 'en-US' : 'fr-FR';
 
   return (
     <Card className="py-0 dark:bg-primary">
       <CardHeader className="flex flex-col items-stretch border-b !p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 pt-4 pb-3 sm:!py-0">
-          <CardTitle>Vos dépense du mois</CardTitle>
+          <CardTitle>{t('expenses.chart.header.title')}</CardTitle>
         </div>
         <div className="flex">
           {Object.keys(chartConfig).map((key) => {
@@ -61,7 +62,7 @@ export function ChartBarInteractive() {
                 className="data-[active=true]:bg-muted/50 relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l sm:border-t-0 sm:border-l sm:px-8 sm:py-6"
                 onClick={() => setActiveChart(chart)}
               >
-                <span className="text-muted-foreground text-xs">{chartConfig[chart].label}</span>
+                <span className="text-muted-foreground text-xs">{t(chartConfig[chart].label)}</span>
                 <span className="text-lg leading-none font-bold sm:text-3xl">
                   {total[key as keyof typeof total].toLocaleString()}
                   <strong>€</strong>
@@ -90,7 +91,7 @@ export function ChartBarInteractive() {
               minTickGap={32}
               tickFormatter={(value) => {
                 const date = new Date(value);
-                return date.toLocaleDateString('fr-FR', {
+                return date.toLocaleDateString(locale, {
                   month: 'short',
                   day: 'numeric',
                 });
@@ -102,7 +103,7 @@ export function ChartBarInteractive() {
                   className="w-[150px]"
                   nameKey="amount"
                   labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString('fr-FR', {
+                    return new Date(value).toLocaleDateString(locale, {
                       month: 'short',
                       day: 'numeric',
                       year: 'numeric',

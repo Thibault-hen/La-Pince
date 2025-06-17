@@ -7,11 +7,14 @@ import {} from 'react';
 import { DefaultWrapper } from './DefaultWrapper';
 import { useQueryClient } from '@tanstack/react-query';
 import type { User } from '@/services/auth';
+import { useTranslation } from 'react-i18next';
 
 export const AppLayout = () => {
   const location = useLocation();
   const queryClient = useQueryClient();
   const userData = queryClient.getQueryData<User>(['authUser']);
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language === 'en' ? 'en-US' : 'fr-FR';
   return (
     <SidebarProvider>
       <aside aria-label="navigation">
@@ -26,10 +29,10 @@ export const AppLayout = () => {
             <div className="flex gap-2 items-center justify-between w-full">
               <div>
                 <h2 className="text-lg font-bold text-foreground">
-                  Salut, {userData?.user.name} 👋
+                  {t('header.greeting', { name: userData?.user.name })}
                 </h2>
                 <p className="text-xs text-muted-foreground">
-                  {new Date().toLocaleDateString('fr-FR', {
+                  {new Date().toLocaleDateString(locale, {
                     weekday: 'long',
                     day: 'numeric',
                     month: 'long',

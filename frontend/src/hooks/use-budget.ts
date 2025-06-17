@@ -2,6 +2,7 @@ import { budgetService } from '@/services/budget';
 import type { BudgetResponse, UpdateBudget } from '@/types/budget';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 
 export const useBudgets = () => {
   return useQuery<BudgetResponse>({
@@ -13,47 +14,46 @@ export const useBudgets = () => {
 
 export const useCreateBudget = () => {
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
   return useMutation({
     mutationFn: budgetService.createBudget,
     onSuccess: (data) => {
-      toast.success(`Ton budget ${data.category.title} a été créé`);
+      toast.success(t('budget.toast.created', { title: data.category.title }));
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
     },
     onError: (_data) => {
-      toast.error('Une erreur est survenue ou un autre budget appartient déjà à cette catégorie');
+      toast.error(t('budget.toast.createError'));
     },
   });
 };
 
 export const useUpdateBudget = () => {
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
   return useMutation({
     mutationFn: ({ id, data }: { id: string; data: UpdateBudget }) =>
       budgetService.updateBudget(id, data),
     onSuccess: (data) => {
-      toast.success(`Ton budget ${data.category.title} a été mis à jour`);
+      toast.success(t('budget.toast.updated', { title: data.category.title }));
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
     },
     onError: (_data) => {
-      toast.error(
-        'Une erreur est survenue lors de la mise à jour ou un autre budget appartient déjà à cette catégorie'
-      );
+      toast.error(t('budget.toast.updateError'));
     },
   });
 };
 
 export const useDeleteBudget = () => {
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
   return useMutation({
     mutationFn: budgetService.deleteBudget,
     onSuccess: (_data) => {
-      toast.success('Ton budget a été supprimé');
+      toast.success(t('budget.toast.deleted'));
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
     },
     onError: (_data) => {
-      toast.error(
-        "Une erreur est survenue lors de la suppression de ton budget ou il n'existe plus"
-      );
+      toast.error(t('budget.toast.deleteError'));
     },
   });
 };

@@ -8,45 +8,42 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { useDeleteBudget } from '@/hooks/use-budget';
-import type { Budget } from '@/types/budget';
+import { useDeleteExpense, type Expense } from '@/hooks/expenses';
 import { useTranslation } from 'react-i18next';
 
 interface DeleteBudgetProps {
   open: boolean;
   setOpen: (open: boolean) => void;
-  budget?: Budget;
+  expense?: Expense;
 }
 
-export const DeleteBudgetModal = ({ open, setOpen, budget }: DeleteBudgetProps) => {
-  const { mutateAsync: deleteBudget } = useDeleteBudget();
+export const ExpenseDeleteModal = ({ open, setOpen, expense }: DeleteBudgetProps) => {
+  const { mutateAsync: deleteExpense } = useDeleteExpense();
   const { t } = useTranslation();
 
-  const handleDeleteBudget = async () => {
-    if (!budget?.id) return;
-    await deleteBudget(budget.id);
-    setOpen(false);
+  const handleDeleteExpense = async () => {
+    if (expense?.id) {
+      await deleteExpense(expense.id);
+      setOpen(false);
+    }
   };
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className="font-medium text-xl">
-            {t('budget.delete.title')}
+            {t('expenses.delete.title')}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            {t('budget.delete.description', {
-              title: budget?.category.title || 'Budget',
-              amount: budget?.amount || 0,
-            })}
+            {t('expenses.delete.description', { title: expense?.title, amount: expense?.amount })}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel className="cursor-pointer">
-            {t('budget.delete.cancel')}
+            {t('expenses.delete.cancel')}
           </AlertDialogCancel>
-          <AlertDialogAction onClick={handleDeleteBudget}>
-            {t('budget.delete.confirm')}
+          <AlertDialogAction onClick={handleDeleteExpense}>
+            {t('expenses.delete.confirm')}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

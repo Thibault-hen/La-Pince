@@ -4,11 +4,10 @@ import { AddCategoryModal } from '@/components/category/modals/AddCategoryModal'
 import { DeleteCategoryModal } from '@/components/category/modals/DeleteCategoryModal';
 import { EditCategoryModal } from '@/components/category/modals/EditCategoryModal';
 import { MainLoader } from '@/components/ui/MainLoader';
-import { useCategories } from '@/hooks/use-category';
+import { useCategories } from '@/hooks/categories';
 import { useColors } from '@/hooks/use-color';
 import type { Category } from '@/types/category';
 import { useState } from 'react';
-
 export const CategoryPage = () => {
   const [openAddCategory, setOpenAddCategory] = useState(false);
   const [openEditCategory, setOpenEditCategory] = useState(false);

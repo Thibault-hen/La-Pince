@@ -1,56 +1,51 @@
-import { EllipsisVerticalIcon, Pencil, Trash2 } from "lucide-react";
-import type { ColumnDef } from "@tanstack/react-table";
+import { EllipsisVerticalIcon, Pencil, Trash2 } from 'lucide-react';
+import type { ColumnDef } from '@tanstack/react-table';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import type { Expense } from '@/hooks/expenses';
+import type { TFunction } from 'i18next';
 
-export type IExpense = {
-  id: string;
-  title: string;
-  category: {
-    title: string;
-    color: string;
-  };
-  amount: number;
-  date: string;
-};
-
-export const columns: ColumnDef<IExpense>[] = [
+export const createColumns = (
+  onEdit: (expense: Expense) => void,
+  onDelete: (expense: Expense) => void,
+  t: TFunction,
+  locale: string = 'fr-FR'
+): ColumnDef<Expense>[] => [
   {
-    accessorKey: "id",
-    header: "",
+    accessorKey: 'id',
+    header: '',
     cell: () => {
-      return "";
+      return '';
     },
   },
   {
-    accessorKey: "title",
-    header: "Titre",
+    accessorKey: 'title',
+    header: t('expenses.table.columns.title'),
     cell: ({ row }) => {
-      const title: string = row.getValue("title");
+      const title: string = row.getValue('title');
       return <div className="font-medium">{title}</div>;
     },
-    filterFn: "includesString",
+    filterFn: 'includesString',
   },
   {
-    accessorKey: "category",
-    header: () => <div className="text-center">Categorie</div>,
+    accessorKey: 'category',
+    header: () => <div className="text-center">{t('expenses.table.columns.category')}</div>,
     cell: ({ row }) => {
-      const category: { title: string; color: string } =
-        row.getValue("category");
+      const category: { title: string; color: string } = row.getValue('category');
       return (
         <div className="flex justify-center">
           <Badge
             className={
-              "border align-center items-center capitalize min-w-26 bg-white dark:bg-secondary"
+              'border align-center items-center capitalize min-w-26 bg-white dark:bg-secondary'
             }
             style={{
-              border: "1px solid " + category.color,
+              border: '1px solid ' + category.color,
             }}
           >
             <span className="text-black dark:text-white">{category.title}</span>
@@ -60,33 +55,31 @@ export const columns: ColumnDef<IExpense>[] = [
     },
   },
   {
-    accessorKey: "date",
-    header: "Date",
+    accessorKey: 'date',
+    header: t('expenses.table.columns.date'),
     cell: ({ row }) => {
-      const date: string = row.getValue("date");
+      const date: string = row.getValue('date');
       const formated = new Date(Date.parse(date));
-      return <span>{formated.toLocaleDateString()}</span>;
+      return <span>{formated.toLocaleDateString(locale)}</span>;
     },
   },
   {
-    accessorKey: "amount",
-    header: () => <div className=" text-right">Montant</div>,
+    accessorKey: 'amount',
+    header: () => <div className=" text-right">{t('expenses.table.columns.amount')}</div>,
     cell: ({ row }) => {
-      const amount = Number.parseFloat(row.getValue("amount"));
-      const formatted = new Intl.NumberFormat("eu-FR", {
-        style: "currency",
-        currency: "EUR",
+      const amount = Number.parseFloat(row.getValue('amount'));
+      const formatted = new Intl.NumberFormat(locale, {
+        style: 'currency',
+        currency: 'EUR',
       }).format(amount);
 
       return <div className="text-right font-medium">{formatted}</div>;
     },
   },
   {
-    accessorKey: "edit",
-    header: "",
+    accessorKey: 'edit',
+    header: '',
     cell: ({ row }) => {
-      const id = row.getValue("id");
-
       return (
         <div className="flex justify-end">
           <DropdownMenu>
@@ -95,21 +88,19 @@ export const columns: ColumnDef<IExpense>[] = [
                 <EllipsisVerticalIcon className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent
-              className="outline  rounded-md shadow-lg"
-              align="start"
-            >
-              <DropdownMenuItem onSelect={() => console.log("Edit", id)}>
+            <DropdownMenuContent className="outline  rounded-md shadow-lg" align="start">
+              <DropdownMenuItem onSelect={() => onEdit(row.original)}>
                 <Pencil size={20} />
-                Éditer
+                {t('expenses.table.actions.edit')}
               </DropdownMenuItem>
+
               <DropdownMenuItem
                 variant="destructive"
                 className=""
-                onSelect={() => console.log("Supprimer", id)}
+                onSelect={() => onDelete(row.original)}
               >
                 <Trash2 />
-                Supprimer
+                {t('expenses.table.actions.delete')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

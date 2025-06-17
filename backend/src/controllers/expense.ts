@@ -11,7 +11,7 @@ import { ZodError } from 'zod';
 const expenseRouter = new Hono();
 
 expenseRouter.basePath('/expense')
-.get('/', 
+.get('/',
   describeRoute({
     description: 'Get expenses by user ID',
     tags: ['expense'],
@@ -26,10 +26,6 @@ expenseRouter.basePath('/expense')
       },
       orderBy: {
         date: 'desc',
-      },
-      omit:{
-        userId: true, 
-        budgetId: true, 
       },
       include: {
         budget:{
@@ -125,7 +121,7 @@ expenseRouter.basePath('/expense')
       404: response404(),
     }
   }),
-  zValidator('json', expenseCreateOrUpdateSchema, (result, c) => 
+  zValidator('json', expenseCreateOrUpdateSchema, (result, c) =>
     zodValidatorMessage(result, c)
   ),
   async (c) => {
@@ -161,7 +157,7 @@ expenseRouter.basePath('/expense')
     }
   }),
   zValidator('param', paramsWithId),
-  zValidator('json', expenseCreateOrUpdateSchema, (result, c) => 
+  zValidator('json', expenseCreateOrUpdateSchema, (result, c) =>
     zodValidatorMessage(result, c)
 ),
   async (c) => {

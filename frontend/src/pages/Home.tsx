@@ -2,7 +2,7 @@ import Contact from '@/components/blocks/contact';
 import Footer01 from '@/components/blocks/footer-01';
 import Hero05 from '@/components/blocks/hero-05';
 import Problem01 from '@/components/blocks/problem-01';
-import Header from '@/components/homePage/header.tsx';
+import Header from '@/components/homePage/Header.tsx';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 
 export const Home = () => {
