@@ -1,4 +1,4 @@
-import { CirclePlus, PiggyBank } from 'lucide-react';
+import { PiggyBank } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useTranslation } from 'react-i18next';
 
@@ -18,7 +18,7 @@ export const BudgetHeader = ({ onOpenAddModal }: { onOpenAddModal: () => void })
       </div>
       <div>
         <Button variant="blue" onClick={onOpenAddModal}>
-          Ajouter un budget <CirclePlus />
+          Ajouter un budget
         </Button>
       </div>
     </div>

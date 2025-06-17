@@ -1,15 +1,31 @@
 import { categoryService } from '@/services/category';
-import type { Category, UpdateCategory } from '@/types/category';
+import type { CategoryWithBudget, UpdateCategory } from '@/types/category';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
+import { useCurrency } from './use-currency';
+import { da } from 'date-fns/locale';
 
 export const useCategories = () => {
-  return useQuery<Category[]>({
-    queryKey: ['categories'],
+  const { currency, convertFromEUR } = useCurrency();
+  const { data, ...others } = useQuery<CategoryWithBudget[]>({
+    queryKey: ['categories', currency],
     queryFn: categoryService.getAll,
+    select: (data) =>
+      data.map((category) => ({
+        ...category,
+        budgets: category.budgets?.map((budget) => ({
+          ...budget,
+          amount: convertFromEUR(budget.amount),
+        })),
+      })),
     staleTime: 1000 * 60 * 5,
   });
+
+  return {
+    data,
+    ...others,
+  };
 };
 
 export const useCreateCategory = () => {

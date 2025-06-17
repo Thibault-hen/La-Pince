@@ -2,9 +2,10 @@ import { TrendingUp, Hash, Euro } from 'lucide-react';
 import { Progress } from '../ui/progress';
 import { useSpring } from 'motion/react';
 import { useEffect, useState } from 'react';
-import { ColorStatus, getColorStatus } from '@/utils/colorStatus';
+import { getColorStatus } from '@/utils/colorStatus';
 import { getPercentage } from '@/utils/percentage';
 import { useTranslation } from 'react-i18next';
+import { useCurrency } from '@/hooks/use-currency';
 
 type BudgetCardsProps = {
   totalBudget?: number;
@@ -13,9 +14,10 @@ type BudgetCardsProps = {
 };
 
 export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: BudgetCardsProps) => {
-  const [displayTotal, setDisplayTotal] = useState<string>();
-  const [displayCount, setDisplayCount] = useState<string>();
-  const [displayRemaining, setDisplayRemaining] = useState<string>();
+  const { formatAmount } = useCurrency();
+  const [displayTotal, setDisplayTotal] = useState<string>('0.00');
+  const [displayCount, setDisplayCount] = useState<string>('0.00');
+  const [displayRemaining, setDisplayRemaining] = useState<string>('0.00');
   const { t } = useTranslation();
 
   const total = useSpring(0, {
@@ -70,8 +72,7 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
 
           <div className="space-y-1">
             <div className="text-xl md:text-3xl font-bold text-gray-900 dark:text-white">
-              {displayTotal}
-              <span className="text-lg text-gray-500 dark:text-gray-400 ml-1">€</span>
+              {formatAmount(Number(displayTotal))}
             </div>
             <p className="text-sm text-muted-foreground">{t('budget.cards.totalBudget')}</p>
           </div>
@@ -90,7 +91,7 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
           </div>
 
           <div className="space-y-1">
-            <div className="text-xl md:text-3xl font-bold">{displayCount}</div>
+            <div className="text-xl md:text-3xl font-bold"> {displayCount}</div>
             <p className="text-sm text-muted-foreground">{t('budget.cards.activeBudgets')}</p>
           </div>
         </div>
@@ -109,8 +110,7 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
 
           <div className="space-y-1">
             <div className="text-xl md:text-3xl font-bold ">
-              <span>{displayRemaining}</span>
-              <span className="text-lg text-gray-500 dark:text-gray-400 ml-1">€</span>
+              <span> {formatAmount(Number(displayRemaining))}</span>
             </div>
             <p className="text-sm text-muted-foreground">{t('budget.cards.remainingBudget')}</p>
 
