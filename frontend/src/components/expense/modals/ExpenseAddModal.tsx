@@ -23,7 +23,7 @@ import { DatePicker } from '../DatePicker';
 import { useBudgets } from '@/hooks/use-budget';
 import { createExpenseSchema } from '@/schemas/expense.schemas';
 import { useForm } from '@tanstack/react-form';
-import { useCreateExpense } from '@/hooks/expenses';
+import { useCreateExpense } from '@/hooks/use-expense';
 import { Loader } from '@/components/ui/loader';
 import type z from 'zod';
 import { useTranslation } from 'react-i18next';

@@ -25,7 +25,7 @@ import { updateBudgetSchema } from '@/schemas/budget.schemas';
 import { Loader } from '@/components/ui/loader';
 import type { Budget } from '@/types/budget';
 import { useEffect } from 'react';
-import { useCategories } from '@/hooks/categories.ts';
+import { useCategories } from '@/hooks/use-category';
 import { useTranslation } from 'react-i18next';
 
 interface AddBudgetProps {

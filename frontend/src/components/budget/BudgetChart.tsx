@@ -42,7 +42,7 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
           </div>
           <CardTitle className="text-xl font-bold">{t('budget.chart.title')}</CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col lg:flex-row items-center justify-center gap-8 p-6">
+        <CardContent className="flex flex-col xl:flex-row items-center justify-center gap-8 p-6">
           {/* Chart Section */}
           <div className="relative">
             <ChartContainer

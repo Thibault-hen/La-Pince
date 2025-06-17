@@ -82,11 +82,7 @@ export const CategoryCard = ({ category, onOpenDeleteModal, onOpenEditModal }: I
             variant="outline"
             className="font-bold items-center hover:bg-secondary-color transition-all duration-200 ease-in-out"
           >
-            {category?.budgets
-              ?.reduce((total, budget) => total + budget.amount, 0)
-              .toFixed(2)
-              .toLocaleString()}{' '}
-            €
+            {category?.budgets?.reduce((total, budget) => total + budget.amount, 0).toFixed(2)}€
           </Badge>
         </CardDescription>
       </CardContent>

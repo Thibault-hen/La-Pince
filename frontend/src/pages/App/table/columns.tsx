@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import type { Expense } from '@/hooks/expenses';
+import type { Expense } from '@/hooks/use-expense';
 import type { TFunction } from 'i18next';
 
 export const createColumns = (

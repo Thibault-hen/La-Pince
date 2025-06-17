@@ -8,7 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { useDeleteExpense, type Expense } from '@/hooks/expenses';
+import { useDeleteExpense, type Expense } from '@/hooks/use-expense';
 import { useTranslation } from 'react-i18next';
 
 interface DeleteBudgetProps {

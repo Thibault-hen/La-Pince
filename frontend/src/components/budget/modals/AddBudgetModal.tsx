@@ -23,7 +23,7 @@ import { useCreateBudget } from '@/hooks/use-budget';
 import { useForm } from '@tanstack/react-form';
 import { createBudgetSchema } from '@/schemas/budget.schemas';
 import { Loader } from '@/components/ui/loader';
-import { useCategories } from '@/hooks/categories';
+import { useCategories } from '@/hooks/use-category';
 import { useTranslation } from 'react-i18next';
 
 interface AddBudgetProps {

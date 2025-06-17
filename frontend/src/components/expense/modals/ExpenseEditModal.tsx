@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useUpdateExpense, type Expense } from '@/hooks/expenses';
+import { useUpdateExpense, type Expense } from '@/hooks/use-expense';
 import { useForm } from '@tanstack/react-form';
 import { updateExpenseSchema } from '@/schemas/expense.schemas';
 import { Loader } from '@/components/ui/loader';
