@@ -9,6 +9,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useDeleteBudget } from '@/hooks/use-budget';
+import { useCurrency } from '@/hooks/use-currency';
 import type { Budget } from '@/types/budget';
 import { useTranslation } from 'react-i18next';
 
@@ -21,6 +22,7 @@ interface DeleteBudgetProps {
 export const DeleteBudgetModal = ({ open, setOpen, budget }: DeleteBudgetProps) => {
   const { mutateAsync: deleteBudget } = useDeleteBudget();
   const { t } = useTranslation();
+  const { formatAmount } = useCurrency();
 
   const handleDeleteBudget = async () => {
     if (!budget?.id) return;
@@ -37,7 +39,7 @@ export const DeleteBudgetModal = ({ open, setOpen, budget }: DeleteBudgetProps) 
           <AlertDialogDescription>
             {t('budget.delete.description', {
               title: budget?.category.title || 'Budget',
-              amount: budget?.amount || 0,
+              amount: formatAmount(Number(budget?.amount)) || 0,
             })}
           </AlertDialogDescription>
         </AlertDialogHeader>

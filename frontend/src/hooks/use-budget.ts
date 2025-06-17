@@ -1,13 +1,26 @@
 import { budgetService } from '@/services/budget';
-import type { BudgetResponse, UpdateBudget } from '@/types/budget';
+import type { Budget, BudgetResponse, CreateBudget, UpdateBudget } from '@/types/budget';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
+import { useCurrency } from './use-currency';
 
 export const useBudgets = () => {
+  const { convertFromEUR, currency } = useCurrency();
   return useQuery<BudgetResponse>({
-    queryKey: ['budgets'],
+    queryKey: ['budgets', currency],
     queryFn: budgetService.getAllBudgets,
+    select: (data) => ({
+      ...data,
+      budgets: data.budgets.map((budget: Budget) => ({
+        ...budget,
+        totalExpense: convertFromEUR(budget.totalExpense),
+        amount: convertFromEUR(budget.amount),
+        limitAlert: convertFromEUR(budget.limitAlert),
+      })),
+      budgetTotal: convertFromEUR(data.budgetTotal),
+      budgetRemaining: convertFromEUR(data.budgetRemaining),
+    }),
     staleTime: 1000 * 60 * 5,
   });
 };
@@ -15,9 +28,17 @@ export const useBudgets = () => {
 export const useCreateBudget = () => {
   const queryClient = useQueryClient();
   const { t } = useTranslation();
+  const { convertToEUR } = useCurrency();
   return useMutation({
-    mutationFn: budgetService.createBudget,
+    mutationFn: async (data: CreateBudget) => {
+      return budgetService.createBudget({
+        ...data,
+        amount: convertToEUR(data.amount),
+        limitAlert: convertToEUR(data.limitAlert),
+      });
+    },
     onSuccess: (data) => {
+      console.log('Budget created:', data);
       toast.success(t('budget.toast.created', { title: data.category.title }));
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
     },

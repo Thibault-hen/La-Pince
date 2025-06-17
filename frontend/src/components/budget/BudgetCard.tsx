@@ -12,6 +12,7 @@ import { getColorStatus } from '@/utils/colorStatus';
 import { getPercentage } from '@/utils/percentage';
 import type { Budget } from '@/types/budget';
 import { useTranslation } from 'react-i18next';
+import { useCurrency } from '@/hooks/use-currency';
 
 interface BudgetProps {
   budget: Budget;
@@ -21,13 +22,14 @@ interface BudgetProps {
 
 export const BudgetCard = ({ budget, onOpenEditModal, onOpenDeleteModal }: BudgetProps) => {
   const { t } = useTranslation();
+  const { formatAmount } = useCurrency();
 
   const getRemainingBudget = () => {
     if (budget.amount === undefined || budget.totalExpense === undefined) {
       return 0;
     }
     const remaining = budget.amount - budget.totalExpense;
-    return remaining < 0 ? 0 : remaining.toFixed(2);
+    return remaining < 0 ? '0' : remaining.toFixed(2);
   };
 
   return (
@@ -98,10 +100,10 @@ export const BudgetCard = ({ budget, onOpenEditModal, onOpenDeleteModal }: Budge
             </div>
             <div className="flex items-center gap-1">
               <span className={`${budget.totalExpense > budget.amount ? 'text-red-500' : ''}`}>
-                {budget.totalExpense.toFixed(2)}
+                {formatAmount(budget.totalExpense)}
               </span>
               <span>/</span>
-              <span className="font-bold">{budget.amount.toFixed(2)} €</span>
+              <span className="font-bold">{formatAmount(budget.amount)} €</span>
             </div>
           </div>
           <div className="flex w-full flex-col">
@@ -116,7 +118,7 @@ export const BudgetCard = ({ budget, onOpenEditModal, onOpenDeleteModal }: Budge
               }
             />
             <span className="flex self-end p-1 text-xs text-muted-foreground font-bold">
-              {getRemainingBudget()}€ {t('budget.card.remaining')}
+              {formatAmount(Number(getRemainingBudget()))} {t('budget.card.remaining')}
             </span>
           </div>
         </CardDescription>
