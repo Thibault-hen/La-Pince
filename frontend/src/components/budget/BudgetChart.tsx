@@ -33,7 +33,7 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
       <Card className="dark:bg-primary flex overflow-hidden shadow-lg w-full h-full flex-col">
         <CardHeader className="items-center pb-0 text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <div className="p-2 bg-primary-color/10 border border-primary-color rounded-lg">
+            <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
               <TrendingUp className="h-5 w-5 text-primary-color" />
             </div>
           </div>
@@ -58,7 +58,7 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
                   stroke="rgba(255,255,255,0.1)"
                 >
                   {budgets?.budgets.map((budget) => (
-                    <Cell key={`cell-${budget.id}`} fill={budget.category.color.value} />
+                    <Cell key={`cell-${budget.id}`} fill={budget.category.color?.value} />
                   ))}
 
                   <Label
@@ -112,7 +112,7 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
                     <span
                       className="block h-4 w-4 rounded-full shadow-sm"
                       style={{
-                        backgroundColor: budget.category.color.value,
+                        backgroundColor: budget.category.color?.value,
                       }}
                     ></span>
                   </div>
@@ -124,18 +124,14 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
 
                     <div className="flex items-center gap-3">
                       <span className="font-bold text-gray-900 dark:text-white">
-                        {budget.amount.toLocaleString('fr-FR', {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}{' '}
-                        €
+                        {budget.amount.toFixed(2)} €
                       </span>
 
                       <span
                         className="text-xs font-semibold px-2 py-1 rounded-full"
                         style={{
-                          backgroundColor: `${budget.category.color.value}20`,
-                          color: budget.category.color.value,
+                          backgroundColor: `${budget.category.color?.value}20`,
+                          color: budget.category.color?.value,
                         }}
                       >
                         {itemPercentage}

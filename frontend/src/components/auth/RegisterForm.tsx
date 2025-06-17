@@ -8,6 +8,7 @@ import { useRegister } from '@/hooks/use-auth';
 import { useForm } from '@tanstack/react-form';
 import { registerSchema } from '@/schemas/auth.schemas';
 import { Loader } from '../ui/loader';
+import { Lock, Mail, User } from 'lucide-react';
 
 export function RegisterForm({ className, ...props }: React.ComponentProps<'form'>) {
   const { mutateAsync: register, error } = useRegister();
@@ -47,9 +48,13 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
         <form.Field
           name="name"
           children={(field) => (
-            <div className="grid gap-3">
-              <Label htmlFor={field.name}>Nom</Label>
+            <div className="relative grid gap-3">
+              <div>
+                <Label htmlFor={field.name}>Nom</Label>
+              </div>
+              <User className="absolute left-3 top-9 h-4 w-4 text-muted-foreground" />
               <Input
+                className="pl-10"
                 id={field.name}
                 value={field.state.value}
                 type="text"
@@ -68,9 +73,13 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
         <form.Field
           name="email"
           children={(field) => (
-            <div className="grid gap-3">
-              <Label htmlFor={field.name}>Email</Label>
+            <div className="relative grid gap-3">
+              <div>
+                <Label htmlFor={field.name}>Email</Label>
+              </div>
+              <Mail className="absolute left-3 top-9 h-4 w-4 text-muted-foreground" />
               <Input
+                className="pl-10"
                 id={field.name}
                 value={field.state.value}
                 type="email"
@@ -89,14 +98,16 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
         <form.Field
           name="password"
           children={(field) => (
-            <div className="grid gap-3">
+            <div className="relative grid gap-3">
               <div className="flex items-center">
                 <Label htmlFor={field.name}>Mot de passe</Label>
                 <a href="#" className="ml-auto text-sm underline-offset-4 hover:underline">
                   Mot de passe oublié ?
                 </a>
               </div>
+              <Lock className="absolute left-3 top-10 h-4 w-4 text-muted-foreground" />
               <Input
+                className="pl-10"
                 id={field.name}
                 value={field.state.value}
                 type="password"
@@ -115,11 +126,13 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
         <form.Field
           name="confirmPassword"
           children={(field) => (
-            <div className="grid gap-3">
+            <div className="relative grid gap-3">
               <div className="flex items-center">
                 <Label htmlFor={field.name}>Confirmer mot de passe</Label>
               </div>
+              <Lock className="absolute left-3 top-9 h-4 w-4 text-muted-foreground" />
               <Input
+                className="pl-10"
                 id={field.name}
                 value={field.state.value}
                 type="password"

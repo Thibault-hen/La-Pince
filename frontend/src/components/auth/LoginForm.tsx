@@ -9,6 +9,7 @@ import { useForm } from '@tanstack/react-form';
 import { loginSchema } from '@/schemas/auth.schemas';
 import { Loader } from '../ui/loader';
 import { useEffect, useState } from 'react';
+import { Lock, Mail } from 'lucide-react';
 
 type createdAccountMessages = {
   messages: {
@@ -64,9 +65,13 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'form'>)
         <form.Field
           name="email"
           children={(field) => (
-            <div className="grid gap-3">
-              <Label htmlFor={field.name}>Email</Label>
+            <div className="relative grid gap-3">
+              <div>
+                <Label htmlFor={field.name}>Email</Label>
+              </div>
+              <Mail className="absolute left-3 top-9 h-4 w-4 text-muted-foreground" />
               <Input
+                className="pl-10"
                 id={field.name}
                 value={field.state.value}
                 type="email"
@@ -86,14 +91,16 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'form'>)
         <form.Field
           name="password"
           children={(field) => (
-            <div className="grid gap-3">
+            <div className="relative grid gap-3">
               <div className="flex items-center">
                 <Label htmlFor={field.name}>Mot de passe</Label>
                 <a href="#" className="ml-auto text-sm underline-offset-4 hover:underline">
                   Mot de passe oublié ?
                 </a>
               </div>
+              <Lock className="absolute left-3 top-10 h-4 w-4 text-muted-foreground" />
               <Input
+                className="pl-10"
                 id={field.name}
                 value={field.state.value}
                 type="password"
