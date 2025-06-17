@@ -37,7 +37,7 @@ export const CategoryCard = ({ category, onOpenDeleteModal, onOpenEditModal }: I
           <CardTitle
             className="border-l-4 px-2 flex gap-2 items-center"
             style={{
-              borderLeftColor: category?.color.value as React.CSSProperties['borderLeftColor'],
+              borderLeftColor: category?.color?.value as React.CSSProperties['borderLeftColor'],
             }}
           >
             {category?.title}

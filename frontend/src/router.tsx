@@ -4,7 +4,7 @@ import { Dashboard } from './pages/App/Dashboard';
 import { BudgetPage } from './pages/App/Budget';
 import { CategoryPage } from './pages/App/Category';
 import { Expense } from './pages/App/Expense';
-import { Settings } from './pages/App/Settings';
+import { SettingsPage } from './pages/App/Settings';
 import { AppLayout } from './layouts/AppLayout';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
@@ -58,7 +58,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: 'parametres',
-                element: <Settings />,
+                element: <SettingsPage />,
               },
             ],
           },

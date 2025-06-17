@@ -56,8 +56,8 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
       <div className="relative group">
         <div className="relative bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
-            <div className="p-2 dark:bg-primary-color/20 bg-primary-color/30 border border-primary-color rounded-lg">
-              <Euro className="h-4 w-4 md:h-5 md:w-5 text-primary-color" />
+            <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
+              <Euro className="h-5 w-5 text-primary-color" />
             </div>
             <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
               {t('budget.cards.totalBudget').toUpperCase()}
@@ -77,8 +77,8 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
       <div className="relative group">
         <div className="relative bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
-            <div className="p-2 dark:bg-primary-color/20 bg-primary-color/30 border border-primary-color rounded-lg">
-              <Hash className="h-4 w-4 md:h-5 md:w-5 text-primary-color" />
+            <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
+              <Hash className="h-5 w-5 text-primary-color" />
             </div>
             <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
               {t('budget.cards.activeBudgets').toUpperCase()}
@@ -95,8 +95,8 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
       <div className="relative group">
         <div className="relative bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
-            <div className="p-2 dark:bg-secondary-color/10 bg-secondary-color/30 border border-secondary-color rounded-lg">
-              <TrendingUp className="h-4 w-4 md:h-5 md:w-5 text-secondary-color" />
+            <div className="p-2 bg-secondary-color/10 border border-secondary-color/20 rounded-lg">
+              <TrendingUp className="h-5 w-5 text-secondary-color" />
             </div>
             <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
               {t('budget.cards.remainingBudget').toUpperCase()}
