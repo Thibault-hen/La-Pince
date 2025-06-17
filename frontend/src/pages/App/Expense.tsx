@@ -4,7 +4,7 @@ import { DataTable } from './table/data-table';
 import { Button } from '@/components/ui/button';
 import ExpenseAddModal from '@/components/expense/modals/ExpenseAddModal';
 import { ExpenseEditModal } from '@/components/expense/modals/ExpenseEditModal';
-import { useExpenses, type Expense } from '@/hooks/expenses';
+import { useExpenses, type Expense } from '@/hooks/use-expense';
 import { ChartBarInteractive } from '@/components/expense/BarChart';
 import { ExpenseDeleteModal } from '@/components/expense/modals/ExpenseDeleteModal';
 import { useTranslation } from 'react-i18next';

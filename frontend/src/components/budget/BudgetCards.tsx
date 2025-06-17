@@ -2,7 +2,7 @@ import { TrendingUp, Hash, Euro } from 'lucide-react';
 import { Progress } from '../ui/progress';
 import { useSpring } from 'motion/react';
 import { useEffect, useState } from 'react';
-import { getColorStatus } from '@/utils/colorStatus';
+import { ColorStatus, getColorStatus } from '@/utils/colorStatus';
 import { getPercentage } from '@/utils/percentage';
 import { useTranslation } from 'react-i18next';
 
@@ -49,10 +49,14 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
     total.set(totalBudget ?? 0);
     count.set(activeBudget ?? 0);
     remaining.set(remainingBudget ?? 0);
+
+    if (remainingBudget === 0) {
+      setDisplayRemaining('0.00');
+    }
   }, [totalBudget, activeBudget, remainingBudget]);
 
   return (
-    <div className="flex flex-col gap-4 w-full xl:w-120">
+    <div className="flex flex-col gap-4 w-full xl:max-w-xl">
       <div className="relative group">
         <div className="relative bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
@@ -105,7 +109,7 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
 
           <div className="space-y-1">
             <div className="text-xl md:text-3xl font-bold ">
-              {displayRemaining}
+              <span>{displayRemaining}</span>
               <span className="text-lg text-gray-500 dark:text-gray-400 ml-1">€</span>
             </div>
             <p className="text-sm text-muted-foreground">{t('budget.cards.remainingBudget')}</p>

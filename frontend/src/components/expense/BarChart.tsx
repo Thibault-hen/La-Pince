@@ -8,7 +8,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { useMemo, useState } from 'react';
-import { useExpenses } from '@/hooks/expenses';
+import { useExpenses } from '@/hooks/use-expense';
 import { useTranslation } from 'react-i18next';
 
 export const description = 'An interactive bar chart';
