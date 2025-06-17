@@ -8,6 +8,7 @@ import { DefaultWrapper } from './DefaultWrapper';
 import { useQueryClient } from '@tanstack/react-query';
 import type { User } from '@/services/auth';
 import { useTranslation } from 'react-i18next';
+import { LanguageSelector } from '@/components/lang/LanguageSelector';
 
 export const AppLayout = () => {
   const location = useLocation();
@@ -40,6 +41,7 @@ export const AppLayout = () => {
                 </p>
               </div>
               <div className="flex items-center gap-3">
+                <LanguageSelector />
                 <ModeToggle />
                 <ProfileButton />
               </div>
