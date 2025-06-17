@@ -8,7 +8,9 @@
     "start": "npm run db:deploy && npm run db:seed && npm run dev",
     "db:deploy": "npx prisma migrate deploy && npx prisma generate",
     "deploy": "run-s build zip update",
-    "db:seed": "tsx src/db/seeding.ts"
+    "db:seed": "tsx src/db/seeding.ts",
+    "test": "vitest",
+    "test:watch": "vitest --watch"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -17,7 +19,8 @@
     "npm-run-all2": "^6.2.0",
     "prisma": "^6.9.0",
     "tsx": "^4.19.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.3"
   },
   "dependencies": {
     "@hono/node-server": "^1.14.3",
