@@ -26,6 +26,7 @@ import { Loader } from '@/components/ui/loader';
 import type { Budget } from '@/types/budget';
 import { useEffect } from 'react';
 import { useCategories } from '@/hooks/categories.ts';
+import { useTranslation } from 'react-i18next';
 
 interface AddBudgetProps {
   open: boolean;
@@ -36,6 +37,7 @@ interface AddBudgetProps {
 export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
   const { data: categories } = useCategories();
   const { mutateAsync: updateBudget } = useUpdateBudget();
+  const { t } = useTranslation();
 
   useEffect(() => {
     form.reset();
@@ -70,19 +72,19 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
         >
           <DialogHeader className="mb-4">
             <DialogTitle className="font-medium text-xl">
-              Modifie ton budget {budget?.category?.title}
+              {t('budget.edit.title', { title: budget?.category?.title || 'Budget' })}
             </DialogTitle>
-            <DialogDescription>Modifie les informations de ton budget</DialogDescription>
+            <DialogDescription>{t('budget.edit.description')}</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <form.Field
               name="amount"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>Montant</Label>
+                  <Label htmlFor={field.name}>{t('budget.edit.form.amount')}</Label>
                   <Input
                     id={field.name}
-                    placeholder="800"
+                    placeholder={t('budget.edit.form.amountPlaceholder')}
                     type="number"
                     required
                     value={field.state.value || ''}
@@ -102,10 +104,10 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
               name="limitAlert"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>Alerte limite</Label>
+                  <Label htmlFor={field.name}>{t('budget.edit.form.limitAlert')}</Label>
                   <Input
                     id={field.name}
-                    placeholder="600"
+                    placeholder={t('budget.edit.form.limitAlertPlaceholder')}
                     type="number"
                     required
                     value={field.state.value || ''}
@@ -129,7 +131,7 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
                 );
                 return (
                   <div className="grid gap-3">
-                    <Label htmlFor={field.name}>Categorie</Label>
+                    <Label htmlFor={field.name}>{t('budget.edit.form.category')}</Label>
                     <Select
                       name={field.name}
                       onValueChange={(value) => field.handleChange(value)}
@@ -138,11 +140,11 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
                       required
                     >
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Sélectionne une catégorie" />
+                        <SelectValue placeholder={t('budget.edit.form.categoryPlaceholder')} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectLabel>Catégories</SelectLabel>
+                          <SelectLabel>{t('budget.edit.form.categoryLabel')}</SelectLabel>
                           {categories?.map((category) => (
                             <SelectItem key={category.id} value={category.id}>
                               <span>{category.title}</span>
@@ -167,13 +169,13 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
           </div>
           <DialogFooter className="flex justify-between items-center mt-4">
             <DialogClose asChild>
-              <Button variant="outline">Annuler</Button>
+              <Button variant="outline">{t('budget.edit.form.cancel')}</Button>
             </DialogClose>
             <form.Subscribe
               selector={(state) => [state.isSubmitting]}
               children={([isSubmiting]) => (
                 <Button type="submit" variant="blue">
-                  {isSubmiting ? <Loader /> : 'Modifier'}
+                  {isSubmiting ? <Loader /> : t('budget.edit.form.update')}
                 </Button>
               )}
             />

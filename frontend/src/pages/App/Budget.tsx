@@ -10,6 +10,7 @@ import { useBudgets } from '@/hooks/use-budget';
 import { UserAppWrapper } from '@/layouts/UserAppWrapper';
 import type { Budget } from '@/types/budget';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const BudgetPage = () => {
   const [openAddBudget, setOpenAddBudget] = useState(false);
@@ -18,6 +19,7 @@ export const BudgetPage = () => {
   const [selectedBudget, setSelectedBudget] = useState<Budget>();
 
   const { data: budgets, isLoading } = useBudgets();
+  const { t } = useTranslation();
 
   if (isLoading) return <MainLoader />;
 
@@ -42,7 +44,9 @@ export const BudgetPage = () => {
         </div>
       </section>
       <section>
-        <h2 className="border-l-4 border-primary-color text-xl p-2 font-bold mb-4">Mes budgets</h2>
+        <h2 className="border-l-4 border-primary-color text-xl p-2 font-bold mb-4">
+          {t('budget.page.title')}
+        </h2>
         <div className="grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
           {budgets?.budgets?.map((budget) => (
             <BudgetCard

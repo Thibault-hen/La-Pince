@@ -6,6 +6,7 @@ import { router } from './router';
 import { ThemeProvider } from './components/theme/theme-provider';
 import { AnimatePresence } from 'framer-motion';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import './i18n';
 
 const queryClient = new QueryClient();
 

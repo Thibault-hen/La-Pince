@@ -1,4 +1,3 @@
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,6 +9,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useDeleteExpense, type Expense } from '@/hooks/expenses';
+import { useTranslation } from 'react-i18next';
 
 interface DeleteBudgetProps {
   open: boolean;
@@ -19,6 +19,7 @@ interface DeleteBudgetProps {
 
 export const ExpenseDeleteModal = ({ open, setOpen, expense }: DeleteBudgetProps) => {
   const { mutateAsync: deleteExpense } = useDeleteExpense();
+  const { t } = useTranslation();
 
   const handleDeleteExpense = async () => {
     if (expense?.id) {
@@ -30,14 +31,20 @@ export const ExpenseDeleteModal = ({ open, setOpen, expense }: DeleteBudgetProps
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="font-medium text-xl">Supprimer une dépense</AlertDialogTitle>
+          <AlertDialogTitle className="font-medium text-xl">
+            {t('expenses.delete.title')}
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            Tu veux vraiment supprimer ta dépense {expense?.title} de {expense?.amount} € ?
+            {t('expenses.delete.description', { title: expense?.title, amount: expense?.amount })}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="cursor-pointer">Annuler</AlertDialogCancel>
-          <AlertDialogAction onClick={handleDeleteExpense}>Supprimer</AlertDialogAction>
+          <AlertDialogCancel className="cursor-pointer">
+            {t('expenses.delete.cancel')}
+          </AlertDialogCancel>
+          <AlertDialogAction onClick={handleDeleteExpense}>
+            {t('expenses.delete.confirm')}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

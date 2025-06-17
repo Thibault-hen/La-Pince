@@ -2,6 +2,7 @@ import { categoryService } from '@/services/category';
 import type { Category, UpdateCategory } from '@/types/category';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 
 export const useCategories = () => {
   return useQuery<Category[]>({
@@ -13,49 +14,48 @@ export const useCategories = () => {
 
 export const useCreateCategory = () => {
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
   return useMutation({
     mutationFn: categoryService.createCategory,
     onSuccess: (data) => {
-      toast.success(`Ta catégorie ${data.title} a été créé`);
+      toast.success(t('category.toast.created', { title: data.title }));
       queryClient.invalidateQueries({ queryKey: ['categories'] });
     },
     onError: (_data) => {
-      toast.error('Une erreur est survenue ou cette catégorie existe déjà');
+      toast.error(t('category.toast.createError'));
     },
   });
 };
 
 export const useUpdateCategory = () => {
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
   return useMutation({
     mutationFn: ({ id, data }: { id: string; data: UpdateCategory }) =>
       categoryService.updateCategory(id, data),
     onSuccess: (data) => {
-      toast.success(`Ta catégorie ${data.title} a été mise à jour`);
+      toast.success(t('category.toast.updated', { title: data.title }));
       queryClient.invalidateQueries({ queryKey: ['categories'] });
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
     },
     onError: (_data) => {
-      toast.error(
-        'Une erreur est survenue lors de la mise à jour ou une autre catégorie porte le même nom'
-      );
+      toast.error(t('category.toast.updateError'));
     },
   });
 };
 
 export const useDeleteCategory = () => {
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
   return useMutation({
     mutationFn: categoryService.deleteCategory,
     onSuccess: (_data) => {
-      toast.success('Ta catégorie a été supprimé');
+      toast.success(t('category.toast.deleted'));
       queryClient.invalidateQueries({ queryKey: ['categories'] });
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
     },
     onError: (_data) => {
-      toast.error(
-        "Une erreur est survenue lors de la suppression de ta catégorie ou elle n'existe plus"
-      );
+      toast.error(t('category.toast.deleteError'));
     },
   });
 };

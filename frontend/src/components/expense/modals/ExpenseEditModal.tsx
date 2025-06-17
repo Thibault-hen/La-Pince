@@ -25,6 +25,7 @@ import { updateExpenseSchema } from '@/schemas/expense.schemas';
 import { Loader } from '@/components/ui/loader';
 import { useBudgets } from '@/hooks/use-budget';
 import { DatePicker } from '../DatePicker';
+import { useTranslation } from 'react-i18next';
 
 interface ExpenseEditModalProps {
   open: boolean;
@@ -33,8 +34,9 @@ interface ExpenseEditModalProps {
 }
 
 export const ExpenseEditModal = ({ expense, open, setOpen }: ExpenseEditModalProps) => {
-  const { data: { budgets = [] } = {}, isLoading: isLoadingBudget } = useBudgets();
+  const { data: { budgets = [] } = {} } = useBudgets();
   const { mutateAsync: updateExpense } = useUpdateExpense();
+  const { t } = useTranslation();
 
   const form = useForm({
     defaultValues: {
@@ -68,19 +70,19 @@ export const ExpenseEditModal = ({ expense, open, setOpen }: ExpenseEditModalPro
         >
           <DialogHeader>
             <DialogTitle className="font-medium text-xl">
-              Modifie ta dépense: {expense?.title}
+              {t('expenses.edit.title', { title: expense?.title })}
             </DialogTitle>
-            <DialogDescription>Entre les nouvelles informations de ta dépense</DialogDescription>
+            <DialogDescription>{t('expenses.edit.description')}</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <form.Field
               name="description"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>Titre</Label>
+                  <Label htmlFor={field.name}>{t('expenses.edit.form.title')}</Label>
                   <Input
                     id={field.name}
-                    placeholder="Titre de votre dépense"
+                    placeholder={t('expenses.edit.form.titlePlaceholder')}
                     type="text"
                     required
                     value={field.state.value}
@@ -100,10 +102,10 @@ export const ExpenseEditModal = ({ expense, open, setOpen }: ExpenseEditModalPro
               name="amount"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>Montant</Label>
+                  <Label htmlFor={field.name}>{t('expenses.edit.form.amount')}</Label>
                   <Input
                     id={field.name}
-                    placeholder="200"
+                    placeholder={t('expenses.edit.form.amountPlaceholder')}
                     type="number"
                     required
                     value={field.state.value}
@@ -124,7 +126,7 @@ export const ExpenseEditModal = ({ expense, open, setOpen }: ExpenseEditModalPro
               children={(field) => {
                 return (
                   <div className="grid gap-3">
-                    <Label htmlFor={field.name}>Budget</Label>
+                    <Label htmlFor={field.name}>{t('expenses.edit.form.budget')}</Label>
                     <Select
                       name={field.name}
                       onValueChange={(value) => field.handleChange(value)}
@@ -132,11 +134,11 @@ export const ExpenseEditModal = ({ expense, open, setOpen }: ExpenseEditModalPro
                       required
                     >
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Sélectionne un budget" />
+                        <SelectValue placeholder={t('expenses.edit.form.budgetPlaceholder')} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectLabel>Budgets</SelectLabel>
+                          <SelectLabel>{t('expenses.edit.form.budgetLabel')}</SelectLabel>
                           {budgets?.map((budget) => (
                             <SelectItem key={budget.id} value={budget.id}>
                               {budget.category.title} - {budget.amount}€
@@ -158,12 +160,14 @@ export const ExpenseEditModal = ({ expense, open, setOpen }: ExpenseEditModalPro
               name="date"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>Date</Label>
+                  <Label htmlFor={field.name}>{t('expenses.edit.form.date')}</Label>
                   <DatePicker
                     name={field.name}
                     required
                     value={new Date(field.state.value)}
-                    onChange={(date) => { field.handleChange(date.toISOString()); }}
+                    onChange={(date) => {
+                      field.handleChange(date.toISOString());
+                    }}
                   />
                   {field.state.meta.errors.length > 0 && (
                     <span className="text-red-500 text-sm">
@@ -176,13 +180,13 @@ export const ExpenseEditModal = ({ expense, open, setOpen }: ExpenseEditModalPro
           </div>
           <DialogFooter className="flex justify-between items-center mt-4">
             <DialogClose asChild>
-              <Button variant="outline">Annuler</Button>
+              <Button variant="outline">{t('expenses.edit.form.cancel')}</Button>
             </DialogClose>
             <form.Subscribe
               selector={(state) => [state.isSubmitting]}
               children={([isSubmiting]) => (
                 <Button type="submit" variant="blue">
-                  {isSubmiting ? <Loader /> : 'Modifier'}
+                  {isSubmiting ? <Loader /> : t('expenses.edit.form.update')}
                 </Button>
               )}
             />

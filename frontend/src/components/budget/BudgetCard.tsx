@@ -11,6 +11,7 @@ import {
 import { getColorStatus } from '@/utils/colorStatus';
 import { getPercentage } from '@/utils/percentage';
 import type { Budget } from '@/types/budget';
+import { useTranslation } from 'react-i18next';
 
 interface BudgetProps {
   budget: Budget;
@@ -19,6 +20,8 @@ interface BudgetProps {
 }
 
 export const BudgetCard = ({ budget, onOpenEditModal, onOpenDeleteModal }: BudgetProps) => {
+  const { t } = useTranslation();
+
   const getRemainingBudget = () => {
     if (budget.amount === undefined || budget.totalExpense === undefined) {
       return 0;
@@ -62,14 +65,14 @@ export const BudgetCard = ({ budget, onOpenEditModal, onOpenDeleteModal }: Budge
                   onClick={onOpenEditModal}
                 >
                   <Pencil className="dark:text-white text-dark" />
-                  <span>Editer</span>
+                  <span>{t('budget.card.edit')}</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="p-2 dark:bg-primary cursor-pointer hover:!bg-red-500 dark:hover:bg-red-700/20 transition-all duration-150 ease-in-out"
                   onClick={onOpenDeleteModal}
                 >
                   <Trash2 className="dark:text-white text-dark" />
-                  <span>Supprimer</span>
+                  <span>{t('budget.card.delete')}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -81,7 +84,7 @@ export const BudgetCard = ({ budget, onOpenEditModal, onOpenDeleteModal }: Budge
         <CardDescription className="flex flex-col space-x-1 items-center">
           <div className="flex justify-between w-full">
             <div className="flex gap-1 items-center">
-              <span className="text-xs text-muted-foreground">Dépenses totales</span>
+              <span className="text-xs text-muted-foreground">{t('budget.card.spent')}</span>
               <span
                 className="text-xs"
                 style={
@@ -113,7 +116,7 @@ export const BudgetCard = ({ budget, onOpenEditModal, onOpenDeleteModal }: Budge
               }
             />
             <span className="flex self-end p-1 text-xs text-muted-foreground font-bold">
-              {getRemainingBudget()}€ restant
+              {getRemainingBudget()}€ {t('budget.card.remaining')}
             </span>
           </div>
         </CardDescription>

@@ -23,6 +23,7 @@ import type { Color } from '@/types/color';
 import { useForm } from '@tanstack/react-form';
 import { createCategorySchema } from '@/schemas/category.schemas';
 import { useCreateCategory } from '@/hooks/categories.ts';
+import { useTranslation } from 'react-i18next';
 
 interface AddCategoryProps {
   open: boolean;
@@ -32,6 +33,7 @@ interface AddCategoryProps {
 
 export const AddCategoryModal = ({ colors, open, setOpen }: AddCategoryProps) => {
   const { mutateAsync: createCategory } = useCreateCategory();
+  const { t } = useTranslation();
 
   const form = useForm({
     defaultValues: {
@@ -57,21 +59,21 @@ export const AddCategoryModal = ({ colors, open, setOpen }: AddCategoryProps) =>
           }}
         >
           <DialogHeader className="mb-4">
-            <DialogTitle className="font-medium text-xl">Créer une nouvelle catégorie</DialogTitle>
-            <DialogDescription>Entre les informations de ta nouvelle catégorie</DialogDescription>
+            <DialogTitle className="font-medium text-xl">{t('category.add.title')}</DialogTitle>
+            <DialogDescription>{t('category.add.description')}</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <form.Field
               name="title"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>Titre</Label>
+                  <Label htmlFor={field.name}>{t('category.add.form.title')}</Label>
                   <Input
                     id={field.name}
                     onChange={(e) => {
                       field.handleChange(e.target.value);
                     }}
-                    placeholder="Loisirs"
+                    placeholder={t('category.add.form.titlePlaceholder')}
                     type="text"
                     required
                   />
@@ -87,18 +89,18 @@ export const AddCategoryModal = ({ colors, open, setOpen }: AddCategoryProps) =>
               name="colorId"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>Couleurs</Label>
+                  <Label htmlFor={field.name}>{t('category.add.form.color')}</Label>
                   <Select
                     name={field.name}
                     onValueChange={(value) => field.handleChange(value)}
                     required
                   >
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Sélectionne une couleur" />
+                      <SelectValue placeholder={t('category.add.form.colorPlaceholder')} />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectLabel>Couleurs</SelectLabel>
+                        <SelectLabel>{t('category.add.form.colorLabel')}</SelectLabel>
                         {colors?.map((color) => (
                           <SelectItem key={color.id} value={color.id ?? ''} className="flex">
                             <span>{color.name}</span>
@@ -117,10 +119,10 @@ export const AddCategoryModal = ({ colors, open, setOpen }: AddCategoryProps) =>
           </div>
           <DialogFooter className="mt-4 flex justify-between items-center">
             <DialogClose asChild>
-              <Button variant="outline">Annuler</Button>
+              <Button variant="outline">{t('category.add.form.cancel')}</Button>
             </DialogClose>
             <Button type="submit" variant="blue">
-              Créer
+              {t('category.add.form.create')}
             </Button>
           </DialogFooter>
         </form>

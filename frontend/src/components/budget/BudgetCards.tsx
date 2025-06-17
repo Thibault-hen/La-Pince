@@ -4,6 +4,7 @@ import { useSpring } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { getColorStatus } from '@/utils/colorStatus';
 import { getPercentage } from '@/utils/percentage';
+import { useTranslation } from 'react-i18next';
 
 type BudgetCardsProps = {
   totalBudget?: number;
@@ -15,6 +16,7 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
   const [displayTotal, setDisplayTotal] = useState<string>();
   const [displayCount, setDisplayCount] = useState<string>();
   const [displayRemaining, setDisplayRemaining] = useState<string>();
+  const { t } = useTranslation();
 
   const total = useSpring(0, {
     bounce: 0,
@@ -58,7 +60,7 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
               <Euro className="h-4 w-4 md:h-5 md:w-5 text-primary-color" />
             </div>
             <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-              TOTAL
+              {t('budget.cards.totalBudget').toUpperCase()}
             </div>
           </div>
 
@@ -67,7 +69,7 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
               {displayTotal}
               <span className="text-lg text-gray-500 dark:text-gray-400 ml-1">€</span>
             </div>
-            <p className="text-sm text-muted-foreground">Budget total</p>
+            <p className="text-sm text-muted-foreground">{t('budget.cards.totalBudget')}</p>
           </div>
         </div>
       </div>
@@ -79,13 +81,13 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
               <Hash className="h-4 w-4 md:h-5 md:w-5 text-primary-color" />
             </div>
             <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-              Budgets
+              {t('budget.cards.activeBudgets').toUpperCase()}
             </div>
           </div>
 
           <div className="space-y-1">
             <div className="text-xl md:text-3xl font-bold">{displayCount}</div>
-            <p className="text-sm text-muted-foreground">Budget actifs</p>
+            <p className="text-sm text-muted-foreground">{t('budget.cards.activeBudgets')}</p>
           </div>
         </div>
       </div>
@@ -97,7 +99,7 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
               <TrendingUp className="h-4 w-4 md:h-5 md:w-5 text-secondary-color" />
             </div>
             <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-              Restant
+              {t('budget.cards.remainingBudget').toUpperCase()}
             </div>
           </div>
 
@@ -106,11 +108,11 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
               {displayRemaining}
               <span className="text-lg text-gray-500 dark:text-gray-400 ml-1">€</span>
             </div>
-            <p className="text-sm text-muted-foreground">Budget restant</p>
+            <p className="text-sm text-muted-foreground">{t('budget.cards.remainingBudget')}</p>
 
             <div className="mt-3">
               <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
-                <span>Utilisé</span>
+                <span>{t('budget.cards.used')}</span>
                 <span>
                   {remainingBudget === totalBudget
                     ? '0%'

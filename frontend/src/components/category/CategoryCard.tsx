@@ -10,6 +10,7 @@ import {
 import { Badge } from '../ui/badge';
 import type { Category } from '@/types/category';
 import type { Budget } from '@/types/budget';
+import { useTranslation } from 'react-i18next';
 
 interface ICategoryProps {
   category?: Category & {
@@ -20,6 +21,8 @@ interface ICategoryProps {
 }
 
 export const CategoryCard = ({ category, onOpenDeleteModal, onOpenEditModal }: ICategoryProps) => {
+  const { t } = useTranslation();
+
   return (
     <Card
       className="flex justify-around p-4 dark:bg-primary hover:border-secondary-color transition-all duration-200 ease-in-out gap-1 shadow"
@@ -58,14 +61,14 @@ export const CategoryCard = ({ category, onOpenDeleteModal, onOpenEditModal }: I
                   onClick={onOpenEditModal}
                 >
                   <Pencil className="dark:text-white text-dark" />
-                  <span>Editer</span>
+                  <span>{t('category.card.edit')}</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="p-2 dark:bg-primary cursor-pointer hover:!bg-red-500 dark:hover:bg-red-700/20 transition-all duration-150 ease-in-out"
                   onClick={onOpenDeleteModal}
                 >
                   <Trash2 className="dark:text-white text-dark" />
-                  <span>Supprimer</span>
+                  <span>{t('category.card.delete')}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -74,7 +77,7 @@ export const CategoryCard = ({ category, onOpenDeleteModal, onOpenEditModal }: I
       </CardHeader>
       <CardContent className="p-0 mx-4">
         <CardDescription>
-          <span className="mr-2">Budget en cours</span>
+          <span className="mr-2">{t('category.card.currentBudget')}</span>
           <Badge
             variant="outline"
             className="font-bold items-center hover:bg-secondary-color transition-all duration-200 ease-in-out"

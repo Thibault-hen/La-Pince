@@ -1,6 +1,7 @@
 import { expenseService, type CreateExpense, type EditExpense } from '@/services/expenses';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 
 export type Expense = {
   id: string;
@@ -13,7 +14,6 @@ export type Expense = {
   amount: number;
   date: string;
 };
-
 
 export function useExpenses() {
   const { data = [], isLoading } = useQuery({
@@ -44,19 +44,19 @@ export function useExpenses() {
   };
 }
 
-
 export function useCreateExpense() {
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
   const mutation = useMutation({
     mutationKey: ['expenses'],
     mutationFn: (expense: CreateExpense) => expenseService.create(expense),
     onSuccess: (expense) => {
-      toast.success(`Ta dépense "${expense.description}" a été créé`);
-      queryClient.invalidateQueries({ queryKey: ['expenses'] })
+      toast.success(t('expenses.toast.created', { title: expense.description }));
+      queryClient.invalidateQueries({ queryKey: ['expenses'] });
     },
     onError: () => {
-      toast.error('Une erreur est survenue lors de la création de ta dépense');
-    }
+      toast.error(t('expenses.toast.createError'));
+    },
   });
 
   return mutation;
@@ -64,16 +64,17 @@ export function useCreateExpense() {
 
 export function useUpdateExpense() {
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
   const mutation = useMutation({
     mutationKey: ['expenses'],
     mutationFn: ({ id, data }: { id: string; data: EditExpense }) =>
       expenseService.update(id, data),
     onSuccess: () => {
-      toast.success('Ta dépense a été mise à jour');
-      queryClient.invalidateQueries({ queryKey: ['expenses'] })
+      toast.success(t('expenses.toast.updated'));
+      queryClient.invalidateQueries({ queryKey: ['expenses'] });
     },
     onError: () => {
-      toast.error('Une erreur est survenue lors de la mise à jour de ta dépense');
+      toast.error(t('expenses.toast.updateError'));
     },
   });
   return mutation;
@@ -81,16 +82,16 @@ export function useUpdateExpense() {
 
 export function useDeleteExpense() {
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
   const mutation = useMutation({
     mutationKey: ['expenses'],
     mutationFn: (id: string) => expenseService.delete(id),
     onSuccess: () => {
-      toast.success('Ta dépense a été supprimée');
-      queryClient.invalidateQueries({ queryKey: ['expenses'] }
-      )
+      toast.success(t('expenses.toast.deleted'));
+      queryClient.invalidateQueries({ queryKey: ['expenses'] });
     },
     onError: () => {
-      toast.error('Une erreur est survenue lors de la suppression de ta dépense');
+      toast.error(t('expenses.toast.deleteError'));
     },
   });
   return mutation;

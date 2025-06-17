@@ -8,7 +8,6 @@ import { useCategories } from '@/hooks/categories';
 import { useColors } from '@/hooks/use-color';
 import type { Category } from '@/types/category';
 import { useState } from 'react';
-
 export const CategoryPage = () => {
   const [openAddCategory, setOpenAddCategory] = useState(false);
   const [openEditCategory, setOpenEditCategory] = useState(false);

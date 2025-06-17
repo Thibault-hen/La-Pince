@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { HandCoins, Home, PiggyBank, Settings, Tags } from 'lucide-react';
 import laPinceLogo from '@/assets/logo.webp';
+import { useTranslation } from 'react-i18next';
 
 import {
   Sidebar,
@@ -16,29 +17,29 @@ import {
 } from '@/components/ui/sidebar';
 import { NavLink, useLocation } from 'react-router-dom';
 
-const items = [
+const getItems = (t: any) => [
   {
-    title: 'Tableau de bord',
+    title: t('sidebar.dashboard'),
     url: '/tableau-de-bord',
     icon: Home,
   },
   {
-    title: 'Budgets',
+    title: t('sidebar.budgets'),
     url: '/tableau-de-bord/budgets',
     icon: PiggyBank,
   },
   {
-    title: 'Dépenses',
+    title: t('sidebar.expenses'),
     url: '/tableau-de-bord/depenses',
     icon: HandCoins,
   },
   {
-    title: 'Catégories',
+    title: t('sidebar.categories'),
     url: '/tableau-de-bord/categories',
     icon: Tags,
   },
   {
-    title: 'Paramètres',
+    title: t('sidebar.settings'),
     url: '/tableau-de-bord/parametres',
     icon: Settings,
   },
@@ -47,6 +48,8 @@ const items = [
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const location = useLocation();
   const { open, openMobile } = useSidebar();
+  const { t } = useTranslation();
+  const items = getItems(t);
   return (
     <Sidebar {...props}>
       <SidebarHeader className="flex">
@@ -91,7 +94,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <p className="mb-1">© 2025 La Pince</p>
               <p className="mb-1">-</p>
               <NavLink to="/terms" className="hover:underline">
-                Mentions légales
+                {t('sidebar.legalNotice')}
               </NavLink>
             </div>
           </div>
