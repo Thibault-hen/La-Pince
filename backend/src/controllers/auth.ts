@@ -2,6 +2,7 @@ import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import {
   resetUserPasswordSchema,
+  updateUserPasswordSchema,
   userLoginSchema,
   userRegisterSchema,
   userSelectSchema,
