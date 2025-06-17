@@ -12,6 +12,8 @@ lambda.zip
 .idea/usage.statistics.xml
 .idea/shelf
 
+coverage/
+
 # deps
 node_modules/
 
