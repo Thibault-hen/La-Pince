@@ -26,5 +26,9 @@ export const updateUserSchema = z.object({
   name: z.string().trim().min(1).max(100).optional(),
   currency: z.string().trim().min(1).max(10).optional(),
   alert: z.boolean().optional(),
-  password: z.string().trim().min(8).optional(),
+});
+
+export const updateUserPasswordSchema = z.object({
+  currentPassword: z.string().trim().min(8),
+  newPassword: z.string().trim().min(8),
 });
