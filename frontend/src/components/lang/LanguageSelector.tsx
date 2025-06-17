@@ -1,23 +1,31 @@
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
-import { Button } from "../ui/button";
-import { useLanguage } from "@/hooks/use-language";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu';
+import { Button } from '../ui/button';
+import { useLanguage } from '@/hooks/use-language';
 
 export const LanguageSelector = () => {
+  const { changeLanguage, currentLanguage, languages } = useLanguage();
+  const selectedLanguage = languages.find((lang) => lang.code === currentLanguage);
 
-  const { changeLanguage, currentLanguage, languages }  = useLanguage()
-  const selectedLanguage = languages.find(lang => lang.code === currentLanguage);
-
-  console.log(selectedLanguage)
-return <DropdownMenu>
+  return (
+    <DropdownMenu>
       <DropdownMenuTrigger
         asChild
         className="shadow-none dark:bg-primary cursor-pointer hover:bg-secondary-color dark:hover:bg-secondary-color border focus:outline-none focus-visible:ring-2"
       >
-         <Button variant="outline" size="icon">
-          <span className="sr-only">
-            {selectedLanguage ? selectedLanguage.name : "Français"}
-            </span>
-          <img src={selectedLanguage?.flag || "/flags/fr.svg"} alt="Language Flag" width={24} height={24}  className="rounded"/>
+        <Button variant="outline" size="icon">
+          <span className="sr-only">{selectedLanguage ? selectedLanguage.name : 'Français'}</span>
+          <img
+            src={selectedLanguage?.flag || '/flags/fr.svg'}
+            alt="Language Flag"
+            width={24}
+            height={24}
+            className="rounded"
+          />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -28,7 +36,13 @@ return <DropdownMenu>
             className="cursor-pointer"
           >
             <span className="flex items-center gap-2">
-              <img src={lang?.flag || "/flags/fr.svg"} alt="Language Flag" width={24} height={24} className="rounded"/>
+              <img
+                src={lang?.flag || '/flags/fr.svg'}
+                alt="Language Flag"
+                width={24}
+                height={24}
+                className="rounded"
+              />
               <span>{lang.name}</span>
             </span>
             {currentLanguage === lang.code && (
@@ -38,4 +52,5 @@ return <DropdownMenu>
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
+  );
 };

@@ -46,7 +46,7 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
   const form = useForm({
     defaultValues: {
       amount: budget?.amount ?? 0,
-      limitAlert: budget?.limitAlert ?? 0,
+      limitAlert: budget?.amount ?? 0,
       categoryId: budget?.categoryId ?? '',
     },
     validators: {
@@ -87,7 +87,8 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
                     placeholder={t('budget.edit.form.amountPlaceholder')}
                     type="number"
                     required
-                    value={field.state.value || ''}
+                    step={0.01}
+                    value={field.state.value.toFixed(2) || ''}
                     onChange={(e) => {
                       field.handleChange(Number(e.target.value));
                     }}
@@ -110,7 +111,8 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
                     placeholder={t('budget.edit.form.limitAlertPlaceholder')}
                     type="number"
                     required
-                    value={field.state.value || ''}
+                    step={0.01}
+                    value={field.state.value.toFixed(2) || ''}
                     onChange={(e) => {
                       field.handleChange(Number(e.target.value));
                     }}

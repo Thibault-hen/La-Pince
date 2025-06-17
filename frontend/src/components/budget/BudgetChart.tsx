@@ -11,6 +11,7 @@ import {
 import { TrendingUp } from 'lucide-react';
 import type { BudgetResponse } from '@/types/budget';
 import { useTranslation } from 'react-i18next';
+import { useCurrency } from '@/hooks/use-currency';
 
 export const description = 'A donut chart with text';
 
@@ -21,8 +22,8 @@ interface BudgetChartProps {
 }
 
 export const BudgetChart = ({ budgets }: BudgetChartProps) => {
-  const { t, i18n } = useTranslation();
-  const locale = i18n.language === 'en' ? 'en-US' : 'fr-FR';
+  const { t } = useTranslation();
+  const { formatAmount } = useCurrency();
   const totalAmount = React.useMemo(() => {
     return budgets?.budgets.reduce((acc, curr) => acc + curr.amount, 0);
   }, [budgets?.budgets]);
@@ -74,13 +75,9 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
                               y={(viewBox.cy ?? 0) - 10}
                               textAnchor="middle"
                               dominantBaseline="middle"
-                              className="fill-gray-900 dark:fill-white text-2xl font-bold"
+                              className="fill-gray-900 dark:fill-white text-lg font-bold"
                             >
-                              {budgets?.budgetTotal.toLocaleString(locale, {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              })}{' '}
-                              €
+                              {formatAmount(totalAmount ?? 0)}
                             </text>
                             <text
                               x={viewBox.cx}
@@ -120,14 +117,14 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
                     ></span>
                   </div>
 
-                  <div className="flex-1 flex items-center justify-between">
-                    <span className="font-medium text-gray-700 dark:text-gray-300 text-sm">
+                  <div className="flex-1 flex items-center justify-between ">
+                    <span className="font-medium text-gray-700 dark:text-gray-300 text-sm truncate mr-2">
                       {budget.category.title}
                     </span>
 
                     <div className="flex items-center gap-3">
-                      <span className="font-bold text-gray-900 dark:text-white">
-                        {budget.amount.toFixed(2)} €
+                      <span className="font-bold text-gray-900 dark:text-white text-sm">
+                        {formatAmount(budget.amount ?? 0)}
                       </span>
 
                       <span

@@ -11,6 +11,7 @@ import { Badge } from '../ui/badge';
 import type { Category } from '@/types/category';
 import type { Budget } from '@/types/budget';
 import { useTranslation } from 'react-i18next';
+import { useCurrency } from '@/hooks/use-currency';
 
 interface ICategoryProps {
   category?: Category & {
@@ -22,6 +23,7 @@ interface ICategoryProps {
 
 export const CategoryCard = ({ category, onOpenDeleteModal, onOpenEditModal }: ICategoryProps) => {
   const { t } = useTranslation();
+  const { formatAmount } = useCurrency();
 
   return (
     <Card
@@ -82,7 +84,13 @@ export const CategoryCard = ({ category, onOpenDeleteModal, onOpenEditModal }: I
             variant="outline"
             className="font-bold items-center hover:bg-secondary-color transition-all duration-200 ease-in-out"
           >
-            {category?.budgets?.reduce((total, budget) => total + budget.amount, 0).toFixed(2)}€
+            {formatAmount(
+              category?.budgets?.reduce((total, budget) => {
+                const amount = Number(budget?.amount);
+                return total + (isNaN(amount) ? 0 : amount);
+              }, 0) ?? 0
+            )}
+            €
           </Badge>
         </CardDescription>
       </CardContent>
