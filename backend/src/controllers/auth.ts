@@ -214,7 +214,7 @@ authRouter
       });
 
       const { password: _, ...safeUser } = updatedUser;
-      
+
       await prisma.resetPassword.delete({
           where:{
             id:tokenExist.id
