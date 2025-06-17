@@ -1,6 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import {
+  updateUserPasswordSchema,
   userLoginSchema,
   userRegisterSchema,
   userSelectSchema,
@@ -20,10 +21,12 @@ import "dotenv/config";
 import { getSignedCookie } from "hono/cookie";
 import {
   deleteUserCookie,
+  generateRandomString,
   generateTokenCSRF,
   generateTokenJWT,
 } from "../lib/tokens";
 import { getEnv } from "../utils/env";
+import { Resend } from 'resend';
 
 const authRouter = new Hono();
 
@@ -109,6 +112,71 @@ authRouter
       );
     }
   )
+  .post(
+    "/request-reset",
+  describeRoute({
+      description: "Request a reset password",
+      tags: ["auth"],
+      responses: {
+        200: response200(userSelectSchema),
+        401: response400(z.literal("Invalid email or password.")),
+      },
+    }),
+    zValidator("json", userLoginSchema.pick({ email: true })),
+    async (c) => {
+      const { email } = c.req.valid("json");
+      const user = await prisma.user.findUnique({
+        where: { email },
+      });
+      if (!user) {
+        return c.status(200);
+      }
+
+      const token = generateRandomString()
+      //verif resetPassword du user exist ? suppression + creation : creation
+      const userToken = await prisma.resetPassword.findUnique({
+        where:{
+          userId:user.id
+        }
+      })
+
+      if(userToken){
+        await prisma.resetPassword.delete({
+          where:{
+            id:userToken.id
+          }
+        })
+      }
+
+      await prisma.resetPassword.create({
+        data: {
+          userId: user.id,
+          token: await argon2.hash(token),
+          expiredAt: new Date(Date.now() + 1000 * 60 * 15), 
+        },
+      });
+      const resetLink = `http://localhost:5173/reset-password?token=${token}`
+      const resend = new Resend(getEnv().RESEND_API_KEY);
+      const htmlContent = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; background-color: #f9f9f9; padding: 20px; border-radius: 8px;">
+        <h2>Réinitialisation de votre mot de passe</h2>
+        <p>Bonjour,</p>
+        <p>Vous avez demandé à réinitialiser votre mot de passe. Cliquez sur le bouton ci-dessous pour continuer :</p>
+        <a href="${resetLink}" style="display: inline-block; padding: 12px 20px; background-color: #615FFF; color: #fff; text-decoration: none; border-radius: 4px;">Réinitialiser mon mot de passe</a>
+        <p style="margin-top: 20px;">Si vous n'avez pas demandé cette réinitialisation, ignorez simplement ce message.</p>
+        <p>Merci,<br />L’équipe La pince - O'clock</p>
+      </div>
+      `;
+
+      await resend.emails.send({
+        from: 'La pince - Oclock <onboarding@resend.dev>',
+        to: ['giselle.magalong@gmail.com'],
+        subject: 'Reinitialisation de votre mot de passe',
+        html: htmlContent,
+      });
+
+      return c.json({message : "Send reset password link successfuly"}, 200)
+  })
   .get("/logout", async (c) => {
     const { TOKEN_JWT_NAME, SECRET_JWT } = getEnv();
     const token = await getSignedCookie(c, SECRET_JWT, TOKEN_JWT_NAME);
