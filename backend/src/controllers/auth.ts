@@ -1,7 +1,7 @@
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import {
-  updateUserPasswordSchema,
+  resetUserPasswordSchema,
   userLoginSchema,
   userRegisterSchema,
   userSelectSchema,
@@ -179,6 +179,49 @@ authRouter
       });
 
       return c.json({message : "Send reset password link successfuly"}, 200)
+  })
+  .post(
+    "/reset-password",
+    describeRoute({
+      description: "Reset password",
+      tags: ["auth"],
+      responses: {
+        200: response200(userSelectSchema),
+      },
+    }),
+    zValidator("json", resetUserPasswordSchema),
+    async (c) => {
+      const data = c.req.valid('json');
+      const tokenExist = await prisma.resetPassword.findFirst({
+        where:{
+          token:data.token
+        }
+      });
+
+      if(!tokenExist || tokenExist.expiredAt < new Date()){
+        console.log(tokenExist);
+        throw new HTTPException(401, {
+          message: "Token invalid.",
+        });
+      }
+
+      const hashedNewPassword = await argon2.hash(data.newPassword);
+      const updatedUser = await prisma.user.update({
+        where: { id: tokenExist.userId },
+        data: {
+          password: hashedNewPassword,
+        },
+      });
+
+      const { password: _, ...safeUser } = updatedUser;
+      
+      await prisma.resetPassword.delete({
+          where:{
+            id:tokenExist.id
+          }
+        })
+
+      return c.json(safeUser, 200);
   })
   .get("/logout", async (c) => {
     const { TOKEN_JWT_NAME, SECRET_JWT } = getEnv();
