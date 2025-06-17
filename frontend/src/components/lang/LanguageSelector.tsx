@@ -3,11 +3,9 @@ import { Button } from "../ui/button";
 import { useLanguage } from "@/hooks/use-language";
 
 export const LanguageSelector = () => {
-
   const { changeLanguage, currentLanguage, languages }  = useLanguage()
   const selectedLanguage = languages.find(lang => lang.code === currentLanguage);
 
-  console.log(selectedLanguage)
 return <DropdownMenu>
       <DropdownMenuTrigger
         asChild

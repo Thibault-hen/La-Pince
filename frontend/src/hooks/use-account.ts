@@ -15,8 +15,25 @@ export const useUpdateUserProfile= () => {
       toast.success(t('account.toast.updated'));
       queryClient.invalidateQueries({ queryKey: ['account'] });
     },
-    onError: (_data) => {
+    onError: () => {
       toast.error(t('account.toast.updateError'));
+    },
+  });
+}
+
+export const useUpdatePassword = () => {
+  const queryClient = useQueryClient();
+  const { t } = useTranslation();
+
+  return useMutation({
+    mutationFn: (data: { currentPassword: string; newPassword: string }) =>
+      accountService.updateUserPassword(data),
+    onSuccess: () => {
+      toast.success(t('account.toast.passwordUpdated'));
+      queryClient.invalidateQueries({ queryKey: ['account'] });
+    },
+    onError: () => {
+      toast.error(t('account.toast.passwordUpdateError'));
     },
   });
 }

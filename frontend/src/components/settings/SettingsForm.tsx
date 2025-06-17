@@ -8,8 +8,6 @@ export const SettingsForm = () => {
   const queryClient = useQueryClient();
   const userData = queryClient.getQueryData<UserType>(['authUser']);
 
-  console.log('SettingsForm userData:', userData);
-
   return (
     <>
       <div className="flex items-center gap-3">

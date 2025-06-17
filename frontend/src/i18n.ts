@@ -157,6 +157,9 @@ i18n
           'category.card.currentBudget': 'Current Budget',
           'account.toast.updated': 'Your profile has been updated',
           'account.toast.updateError': 'An error occurred while updating your profile',
+          'account.toast.passwordUpdated': 'Your password has been updated',
+          'account.toast.passwordUpdateError':
+            'An error occurred while updating your password',
         },
       },
       fr: {
@@ -306,6 +309,9 @@ i18n
           'category.card.currentBudget': 'Budget en cours',
           'account.toast.updated': 'Ton profil a été mis à jour',
           'account.toast.updateError': 'Une erreur est survenue lors de la mise à jour de ton profil',
+          'account.toast.passwordUpdated': 'Ton mot de passe a été mis à jour',
+          'account.toast.passwordUpdateError':
+            'Une erreur est survenue lors de la mise à jour de ton mot de passe',
         },
       },
     },

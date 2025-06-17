@@ -8,6 +8,7 @@ import { Switch } from '../ui/switch';
 import { useForm } from '@tanstack/react-form'; 
 import { useUpdateUserProfile } from '@/hooks/use-account';
 import type { UserAccount } from '@/types/account';
+import { userAccountSchema } from '@/schemas/account.schema';
 
 
 interface ProfileProps {
@@ -24,8 +25,10 @@ export const Profile = ({ userData }: ProfileProps) => {
       currency: userData?.currency || 'EUR',
       alert: userData?.alert || false,
     },
+    validators: {
+      onSubmit: userAccountSchema,
+    },
     onSubmit: async ({ value }) => {
-      console.log('Form data submitted:', value);
       await updateUserProfile(value);
     },
   });
@@ -65,6 +68,7 @@ export const Profile = ({ userData }: ProfileProps) => {
                       value={field.state.value}
                       onChange={(e) => field.handleChange(e.target.value)}
                       placeholder="John Doe"
+                      className="pl-10 text-xs md:text-sm"
                       required
                     />
                   </div>
@@ -91,6 +95,7 @@ export const Profile = ({ userData }: ProfileProps) => {
                       onChange={(e) => field.handleChange(e.target.value)}
                       placeholder="lapince@oclock.io"
                       className="pl-10 text-xs md:text-sm"
+                      required
                     />
                   </div>
                    {field.state.meta.errors.length > 0 && (
