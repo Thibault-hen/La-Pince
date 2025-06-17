@@ -155,6 +155,8 @@ i18n
           'budget.chart.totalLabel': 'Total Budget',
           'budget.cards.used': 'Used',
           'category.card.currentBudget': 'Current Budget',
+          'account.toast.updated': 'Your profile has been updated',
+          'account.toast.updateError': 'An error occurred while updating your profile',
         },
       },
       fr: {
@@ -302,6 +304,8 @@ i18n
           'budget.chart.totalLabel': 'Budget total',
           'budget.cards.used': 'Utilisé',
           'category.card.currentBudget': 'Budget en cours',
+          'account.toast.updated': 'Ton profil a été mis à jour',
+          'account.toast.updateError': 'Une erreur est survenue lors de la mise à jour de ton profil',
         },
       },
     },
