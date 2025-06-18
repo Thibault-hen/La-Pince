@@ -15,51 +15,57 @@ import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useQueryClient } from '@tanstack/react-query';
 import type { User } from '@/services/auth';
+import { LanguageSelector } from '../lang/LanguageSelector';
+import { useTranslation } from 'react-i18next';
 
 const TopMenu = [
-  { name: 'Nous contacter', to: '#contact' },
-  { name: 'Fonctionnalités', to: '#features' },
+  { name: 'home.nav.contact', to: '#contact' },
+  { name: 'home.nav.features', to: '#features' },
 ];
 
 export default function Header() {
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
   const userData = queryClient.getQueryData<User>(['authUser']);
   return (
     <header className="sticky top-5 z-50 flex justify-center container ">
-      <div className="min-w-full border rounded-md  w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-2.5 px-4 ">
+      <div className="min-w-full border rounded-md w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-2.5 px-4 ">
         <nav className="hidden justify-between lg:flex">
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-8">
             <Link to="/" className="flex items-center gap-1">
               <img src={laPinceLogo} width={60} className="text-red-500" />
-              <span className="text-xl font-bold">La Pince</span>
+              <span className="text-xl font-bold">{t('home.nav.title')}</span>
             </Link>
-            <div className="items-center flex gap-6">
+            <div className="items-center flex">
               {TopMenu.map((menu, idx) => (
                 <a key={idx} className={cn(buttonVariants({ variant: 'ghost' }))} href={menu.to}>
-                  {menu.name}
+                  {t(menu.name)}
                 </a>
               ))}
             </div>
           </div>
-          <div className="items-center flex gap-6">
-            <div className="flex items-center gap-4">
+          <div className="items-center flex">
+            <div className="flex items-center gap-2">
               {!userData ? (
                 <>
                   <Button variant="blue" asChild>
-                    <Link to="/connexion">Connexion</Link>
+                    <Link to="/connexion">{t('home.nav.login')}</Link>
                   </Button>
                   <Button variant="blue">
-                    <Link to="/inscription">Inscription</Link>
+                    <Link to="/inscription">{t('home.nav.register')}</Link>
                   </Button>
                 </>
               ) : (
                 <Button variant="blue" asChild>
-                  <Link to="/tableau-de-bord">Mon espace</Link>
+                  <Link to="/tableau-de-bord">{t('home.nav.myspace')}</Link>
                 </Button>
               )}
             </div>
             <Suspense>
-              <ModeToggle />
+              <div className="flex items-center gap-2 ml-4">
+                <LanguageSelector />
+                <ModeToggle />
+              </div>
             </Suspense>
           </div>
         </nav>
@@ -70,22 +76,22 @@ export default function Header() {
             <div className="flex items-center gap-6">
               <Link to="/" className="flex items-center gap-1">
                 <img src={laPinceLogo} width={60} className="text-red-500" />
-                <span className="hidden sm:flex text-xl font-bold">La Pince</span>
+                <span className="hidden sm:flex text-xl font-bold">{t('home.nav.title')}</span>
               </Link>
             </div>
-            <div className="items-center my-4 flex  gap-0">
+            <div className="items-center my-2 flex gap-2">
               {!userData ? (
                 <>
-                  <Button variant="blue" className="font-semibold text-sm m-2 p-5 justify-end">
-                    <Link to="/connexion">Connexion</Link>
+                  <Button variant="blue" className="font-semibold text-sm p-5 justify-end">
+                    <Link to="/connexion">{t('home.nav.login')}</Link>
                   </Button>
-                  <Button variant="blue" className="font-semibold text-sm m-2 p-5 justify-end">
-                    <Link to="/inscription">Inscription</Link>
+                  <Button variant="blue" className="font-semibold text-sm p-5 justify-end">
+                    <Link to="/inscription">{t('home.nav.register')}</Link>
                   </Button>
                 </>
               ) : (
                 <Button variant="blue" className="font-semibold text-sm m-2 p-5 justify-end">
-                  <Link to="/tableau-de-bord">Mon espace</Link>
+                  <Link to="/tableau-de-bord">{t('home.nav.myspace')}</Link>
                 </Button>
               )}
 
@@ -111,7 +117,7 @@ export default function Header() {
                         key={idx}
                         className="font-semibold text-lg m-2 p-6"
                       >
-                        <a href={menu.to}>{menu.name}</a>
+                        <a href={menu.to}>{t(menu.name)}</a>
                       </Button>
                     </SheetClose>
                   ))}

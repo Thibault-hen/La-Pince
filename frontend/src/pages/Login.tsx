@@ -5,6 +5,7 @@ import { House } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { ModeToggle } from '@/components/theme/theme-toggle';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
+import { LanguageSelector } from '@/components/lang/LanguageSelector';
 
 export const Login = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ export const Login = () => {
             >
               <House size={18} />
             </NavLink>
+            <LanguageSelector />
             <ModeToggle />
           </div>
           <div className="flex flex-1 items-center justify-center">
