@@ -28,12 +28,17 @@ async function main() {
   // --- 1. Colors ---
   await prisma.color.createMany({
     data: [
-      { name: 'Blanc', value: '#ffffff' }, { name: 'Rouge', value: '#ef4444' },
-      { name: 'Vert', value: '#22c55e' }, { name: 'Bleu', value: '#3b82f6' },
-      { name: 'Jaune', value: '#eab308' }, { name: 'Violet', value: '#8b5cf6' },
-      { name: 'Orange', value: '#f97316' }, { name: 'Rose', value: '#ec4899' },
-      { name: 'Sarcelle', value: '#14b8a6' }, { name: 'Indigo', value: '#6366f1' },
-      { name: 'Gris', value: '#6b7280' }
+       { name: 'color.white', value: '#ffffff' },
+  { name: 'color.red', value: '#ef4444' },
+  { name: 'color.green', value: '#22c55e' },
+  { name: 'color.blue', value: '#3b82f6' },
+  { name: 'color.yellow', value: '#eab308' },
+  { name: 'color.violet', value: '#8b5cf6' },
+  { name: 'color.orange', value: '#f97316' },
+  { name: 'color.pink', value: '#ec4899' },
+  { name: 'color.teal', value: '#14b8a6' },
+  { name: 'color.indigo', value: '#6366f1' },
+  { name: 'color.gray', value: '#6b7280' },
     ],
     skipDuplicates: true,
   });
@@ -75,18 +80,18 @@ async function main() {
   console.log('Creating categories...');
   // Categories for Alice
   const [categoryCoursesAlice, categoryTransportAlice, categoryLoisirsAlice, categorySanteAlice, categoryShoppingAlice] = await prisma.$transaction([
-    prisma.category.create({ data: { title: 'Courses', userId: alice.id, colorId: colorMap['Bleu'].id } }),
-    prisma.category.create({ data: { title: 'Transport', userId: alice.id, colorId: colorMap['Jaune'].id } }),
-    prisma.category.create({ data: { title: 'Loisirs', userId: alice.id, colorId: colorMap['Vert'].id } }),
-    prisma.category.create({ data: { title: 'Santé', userId: alice.id, colorId: colorMap['Rose'].id } }),
-    prisma.category.create({ data: { title: 'Shopping', userId: alice.id, colorId: colorMap['Violet'].id } }),
+    prisma.category.create({ data: { title: 'category.food', userId: alice.id, colorId: colorMap['color.blue'].id } }),
+    prisma.category.create({ data: { title: 'category.transport', userId: alice.id, colorId: colorMap['color.yellow'].id } }),
+    prisma.category.create({ data: { title: 'Loisirs', userId: alice.id, colorId: colorMap['color.green'].id } }),
+    prisma.category.create({ data: { title: 'Santé', userId: alice.id, colorId: colorMap['color.pink'].id } }),
+    prisma.category.create({ data: { title: 'Shopping', userId: alice.id, colorId: colorMap['color.violet'].id } }),
   ]);
   // Categories for John
   const [categoryFacturesJohn, categoryAlimentationJohn, categoryVoitureJohn, categoryDivertissementJohn] = await prisma.$transaction([
-    prisma.category.create({ data: { title: 'Factures', userId: john.id, colorId: colorMap['Rouge'].id } }),
-    prisma.category.create({ data: { title: 'Alimentation', userId: john.id, colorId: colorMap['Bleu'].id } }),
-    prisma.category.create({ data: { title: 'Voiture', userId: john.id, colorId: colorMap['Gris'].id } }),
-    prisma.category.create({ data: { title: 'Divertissement', userId: john.id, colorId: colorMap['Orange'].id } }),
+    prisma.category.create({ data: { title: 'Factures', userId: john.id, colorId: colorMap['color.red'].id } }),
+    prisma.category.create({ data: { title: 'category.food', userId: john.id, colorId: colorMap['color.blue'].id } }),
+    prisma.category.create({ data: { title: 'Voiture', userId: john.id, colorId: colorMap['color.gray'].id } }),
+    prisma.category.create({ data: { title: 'Divertissement', userId: john.id, colorId: colorMap['color.orange'].id } }),
   ]);
   console.log('Categories created for Alice and John.');
 

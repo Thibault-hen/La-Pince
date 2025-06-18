@@ -240,9 +240,9 @@ authRouter
 
 async function createListCategories(userId: string) {
   const categories = [
-    { name: 'Alimentation', color: 'Jaune' },
-    { name: 'Logement', color: 'Blanc' },
-    { name: 'Transports', color: 'Orange' },
+    { name: 'category.food', color: 'color.yellow' },
+    { name: 'category.houseRent', color: 'color.white' },
+    { name: 'category.transport', color: 'color.orange' },
   ];
 
   categories.map(async (category) => {
