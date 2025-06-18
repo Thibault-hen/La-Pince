@@ -9,9 +9,23 @@ import { useForm } from '@tanstack/react-form';
 import { registerSchema } from '@/schemas/auth.schemas';
 import { Loader } from '../ui/loader';
 import { Lock, Mail, User } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export function RegisterForm({ className, ...props }: React.ComponentProps<'form'>) {
   const { mutateAsync: register, error } = useRegister();
+  const { t } = useTranslation();
+
+  const getErrorMessage = (error: any): string | null => {
+    if (!error) return null;
+
+    if (error.response?.status === 400) {
+      return t('register.errorMessages.emailExists');
+    }
+    if (error.response?.status === 429) {
+      return t('register.errorMessages.tooManyAttempts');
+    }
+    return t('register.errorMessages.error');
+  };
 
   const form = useForm({
     defaultValues: {
@@ -44,13 +58,13 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
         <img src={laPinceLogo} width={100} alt="Application logo" />
       </div>
       <div className="grid gap-6">
-        <h1 className="text-2xl font-semibold text-left">Inscription</h1>
+        <h1 className="text-2xl font-semibold text-left">{t('register.title')}</h1>
         <form.Field
           name="name"
           children={(field) => (
             <div className="relative grid gap-3">
               <div>
-                <Label htmlFor={field.name}>Nom</Label>
+                <Label htmlFor={field.name}>{t('register.form.name')}</Label>
               </div>
               <User className="absolute left-3 top-9 h-4 w-4 text-muted-foreground" />
               <Input
@@ -65,7 +79,9 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
                 }}
               />
               {field.state.meta.errors.length > 0 && (
-                <span className="text-red-500 text-sm">{field.state.meta.errors[0]?.message}</span>
+                <span className="text-red-500 text-sm">
+                  {t(field.state.meta.errors[0]?.message || '')}
+                </span>
               )}
             </div>
           )}
@@ -75,7 +91,7 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
           children={(field) => (
             <div className="relative grid gap-3">
               <div>
-                <Label htmlFor={field.name}>Email</Label>
+                <Label htmlFor={field.name}>{t('register.form.email')}</Label>
               </div>
               <Mail className="absolute left-3 top-9 h-4 w-4 text-muted-foreground" />
               <Input
@@ -90,7 +106,9 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
                 }}
               />
               {field.state.meta.errors.length > 0 && (
-                <span className="text-red-500 text-sm">{field.state.meta.errors[0]?.message}</span>
+                <span className="text-red-500 text-sm">
+                  {t(field.state.meta.errors[0]?.message || '')}
+                </span>
               )}
             </div>
           )}
@@ -100,9 +118,9 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
           children={(field) => (
             <div className="relative grid gap-3">
               <div className="flex items-center">
-                <Label htmlFor={field.name}>Mot de passe</Label>
+                <Label htmlFor={field.name}>{t('register.form.password')}</Label>
                 <a href="#" className="ml-auto text-sm underline-offset-4 hover:underline">
-                  Mot de passe oublié ?
+                  {t('register.form.forgotPassword')}
                 </a>
               </div>
               <Lock className="absolute left-3 top-10 h-4 w-4 text-muted-foreground" />
@@ -118,7 +136,9 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
                 }}
               />
               {field.state.meta.errors.length > 0 && (
-                <span className="text-red-500 text-sm">{field.state.meta.errors[0]?.message}</span>
+                <span className="text-red-500 text-sm">
+                  {t(field.state.meta.errors[0]?.message || '')}
+                </span>
               )}
             </div>
           )}
@@ -128,7 +148,7 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
           children={(field) => (
             <div className="relative grid gap-3">
               <div className="flex items-center">
-                <Label htmlFor={field.name}>Confirmer mot de passe</Label>
+                <Label htmlFor={field.name}>{t('register.form.confirmPassword')}</Label>
               </div>
               <Lock className="absolute left-3 top-9 h-4 w-4 text-muted-foreground" />
               <Input
@@ -143,7 +163,9 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
                 }}
               />
               {field.state.meta.errors.length > 0 && (
-                <span className="text-red-500 text-sm">{field.state.meta.errors[0]?.message}</span>
+                <span className="text-red-500 text-sm">
+                  {t(field.state.meta.errors[0]?.message || '')}
+                </span>
               )}
             </div>
           )}
@@ -152,20 +174,18 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
           selector={(state) => [state.isSubmitting]}
           children={([isSubmiting]) => (
             <Button type="submit" variant="blue" className="py-4">
-              {isSubmiting ? <Loader /> : "S'inscrire"}
+              {isSubmiting ? <Loader /> : t('register.form.registerButton')}
             </Button>
           )}
         />
-        {error && form.state.isFormValid && (
-          <span className="text-sm text-red-500 text-center">
-            Cette adresse email est déjà utilisé
-          </span>
+        {error && (
+          <span className="text-sm text-red-500 text-center">{getErrorMessage(error)}</span>
         )}
       </div>
       <div className="text-center text-sm">
-        <p>Vous avez déjà un compte ?</p>
+        <p>{t('register.form.alreadyHaveAccount')}</p>
         <NavLink to="/connexion" className="underline underline-offset-4 text-primary-color">
-          Connectez-vous
+          {t('register.form.loginLink')}
         </NavLink>
       </div>
     </form>

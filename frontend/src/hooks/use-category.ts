@@ -4,7 +4,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { useCurrency } from './use-currency';
-import { da } from 'date-fns/locale';
 
 export const useCategories = () => {
   const { currency, convertFromEUR } = useCurrency();

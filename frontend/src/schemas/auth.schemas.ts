@@ -1,17 +1,17 @@
 import z from 'zod';
 
 export const loginSchema = z.object({
-  email: z.string().email({ message: 'Email invalide' }),
-  password: z.string().min(8, { message: 'Le mot de passe doit contenir au moins 6 caractères' }),
+  email: z.string().email({ message: 'login.errorMessages.invalidEmail' }),
+  password: z.string().min(8, { message: 'login.errorMessages.invalidPassword' }),
 });
 
 export const registerSchema = loginSchema
   .extend({
-    name: z.string().min(2, { message: 'Le nom doit contenir au moins 2 caractères' }),
+    name: z.string().min(2, { message: 'register.errorMessages.invalidName' }),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: 'Les mots de passe ne correspondent pas',
+    message: 'register.errorMessages.matchPassword',
     path: ['confirmPassword'],
   });
 

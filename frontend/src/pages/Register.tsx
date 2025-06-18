@@ -5,6 +5,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import preview1 from '@/assets/preview1.png';
 import preview2 from '@/assets/preview2.png';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
+import { LanguageSelector } from '@/components/lang/LanguageSelector';
 
 export const Register = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ export const Register = () => {
             >
               <House size={18} />
             </NavLink>
+            <LanguageSelector />
             <ModeToggle />
           </div>
           <div className="flex flex-1 items-center justify-center">
