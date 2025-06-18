@@ -8,7 +8,7 @@ import { useExpenses, type Expense } from '@/hooks/use-expense';
 import { ChartBarInteractive } from '@/components/expense/BarChart';
 import { ExpenseDeleteModal } from '@/components/expense/modals/ExpenseDeleteModal';
 import { useTranslation } from 'react-i18next';
-import { Tags } from 'lucide-react';
+import { HandCoins } from 'lucide-react';
 
 export function Expense() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,7 +50,7 @@ export function Expense() {
       )}
       <div className="flex items-center gap-3">
         <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
-          <Tags className="h-5 w-5 text-primary-color" />
+          <HandCoins className="h-5 w-5 text-primary-color" />
         </div>
         <div>
           <h1 className="text-2xl font-bold text-foreground">{t('expenses.header.title')}</h1>

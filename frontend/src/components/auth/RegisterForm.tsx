@@ -117,12 +117,8 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
           name="password"
           children={(field) => (
             <div className="relative grid gap-3">
-              <div className="flex items-center">
-                <Label htmlFor={field.name}>{t('register.form.password')}</Label>
-                <a href="#" className="ml-auto text-sm underline-offset-4 hover:underline">
-                  {t('register.form.forgotPassword')}
-                </a>
-              </div>
+              <Label htmlFor={field.name}>{t('register.form.password')}</Label>
+
               <Lock className="absolute left-3 top-10 h-4 w-4 text-muted-foreground" />
               <Input
                 className="pl-10"

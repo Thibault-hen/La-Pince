@@ -1,4 +1,4 @@
-import { EllipsisVerticalIcon, Pencil, Trash2 } from 'lucide-react';
+import { EllipsisVertical, EllipsisVerticalIcon, Pencil, Trash2 } from 'lucide-react';
 import type { ColumnDef } from '@tanstack/react-table';
 import {
   DropdownMenu,
@@ -41,14 +41,10 @@ export const createColumns = (
       return (
         <div className="flex justify-center">
           <Badge
-            className={
-              'border align-center items-center capitalize min-w-26 bg-white dark:bg-secondary'
-            }
-            style={{
-              border: '1px solid ' + category.color,
-            }}
+            className={'border align-center items-center capitalize min-w-26'}
+            style={{ backgroundColor: category.color, color: '#fff' }}
           >
-            <span className="text-black dark:text-white">{category.title}</span>
+            <span className="font-bold">{category.title}</span>
           </Badge>
         </div>
       );
@@ -83,23 +79,31 @@ export const createColumns = (
       return (
         <div className="flex justify-end">
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <EllipsisVerticalIcon className="h-4 w-4" />
+            <DropdownMenuTrigger
+              asChild
+              className="bg-transparent cursor-pointer hover:bg-secondary-color dark:hover:bg-secondary-color border-none  focus:outline-none focus:ring-0 focus:ring-transparent
+             focus-visible:outline-none focus-visible:ring-0
+             data-[highlighted]:bg-transparent data-[state=open]:bg-transparent
+             shadow-none focus:shadow-none focus-visible:shadow-none"
+            >
+              <Button variant="outline" size="icon">
+                <EllipsisVertical />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="outline  rounded-md shadow-lg" align="start">
-              <DropdownMenuItem onSelect={() => onEdit(row.original)}>
-                <Pencil size={20} />
+              <DropdownMenuItem
+                className="p-2 dark:bg-primary cursor-pointer hover:!bg-secondary-color transition-all duration-150 ease-in-out"
+                onSelect={() => onEdit(row.original)}
+              >
+                <Pencil className="dark:text-white text-dark" />
                 {t('expenses.table.actions.edit')}
               </DropdownMenuItem>
 
               <DropdownMenuItem
-                variant="destructive"
-                className=""
+                className="p-2 dark:bg-primary cursor-pointer hover:!bg-red-500 dark:hover:bg-red-700/20 transition-all duration-150 ease-in-out"
                 onSelect={() => onDelete(row.original)}
               >
-                <Trash2 />
+                <Trash2 className="dark:text-white text-dark" />
                 {t('expenses.table.actions.delete')}
               </DropdownMenuItem>
             </DropdownMenuContent>

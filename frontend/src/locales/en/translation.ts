@@ -70,7 +70,19 @@ export const en = {
       conditions: 'Terms of Use',
     },
   },
+  dashboard: {
+    header: {
+      title: 'Dashboard',
+      subtitle: 'Overview of my finances',
+      addButton: 'Update my income',
+    },
+  },
   expenses: {
+    header: {
+      title: 'Expenses',
+      subtitle: 'Manage my expenses',
+      addButton: 'Add an expense',
+    },
     chart: {
       header: {
         title: 'Your expenses this month',
@@ -79,7 +91,7 @@ export const en = {
     },
     table: {
       addButton: 'Add an expense',
-      filterPlaceholder: 'Filter by title...',
+      filterPlaceholder: 'Filter by title',
       noResults: 'No results.',
       columns: {
         title: 'Title',
@@ -87,10 +99,14 @@ export const en = {
         date: 'Date',
         amount: 'Amount',
       },
+      next: 'Next',
+      previous: 'Previous',
       actions: {
         edit: 'Edit',
         delete: 'Delete',
       },
+      singularCount: 'expense',
+      pluralCount: 'expenses',
     },
     add: {
       title: 'Create a new expense',
@@ -155,9 +171,9 @@ export const en = {
       title: 'My budgets',
     },
     header: {
-      title: 'Budget Management',
-      subtitle: 'Create and manage your budgets',
-      addButton: 'Add Budget',
+      title: 'Budgets',
+      subtitle: 'Manage my budgets',
+      addButton: 'Add a budget',
     },
     card: {
       spent: 'Spent',
@@ -224,14 +240,14 @@ export const en = {
   },
   category: {
     header: {
-      title: 'Category Management',
-      subtitle: 'Create and manage your categories',
-      addButton: 'Add Category',
+      title: 'Categories',
+      subtitle: 'Manage my categories',
+      addButton: 'Add a category',
     },
     card: {
       edit: 'Edit',
       delete: 'Delete',
-      currentBudget: 'Current Budget',
+      currentBudget: 'Current budget',
     },
     add: {
       title: 'Create a new category',
@@ -330,6 +346,36 @@ export const en = {
     },
   },
   account: {
+    header: {
+      title: 'Account Settings',
+      subtitle: 'Manage your personal information',
+    },
+    profile: {
+      title: 'Profile Settings',
+      description: 'Update your account information and preferences',
+      form: {
+        name: 'Name',
+        email: 'Email',
+        favoriteCurrency: 'Preferred Currency',
+        alert: 'Budget Alert',
+        alertDescription: 'Receive notifications when approaching your limits',
+        saveButton: 'Save Changes',
+      },
+    },
+    security: {
+      title: 'Security',
+      description: 'Change your password',
+      form: {
+        currentPassword: 'Current password',
+        newPassword: 'New password',
+        confirmNewPassword: 'Confirm new password',
+        changePasswordButton: 'Save new password',
+      },
+    },
+    menu: {
+      profile: 'Profile',
+      disconnect: 'Disconnect',
+    },
     toast: {
       updated: 'Your profile has been updated',
       updateError: 'An error occurred while updating your profile',
