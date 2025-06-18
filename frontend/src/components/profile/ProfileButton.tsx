@@ -35,7 +35,7 @@ export const ProfileButton = () => {
         <DropdownMenuLabel>Mon Compte</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          onClick={() => console.log('Profile')}
+          onClick={() => naviguate('/tableau-de-bord/parametres')}
           className="cursor-pointer transition-all duration-150 ease-in-out"
         >
           Profil

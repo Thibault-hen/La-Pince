@@ -1,6 +1,8 @@
 import { Home } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const Dashboard = () => {
+  const { t } = useTranslation();
   return (
     <>
       <div className="flex items-center gap-3">
@@ -8,8 +10,8 @@ export const Dashboard = () => {
           <Home className="h-5 w-5 text-primary-color" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Tableau de bord</h1>
-          <p className="text-sm text-muted-foreground">Gérez vos finances</p>
+          <h1 className="text-2xl font-bold text-foreground">{t('dashboard.header.title')}</h1>
+          <p className="text-sm text-muted-foreground">{t('dashboard.header.subtitle')}</p>
         </div>
       </div>
     </>

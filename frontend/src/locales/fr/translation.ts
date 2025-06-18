@@ -1,3 +1,5 @@
+import { en } from '../en/translation';
+
 export const fr = {
   home: {
     nav: {
@@ -71,7 +73,19 @@ export const fr = {
       conditions: 'Conditions d’utilisation',
     },
   },
+  dashboard: {
+    header: {
+      title: 'Tableau de bord',
+      subtitle: "Vue d'ensemble de mes finances",
+      addButton: 'Update my income',
+    },
+  },
   expenses: {
+    header: {
+      title: 'Dépenses',
+      subtitle: 'Gérer mes dépenses',
+      addButton: 'Ajouter une dépense',
+    },
     chart: {
       header: {
         title: 'Vos dépenses de ce mois',
@@ -80,7 +94,7 @@ export const fr = {
     },
     table: {
       addButton: 'Ajouter une dépense',
-      filterPlaceholder: 'Filter par titre...',
+      filterPlaceholder: 'Filter par titre',
       noResults: 'Aucun résultat.',
       columns: {
         title: 'Titre',
@@ -88,10 +102,14 @@ export const fr = {
         date: 'Date',
         amount: 'Montant',
       },
+      next: 'Suivant',
+      previous: 'Précédent',
       actions: {
         edit: 'Éditer',
         delete: 'Supprimer',
       },
+      singularCount: 'dépense',
+      pluralCount: 'dépenses',
     },
     add: {
       title: 'Créer une nouvelle dépense',
@@ -156,8 +174,8 @@ export const fr = {
       title: 'Mes budgets',
     },
     header: {
-      title: 'Gestion des budgets',
-      subtitle: 'Créez et gérez vos budgets',
+      title: 'Budgets',
+      subtitle: 'Gérer mes budgets',
       addButton: 'Ajouter un budget',
     },
     card: {
@@ -226,8 +244,8 @@ export const fr = {
   },
   category: {
     header: {
-      title: 'Gestion des catégories',
-      subtitle: 'Créez et gérez vos catégories',
+      title: 'Catégories',
+      subtitle: 'Gérer mes catégories',
       addButton: 'Ajouter une catégorie',
     },
     card: {
@@ -334,6 +352,36 @@ export const fr = {
     },
   },
   account: {
+    header: {
+      title: 'Paramètre du compte',
+      subtitle: 'Gérez mes informations personnelles',
+    },
+    profile: {
+      title: 'Paramètres du profil',
+      description: 'Modifie les informations d’identification de ton compte et préférences',
+      form: {
+        name: 'Nom',
+        email: 'Email',
+        favoriteCurrency: 'Devise préférée',
+        alert: 'Alerte de budget',
+        alertDescription: 'Recevoir des notifications lorsque tu approches de tes limites',
+        saveButton: 'Enregistrer les modifications',
+      },
+    },
+    security: {
+      title: 'Sécurité',
+      description: 'Modifiez votre mot de passe',
+      form: {
+        currentPassword: 'Mot de passe actuel',
+        newPassword: 'Nouveau mot de passe',
+        confirmNewPassword: 'Confirmer le nouveau mot de passe',
+        changePasswordButton: 'Modifier le mot de passe',
+      },
+    },
+    menu: {
+      profile: 'Profil',
+      disconnect: 'Déconnexion',
+    },
     toast: {
       updated: 'Ton profil a été mis à jour',
       updateError: 'Une erreur est survenue lors de la mise à jour de ton profil',

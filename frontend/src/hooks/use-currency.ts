@@ -14,7 +14,13 @@ export const useCurrency = () => {
       const response = await currencyService.getCurrencyRates();
       return response.rates;
     },
-    staleTime: 1000 * 60 * 60,
+    refetchOnMount: false, // Ne refetch pas au mount
+    refetchOnWindowFocus: false, // Ne refetch pas au focus
+    refetchOnReconnect: false, // Ne refetch pas à la reconnexion
+    retry: false, // Ne retry pas en cas d'erreur
+
+    // Données de fallback en cas d'erreur
+    placeholderData: (previousData) => previousData,
   });
 
   const convertFromEUR = (amount: number): number => {
