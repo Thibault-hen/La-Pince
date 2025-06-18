@@ -12,6 +12,7 @@ const envSchema = z.object({
   DOMAIN_NAME: z.string().default('localhost'),
   TOKEN_JWT_NAME: z.string().default('auth_token'),
   TOKEN_CSRF_NAME: z.string().default('auth_token'),
+  RESEND_API_KEY : z.string().default('resend_api_key')
 });
 
 export function getEnv() {

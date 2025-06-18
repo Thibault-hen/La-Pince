@@ -6,7 +6,7 @@ import { Hono } from 'hono';
 const mockFindMany = vi.fn();
 
 // on mock le client de la base de données pour qu'il utilise notre mock
-vi.mock('../src/db/client', () => ({
+vi.mock('../db/client', () => ({
   default: {
     color: {
       findMany: mockFindMany,
@@ -23,7 +23,7 @@ describe('Color Router', () => {
     vi.resetModules(); // on réinitialise le cache des modules
 
     // on réimporte le routeur après resetModules pour avoir le mock à jour
-    colorRouter = (await import('../src/controllers/color')).default;
+    colorRouter = (await import('../controllers/color')).default;
 
     app = new Hono();
     app.route('/api/v1', colorRouter);

@@ -46,7 +46,8 @@ export const useCreateBudget = () => {
       toast.error(t('budget.toast.createError'));
     },
   });
-};
+}
+
 
 export const useUpdateBudget = () => {
   const queryClient = useQueryClient();
