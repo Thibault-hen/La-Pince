@@ -11,6 +11,7 @@ import { Register } from './pages/Register';
 import { Terms } from './pages/Terms';
 import { ProtectedRoutes } from './components/auth/ProtectedRoutes';
 import { RootLayout } from './layouts/RootLayout';
+import { ResetPassword } from './pages/ResetPassword';
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: '/reset-password',
+        element: <ResetPassword />,
       },
       {
         path: '/connexion',

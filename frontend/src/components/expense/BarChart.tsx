@@ -7,9 +7,10 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
-import { useMemo, useState } from 'react';
-import { useExpenses } from '@/hooks/use-expense';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSpring } from 'motion/react';
+import { useExpenses } from '@/hooks/use-expense';
 
 export const description = 'An interactive bar chart';
 
@@ -33,18 +34,32 @@ function getExpensesThisMonth<T extends { date: string }>(expenses: T[]): T[] {
 }
 
 export function ChartBarInteractive() {
+  const [displayTotal, setDisplayTotal] = useState<string>();
   const [activeChart, setActiveChart] = useState<keyof typeof chartConfig>('amount');
   const { expenses } = useExpenses();
   const expensesThisMonth = useMemo(() => getExpensesThisMonth(expenses), [expenses]);
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language === 'en' ? 'en-US' : 'fr-FR';
   const total = useMemo(
     () => ({
-      amount: expenses.reduce((acc, curr) => acc + curr.amount, 0),
+      amount: expensesThisMonth.reduce((acc, curr) => acc + curr.amount, 0),
     }),
-    []
+    [expenses]
   );
-  const { t, i18n } = useTranslation();
+  const dTotal = useSpring(0, {
+    bounce: 0,
+    duration: 1000,
+  })
 
-  const locale = i18n.language === 'en' ? 'en-US' : 'fr-FR';
+  dTotal.on('change', (value) => {
+    setDisplayTotal(value.toFixed(2));
+  });
+
+  useEffect(() => {
+    dTotal.set(total.amount ?? 0);
+  }, [total.amount])
+
+
 
   return (
     <Card className="py-0 dark:bg-primary">
@@ -64,7 +79,7 @@ export function ChartBarInteractive() {
               >
                 <span className="text-muted-foreground text-xs">{t(chartConfig[chart].label)}</span>
                 <span className="text-lg leading-none font-bold sm:text-3xl">
-                  {total[key as keyof typeof total].toLocaleString()}
+                  {displayTotal ?? ''}
                   <strong>€</strong>
                 </span>
               </button>
@@ -73,7 +88,7 @@ export function ChartBarInteractive() {
         </div>
       </CardHeader>
       <CardContent className="px-2 sm:p-6">
-        <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
+        <ChartContainer config={chartConfig} className="aspect-auto h-[150px] w-full">
           <BarChart
             accessibilityLayer
             data={expensesThisMonth}
