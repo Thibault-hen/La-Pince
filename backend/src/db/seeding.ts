@@ -82,16 +82,16 @@ async function main() {
   const [categoryCoursesAlice, categoryTransportAlice, categoryLoisirsAlice, categorySanteAlice, categoryShoppingAlice] = await prisma.$transaction([
     prisma.category.create({ data: { title: 'category.food', userId: alice.id, colorId: colorMap['color.blue'].id } }),
     prisma.category.create({ data: { title: 'category.transport', userId: alice.id, colorId: colorMap['color.yellow'].id } }),
-    prisma.category.create({ data: { title: 'Loisirs', userId: alice.id, colorId: colorMap['color.green'].id } }),
-    prisma.category.create({ data: { title: 'Santé', userId: alice.id, colorId: colorMap['color.pink'].id } }),
-    prisma.category.create({ data: { title: 'Shopping', userId: alice.id, colorId: colorMap['color.violet'].id } }),
+    prisma.category.create({ data: { title: 'category.entertainment', userId: alice.id, colorId: colorMap['color.green'].id } }),
+    prisma.category.create({ data: { title: 'category.health', userId: alice.id, colorId: colorMap['color.pink'].id } }),
+    prisma.category.create({ data: { title: 'category.shopping', userId: alice.id, colorId: colorMap['color.violet'].id } }),
   ]);
   // Categories for John
   const [categoryFacturesJohn, categoryAlimentationJohn, categoryVoitureJohn, categoryDivertissementJohn] = await prisma.$transaction([
-    prisma.category.create({ data: { title: 'Factures', userId: john.id, colorId: colorMap['color.red'].id } }),
+    prisma.category.create({ data: { title: 'category.bills', userId: john.id, colorId: colorMap['color.red'].id } }),
     prisma.category.create({ data: { title: 'category.food', userId: john.id, colorId: colorMap['color.blue'].id } }),
-    prisma.category.create({ data: { title: 'Voiture', userId: john.id, colorId: colorMap['color.gray'].id } }),
-    prisma.category.create({ data: { title: 'Divertissement', userId: john.id, colorId: colorMap['color.orange'].id } }),
+    prisma.category.create({ data: { title: 'category.transport', userId: john.id, colorId: colorMap['color.gray'].id } }),
+    prisma.category.create({ data: { title: 'category.entertainment', userId: john.id, colorId: colorMap['color.orange'].id } }),
   ]);
   console.log('Categories created for Alice and John.');
 
