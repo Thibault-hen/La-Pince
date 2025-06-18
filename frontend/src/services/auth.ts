@@ -37,4 +37,18 @@ export const authService = {
     api.defaults.headers.common['csrf_token'] = response.data.token;
     return response.data;
   },
+
+  sendResetEmail: async ({ email }: { email: string }) => {
+    const response = await api.post('/auth/send-reset-email', { email });
+    return response.data;
+  },
+
+  resetPassword: async ({ newPassword, token }: { newPassword: string; token: string }) => {
+    const response = await api.post('/auth/reset-password', {
+      newPassword,
+      token,
+    });
+    return response.data;
+  },
+
 };

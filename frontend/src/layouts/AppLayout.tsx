@@ -3,7 +3,7 @@ import { ProfileButton } from '@/components/profile/ProfileButton';
 import { ModeToggle } from '@/components/theme/theme-toggle';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { Outlet, useLocation } from 'react-router-dom';
-import {} from 'react';
+import { } from 'react';
 import { DefaultWrapper } from './DefaultWrapper';
 import { useQueryClient } from '@tanstack/react-query';
 import type { User } from '@/services/auth';
