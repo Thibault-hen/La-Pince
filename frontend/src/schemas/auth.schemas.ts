@@ -15,5 +15,19 @@ export const registerSchema = loginSchema
     path: ['confirmPassword'],
   });
 
+export const resetPasswordSchema = z
+  .object({
+    newPassword: z.string().min(8, { message: 'user.resetPassword.errorChar' }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'user.resetPassword.errorMatch',
+    path: ['confirmPassword'],
+  });
+
+export const sendResetEmailSchema = z.object({
+  email: z.string().email({ message: 'user.resetPassword.error.invalid' }),
+});
+
 export type LoginUser = z.infer<typeof loginSchema>;
 export type RegisterUser = z.infer<typeof registerSchema>;
