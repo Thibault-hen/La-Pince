@@ -11,8 +11,6 @@
     "db:seed": "tsx src/db/seeding.ts",
     "test": "vitest",
     "test:watch": "vitest --watch",
-    "coverage": "vitest run --coverage"
-    "test:watch": "vitest --watch",
     "coverage": "vitest run --coverage",
     "test:ui": "vitest --watch --ui"
   },
