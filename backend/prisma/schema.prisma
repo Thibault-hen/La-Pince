@@ -95,14 +95,14 @@ model Expense {
   description      String
   amount           Float
   date             DateTime
-  budgetId         String   @map("budget_id")
-  userId           String   @map("user_id")
+  budgetId         String?   @map("budget_id")
+  userId           String    @map("user_id")
 
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
 
   user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  budget           Budget   @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  budget           Budget?  @relation(fields: [budgetId], references: [id], onDelete: SetNull)
 }
 
 model Notification {
