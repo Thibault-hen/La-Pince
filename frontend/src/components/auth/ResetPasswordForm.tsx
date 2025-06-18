@@ -40,7 +40,8 @@ export function ResetPasswordForm({ className, ...props }: React.ComponentProps<
     },
     async onSubmit({ value }) {
       try {
-        const response = await authService.resetPassword({ newPassword: value.newPassword, token: window.location.search.substring(7) || '' });
+        const response = await authService.resetPassword({ newPassword: value.newPassword, token: window.location.pathname.split('/').pop() || '' });
+
       } catch (error) {
       }
     },

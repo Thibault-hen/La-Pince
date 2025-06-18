@@ -1,24 +1,25 @@
-import { zValidator } from "@hono/zod-validator";
-import { Hono } from "hono";
+import { zValidator } from '@hono/zod-validator';
+import { Hono } from 'hono';
 import {
   resetUserPasswordSchema,
+  updateUserPasswordSchema,
   userLoginSchema,
   userRegisterSchema,
   userSelectSchema,
-} from "../validators/user";
-import prisma from "../db/client";
-import argon2 from "argon2";
-import { describeRoute } from "hono-openapi";
+} from '../validators/user';
+import prisma from '../db/client';
+import argon2 from 'argon2';
+import { describeRoute } from 'hono-openapi';
 import {
   response200,
   response201,
   response400,
   response500,
-} from "../utils/openapi";
-import { HTTPException } from "hono/http-exception";
-import { z } from "zod";
-import "dotenv/config";
-import { getSignedCookie } from "hono/cookie";
+} from '../utils/openapi';
+import { HTTPException } from 'hono/http-exception';
+import { z } from 'zod';
+import 'dotenv/config';
+import { getSignedCookie } from 'hono/cookie';
 import {
   deleteUserCookie,
   generateRandomString,
@@ -31,28 +32,31 @@ import { Resend } from 'resend';
 const authRouter = new Hono();
 
 authRouter
-  .basePath("/auth")
+  .basePath('/auth')
   .post(
-    "/register",
+    '/register',
     describeRoute({
-      description: "Register a new user",
-      tags: ["auth"],
+      description: 'Register a new user',
+      tags: ['auth'],
       responses: {
         201: response201(userSelectSchema),
-        400: response400(z.literal("User already exists.")),
+        400: response400(z.literal('User already exists.')),
       },
     }),
-    zValidator("json", userRegisterSchema),
+    zValidator('json', userRegisterSchema),
     async (c) => {
-      const { email, password, name } = c.req.valid("json");
+      const { email, password, name } = c.req.valid('json');
 
       const userExists = await prisma.user.findUnique({
         where: { email },
       });
 
       if (userExists) {
+        // throw new HTTPException(400, {
+        //   message: 'User already exists.',
+        // });
         throw new HTTPException(400, {
-          message: "User already exists.",
+          res: c.json({ message: 'User already exists.' }, 400),
         });
       }
 
@@ -60,7 +64,7 @@ authRouter
         data: {
           email,
           alert: true,
-          currency: "EUR",
+          currency: 'EUR',
           name,
           password: await argon2.hash(password),
         },
@@ -70,25 +74,25 @@ authRouter
       await createListCategories(safeUser.id);
 
       return c.json(
-        { message: "User registered successfully", user: safeUser },
+        { message: 'User registered successfully', user: safeUser },
         201
       );
     }
   )
   .post(
-    "/login",
+    '/login',
     describeRoute({
-      description: "Login",
-      tags: ["auth"],
+      description: 'Login',
+      tags: ['auth'],
       responses: {
         200: response200(userSelectSchema),
-        401: response400(z.literal("Invalid email or password.")),
-        500: response500(z.literal("JWT secret is not set.")),
+        401: response400(z.literal('Invalid email or password.')),
+        500: response500(z.literal('JWT secret is not set.')),
       },
     }),
-    zValidator("json", userLoginSchema),
+    zValidator('json', userLoginSchema),
     async (c) => {
-      const { email, password } = c.req.valid("json");
+      const { email, password } = c.req.valid('json');
 
       const user = await prisma.user.findUnique({
         where: { email },
@@ -96,7 +100,7 @@ authRouter
 
       if (!user || !(await argon2.verify(user.password, password))) {
         throw new HTTPException(401, {
-          message: "Invalid email or password.",
+          message: 'Invalid email or password.',
         });
       }
 
@@ -107,7 +111,7 @@ authRouter
       const tokenCSRF = await generateTokenCSRF(c);
 
       return c.json(
-        { message: "success", user: safeUser, token: tokenCSRF },
+        { message: 'success', user: safeUser, token: tokenCSRF },
         200
       );
     }
@@ -152,7 +156,7 @@ authRouter
         data: {
           userId: user.id,
           token: await argon2.hash(token),
-          expiredAt: new Date(Date.now() + 1000 * 60 * 15), 
+          expiredAt: new Date(Date.now() + 1000 * 60 * 15),
         },
       });
       const resetLink = `http://localhost:5173/reset-password?token=${token}`
@@ -189,10 +193,9 @@ authRouter
     zValidator("json", resetUserPasswordSchema),
     async (c) => {
       const data = c.req.valid('json');
-
       const tokenExist = await prisma.resetPassword.findFirst({
         where:{
-          token:argon2.hash(data.token)
+          token:data.token
         }
       });
 
@@ -212,7 +215,7 @@ authRouter
       });
 
       const { password: _, ...safeUser } = updatedUser;
-      
+
       await prisma.resetPassword.delete({
           where:{
             id:tokenExist.id
@@ -226,30 +229,30 @@ authRouter
     const token = await getSignedCookie(c, SECRET_JWT, TOKEN_JWT_NAME);
     if (!token) {
       throw new HTTPException(401, {
-        message: "You are not logged in.",
+        message: 'You are not logged in.',
       });
     }
 
     deleteUserCookie(c);
 
-    return c.json({ message: "Logged out" }, 200);
+    return c.json({ message: 'Logged out' }, 200);
   });
 
 async function createListCategories(userId: string) {
   const categories = [
-    { name: "Alimentation", color: "Jaune" },
-    { name: "Logement", color: "Blanc" },
-    { name: "Transports", color: "Orange" }
+    { name: 'Alimentation', color: 'Jaune' },
+    { name: 'Logement', color: 'Blanc' },
+    { name: 'Transports', color: 'Orange' },
   ];
 
   categories.map(async (category) => {
     const findColor = await prisma.color.findFirst({
-      where:{
-        name:category.color
-      }
+      where: {
+        name: category.color,
+      },
     });
-    
-    if (!findColor){
+
+    if (!findColor) {
       throw new HTTPException(404, {
         message: 'Cannot found color.',
       });
@@ -261,9 +264,11 @@ async function createListCategories(userId: string) {
         title: category.name,
         userId,
         colorId: colorId,
-      }
+      },
     });
-  })
+  });
 }
+
+export { createListCategories };
 
 export default authRouter;
