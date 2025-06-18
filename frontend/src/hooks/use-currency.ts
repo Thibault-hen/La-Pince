@@ -7,17 +7,22 @@ import { useTranslation } from 'react-i18next';
 export const useCurrency = () => {
   const { currency, setCurrency } = useCurrencyContext();
   const { i18n } = useTranslation();
-  const { data: rates = {}, ...others } = useQuery<CurrencyRates>({
+  const {
+    data: rates = {},
+    isError,
+    error,
+    ...others
+  } = useQuery<CurrencyRates>({
     queryKey: ['currencyRates'],
     queryFn: async () => {
       console.log('Fetching currency rates for:', currency);
       const response = await currencyService.getCurrencyRates();
       return response.rates;
     },
-    refetchOnMount: false, // Ne refetch pas au mount
-    refetchOnWindowFocus: false, // Ne refetch pas au focus
-    refetchOnReconnect: false, // Ne refetch pas à la reconnexion
-    retry: false, // Ne retry pas en cas d'erreur
+    refetchOnMount: false, // pas de refetch au montage
+    refetchOnWindowFocus: false, // pas de refetch quand je reviens sur la apge
+    refetchOnReconnect: false,
+    retry: false, // pas de refetch si l'api try
 
     // Données de fallback en cas d'erreur
     placeholderData: (previousData) => previousData,
@@ -57,7 +62,7 @@ export const useCurrency = () => {
 
     const formattedAmount = new Intl.NumberFormat(getLocale(), {
       style: 'currency',
-      currency,
+      currency: rates[currency] ? currency : 'EUR',
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     });
@@ -71,6 +76,7 @@ export const useCurrency = () => {
     convertFromEUR,
     convertToEUR,
     formatAmount,
-    others,
+    error,
+    ...others,
   };
 };

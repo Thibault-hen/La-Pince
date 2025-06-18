@@ -73,6 +73,9 @@ export const fr = {
       conditions: 'Conditions d’utilisation',
     },
   },
+  currencySelector: {
+    error: 'Erreur lors de la récupération des devises',
+  },
   dashboard: {
     header: {
       title: 'Tableau de bord',

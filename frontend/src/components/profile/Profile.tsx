@@ -3,7 +3,15 @@ import { Button } from '../ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select';
 import { Switch } from '../ui/switch';
 import { useForm } from '@tanstack/react-form';
 import { useUpdateUserProfile } from '@/hooks/use-account';
@@ -11,6 +19,7 @@ import type { UserAccount } from '@/types/account';
 import { userAccountSchema } from '@/schemas/account.schema';
 import { use } from 'react';
 import { useTranslation } from 'react-i18next';
+import { currencies } from '../currency/CurrencySelector';
 
 interface ProfileProps {
   userData: UserAccount | undefined;
@@ -114,22 +123,38 @@ export const Profile = ({ userData }: ProfileProps) => {
           <form.Field
             name="currency"
             children={(field) => (
-              <div className="space-y-2">
+              <div className="space-y-2 max-w-1/4">
                 <Label htmlFor={field.name} className="text-sm font-medium">
                   {t('account.profile.form.favoriteCurrency')}
                 </Label>
-                <Select onValueChange={field.handleChange} defaultValue={field.state.value}>
-                  <SelectTrigger className="">
-                    <div className="flex items-center gap-2">
-                      <DollarSign className="h-4 w-4 text-muted-foreground" />
-                      <SelectValue placeholder="Sélectionnez votre devise" />
-                    </div>
+
+                <Select
+                  required
+                  onValueChange={field.handleChange}
+                  defaultValue={field.state.value}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="EUR">🇪🇺 Euro (EUR)</SelectItem>
-                    <SelectItem value="USD">🇺🇸 Dollar US (USD)</SelectItem>
-                    <SelectItem value="GBP">🇬🇧 Livre Sterling (GBP)</SelectItem>
-                    <SelectItem value="CAD">🇨🇦 Dollar Canadien (CAD)</SelectItem>
+                    <SelectGroup>
+                      <SelectLabel>Selectionne ta monnaie</SelectLabel>
+                      {currencies?.map((currency, idx) => (
+                        <SelectItem key={idx} value={currency.code} className="flex cursor-pointer">
+                          <div className="flex max-w-16 min-w-[45px]">
+                            <span className="p-2 bg-secondary-color border border-secondary-color/40 px-1.5 py-0.5 rounded-md">
+                              {currency.symbol}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="font-bold">{currency.code}</span>
+                            <span className="font-bold text-muted-foreground text-xs">
+                              {currency.name}
+                            </span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
               </div>

@@ -70,6 +70,9 @@ export const en = {
       conditions: 'Terms of Use',
     },
   },
+  currencySelector: {
+    error: 'Error while loading currencies',
+  },
   dashboard: {
     header: {
       title: 'Dashboard',
