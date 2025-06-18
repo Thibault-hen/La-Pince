@@ -4,7 +4,7 @@ export const categorySelectSchema = z.object({
   id: z.string().cuid(),
   title: z.string().trim().toLowerCase().min(1),
   userId : z.string().cuid(),
-  colorId: z.number().int().positive(),
+  colorId: z.string().cuid(),
   createdAt: z.string().datetime(),
   updatedAt: z.string().datetime(),
 })
