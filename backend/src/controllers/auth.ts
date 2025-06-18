@@ -189,9 +189,10 @@ authRouter
     zValidator("json", resetUserPasswordSchema),
     async (c) => {
       const data = c.req.valid('json');
+
       const tokenExist = await prisma.resetPassword.findFirst({
         where:{
-          token:data.token
+          token:argon2.hash(data.token)
         }
       });
 
