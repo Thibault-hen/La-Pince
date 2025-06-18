@@ -75,6 +75,7 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
                     placeholder={t('budget.add.form.amountPlaceholder')}
                     type="number"
                     required
+                    step={0.01}
                     onChange={(e) => {
                       field.handleChange(Number(e.target.value));
                     }}
@@ -97,6 +98,7 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
                     placeholder={t('budget.add.form.limitAlertPlaceholder')}
                     type="number"
                     required
+                    step={0.01}
                     onChange={(e) => {
                       field.handleChange(Number(e.target.value));
                     }}

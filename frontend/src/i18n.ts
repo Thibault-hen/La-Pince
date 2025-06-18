@@ -103,7 +103,7 @@ i18n
           'budget.edit.form.update': 'Update',
           'budget.delete.title': 'Delete a budget',
           'budget.delete.description':
-            'Do you really want to delete your budget {{title}} of {{amount}} €?',
+            'Do you really want to delete your budget {{title}} of {{amount}} ?',
           'budget.delete.cancel': 'Cancel',
           'budget.delete.confirm': 'Delete',
           'budget.toast.created': 'Your budget {{title}} has been created',
@@ -140,7 +140,7 @@ i18n
           'category.edit.form.update': 'Update',
           'category.delete.title': 'Delete a category',
           'category.delete.description':
-            'Do you really want to delete your category {{title}} of {{total}} € ?',
+            'Do you really want to delete your category {{title}} of {{total}} ?',
           'category.delete.cancel': 'Cancel',
           'category.delete.confirm': 'Delete',
           'category.toast.created': 'Your category {{title}} has been created',
@@ -255,7 +255,7 @@ i18n
           'budget.edit.form.update': 'Modifier',
           'budget.delete.title': 'Supprimer un budget',
           'budget.delete.description':
-            'Tu veux vraiment supprimer ton budget {{title}} de {{amount}} € ?',
+            'Tu veux vraiment supprimer ton budget {{title}} de {{amount}} ?',
           'budget.delete.cancel': 'Annuler',
           'budget.delete.confirm': 'Supprimer',
           'budget.toast.created': 'Ton budget {{title}} a été créé',

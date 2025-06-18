@@ -1,10 +1,7 @@
-import { CirclePlus, Tags } from 'lucide-react';
+import { Tags } from 'lucide-react';
 import { Button } from '../ui/button';
-import { useTranslation } from 'react-i18next';
 
 export const CategoryHeader = ({ onOpenAddModal }: { onOpenAddModal: () => void }) => {
-  const { t } = useTranslation();
-
   return (
     <div className="flex items-center justify-between mb-6">
       <div>
@@ -20,7 +17,7 @@ export const CategoryHeader = ({ onOpenAddModal }: { onOpenAddModal: () => void 
       </div>
       <div>
         <Button variant="blue" onClick={onOpenAddModal}>
-          Ajouter une catégorie <CirclePlus />
+          Ajouter une catégorie
         </Button>
       </div>
     </div>
