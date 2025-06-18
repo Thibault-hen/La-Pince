@@ -14,6 +14,10 @@ i18n
     resources: {
       en: {
         translation: {
+          'previous': 'Previous',
+          'next': 'Next',
+          'expenses.header.title': 'Expense',
+          'expenses.header.subtitle': 'Manage your expenses',
           'expenses.chart.header.title': 'Your expenses this month',
           'expenses.chart.header.totalAmount': 'Total amount',
           'expenses.table.addButton': 'Add an expense',
@@ -170,6 +174,10 @@ i18n
       },
       fr: {
         translation: {
+          'previous': 'Précédent',
+          'next': 'Suivant',
+          'expenses.header.title': 'Dépense',
+          'expenses.header.subtitle': 'Gérer vos dépenses',
           'send': 'Envoyer',
           'user.resetPassword.error': 'Une erreur est survenue',
           'user.sendResetPassword.title': 'Envoyer un email de réinitialisation',

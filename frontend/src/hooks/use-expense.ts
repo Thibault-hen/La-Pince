@@ -53,6 +53,7 @@ export function useCreateExpense() {
     onSuccess: (expense) => {
       toast.success(t('expenses.toast.created', { title: expense.description }));
       queryClient.invalidateQueries({ queryKey: ['expenses'] });
+      queryClient.invalidateQueries({ queryKey: ['budgets'] });
     },
     onError: () => {
       toast.error(t('expenses.toast.createError'));
@@ -72,6 +73,7 @@ export function useUpdateExpense() {
     onSuccess: () => {
       toast.success(t('expenses.toast.updated'));
       queryClient.invalidateQueries({ queryKey: ['expenses'] });
+      queryClient.invalidateQueries({ queryKey: ['budgets'] });
     },
     onError: () => {
       toast.error(t('expenses.toast.updateError'));
@@ -89,6 +91,7 @@ export function useDeleteExpense() {
     onSuccess: () => {
       toast.success(t('expenses.toast.deleted'));
       queryClient.invalidateQueries({ queryKey: ['expenses'] });
+      queryClient.invalidateQueries({ queryKey: ['budgets'] });
     },
     onError: () => {
       toast.error(t('expenses.toast.deleteError'));

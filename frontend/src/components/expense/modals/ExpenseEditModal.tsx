@@ -49,7 +49,6 @@ export const ExpenseEditModal = ({ expense, open, setOpen }: ExpenseEditModalPro
       onSubmit: updateExpenseSchema,
     },
     async onSubmit({ value }) {
-      console.log('Form submitted with values:', value);
       if (!expense?.id) return;
       await updateExpense({ id: expense?.id, data: { ...value } });
       setOpen(false);
@@ -63,7 +62,6 @@ export const ExpenseEditModal = ({ expense, open, setOpen }: ExpenseEditModalPro
       <DialogContent className="sm:max-w-[425px]">
         <form
           onSubmit={async (e) => {
-            console.log('Form submitted:');
             e.preventDefault();
             form.handleSubmit();
           }}

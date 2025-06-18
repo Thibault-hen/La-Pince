@@ -63,7 +63,6 @@ export default function ExpenseAddModal({ isModalOpen, handleClose }: ExpenseAdd
       <DialogContent className="sm:max-w-[425px]">
         <form
           onSubmit={(e) => {
-            console.log('Form submitted:');
             e.preventDefault();
             form.handleSubmit();
           }}
