@@ -1,4 +1,4 @@
-import { EllipsisVertical, EllipsisVerticalIcon, Pencil, Trash2 } from 'lucide-react';
+import { EllipsisVertical, Pencil, Trash2 } from 'lucide-react';
 import type { ColumnDef } from '@tanstack/react-table';
 import {
   DropdownMenu,
@@ -42,7 +42,7 @@ export const createColumns = (
         <div className="flex justify-center">
           <Badge
             className={'border align-center items-center capitalize min-w-26'}
-            style={{ backgroundColor: category.color, color: '#fff' }}
+            style={{ backgroundColor: category.color, color: '#fff' } as React.CSSProperties}
           >
             <span className="font-bold">{category.title}</span>
           </Badge>
