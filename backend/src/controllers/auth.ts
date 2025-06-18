@@ -28,6 +28,7 @@ import {
 } from "../lib/tokens";
 import { getEnv } from "../utils/env";
 import { Resend } from 'resend';
+import { saveContentToFile } from 'hono/ssg';
 
 const authRouter = new Hono();
 
@@ -243,6 +244,15 @@ async function createListCategories(userId: string) {
     { name: 'category.food', color: 'color.yellow' },
     { name: 'category.houseRent', color: 'color.white' },
     { name: 'category.transport', color: 'color.orange' },
+    { name: 'category.health', color: 'color.green' },
+    { name: 'category.shopping', color: 'color.pink' },
+    { name: 'category.entertainment', color: 'color.blue' },
+    { name: 'category.subscriptions', color: 'color.violet' },
+    { name: 'category.other', color: 'color.gray' },
+    { name: 'category.pet', color: 'color.green' },
+    { name: 'category.sport', color: 'color.blue' },
+    { name: 'category.education', color: 'color.blue' },
+    { name: 'category.bills', color: 'color.blue' },
   ];
 
   categories.map(async (category) => {
