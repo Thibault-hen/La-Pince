@@ -54,6 +54,7 @@ export function useCreateExpense() {
       toast.success(t('expenses.toast.created', { title: expense.description }));
       queryClient.invalidateQueries({ queryKey: ['expenses'] });
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
+      queryClient.invalidateQueries({ queryKey: ['notifications'] });
     },
     onError: () => {
       toast.error(t('expenses.toast.createError'));
@@ -92,6 +93,7 @@ export function useDeleteExpense() {
       toast.success(t('expenses.toast.deleted'));
       queryClient.invalidateQueries({ queryKey: ['expenses'] });
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
+      queryClient.invalidateQueries({ queryKey: ['notifications'] });
     },
     onError: () => {
       toast.error(t('expenses.toast.deleteError'));

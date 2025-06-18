@@ -10,6 +10,7 @@ import type { User } from '@/services/auth';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '@/components/lang/LanguageSelector';
 import { CurrencyProvider } from '@/context/currency-context';
+import NotificationButton from '@/components/notification/NotificationButton';
 
 export const AppLayout = () => {
   const location = useLocation();
@@ -43,6 +44,7 @@ export const AppLayout = () => {
                   </p>
                 </div>
                 <div className="flex items-center gap-3">
+                  <NotificationButton />
                   <LanguageSelector />
                   <ModeToggle />
                   <ProfileButton />

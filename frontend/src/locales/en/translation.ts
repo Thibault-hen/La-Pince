@@ -386,4 +386,14 @@ export const en = {
       passwordUpdateError: 'An error occurred while updating your password',
     },
   },
+  notification: {
+    budgetWarning: {
+      title: 'Your budget is almost exceeded',
+      content: 'Your budget <0>{{ budgetName }}</0> is approaching its limit.<1/>You have <2>{{budgetAmountRemaining}}</2> remaining.',
+    },
+    budgetExceeded: {
+      title: 'Your budget has been exceeded',
+      content: 'Your budget <0>{{ budgetName }}</0> has been exceeded.',
+    }
+  }
 };
