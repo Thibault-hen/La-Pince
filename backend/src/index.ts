@@ -1,8 +1,11 @@
 import { serve } from '@hono/node-server';
-import { app } from './app';
+import { app, injectWebSocket } from './app';
 
-serve({
-  fetch: app.fetch,
-  port: 3000,
-  hostname: '0.0.0.0',
-});
+
+injectWebSocket(
+  serve({
+    fetch: app.fetch,
+    port: 3000,
+    hostname: '0.0.0.0',
+  })
+)

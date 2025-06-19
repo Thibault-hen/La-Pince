@@ -1,24 +1,34 @@
-import { Bell, BellRing } from "lucide-react"
-import { Button } from "../ui/button"
-import { Sheet, SheetTrigger, SheetContent, SheetHeader } from "../ui/sheet"
-import Notification from "./Notification"
-import { useNotifications } from "@/hooks/use-notification"
-
-
+import { Bell, BellRing } from 'lucide-react';
+import { Button } from '../ui/button';
+import { Sheet, SheetTrigger, SheetContent, SheetHeader } from '../ui/sheet';
+import Notification from './Notification';
+import { useNotifications } from '@/hooks/use-notification';
+import { useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 export default function NotificationButton() {
   const { notifications } = useNotifications();
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    const ws = new WebSocket(`${import.meta.env.VITE_WS_URL}`);
+    ws.onmessage = () => {
+      queryClient.invalidateQueries({ queryKey: ['notifications'] });
+      toast.info('New notification received', { position: 'top-center' });
+    };
+    return () => ws.close();
+  }, []);
 
   return (
     <Sheet>
       <SheetTrigger>
         <Button variant="outline" size="icon">
-          {notifications.length > 0
-            ? <BellRing className="size-4 text-secondary-color" />
-            : <Bell className="size-4 opacity-50" />
-          }
+          {notifications.length > 0 ? (
+            <BellRing className="size-4 text-secondary-color" />
+          ) : (
+            <Bell className="size-4 opacity-50" />
+          )}
         </Button>
-
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
@@ -29,13 +39,10 @@ export default function NotificationButton() {
         </SheetHeader>
         <div className="flex flex-col  gap-2 overflow-auto mb-2 shadow-inner shadow-20  px-2 rounded-md ">
           {notifications.map((notification) => {
-            return (
-              <Notification key={notification.id} notification={notification} />
-            )
-          })
-          }
+            return <Notification key={notification.id} notification={notification} />;
+          })}
         </div>
       </SheetContent>
     </Sheet>
-  )
+  );
 }

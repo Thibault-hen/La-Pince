@@ -1,8 +1,6 @@
 import { notificationService } from "@/services/notification";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-
-
 export function useNotifications() {
   const { data = [], isLoading } = useQuery({
     queryKey: ['notifications'],

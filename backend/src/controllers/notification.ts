@@ -1,17 +1,12 @@
-import { Hono } from "hono";
 import { describeRoute } from "hono-openapi";
-import {
-  response200,
-  response204,
-  response404,
-} from "../utils/openapi";
+import { response200, response204, response404 } from "../utils/openapi";
 import prisma from "../db/client";
-import {
-  notificationSelectSchema,
-} from "../validators/notification";
+import { notificationSelectSchema } from "../validators/notification";
 import { zValidator } from "@hono/zod-validator";
 import { paramsWithId } from "../validators/utils";
 import { HTTPException } from "hono/http-exception";
+import { notifiableUsers } from "../websockets/notifiableUsers";
+import { Hono } from "hono";
 
 const notificationRouter = new Hono();
 
@@ -34,13 +29,19 @@ notificationRouter
         include: {
           budget: {
             include: {
-              category: {}
-            }
-          }
-        }
+              category: {},
+            },
+          },
+        },
       });
 
-      return c.json(notifications.map(({ budget, ...notification }) => ({ ...notification, budgetName: budget.category.title })), 200);
+      return c.json(
+        notifications.map(({ budget, ...notification }) => ({
+          ...notification,
+          budgetName: budget.category.title,
+        })),
+        200,
+      );
     },
   )
   .delete(
@@ -65,7 +66,7 @@ notificationRouter
       });
       if (!notificationExist) {
         throw new HTTPException(404, {
-          res: c.json({ message: 'Notification not found' }, 404),
+          res: c.json({ message: "Notification not found" }, 404),
         });
       }
 
@@ -79,7 +80,10 @@ notificationRouter
     },
   );
 
-export async function tryCreateBudgetNotification(budgetId: string, userId: string) {
+export async function tryCreateBudgetNotification(
+  budgetId: string,
+  userId: string,
+) {
   try {
     const budget = await prisma.budget.findUnique({
       where: {
@@ -107,11 +111,12 @@ export async function tryCreateBudgetNotification(budgetId: string, userId: stri
         budgetId,
         maximumAmount: maxAmount,
         totalAmount: totalExpenseAmount,
-        notificationType: totalExpenseAmount > maxAmount ? "budgetExceeded" : "budgetWarning",
+        notificationType:
+          totalExpenseAmount > maxAmount ? "budgetExceeded" : "budgetWarning",
       },
     });
-
-  } catch (error) { }
+    notifiableUsers.get(userId)?.forEach((ws) => ws.send(""));
+  } catch (error) {}
 }
 
 export default notificationRouter;
