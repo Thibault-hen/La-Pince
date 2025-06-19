@@ -412,6 +412,7 @@ export const en = {
     teal: 'Teal',
     indigo: 'Indigo',
     gray: 'Gray',
+    quentin: 'Quentin 🦩',
   },
   category: {
     bills: 'Bills',
@@ -420,6 +421,12 @@ export const en = {
     health: 'Health',
     shopping: 'Shopping',
     food: 'Food',
+    other: 'Others',
+    sport: 'Sport',
+    houseRent: 'House Rent',
+    subscriptions: 'Subscriptions',
+    pet: 'Pet',
+    education: 'Education',
     defaultTitle: 'Untitled Category',
   },
   toast: {
