@@ -12,6 +12,8 @@ import type { User } from '@/services/auth';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCurrency } from '@/hooks/use-currency';
 import { useTranslation } from 'react-i18next';
+import { CloudAlert } from 'lucide-react';
+import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 
 type Currency = {
   name: string;
@@ -78,9 +80,21 @@ export const CurrencySelector = () => {
         </SelectContent>
       </Select>
       {error && (
-        <span className="flex text-red-500 text-xs text-center mt-2">
-          {t('currencySelector.error')}
-        </span>
+        <DefaultWrapper>
+          <div className="mt-3 p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg">
+            <div className="flex items-start gap-3">
+              <div className="flex-shrink-0">
+                <CloudAlert className="h-5 w-5 text-red-500" />
+              </div>
+              <div className="flex-1">
+                <h4 className="text-sm font-medium">{t('currencySelector.errorTitle')}</h4>
+                <p className="text-sm text-red-700 dark:text-red-300 mt-1">
+                  {t('currencySelector.error')}
+                </p>
+              </div>
+            </div>
+          </div>
+        </DefaultWrapper>
       )}
     </div>
   );

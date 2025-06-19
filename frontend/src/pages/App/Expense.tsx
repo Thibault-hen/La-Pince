@@ -9,6 +9,7 @@ import { ChartBarInteractive } from '@/components/expense/BarChart';
 import { ExpenseDeleteModal } from '@/components/expense/modals/ExpenseDeleteModal';
 import { useTranslation } from 'react-i18next';
 import { HandCoins } from 'lucide-react';
+import { useCurrency } from '@/hooks/use-currency';
 
 export function Expense() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,8 +29,9 @@ export function Expense() {
     setIsDeleteModalOpen(true);
   };
 
+  const { formatAmount } = useCurrency();
   const locale = i18n.language === 'en' ? 'en-US' : 'fr-FR';
-  const columns = createColumns(handleEdit, handleDelete, t, locale);
+  const columns = createColumns(handleEdit, handleDelete, t, locale, formatAmount);
 
   return (
     <>
@@ -59,7 +61,7 @@ export function Expense() {
       </div>
 
       <ChartBarInteractive />
-      <div className="container mx-auto ">
+      <div className="flex flex-col gap-2 mt-6">
         <DataTable
           children={
             <Button variant="blue" onClick={() => setIsModalOpen(true)}>

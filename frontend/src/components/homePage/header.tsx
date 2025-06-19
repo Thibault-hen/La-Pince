@@ -57,7 +57,7 @@ export default function Header() {
                 </>
               ) : (
                 <Button variant="blue" asChild>
-                  <Link to="/tableau-de-bord">{t('home.nav.myspace')}</Link>
+                  <Link to="/tableau-de-bord">{t('home.nav.dashboard')}</Link>
                 </Button>
               )}
             </div>

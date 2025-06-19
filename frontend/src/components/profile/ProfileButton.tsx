@@ -7,13 +7,14 @@ import {
   DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
 import { InitialAvatar } from './InitialAvatar';
-import { authService } from '@/services/auth';
+import { authService, type User } from '@/services/auth';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 export const ProfileButton = () => {
   const queryClient = useQueryClient();
   const naviguate = useNavigate();
+  const userData = queryClient.getQueryData<User>(['authUser']);
 
   const handleLogout = async () => {
     try {
@@ -28,7 +29,7 @@ export const ProfileButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <InitialAvatar className="h-8 w-8 cursor-pointer" name={':)'} />
+        <InitialAvatar className="h-8 w-8 cursor-pointer" name={userData?.user.name || ':)'} />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-48">

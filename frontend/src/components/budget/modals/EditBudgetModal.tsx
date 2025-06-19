@@ -149,7 +149,12 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
                           <SelectLabel>{t('budget.edit.form.categoryLabel')}</SelectLabel>
                           {categories?.map((category) => (
                             <SelectItem key={category.id} value={category.id}>
-                              <span>{category.title}</span>
+                              <span>
+                                {t(category.title, {
+                                  defaultValue: category.title,
+                                  skipOnNull: false,
+                                })}
+                              </span>
                               <div
                                 style={{ backgroundColor: category.color?.value }}
                                 className="h-3 w-3 rounded-lg"

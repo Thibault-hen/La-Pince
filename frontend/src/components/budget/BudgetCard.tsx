@@ -40,7 +40,7 @@ export const BudgetCard = ({ budget, onOpenEditModal, onOpenDeleteModal }: Budge
             className="border-l-4 px-2 flex gap-2 items-center"
             style={{ borderLeftColor: budget.category.color?.value }}
           >
-            {budget.category.title}
+            {t(budget.category.title)}
             {budget.totalExpense > (budget.amount ?? 0) && (
               <TriangleAlert
                 size={30}
@@ -103,7 +103,7 @@ export const BudgetCard = ({ budget, onOpenEditModal, onOpenDeleteModal }: Budge
                 {formatAmount(budget.totalExpense)}
               </span>
               <span>/</span>
-              <span className="font-bold">{formatAmount(budget.amount)} €</span>
+              <span className="font-bold">{formatAmount(budget.amount)}</span>
             </div>
           </div>
           <div className="flex w-full flex-col">

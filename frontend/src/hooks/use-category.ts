@@ -30,14 +30,27 @@ export const useCategories = () => {
 export const useCreateCategory = () => {
   const queryClient = useQueryClient();
   const { t } = useTranslation();
+
+  const getErrorMessage = (error: any): string | null => {
+    if (!error) return null;
+
+    if (error.response?.status === 409) {
+      return t('categories.toast.categoryAlreadyExist');
+    }
+    if (error.response?.status === 429) {
+      return t('toast.tooManyAttempts');
+    }
+    return t('categories.toast.createError');
+  };
+
   return useMutation({
     mutationFn: categoryService.createCategory,
     onSuccess: (data) => {
-      toast.success(t('category.toast.created', { title: data.title }));
+      toast.success(t('categories.toast.created', { title: t(data.title) }));
       queryClient.invalidateQueries({ queryKey: ['categories'] });
     },
-    onError: (_data) => {
-      toast.error(t('category.toast.createError'));
+    onError: (error) => {
+      toast.error(getErrorMessage(error));
     },
   });
 };
@@ -49,12 +62,12 @@ export const useUpdateCategory = () => {
     mutationFn: ({ id, data }: { id: string; data: UpdateCategory }) =>
       categoryService.updateCategory(id, data),
     onSuccess: (data) => {
-      toast.success(t('category.toast.updated', { title: data.title }));
+      toast.success(t('categories.toast.updated', { title: data.title }));
       queryClient.invalidateQueries({ queryKey: ['categories'] });
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
     },
     onError: (_data) => {
-      toast.error(t('category.toast.updateError'));
+      toast.error(t('categories.toast.updateError'));
     },
   });
 };
@@ -65,12 +78,12 @@ export const useDeleteCategory = () => {
   return useMutation({
     mutationFn: categoryService.deleteCategory,
     onSuccess: (_data) => {
-      toast.success(t('category.toast.deleted'));
+      toast.success(t('categories.toast.deleted'));
       queryClient.invalidateQueries({ queryKey: ['categories'] });
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
     },
     onError: (_data) => {
-      toast.error(t('category.toast.deleteError'));
+      toast.error(t('categories.toast.deleteError'));
     },
   });
 };

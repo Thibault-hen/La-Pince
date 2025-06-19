@@ -11,6 +11,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSpring } from 'motion/react';
 import { useExpenses } from '@/hooks/use-expense';
+import { useCurrency } from '@/hooks/use-currency';
 
 export const description = 'An interactive bar chart';
 
@@ -25,7 +26,7 @@ function getExpensesThisMonth<T extends { date: string; amount: number }>(expens
   const date = new Date();
   const month = date.getMonth();
   const year = date.getFullYear();
-
+  
   const map: { [date: string]: { date: string; amount: number } } = {};
 
   expenses.forEach((expense) => {
@@ -48,6 +49,7 @@ export function ChartBarInteractive() {
   const [displayTotal, setDisplayTotal] = useState<string>();
   const [activeChart, setActiveChart] = useState<keyof typeof chartConfig>('amount');
   const { expenses } = useExpenses();
+  const { formatAmount } = useCurrency();
   const { t, i18n } = useTranslation();
   const locale = i18n.language === 'en' ? 'en-US' : 'fr-FR';
   const expensesThisMonth = useMemo(() => getExpensesThisMonth(expenses), [expenses]);
@@ -88,8 +90,7 @@ export function ChartBarInteractive() {
               >
                 <span className="text-muted-foreground text-xs">{t(chartConfig[chart].label)}</span>
                 <span className="text-lg leading-none font-bold sm:text-3xl">
-                  {displayTotal ?? ''}
-                  <strong>€</strong>
+                  {formatAmount(Number(displayTotal))}
                 </span>
               </button>
             );
@@ -128,11 +129,12 @@ export function ChartBarInteractive() {
                   nameKey="amount"
                   labelFormatter={(value) => {
                     return new Date(value).toLocaleDateString(locale, {
-                      month: 'short',
+                      month: 'long',
                       day: 'numeric',
                       year: 'numeric',
                     });
                   }}
+                  formatter={(value) => formatAmount(Number(value))}
                 />
               }
             />

@@ -27,6 +27,7 @@ import { useCreateExpense } from '@/hooks/use-expense';
 import { Loader } from '@/components/ui/loader';
 import type z from 'zod';
 import { useTranslation } from 'react-i18next';
+import { useCurrency } from '@/hooks/use-currency';
 
 type ExpenseAddModalProps = {
   isModalOpen: boolean;
@@ -38,6 +39,7 @@ export default function ExpenseAddModal({ isModalOpen, handleClose }: ExpenseAdd
   const hadBudgets = budgets.length > 0;
   const { mutateAsync: createExpense } = useCreateExpense();
   const { t } = useTranslation();
+  const { formatAmount } = useCurrency();
 
   const form = useForm({
     validators: {
@@ -137,8 +139,12 @@ export default function ExpenseAddModal({ isModalOpen, handleClose }: ExpenseAdd
                       <SelectGroup>
                         <SelectLabel>{t('expenses.add.form.budgetLabel')}</SelectLabel>
                         {budgets.map((budget) => (
-                          <SelectItem key={budget.id} value={budget.id}>
-                            {budget.category.title} - {budget.amount}€
+                          <SelectItem key={budget.id} value={budget.id} className="cursor-pointer">
+                            {t(budget.category.title)} - {formatAmount(budget.amount)}
+                            <div
+                              style={{ backgroundColor: budget?.category.color?.value }}
+                              className="h-3 w-3 rounded-lg"
+                            ></div>
                           </SelectItem>
                         ))}
                       </SelectGroup>

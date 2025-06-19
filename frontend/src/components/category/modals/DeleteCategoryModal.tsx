@@ -35,11 +35,11 @@ export const DeleteCategoryModal = ({ open, setOpen, category }: DeleteBudgetPro
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className="font-medium text-xl">
-            {t('category.delete.title')}
+            {t('categories.delete.title')}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            {t('category.delete.description', {
-              title: category?.title,
+            {t('categories.delete.description', {
+              title: t(category?.title ?? 'category.defaultTitle'),
               total: category?.budgets
                 ?.reduce((total, budget) => total + budget.amount, 0)
                 .toFixed(2),
@@ -48,10 +48,10 @@ export const DeleteCategoryModal = ({ open, setOpen, category }: DeleteBudgetPro
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel className="cursor-pointer">
-            {t('category.delete.cancel')}
+            {t('categories.delete.cancel')}
           </AlertDialogCancel>
           <AlertDialogAction onClick={handleDeleteBudget}>
-            {t('category.delete.confirm')}
+            {t('categories.delete.confirm')}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -26,6 +26,7 @@ import { Loader } from '@/components/ui/loader';
 import { useBudgets } from '@/hooks/use-budget';
 import { DatePicker } from '../DatePicker';
 import { useTranslation } from 'react-i18next';
+import { useCurrency } from '@/hooks/use-currency';
 
 interface ExpenseEditModalProps {
   open: boolean;
@@ -37,6 +38,7 @@ export const ExpenseEditModal = ({ expense, open, setOpen }: ExpenseEditModalPro
   const { data: { budgets = [] } = {} } = useBudgets();
   const { mutateAsync: updateExpense } = useUpdateExpense();
   const { t } = useTranslation();
+  const { formatAmount } = useCurrency();
 
   const form = useForm({
     defaultValues: {
@@ -138,8 +140,16 @@ export const ExpenseEditModal = ({ expense, open, setOpen }: ExpenseEditModalPro
                         <SelectGroup>
                           <SelectLabel>{t('expenses.edit.form.budgetLabel')}</SelectLabel>
                           {budgets?.map((budget) => (
-                            <SelectItem key={budget.id} value={budget.id}>
-                              {budget.category.title} - {budget.amount}€
+                            <SelectItem
+                              key={budget.id}
+                              value={budget.id}
+                              className="cursor-pointer"
+                            >
+                              {t(budget.category.title)} - {formatAmount(budget.amount)}
+                              <div
+                                style={{ backgroundColor: budget?.category.color?.value }}
+                                className="h-3 w-3 rounded-lg"
+                              ></div>
                             </SelectItem>
                           ))}
                         </SelectGroup>

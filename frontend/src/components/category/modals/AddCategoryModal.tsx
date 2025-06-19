@@ -59,21 +59,21 @@ export const AddCategoryModal = ({ colors, open, setOpen }: AddCategoryProps) =>
           }}
         >
           <DialogHeader className="mb-4">
-            <DialogTitle className="font-medium text-xl">{t('category.add.title')}</DialogTitle>
-            <DialogDescription>{t('category.add.description')}</DialogDescription>
+            <DialogTitle className="font-medium text-xl">{t('categories.add.title')}</DialogTitle>
+            <DialogDescription>{t('categories.add.description')}</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <form.Field
               name="title"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>{t('category.add.form.title')}</Label>
+                  <Label htmlFor={field.name}>{t('categories.add.form.title')}</Label>
                   <Input
                     id={field.name}
                     onChange={(e) => {
                       field.handleChange(e.target.value);
                     }}
-                    placeholder={t('category.add.form.titlePlaceholder')}
+                    placeholder={t('categories.add.form.titlePlaceholder')}
                     type="text"
                     required
                   />
@@ -89,21 +89,25 @@ export const AddCategoryModal = ({ colors, open, setOpen }: AddCategoryProps) =>
               name="colorId"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>{t('category.add.form.color')}</Label>
+                  <Label htmlFor={field.name}>{t('categories.add.form.color')}</Label>
                   <Select
                     name={field.name}
                     onValueChange={(value) => field.handleChange(value)}
                     required
                   >
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder={t('category.add.form.colorPlaceholder')} />
+                      <SelectValue placeholder={t('categories.add.form.colorPlaceholder')} />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectLabel>{t('category.add.form.colorLabel')}</SelectLabel>
+                        <SelectLabel>{t('categories.add.form.colorLabel')}</SelectLabel>
                         {colors?.map((color) => (
-                          <SelectItem key={color.id} value={color.id ?? ''} className="flex">
-                            <span>{color.name}</span>
+                          <SelectItem
+                            key={color.id}
+                            value={color.id ?? ''}
+                            className="flex cursor-pointer"
+                          >
+                            <span>{t(color.name)}</span>
                             <div
                               style={{ backgroundColor: color.value }}
                               className="h-3 w-3 rounded-lg"
@@ -119,10 +123,10 @@ export const AddCategoryModal = ({ colors, open, setOpen }: AddCategoryProps) =>
           </div>
           <DialogFooter className="mt-4 flex justify-between items-center">
             <DialogClose asChild>
-              <Button variant="outline">{t('category.add.form.cancel')}</Button>
+              <Button variant="outline">{t('categories.add.form.cancel')}</Button>
             </DialogClose>
             <Button type="submit" variant="blue">
-              {t('category.add.form.create')}
+              {t('categories.add.form.create')}
             </Button>
           </DialogFooter>
         </form>
