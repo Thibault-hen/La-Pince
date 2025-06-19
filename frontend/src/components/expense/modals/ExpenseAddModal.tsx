@@ -103,12 +103,12 @@ export default function ExpenseAddModal({ isModalOpen, handleClose }: ExpenseAdd
                   <Label htmlFor={field.name}>{t('expenses.add.form.amount')}</Label>
                   <Input
                     id={field.name}
+                    step={0.01}
                     placeholder={t('expenses.add.form.amountPlaceholder')}
                     type="number"
-                    value={field.state.value || ''}
                     required
                     onChange={(e) => {
-                      field.handleChange(parseInt(e.target.value, 10));
+                      field.handleChange(Number(e.target.value));
                     }}
                   />
                   {field.state.meta.errors.length > 0 && (

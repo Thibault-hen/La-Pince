@@ -108,7 +108,8 @@ export const ExpenseEditModal = ({ expense, open, setOpen }: ExpenseEditModalPro
                     placeholder={t('expenses.edit.form.amountPlaceholder')}
                     type="number"
                     required
-                    value={field.state.value}
+                    step={0.01}
+                    value={field.state.value.toFixed(2) || ''}
                     onChange={(e) => {
                       field.handleChange(Number(e.target.value));
                     }}

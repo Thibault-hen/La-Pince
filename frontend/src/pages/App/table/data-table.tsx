@@ -55,7 +55,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
-      <div className="relative flex justify-between items-center py-4">
+      <div className="relative flex justify-between items-center py-4 ">
         <Search className="absolute left-3 top-6.5 h-4 w-4 text-muted-foreground" />
         <Input
           placeholder={t('expenses.table.filterPlaceholder')}
@@ -67,15 +67,15 @@ export function DataTable<TData, TValue>({
       </div>
       <div className="rounded-md border dark:bg-primary">
         <Table>
-          <TableHeader>
+          <TableHeader >
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
                 key={headerGroup.id}
-                className="hover:bg-primary-color/20 transition-colors"
+                className=" hover:bg-primary-color/20 transition-colors"
               >
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead className=' font-bold text-lg' key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(header.column.columnDef.header, header.getContext())}
