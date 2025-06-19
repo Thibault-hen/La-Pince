@@ -38,7 +38,7 @@ async function main() {
       { name: 'color.teal', value: '#14b8a6' },
       { name: 'color.indigo', value: '#6366f1' },
       { name: 'color.gray', value: '#6b7280' },
-      { name: 'color.fof', value: '#ff00ff' },
+      { name: 'color.quentin', value: '#ff00ff' },
     ],
     skipDuplicates: true,
   });
