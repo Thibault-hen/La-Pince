@@ -84,6 +84,7 @@ model Budget {
   category         Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   expenses         Expense[]
+  notifications    Notification[]
 
   @@unique([month, year, categoryId, userId])
 }
@@ -109,14 +110,17 @@ model Notification {
   @@map("notification")
 
   id               String   @id @default(cuid())
-  content          String
-  isSeen           Boolean  @default(false) @map("is_seen")
   userId           String   @map("user_id")
+  notificationType String   @map("notification_type")
+  budgetId         String   @map("budget_id")
+  maximumAmount     Float    @map("maximum_amount")
+  totalAmount      Float    @map("total_amount")
 
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
 
   user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  budget           Budget   @relation(fields: [budgetId], references: [id], onDelete: Cascade)
 }
 
 model Income {

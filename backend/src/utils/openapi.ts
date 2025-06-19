@@ -48,6 +48,17 @@ export const response409 = (
   },
 });
 
+export const response422 = (
+  schema: ZodSchema = z.literal('Unprocessable Entity')
+) => ({
+  description: 'Unprocessable Entity',
+  content: {
+    'text/plain': {
+      schema: resolver(schema),
+    },
+  },
+});
+
 export const response200 = (schema: ZodSchema) => ({
   description: 'Successful response',
   content: {

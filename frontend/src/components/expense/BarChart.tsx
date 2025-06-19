@@ -22,22 +22,27 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-function getExpensesThisMonth<T extends { date: string }>(expenses: T[]): T[] {
+function getExpensesThisMonth<T extends { date: string; amount: number }>(expenses: T[]): { date: string; amount: number }[] {
   const date = new Date();
   const month = date.getMonth();
   const year = date.getFullYear();
+  
+  const map: { [date: string]: { date: string; amount: number } } = {};
 
-  const expensesThisMonth = expenses.filter((expense) => {
+  expenses.forEach((expense) => {
     const expenseDate = new Date(expense.date);
-
-    return expenseDate.getMonth() === month && expenseDate.getFullYear() === year;
+    if (expenseDate.getMonth() === month && expenseDate.getFullYear() === year) {
+      const dayKey = expenseDate.toISOString().split('T')[0];
+      if (!map[dayKey]) {
+        map[dayKey] = {
+          date: dayKey,
+          amount: 0,
+        };
+      }
+      map[dayKey].amount += expense.amount;
+    }
   });
-
-  return expensesThisMonth.sort((a, b) => {
-    const dateA = new Date(a.date);
-    const dateB = new Date(b.date);
-    return dateA.getTime() - dateB.getTime();
-  });
+  return Object.values(map).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 }
 
 export function ChartBarInteractive() {
@@ -45,9 +50,9 @@ export function ChartBarInteractive() {
   const [activeChart, setActiveChart] = useState<keyof typeof chartConfig>('amount');
   const { expenses } = useExpenses();
   const { formatAmount } = useCurrency();
-  const expensesThisMonth = useMemo(() => getExpensesThisMonth(expenses), [expenses]);
   const { t, i18n } = useTranslation();
   const locale = i18n.language === 'en' ? 'en-US' : 'fr-FR';
+  const expensesThisMonth = useMemo(() => getExpensesThisMonth(expenses), [expenses]);
   const total = useMemo(
     () => ({
       amount: expensesThisMonth.reduce((acc, curr) => acc + curr.amount, 0),

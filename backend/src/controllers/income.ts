@@ -88,7 +88,9 @@ incomeRouter.basePath('/income')
     });
 
     if (!income) {
-      throw new HTTPException(404, { message : 'Income not found' });
+      throw new HTTPException(404, {
+        res: c.json({ message: 'Income not found' }, 404),
+      });
     }
 
     const updatedIncome = await prisma.income.update({
@@ -122,7 +124,9 @@ incomeRouter.basePath('/income')
     });
 
     if (!income) {
-      throw new HTTPException(404, { message : 'Income not found' });
+      throw new HTTPException(404, {
+        res: c.json({ message: 'Income not found' }, 404),
+      });
     }
 
     await prisma.income.delete({

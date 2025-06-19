@@ -174,7 +174,8 @@ export const ExpenseEditModal = ({ expense, open, setOpen }: ExpenseEditModalPro
                     required
                     value={new Date(field.state.value)}
                     onChange={(date) => {
-                      field.handleChange(date.toISOString());
+                      const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}T12:00:00.000Z`;
+                      field.handleChange(dateString);
                     }}
                   />
                   {field.state.meta.errors.length > 0 && (
