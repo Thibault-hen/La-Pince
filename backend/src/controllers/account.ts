@@ -109,7 +109,10 @@ accountRouter
 
       if (!data.currentPassword || !data.newPassword) {
         throw new HTTPException(400, {
-          res: c.json({ message: 'Current and new password are required.' }, 400),
+          res: c.json(
+            { message: 'Current and new password are required.' },
+            400
+          ),
         });
       }
 
@@ -170,8 +173,8 @@ accountRouter
       });
 
       if (!user) {
-        throw new HTTPException(422, {
-          res: c.json({ message: 'User not found.' }, 422),
+        throw new HTTPException(404, {
+          res: c.json({ message: 'User not found.' }, 404),
         });
       }
 
