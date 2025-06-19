@@ -22,9 +22,9 @@ export const LanguageSelector = () => {
           <img
             src={selectedLanguage?.flag || '/flags/fr.svg'}
             alt="Language Flag"
-            width={24}
-            height={24}
-            className="rounded"
+            width={20}
+            height={20}
+            className="rounded border"
           />
         </Button>
       </DropdownMenuTrigger>
@@ -39,9 +39,9 @@ export const LanguageSelector = () => {
               <img
                 src={lang?.flag || '/flags/fr.svg'}
                 alt="Language Flag"
-                width={24}
-                height={24}
-                className="rounded"
+                width={22}
+                height={22}
+                className="rounded border"
               />
               <span>{lang.name}</span>
             </span>

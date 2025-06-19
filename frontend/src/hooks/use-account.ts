@@ -3,6 +3,7 @@ import type { UserAccount } from '@/types/account';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
+import { updateCurrencySchema, type UpdateCurrency } from '@/schemas/account.schema';
 
 export const useUpdateUserProfile = () => {
   const queryClient = useQueryClient();
@@ -49,14 +50,32 @@ export const useUpdatePassword = () => {
   };
 
   return useMutation({
-    mutationFn: (data: { currentPassword: string; newPassword: string }) =>
-      accountService.updateUserPassword(data),
+    mutationFn: accountService.updateUserPassword,
     onSuccess: () => {
       toast.success(t('account.toast.passwordUpdated'));
       queryClient.invalidateQueries({ queryKey: ['account'] });
     },
     onError: (error) => {
       toast.error(getErrorMessage(error));
+    },
+  });
+};
+
+export const useUpdateCurrency = () => {
+  const queryClient = useQueryClient();
+  const { t } = useTranslation();
+  return useMutation({
+    mutationFn: async (currency: UpdateCurrency) => {
+      updateCurrencySchema.parse(currency);
+      const response = await accountService.updateCurrency(currency);
+      return response;
+    },
+    onSuccess: (data) => {
+      toast.success(t('currency.toast.updated', { currency: data.currency }));
+      queryClient.invalidateQueries({ queryKey: ['account'] });
+    },
+    onError: (_error) => {
+      toast.error(t('currency.toast.error'));
     },
   });
 };

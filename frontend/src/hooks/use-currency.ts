@@ -1,5 +1,4 @@
 import { useCurrencyContext } from '@/context/currency-context';
-import { currencyService } from '@/services/currency';
 import type { CurrencyRates } from '@/types/currency';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';

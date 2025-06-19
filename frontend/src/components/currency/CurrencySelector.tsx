@@ -1,4 +1,3 @@
-import { categories } from '@/data/data';
 import {
   Select,
   SelectTrigger,
@@ -14,6 +13,7 @@ import { useCurrency } from '@/hooks/use-currency';
 import { useTranslation } from 'react-i18next';
 import { CloudAlert } from 'lucide-react';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
+import { useUpdateCurrency } from '@/hooks/use-account';
 
 type Currency = {
   name: string;
@@ -49,20 +49,28 @@ export const CurrencySelector = () => {
   const userData = queryClient.getQueryData<User>(['authUser']);
   const { setCurrency, error, isLoading } = useCurrency();
   const { t } = useTranslation();
+  const { mutateAsync: updateCurrency } = useUpdateCurrency();
+
+  const handleUpdateCurrency = async (currency: string) => {
+    if (currency === undefined || currency === null) return;
+
+    await updateCurrency({ currency });
+    setCurrency(currency);
+  };
   return (
     <div>
       <Select
         disabled={isLoading || error !== null}
         required
         defaultValue={userData?.user.currency ?? 'EUR'}
-        onValueChange={(value) => setCurrency(value)}
+        onValueChange={(value) => handleUpdateCurrency(value)}
       >
         <SelectTrigger className="w-full">
           <SelectValue placeholder="" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>Selectionne ta monnaie</SelectLabel>
+            <SelectLabel>Selectionne ta devise</SelectLabel>
             {currencies?.map((currency, idx) => (
               <SelectItem key={idx} value={currency.code} className="flex cursor-pointer">
                 <div className="flex items-center justify-center w-6 h-6">

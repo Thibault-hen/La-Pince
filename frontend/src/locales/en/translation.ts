@@ -75,6 +75,12 @@ export const en = {
     error:
       'Unable to fetch current exchange rates. Currency conversions are not available at the moment.',
   },
+  currency: {
+    toast: {
+      updated: 'Your currency has been updated to {{currency}}',
+      error: 'An error has occurred while updating your currency',
+    },
+  },
   dashboard: {
     header: {
       title: 'Dashboard',
@@ -239,6 +245,7 @@ export const en = {
       updated: 'Your budget {{title}} has been updated',
       deleted: 'Your budget has been deleted',
       noCategory: 'This category does not exist',
+      limitTooHigh: 'The alert limit cannot be higher than the budget amount',
       categoryAlreadyUsed: 'This category is already used by another budget',
       tooManyAttempts: 'Too many attempts, please try again later',
       createError: 'An error has occurred while creating your budget',
@@ -421,11 +428,12 @@ export const en = {
   notification: {
     budgetWarning: {
       title: 'Your budget is almost exceeded',
-      content: 'Your budget <0>{{ budgetName }}</0> is approaching its limit.<1/>You have <2>{{budgetAmountRemaining}}</2> remaining.',
+      content:
+        'Your budget <0>{{ budgetName }}</0> is approaching its limit.<1/>You have <2>{{budgetAmountRemaining}}</2> remaining.',
     },
     budgetExceeded: {
       title: 'Your budget has been exceeded',
       content: 'Your budget <0>{{ budgetName }}</0> has been exceeded.',
-    }
-  }
+    },
+  },
 };

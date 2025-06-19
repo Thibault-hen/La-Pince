@@ -36,6 +36,9 @@ export const useCreateBudget = () => {
     if (error.response?.status === 404) {
       return t('budget.toast.noCategory');
     }
+    if (error.response?.status === 422) {
+      return t('budget.toast.limitTooHigh');
+    }
     if (error.response?.status === 409) {
       return t('budget.toast.categoryAlreadyUsed');
     }
@@ -54,7 +57,6 @@ export const useCreateBudget = () => {
       });
     },
     onSuccess: (data) => {
-      console.log('Budget created:', data);
       toast.success(t('budget.toast.created', { title: t(data.category.title) }));
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
     },
@@ -70,11 +72,13 @@ export const useUpdateBudget = () => {
   const { convertToEUR } = useCurrency();
 
   const getErrorMessage = (error: any): string | null => {
-    console.error('Error creating budget:', error);
     if (!error) return null;
 
     if (error.response?.status === 404) {
       return t('budget.toast.noCategory');
+    }
+    if (error.response?.status === 422) {
+      return t('budget.toast.limitTooHigh');
     }
     if (error.response?.status === 409) {
       return t('budget.toast.categoryAlreadyUsed');

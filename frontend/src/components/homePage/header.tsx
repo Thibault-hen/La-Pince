@@ -91,7 +91,7 @@ export default function Header() {
                 </>
               ) : (
                 <Button variant="blue" className="font-semibold text-sm m-2 p-5 justify-end">
-                  <Link to="/tableau-de-bord">{t('home.nav.myspace')}</Link>
+                  <Link to="/tableau-de-bord">{t('home.nav.dashboard')}</Link>
                 </Button>
               )}
 
