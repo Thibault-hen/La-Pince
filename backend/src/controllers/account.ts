@@ -11,7 +11,11 @@ import {
   response404,
   response409,
 } from '../utils/openapi';
-import { updateUserPasswordSchema, userSelectSchema } from '../validators/user';
+import {
+  updateUserCurrencySchema,
+  updateUserPasswordSchema,
+  userSelectSchema,
+} from '../validators/user';
 import { updateUserSchema } from '../validators/user';
 import z from 'zod';
 import { describeRoute } from 'hono-openapi';
@@ -91,11 +95,11 @@ accountRouter
         200: response200(updateUserPasswordSchema),
         400: response400(
           z.union([
-            z.literal('Current and new password are required'),
-            z.literal('Current password is incorrect'),
+            z.literal('Current and new password are required.'),
+            z.literal('Current password is incorrect.'),
           ])
         ),
-        404: response404(z.literal('User not found')),
+        404: response404(z.literal('User not found.')),
       },
     }),
     zValidator('json', updateUserPasswordSchema),
@@ -105,7 +109,7 @@ accountRouter
 
       if (!data.currentPassword || !data.newPassword) {
         throw new HTTPException(400, {
-          message: 'Current and new password are required',
+          message: 'Current and new password are required.',
         });
       }
 
@@ -114,7 +118,7 @@ accountRouter
       });
 
       if (!user) {
-        throw new HTTPException(404, { message: 'User not found' });
+        throw new HTTPException(404, { message: 'User not found.' });
       }
 
       const isPasswordValid = await argon2.verify(
@@ -123,7 +127,7 @@ accountRouter
       );
       if (!isPasswordValid) {
         throw new HTTPException(400, {
-          message: 'Current password is incorrect',
+          message: 'Current password is incorrect.',
         });
       }
 
@@ -140,6 +144,41 @@ accountRouter
       });
 
       const { password: _, ...safeUser } = updatedUser;
+
+      return c.json(safeUser, 200);
+    }
+  )
+  .patch(
+    '/currency',
+    describeRoute({
+      description: 'Update currency',
+      tags: ['account'],
+      responses: {
+        200: response200(updateUserCurrencySchema),
+        404: response404(z.literal('User not found.')),
+      },
+    }),
+    zValidator('json', updateUserCurrencySchema),
+    async (c) => {
+      const userId = c.get('jwtPayload').userId;
+      const data = c.req.valid('json');
+
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+
+      if (!user) {
+        throw new HTTPException(422, {
+          res: c.json({ message: 'User not found.' }, 422),
+        });
+      }
+
+      const updatedCurrency = await prisma.user.update({
+        where: { id: userId },
+        data,
+      });
+
+      const { password: _, ...safeUser } = updatedCurrency;
 
       return c.json(safeUser, 200);
     }
