@@ -13,6 +13,7 @@ import {
   response201,
   response204,
   response404,
+  response422,
 } from '../utils/openapi';
 import { paramsWithId, zodValidatorMessage } from '../validators/utils';
 import { HTTPException } from 'hono/http-exception';
@@ -36,6 +37,9 @@ budgetRouter
       const month = now.getMonth() + 1;
       const year = now.getFullYear();
 
+      const firstDay = new Date(year, month - 1, 1);
+      const lastDay = new Date(year, month, 0, 23, 59, 59, 999);
+
       const budgets = await prisma.budget.findMany({
         where: {
           userId,
@@ -49,6 +53,12 @@ budgetRouter
             },
           },
           expenses: {
+            where: {
+              date: {
+                gte: firstDay,
+                lte: lastDay,
+              },
+            },
             select: {
               amount: true,
             },
@@ -117,6 +127,10 @@ budgetRouter
       tags: ['budget'],
       responses: {
         201: response201(createBudgetSchema),
+        404: response404(z.literal('Category not found.')),
+        422: response422(
+          z.literal('The limit cannot be higher than the amount.')
+        ),
       },
     }),
     zValidator('json', createBudgetSchema),
@@ -135,7 +149,18 @@ budgetRouter
         },
       });
       if (!categoryExists) {
-        throw new HTTPException(404, { message: 'Category not found' });
+        throw new HTTPException(404, {
+          res: c.json({ message: 'Category not found.' }, 404),
+        });
+      }
+
+      if (budget.limitAlert > budget.amount) {
+        throw new HTTPException(422, {
+          res: c.json(
+            { message: 'The limit cannot be higher than the amount.' },
+            422
+          ),
+        });
       }
 
       const createBudget = await prisma.budget.create({
@@ -164,7 +189,15 @@ budgetRouter
       tags: ['budget'],
       responses: {
         200: response200(updateBudgetSchema),
-        404: response404(),
+        404: response404(
+          z.union([
+            z.literal('Budget not found.'),
+            z.literal('Category not found.'),
+          ])
+        ),
+        422: response422(
+          z.literal('The limit cannot be higher than the amount.')
+        ),
       },
     }),
     zValidator('param', paramsWithId),
@@ -184,15 +217,12 @@ budgetRouter
         },
       });
       if (!budgetExists) {
-        throw new HTTPException(404, { message: 'Budget not found' });
+        throw new HTTPException(404, {
+          res: c.json({ message: 'Budget not found.' }, 404),
+        });
       }
 
       if (budgetData.categoryId) {
-        console.log(
-          'Checking if category exists for ID:',
-          budgetData.categoryId
-        );
-
         const categoryExists = await prisma.category.findUnique({
           where: {
             id: budgetData.categoryId,
@@ -200,8 +230,23 @@ budgetRouter
           },
         });
         if (!categoryExists) {
-          throw new HTTPException(404, { message: 'Category not found' });
+          throw new HTTPException(404, {
+            res: c.json({ message: 'Category not found.' }, 404),
+          });
         }
+      }
+
+      if (
+        budgetData.limitAlert !== undefined &&
+        budgetData.amount !== undefined &&
+        budgetData.limitAlert > budgetData.amount
+      ) {
+        throw new HTTPException(422, {
+          res: c.json(
+            { message: 'The limit cannot be higher than the amount.' },
+            422
+          ),
+        });
       }
 
       const updatedBudget = await prisma.budget.update({
@@ -233,6 +278,7 @@ budgetRouter
       tags: ['budget'],
       responses: {
         204: response204(),
+        404: response404(z.literal('Budget not found.')),
       },
     }),
     zValidator('param', paramsWithId),
@@ -247,7 +293,9 @@ budgetRouter
         },
       });
       if (!budgetExists) {
-        throw new HTTPException(404, { message: 'Budget not found' });
+        throw new HTTPException(404, {
+          res: c.json({ message: 'Budget not found.' }, 404),
+        });
       }
 
       await prisma.budget.delete({
