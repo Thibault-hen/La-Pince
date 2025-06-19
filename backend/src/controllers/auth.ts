@@ -14,6 +14,8 @@ import {
   response200,
   response201,
   response400,
+  response401,
+  response409,
   response500,
 } from '../utils/openapi';
 import { HTTPException } from 'hono/http-exception';
@@ -42,6 +44,7 @@ authRouter
       responses: {
         201: response201(userSelectSchema),
         400: response400(z.literal('User already exists.')),
+        409: response409(z.literal('User already exists.')),
       },
     }),
     zValidator('json', userRegisterSchema),
@@ -53,8 +56,8 @@ authRouter
       });
 
       if (userExists) {
-        throw new HTTPException(400, {
-          res: c.json({ message: 'User already exists.' }, 400),
+        throw new HTTPException(409, {
+          res: c.json({ message: 'User already exists.' }, 409),
         });
       }
 
@@ -186,6 +189,7 @@ authRouter
       tags: ["auth"],
       responses: {
         200: response200(userSelectSchema),
+        401: response401(z.literal("Token invalid.")),
       },
     }),
     zValidator("json", resetUserPasswordSchema),

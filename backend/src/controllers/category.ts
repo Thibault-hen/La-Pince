@@ -182,7 +182,7 @@ async function verifyDuplicateCategory(
   });
   if (duplicateCategory) {
     throw new HTTPException(409, {
-      res: c.json({ message: 'Category with the same title already exists' }, 404),
+      res: c.json({ message: 'Category with the same title already exists' }, 409),
     });
   }
 }
