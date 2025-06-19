@@ -1,19 +1,21 @@
-import { Home } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { DashboardCards } from '@/components/dashboard/DashboardCards';
+import { DashboardHeader } from '@/components/dashboard/DashboardHeader';
+import { ExpensesOverall } from '@/components/dashboard/ExpensesOverall';
+import { LastExpenses } from '@/components/dashboard/LastExpenses';
 
 export const Dashboard = () => {
-  const { t } = useTranslation();
   return (
     <>
-      <div className="flex items-center gap-3">
-        <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
-          <Home className="h-5 w-5 text-primary-color" />
+      <DashboardHeader />
+      <div className="flex flex-col xl:flex-row gap-4">
+        <div className="flex xl:w-3/4">
+          <ExpensesOverall />
         </div>
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">{t('dashboard.header.title')}</h1>
-          <p className="text-sm text-muted-foreground">{t('dashboard.header.subtitle')}</p>
+        <div className="flex xl:w-1/4">
+          <DashboardCards />
         </div>
       </div>
+      <LastExpenses />
     </>
   );
 };
