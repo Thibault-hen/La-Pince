@@ -71,7 +71,7 @@ accountRouter
 
         if (emailExist && emailExist.id !== userId) {
           throw new HTTPException(409, {
-            message: 'Email already in use.',
+            res: c.json({ message: 'Email already in use.' }, 409),
           });
         }
       }
@@ -109,7 +109,7 @@ accountRouter
 
       if (!data.currentPassword || !data.newPassword) {
         throw new HTTPException(400, {
-          message: 'Current and new password are required.',
+          res: c.json({ message: 'Current and new password are required.' }, 400),
         });
       }
 
@@ -118,7 +118,9 @@ accountRouter
       });
 
       if (!user) {
-        throw new HTTPException(404, { message: 'User not found.' });
+        throw new HTTPException(404, {
+          res: c.json({ message: 'User not found' }, 404),
+        });
       }
 
       const isPasswordValid = await argon2.verify(
@@ -127,7 +129,7 @@ accountRouter
       );
       if (!isPasswordValid) {
         throw new HTTPException(400, {
-          message: 'Current password is incorrect.',
+          res: c.json({ message: 'Current password is incorrect' }, 400),
         });
       }
 

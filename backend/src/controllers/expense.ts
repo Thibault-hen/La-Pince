@@ -136,7 +136,9 @@ expenseRouter.basePath('/expense')
       });
 
       if (!budgetExists) {
-        throw new HTTPException(404, { message: 'Budget not found' });
+        throw new HTTPException(404, {
+          res: c.json({ message: 'Budget not found' }, 404),
+        });
       }
 
       const createdExpense = await prisma.expense.create({
@@ -175,7 +177,9 @@ expenseRouter.basePath('/expense')
       });
 
       if (!budgetExists) {
-        throw new HTTPException(404, { message: 'Budget not found' });
+        throw new HTTPException(404, {
+          res: c.json({ message: 'Budget not found' }, 404),
+        });
       }
 
       const expense = await prisma.expense.findUnique({
@@ -186,7 +190,9 @@ expenseRouter.basePath('/expense')
       });
 
       if (!expense) {
-        throw new HTTPException(404, { message: 'Expense not found' });
+        throw new HTTPException(404, {
+          res: c.json({ message: 'Expense not found' }, 404),
+        });
       }
 
       const updatedExpense = await prisma.expense.update({
@@ -223,7 +229,9 @@ expenseRouter.basePath('/expense')
       });
 
       if (!expense) {
-        throw new HTTPException(404, { message: 'Expense not found' });
+        throw new HTTPException(404, {
+          res: c.json({ message: 'Expense not found' }, 404),
+        });
       }
 
       await prisma.expense.delete({
