@@ -1,4 +1,3 @@
-import { TrendingUp } from 'lucide-react';
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from 'recharts';
 import {
   type ChartConfig,
@@ -6,9 +5,13 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 
-export const ExpensesOverallChart = () => {
+interface ExpensesOverallChartProps {
+  last6MonthsExpensesByMonth: Record<string, number>[];
+}
+
+export const ExpensesOverallChart = ({last6MonthsExpensesByMonth}: ExpensesOverallChartProps) => {
   const chartConfig = {
     desktop: {
       label: 'Desktop',
@@ -16,14 +19,12 @@ export const ExpensesOverallChart = () => {
     },
   } satisfies ChartConfig;
 
-  const chartData = [
-    { month: 'January', desktop: 186 },
-    { month: 'February', desktop: 305 },
-    { month: 'March', desktop: 237 },
-    { month: 'April', desktop: 73 },
-    { month: 'May', desktop: 209 },
-    { month: 'June', desktop: 214 },
-  ];
+  console.log('last6 :>> ', last6MonthsExpensesByMonth);
+
+  const chartData  = Object.entries(last6MonthsExpensesByMonth).map(([month, value]) => ({
+    month: month,
+    desktop: value,
+  }));
 
   return (
     <Card className="w-full h-fit dark:bg-primary border-none">

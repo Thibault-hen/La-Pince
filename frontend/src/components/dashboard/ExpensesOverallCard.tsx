@@ -23,7 +23,7 @@ export function FinanceCard({ title, amount, variant = 'positive' }: FinanceCard
         {/* Content */}
         <div className="space-y-2">
           <h3 className="text-sm font-medium text-muted-foreground tracking-wide">{title}</h3>
-          <p className="text-base lg:text-2xl font-bold text-foreground tracking-tight">{amount}</p>
+          <p className="text-base lg:text-2xl font-bold text-foreground tracking-tight">{amount}€</p>
         </div>
       </CardContent>
     </Card>

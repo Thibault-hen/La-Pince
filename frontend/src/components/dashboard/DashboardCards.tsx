@@ -1,7 +1,12 @@
-import { t } from 'i18next';
-import { Calculator, ChartLine, Euro, TrendingUp } from 'lucide-react';
+import { Calculator, Euro, TrendingUp } from 'lucide-react';
 
-export const DashboardCards = () => {
+interface DashboardCardsProps {
+  currentMonthRevenue: number;
+  currentMonthBudget: number;
+  currentMonthExpenses: number;
+}
+
+export const DashboardCards = ({currentMonthRevenue, currentMonthBudget, currentMonthExpenses}: DashboardCardsProps) => {
   return (
     <div className="flex flex-col w-full xl:max-w-xl justify-between">
       <div className="relative group">
@@ -17,7 +22,7 @@ export const DashboardCards = () => {
 
           <div className="space-y-1">
             <div className="text-xl md:text-3xl font-bold text-gray-900 dark:text-white">
-              2301.00€
+              {currentMonthRevenue.toFixed(2)}€
             </div>
             <p className="text-sm text-muted-foreground">Mon revenu ce mois ci</p>
           </div>
@@ -36,7 +41,7 @@ export const DashboardCards = () => {
           </div>
 
           <div className="space-y-1">
-            <div className="text-xl md:text-3xl font-bold">1892.00€</div>
+            <div className="text-xl md:text-3xl font-bold">{currentMonthBudget.toFixed(2)}€</div>
             <p className="text-sm text-muted-foreground">Budget total ce mois ci</p>
           </div>
         </div>
@@ -54,7 +59,7 @@ export const DashboardCards = () => {
           </div>
 
           <div className="space-y-1">
-            <div className="text-xl md:text-3xl font-bold">320.00€</div>
+            <div className="text-xl md:text-3xl font-bold">{(currentMonthRevenue - currentMonthExpenses).toFixed(2)}€</div>
             <p className="text-sm text-muted-foreground">Restant ce mois ci</p>
           </div>
         </div>

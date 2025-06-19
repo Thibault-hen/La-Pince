@@ -1,80 +1,14 @@
 import { ArrowUpRight, TrendingDown, Calendar } from 'lucide-react';
 import { Button } from '../ui/button';
+import type { Expense } from '@/types/dashboard';
+import { useNavigate } from 'react-router-dom';
 
-export const LastExpenses = () => {
-  // Données d'exemple - remplacez par vos vraies données de la base
-  const recentExpenses = [
-    {
-      id: 1,
-      title: 'Courses Carrefour',
-      amount: 67.5,
-      date: '2025-06-19',
-      color: '#10b981', // emerald-500
-    },
-    {
-      id: 2,
-      title: 'Essence Shell',
-      amount: 45.2,
-      date: '2025-06-18',
-      color: '#3b82f6', // blue-500
-    },
-    {
-      id: 3,
-      title: 'Café Starbucks',
-      amount: 4.8,
-      date: '2025-06-18',
-      color: '#f97316', // orange-500
-    },
-    {
-      id: 4,
-      title: 'Netflix',
-      amount: 15.99,
-      date: '2025-06-17',
-      color: '#8b5cf6', // violet-500
-    },
-    {
-      id: 5,
-      title: 'Pharmacie',
-      amount: 23.45,
-      date: '2025-06-17',
-      color: '#ef4444', // red-500
-    },
-    {
-      id: 6,
-      title: 'Restaurant Le Bistrot',
-      amount: 89.3,
-      date: '2025-06-16',
-      color: '#f97316', // orange-500
-    },
-    {
-      id: 7,
-      title: 'Zara',
-      amount: 129.0,
-      date: '2025-06-15',
-      color: '#ec4899', // pink-500
-    },
-    {
-      id: 8,
-      title: 'Électricité EDF',
-      amount: 156.78,
-      date: '2025-06-14',
-      color: '#6366f1', // indigo-500
-    },
-    {
-      id: 9,
-      title: 'Parking Centre Ville',
-      amount: 8.5,
-      date: '2025-06-14',
-      color: '#3b82f6', // blue-500
-    },
-    {
-      id: 10,
-      title: 'Boulangerie Paul',
-      amount: 12.6,
-      date: '2025-06-13',
-      color: '#10b981', // emerald-500
-    },
-  ];
+interface LastExpensesProps {
+  lastExpensesData: Expense[]
+}
+
+export const LastExpenses = ({lastExpensesData} : LastExpensesProps) => {
+  const navigate = useNavigate();
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -91,7 +25,7 @@ export const LastExpenses = () => {
     }
   };
 
-  const totalAmount = recentExpenses.reduce((sum, expense) => sum + expense.amount, 0);
+  const totalAmount = lastExpensesData.reduce((sum, expense) => sum + expense.amount, 0);
 
   return (
     <div className="w-full max-w-xl shadow-xl dark:bg-primary rounded-lg border">
@@ -123,23 +57,23 @@ export const LastExpenses = () => {
       <div>
         {/* Expense List */}
         <div>
-          {recentExpenses.map((expense, _index) => {
+          {lastExpensesData.map((expense, index) => {
             return (
               <div
-                key={expense.id}
+                key={index}
                 className="relative p-2 px-6 dark:bg-primary transition-all duration-300 cursor-pointer"
               >
                 <div className="flex items-center gap-4">
                   {/* Color indicator */}
                   <div
                     className="w-4 h-4 rounded-full shadow-sm"
-                    style={{ backgroundColor: expense.color }}
+                    style={{ backgroundColor: expense.budget.category.color.value }}
                   />
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-semibold truncate text-base">{expense.title}</h3>
+                      <h3 className="font-semibold truncate text-base">{expense.description}</h3>
                       <span className="text-sm font-bold text-red-500 ml-4">
                         -{expense.amount.toFixed(2)} €
                       </span>
@@ -157,7 +91,7 @@ export const LastExpenses = () => {
             );
           })}
           <div className="p-6">
-            <Button className="w-full" variant="blue">
+            <Button className="w-full" variant="blue" onClick={() => navigate('/tableau-de-bord/depenses')}>
               Voir toutes les transactions
             </Button>
           </div>
