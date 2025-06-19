@@ -33,8 +33,11 @@ export const updateUserPasswordSchema = z.object({
   newPassword: z.string().trim().min(8),
 });
 
-
 export const resetUserPasswordSchema = z.object({
   token: z.string(),
   newPassword: z.string().trim().min(8),
+});
+
+export const updateUserCurrencySchema = z.object({
+  currency: z.string().trim().min(1).max(10).optional(),
 });
