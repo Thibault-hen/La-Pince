@@ -28,17 +28,17 @@ async function main() {
   // --- 1. Colors ---
   await prisma.color.createMany({
     data: [
-       { name: 'color.white', value: '#ffffff' },
-  { name: 'color.red', value: '#ef4444' },
-  { name: 'color.green', value: '#22c55e' },
-  { name: 'color.blue', value: '#3b82f6' },
-  { name: 'color.yellow', value: '#eab308' },
-  { name: 'color.violet', value: '#8b5cf6' },
-  { name: 'color.orange', value: '#f97316' },
-  { name: 'color.pink', value: '#ec4899' },
-  { name: 'color.teal', value: '#14b8a6' },
-  { name: 'color.indigo', value: '#6366f1' },
-  { name: 'color.gray', value: '#6b7280' },
+      { name: 'color.red', value: '#ef4444' },
+      { name: 'color.green', value: '#22c55e' },
+      { name: 'color.blue', value: '#3b82f6' },
+      { name: 'color.yellow', value: '#eab308' },
+      { name: 'color.violet', value: '#8b5cf6' },
+      { name: 'color.orange', value: '#f97316' },
+      { name: 'color.pink', value: '#ec4899' },
+      { name: 'color.teal', value: '#14b8a6' },
+      { name: 'color.indigo', value: '#6366f1' },
+      { name: 'color.gray', value: '#6b7280' },
+      { name: 'color.fof', value: '#ff00ff' },
     ],
     skipDuplicates: true,
   });
