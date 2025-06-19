@@ -8,7 +8,7 @@ export const fr = {
       features: 'Fonctionnalités',
       login: 'Connexion',
       register: 'Inscription',
-      myspace: 'Mon espace',
+      dashboard: 'Tableau de bord',
     },
     hero: {
       title: 'Maîtrisez vos finances, simplement.',
@@ -74,7 +74,9 @@ export const fr = {
     },
   },
   currencySelector: {
-    error: 'Erreur lors de la récupération des devises',
+    errorTitle: 'Oups',
+    error:
+      'Impossible de récupérer les taux de change actuels. Les conversions de devises ne sont pas disponibles pour le moment.',
   },
   dashboard: {
     header: {
@@ -234,18 +236,19 @@ export const fr = {
       created: 'Ton budget {{title}} a été créé',
       updated: 'Ton budget {{title}} a été mis à jour',
       deleted: 'Ton budget a été supprimé',
-      createError: 'Une erreur est survenue ou un autre budget appartient déjà à cette catégorie',
-      updateError:
-        'Une erreur est survenue lors de la mise à jour ou un autre budget appartient déjà à cette catégorie',
-      deleteError:
-        "Une erreur est survenue lors de la suppression de ton budget ou il n'existe plus",
+      noCategory: 'Cette catégorie n’existe pas',
+      categoryAlreadyUsed: 'Cette catégorie est déjà utilisée par un autre budget',
+      tooManyAttempts: 'Trop de tentatives. Veuillez réessayer plus tard',
+      createError: 'Une erreur est survenue lors de la création de ton budget',
+      updateError: 'Une erreur est survenue lors de la mise à jour de ton budget',
+      deleteError: 'Une erreur est survenue lors de la suppression de ton budget',
     },
     chart: {
       title: "Vue d'ensemble des budgets",
       totalLabel: 'Budget total',
     },
   },
-  category: {
+  categories: {
     header: {
       title: 'Catégories',
       subtitle: 'Gérer mes catégories',
@@ -292,11 +295,10 @@ export const fr = {
       created: 'Ta catégorie {{title}} a été créé',
       updated: 'Ta catégorie {{title}} a été mise à jour',
       deleted: 'Ta catégorie a été supprimé',
-      createError: 'Une erreur est survenue ou cette catégorie existe déjà',
-      updateError:
-        'Une erreur est survenue lors de la mise à jour ou une autre catégorie porte le même nom',
-      deleteError:
-        "Une erreur est survenue lors de la suppression de ta catégorie ou elle n'existe plus",
+      categoryAlreadyExist: 'Cette catégorie existe déjà',
+      createError: 'Une erreur est survenue lors de la création de ta catégorie',
+      updateError: 'Une erreur est survenue lors de la mise à jour de ta catégorie',
+      deleteError: 'Une erreur est survenue lors de la suppression de ta catégorie',
     },
   },
   login: {
@@ -387,9 +389,35 @@ export const fr = {
     },
     toast: {
       updated: 'Ton profil a été mis à jour',
-      updateError: 'Une erreur est survenue lors de la mise à jour de ton profil',
+      updateProfileError: 'AUne erreur est survenue lors de la mise à jour de ton profil',
+      updatePasswordError: 'Une erreur est survenue lors de la mise à jour de ton mot de passe',
       passwordUpdated: 'Ton mot de passe a été mis à jour',
-      passwordUpdateError: 'Une erreur est survenue lors de la mise à jour de ton mot de passe',
+      wrongPassword: 'Le mot de passe actuel est incorrect',
+      emailAlreadyUsed: 'Cet email est déjà utilisé par un autre compte',
     },
+  },
+  color: {
+    red: 'Rouge',
+    green: 'Vert',
+    blue: 'Bleu',
+    yellow: 'Jaune',
+    violet: 'Violet',
+    orange: 'Orange',
+    pink: 'Rose',
+    teal: 'Sarcelle',
+    indigo: 'Indigo',
+    gray: 'Gris',
+  },
+  category: {
+    bills: 'Factures',
+    transport: 'Transport',
+    entertainment: 'Divertissement',
+    health: 'Sante',
+    shopping: 'Shopping',
+    food: 'Nourriture',
+    defaultTitle: 'Catégorie sans nom',
+  },
+  toast: {
+    tooManyAttempts: 'Too many attempts, please try again later',
   },
 };

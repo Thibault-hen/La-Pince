@@ -119,7 +119,7 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
 
                   <div className="flex-1 flex items-center justify-between ">
                     <span className="font-medium text-gray-700 dark:text-gray-300 text-sm truncate mr-2">
-                      {budget.category.title}
+                      {t(budget.category.title)}
                     </span>
 
                     <div className="flex items-center gap-3">

@@ -15,14 +15,15 @@ export const useCurrency = () => {
   } = useQuery<CurrencyRates>({
     queryKey: ['currencyRates'],
     queryFn: async () => {
-      console.log('Fetching currency rates for:', currency);
-      const response = await currencyService.getCurrencyRates();
-      return response.rates;
+      throw Error;
+      // const response = await currencyService.getCurrencyRates();
+      // return response.rates;
     },
     refetchOnMount: false, // pas de refetch au montage
     refetchOnWindowFocus: false, // pas de refetch quand je reviens sur la apge
     refetchOnReconnect: false,
     retry: false, // pas de refetch si l'api try
+    staleTime: Infinity,
 
     // Données de fallback en cas d'erreur
     placeholderData: (previousData) => previousData,
@@ -32,7 +33,6 @@ export const useCurrency = () => {
     if (currency === 'EUR') return amount;
 
     if (!rates[currency]) {
-      console.error(`Currency ${currency} not found in rates`);
       return amount;
     }
     return amount * rates[currency];
@@ -42,7 +42,6 @@ export const useCurrency = () => {
     if (currency === 'EUR') return amount;
 
     if (!rates[currency]) {
-      console.error(`Currency ${currency} not found in rates`);
       return amount;
     }
     return amount / rates[currency];

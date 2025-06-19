@@ -11,6 +11,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSpring } from 'motion/react';
 import { useExpenses } from '@/hooks/use-expense';
+import { useCurrency } from '@/hooks/use-currency';
 
 export const description = 'An interactive bar chart';
 
@@ -26,12 +27,12 @@ function getExpensesThisMonth<T extends { date: string }>(expenses: T[]): T[] {
   const month = date.getMonth();
   const year = date.getFullYear();
 
-  const expensesThisMonth =  (expenses.filter((expense) => {
+  const expensesThisMonth = expenses.filter((expense) => {
     const expenseDate = new Date(expense.date);
 
     return expenseDate.getMonth() === month && expenseDate.getFullYear() === year;
-  }))
-  
+  });
+
   return expensesThisMonth.sort((a, b) => {
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
@@ -43,6 +44,7 @@ export function ChartBarInteractive() {
   const [displayTotal, setDisplayTotal] = useState<string>();
   const [activeChart, setActiveChart] = useState<keyof typeof chartConfig>('amount');
   const { expenses } = useExpenses();
+  const { formatAmount } = useCurrency();
   const expensesThisMonth = useMemo(() => getExpensesThisMonth(expenses), [expenses]);
   const { t, i18n } = useTranslation();
   const locale = i18n.language === 'en' ? 'en-US' : 'fr-FR';
@@ -83,8 +85,7 @@ export function ChartBarInteractive() {
               >
                 <span className="text-muted-foreground text-xs">{t(chartConfig[chart].label)}</span>
                 <span className="text-lg leading-none font-bold sm:text-3xl">
-                  {displayTotal ?? ''}
-                  <strong>€</strong>
+                  {formatAmount(Number(displayTotal))}
                 </span>
               </button>
             );
@@ -123,11 +124,12 @@ export function ChartBarInteractive() {
                   nameKey="amount"
                   labelFormatter={(value) => {
                     return new Date(value).toLocaleDateString(locale, {
-                      month: 'short',
+                      month: 'long',
                       day: 'numeric',
                       year: 'numeric',
                     });
                   }}
+                  formatter={(value) => formatAmount(Number(value))}
                 />
               }
             />

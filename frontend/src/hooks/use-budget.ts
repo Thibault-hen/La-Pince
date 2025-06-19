@@ -29,6 +29,22 @@ export const useCreateBudget = () => {
   const queryClient = useQueryClient();
   const { t } = useTranslation();
   const { convertToEUR } = useCurrency();
+
+  const getErrorMessage = (error: any): string | null => {
+    if (!error) return null;
+
+    if (error.response?.status === 404) {
+      return t('budget.toast.noCategory');
+    }
+    if (error.response?.status === 409) {
+      return t('budget.toast.categoryAlreadyUsed');
+    }
+    if (error.response?.status === 429) {
+      return t('toast.tooManyAttempts');
+    }
+    return t('budget.toast.createError');
+  };
+
   return useMutation({
     mutationFn: async (data: CreateBudget) => {
       return budgetService.createBudget({
@@ -39,28 +55,49 @@ export const useCreateBudget = () => {
     },
     onSuccess: (data) => {
       console.log('Budget created:', data);
-      toast.success(t('budget.toast.created', { title: data.category.title }));
+      toast.success(t('budget.toast.created', { title: t(data.category.title) }));
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
     },
-    onError: (_data) => {
-      toast.error(t('budget.toast.createError'));
+    onError: (error) => {
+      toast.error(getErrorMessage(error));
     },
   });
-}
-
+};
 
 export const useUpdateBudget = () => {
   const queryClient = useQueryClient();
   const { t } = useTranslation();
+  const { convertToEUR } = useCurrency();
+
+  const getErrorMessage = (error: any): string | null => {
+    console.error('Error creating budget:', error);
+    if (!error) return null;
+
+    if (error.response?.status === 404) {
+      return t('budget.toast.noCategory');
+    }
+    if (error.response?.status === 409) {
+      return t('budget.toast.categoryAlreadyUsed');
+    }
+    if (error.response?.status === 429) {
+      return t('toast.tooManyAttempts');
+    }
+    return t('budget.toast.updateError');
+  };
+
   return useMutation({
     mutationFn: ({ id, data }: { id: string; data: UpdateBudget }) =>
-      budgetService.updateBudget(id, data),
+      budgetService.updateBudget(id, {
+        ...data,
+        amount: convertToEUR(data.amount ?? 0),
+        limitAlert: convertToEUR(data.limitAlert ?? 0),
+      }),
     onSuccess: (data) => {
-      toast.success(t('budget.toast.updated', { title: data.category.title }));
+      toast.success(t('budget.toast.updated', { title: t(data.category.title) }));
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
     },
-    onError: (_data) => {
-      toast.error(t('budget.toast.updateError'));
+    onError: (error) => {
+      toast.error(getErrorMessage(error));
     },
   });
 };

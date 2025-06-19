@@ -15,7 +15,8 @@ export const createColumns = (
   onEdit: (expense: Expense) => void,
   onDelete: (expense: Expense) => void,
   t: TFunction,
-  locale: string = 'fr-FR'
+  locale: string = 'fr-FR',
+  formatAmount: (amount: number) => string
 ): ColumnDef<Expense>[] => [
   {
     accessorKey: 'id',
@@ -44,7 +45,7 @@ export const createColumns = (
             className={'border align-center items-center capitalize min-w-26'}
             style={{ backgroundColor: category.color, color: '#fff' } as React.CSSProperties}
           >
-            <span className="font-bold">{category.title}</span>
+            <span className="font-bold">{t(category.title)}</span>
           </Badge>
         </div>
       );
@@ -63,13 +64,7 @@ export const createColumns = (
     accessorKey: 'amount',
     header: () => <div className=" text-right">{t('expenses.table.columns.amount')}</div>,
     cell: ({ row }) => {
-      const amount = Number.parseFloat(row.getValue('amount'));
-      const formatted = new Intl.NumberFormat(locale, {
-        style: 'currency',
-        currency: 'EUR',
-      }).format(amount);
-
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="text-right font-medium">{formatAmount(row.getValue('amount'))}</div>;
     },
   },
   {

@@ -70,23 +70,23 @@ export const EditCategoryModal = ({ category, colors, open, setOpen }: AddCatego
         >
           <DialogHeader className="mb-4">
             <DialogTitle className="font-medium text-xl">
-              {t('category.edit.title', { title: category?.title || 'Category' })}
+              {t('categories.edit.title', { title: t(category?.title) })}
             </DialogTitle>
-            <DialogDescription>{t('category.edit.description')}</DialogDescription>
+            <DialogDescription>{t('categories.edit.description')}</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <form.Field
               name="title"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>{t('category.edit.form.title')}</Label>
+                  <Label htmlFor={field.name}>{t('categories.edit.form.title')}</Label>
                   <Input
                     id={field.name}
                     onChange={(e) => {
                       field.handleChange(e.target.value);
                     }}
                     value={field.state.value || ''}
-                    placeholder={t('category.edit.form.titlePlaceholder')}
+                    placeholder={t('categories.edit.form.titlePlaceholder')}
                     type="text"
                     required
                   />
@@ -104,7 +104,7 @@ export const EditCategoryModal = ({ category, colors, open, setOpen }: AddCatego
                 const selectedColor = colors?.find((color) => color.id === category?.colorId);
                 return (
                   <div className="grid gap-3">
-                    <Label htmlFor={field.name}>{t('category.edit.form.color')}</Label>
+                    <Label htmlFor={field.name}>{t('categories.edit.form.color')}</Label>
                     <Select
                       name={field.name}
                       onValueChange={(value) => field.handleChange(value)}
@@ -113,14 +113,14 @@ export const EditCategoryModal = ({ category, colors, open, setOpen }: AddCatego
                       value={field.state.value}
                     >
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder={t('category.edit.form.colorPlaceholder')} />
+                        <SelectValue placeholder={t('categories.edit.form.colorPlaceholder')} />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectLabel>{t('category.edit.form.colorLabel')}</SelectLabel>
+                          <SelectLabel>{t('categories.edit.form.colorLabel')}</SelectLabel>
                           {colors?.map((color) => (
                             <SelectItem key={color.id} value={color.id ?? ''} className="flex">
-                              <span>{color.name}</span>
+                              <span>{t(color.name)}</span>
                               <div
                                 style={{ backgroundColor: color.value }}
                                 className="h-3 w-3 rounded-lg"
@@ -137,10 +137,10 @@ export const EditCategoryModal = ({ category, colors, open, setOpen }: AddCatego
           </div>
           <DialogFooter className="mt-4 flex justify-between items-center">
             <DialogClose asChild>
-              <Button variant="outline">{t('category.edit.form.cancel')}</Button>
+              <Button variant="outline">{t('categories.edit.form.cancel')}</Button>
             </DialogClose>
             <Button type="submit" variant="blue">
-              {t('category.edit.form.update')}
+              {t('categories.edit.form.update')}
             </Button>
           </DialogFooter>
         </form>

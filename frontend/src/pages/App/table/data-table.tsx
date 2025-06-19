@@ -21,7 +21,7 @@ import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { BanknoteArrowDown, Database, Search } from 'lucide-react';
+import { BanknoteArrowDown, Search } from 'lucide-react';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -51,7 +51,6 @@ export function DataTable<TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
   });
 
-  const totalItems = data.length;
   const filteredItems = table.getFilteredRowModel().rows.length;
 
   return (
@@ -67,7 +66,7 @@ export function DataTable<TData, TValue>({
         {children}
       </div>
       <div className="rounded-md border dark:bg-primary">
-        <Table className="">
+        <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
@@ -88,9 +87,9 @@ export function DataTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {isLoading ? (
-              new Array(5).fill(0).map(() => {
+              new Array(5).fill(0).map((_, idx) => {
                 return (
-                  <TableRow>
+                  <TableRow key={idx + 1}>
                     <TableCell colSpan={columns.length} className=" text-center">
                       <Skeleton className="bg-primary-color/50 h-10 w-full" />
                     </TableCell>

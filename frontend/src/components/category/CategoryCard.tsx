@@ -42,7 +42,7 @@ export const CategoryCard = ({ category, onOpenDeleteModal, onOpenEditModal }: I
               borderLeftColor: category?.color?.value as React.CSSProperties['borderLeftColor'],
             }}
           >
-            {category?.title}
+            {t(category?.title ?? 'category.defaultTitle')}
           </CardTitle>
           <CardDescription className="flex gap-1">
             <DropdownMenu>
@@ -63,14 +63,14 @@ export const CategoryCard = ({ category, onOpenDeleteModal, onOpenEditModal }: I
                   onClick={onOpenEditModal}
                 >
                   <Pencil className="dark:text-white text-dark" />
-                  <span>{t('category.card.edit')}</span>
+                  <span>{t('categories.card.edit')}</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="p-2 dark:bg-primary cursor-pointer hover:!bg-red-500 dark:hover:bg-red-700/20 transition-all duration-150 ease-in-out"
                   onClick={onOpenDeleteModal}
                 >
                   <Trash2 className="dark:text-white text-dark" />
-                  <span>{t('category.card.delete')}</span>
+                  <span>{t('categories.card.delete')}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -79,7 +79,7 @@ export const CategoryCard = ({ category, onOpenDeleteModal, onOpenEditModal }: I
       </CardHeader>
       <CardContent className="p-0 mx-4">
         <CardDescription>
-          <span className="mr-2">{t('category.card.currentBudget')}</span>
+          <span className="mr-2">{t('categories.card.currentBudget')}</span>
           <Badge
             variant="outline"
             className="font-bold items-center hover:bg-secondary-color transition-all duration-200 ease-in-out"
@@ -90,7 +90,6 @@ export const CategoryCard = ({ category, onOpenDeleteModal, onOpenEditModal }: I
                 return total + (isNaN(amount) ? 0 : amount);
               }, 0) ?? 0
             )}
-            €
           </Badge>
         </CardDescription>
       </CardContent>

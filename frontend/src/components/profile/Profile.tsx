@@ -17,7 +17,6 @@ import { useForm } from '@tanstack/react-form';
 import { useUpdateUserProfile } from '@/hooks/use-account';
 import type { UserAccount } from '@/types/account';
 import { userAccountSchema } from '@/schemas/account.schema';
-import { use } from 'react';
 import { useTranslation } from 'react-i18next';
 import { currencies } from '../currency/CurrencySelector';
 
@@ -133,7 +132,7 @@ export const Profile = ({ userData }: ProfileProps) => {
                   onValueChange={field.handleChange}
                   defaultValue={field.state.value}
                 >
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="w-full cursor-pointer">
                     <SelectValue placeholder="" />
                   </SelectTrigger>
                   <SelectContent>
@@ -180,7 +179,7 @@ export const Profile = ({ userData }: ProfileProps) => {
                 <Switch
                   checked={field.state.value}
                   onCheckedChange={field.handleChange}
-                  className="data-[state=checked]:bg-primary-color"
+                  className="data-[state=checked]:bg-primary-color cursor-pointer"
                 />
               </div>
             )}

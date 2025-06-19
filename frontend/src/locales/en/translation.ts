@@ -6,7 +6,7 @@ export const en = {
       features: 'Features',
       login: 'Login',
       register: 'Register',
-      myspace: 'My Space',
+      dashboard: 'Dashboard',
     },
     hero: {
       title: 'Master your finances, simply.',
@@ -71,7 +71,9 @@ export const en = {
     },
   },
   currencySelector: {
-    error: 'Error while loading currencies',
+    errorTitle: 'Oops',
+    error:
+      'Unable to fetch current exchange rates. Currency conversions are not available at the moment.',
   },
   dashboard: {
     header: {
@@ -153,6 +155,7 @@ export const en = {
       created: 'Your expense "{{title}}" has been created',
       updated: 'Your expense has been updated',
       deleted: 'Your expense has been deleted',
+      noBudget: 'This budget does not exist',
       createError: 'An error occurred while creating your expense',
       updateError: 'An error occurred while updating your expense',
       deleteError: 'An error occurred while deleting your expense',
@@ -235,13 +238,15 @@ export const en = {
       created: 'Your budget {{title}} has been created',
       updated: 'Your budget {{title}} has been updated',
       deleted: 'Your budget has been deleted',
-      createError: 'An error occurred or another budget already belongs to this category',
-      updateError:
-        'An error occurred while updating or another budget already belongs to this category',
-      deleteError: 'An error occurred while deleting your budget or it no longer exists',
+      noCategory: 'This category does not exist',
+      categoryAlreadyUsed: 'This category is already used by another budget',
+      tooManyAttempts: 'Too many attempts, please try again later',
+      createError: 'An error has occurred while creating your budget',
+      updateError: 'An error has occurred while updating your budget',
+      deleteError: 'An error has occurred while deleting your budget',
     },
   },
-  category: {
+  categories: {
     header: {
       title: 'Categories',
       subtitle: 'Manage my categories',
@@ -288,9 +293,10 @@ export const en = {
       created: 'Your category {{title}} has been created',
       updated: 'Your category {{title}} has been updated',
       deleted: 'Your category has been deleted',
-      createError: 'An error occurred or this category already exists',
-      updateError: 'An error occurred while updating or another category has the same name',
-      deleteError: 'An error occurred while deleting your category or it no longer exists',
+      categoryAlreadyExist: 'This category already exists',
+      createError: 'An error has occurred while creating your category',
+      updateError: 'An error has occurred while updating your category',
+      deleteError: 'An error has occurred while deleting your category',
     },
   },
   login: {
@@ -381,9 +387,35 @@ export const en = {
     },
     toast: {
       updated: 'Your profile has been updated',
-      updateError: 'An error occurred while updating your profile',
+      updateProfileError: 'An error has occurred while updating your profile',
+      updatePasswordError: 'An error occurred while updating your password',
       passwordUpdated: 'Your password has been updated',
-      passwordUpdateError: 'An error occurred while updating your password',
+      wrongPassword: 'The current password is incorrect',
+      emailAlreadyUsed: 'This email is already used by another account',
     },
+  },
+  color: {
+    red: 'Red',
+    green: 'Green',
+    blue: 'Blue',
+    yellow: 'Yellow',
+    violet: 'Violet',
+    orange: 'Orange',
+    pink: 'Pink',
+    teal: 'Teal',
+    indigo: 'Indigo',
+    gray: 'Gray',
+  },
+  category: {
+    bills: 'Bills',
+    transport: 'Transport',
+    entertainment: 'Entertainment',
+    health: 'Health',
+    shopping: 'Shopping',
+    food: 'Food',
+    defaultTitle: 'Untitled Category',
+  },
+  toast: {
+    tooManyAttempts: 'Too many attempts, please try again later',
   },
 };

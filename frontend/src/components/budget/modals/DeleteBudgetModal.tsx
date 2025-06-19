@@ -38,7 +38,7 @@ export const DeleteBudgetModal = ({ open, setOpen, budget }: DeleteBudgetProps) 
           </AlertDialogTitle>
           <AlertDialogDescription>
             {t('budget.delete.description', {
-              title: budget?.category.title || 'Budget',
+              title: t(budget?.category.title ?? 'category.defaultTitle'),
               amount: formatAmount(Number(budget?.amount)) || 0,
             })}
           </AlertDialogDescription>
