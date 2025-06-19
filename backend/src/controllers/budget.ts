@@ -13,6 +13,7 @@ import {
   response201,
   response204,
   response404,
+  response409,
   response422,
 } from '../utils/openapi';
 import { paramsWithId, zodValidatorMessage } from '../validators/utils';
@@ -131,6 +132,11 @@ budgetRouter
         422: response422(
           z.literal('The limit cannot be higher than the amount.')
         ),
+        409: response409(
+          z.literal(
+            'A budget already exists for this category in the current month.'
+          )
+        ),
       },
     }),
     zValidator('json', createBudgetSchema),
@@ -159,6 +165,27 @@ budgetRouter
           res: c.json(
             { message: 'The limit cannot be higher than the amount.' },
             422
+          ),
+        });
+      }
+
+      const existingBudget = await prisma.budget.findFirst({
+        where: {
+          userId: userId,
+          categoryId: budget.categoryId,
+          month: now.getMonth() + 1,
+          year: now.getFullYear(),
+        },
+      });
+
+      if (existingBudget) {
+        throw new HTTPException(409, {
+          res: c.json(
+            {
+              message:
+                'A budget already exists for this category in the current month.',
+            },
+            409
           ),
         });
       }
@@ -198,6 +225,11 @@ budgetRouter
         422: response422(
           z.literal('The limit cannot be higher than the amount.')
         ),
+        409: response409(
+          z.literal(
+            'A budget already exists for this category in the current month.'
+          )
+        ),
       },
     }),
     zValidator('param', paramsWithId),
@@ -232,6 +264,30 @@ budgetRouter
         if (!categoryExists) {
           throw new HTTPException(404, {
             res: c.json({ message: 'Category not found.' }, 404),
+          });
+        }
+
+        const existingBudget = await prisma.budget.findFirst({
+          where: {
+            userId: userId,
+            categoryId: budgetData.categoryId,
+            month: now.getMonth() + 1,
+            year: now.getFullYear(),
+            NOT: {
+              id: budgetId,
+            },
+          },
+        });
+
+        if (existingBudget) {
+          throw new HTTPException(409, {
+            res: c.json(
+              {
+                message:
+                  'A budget already exists for this category in the current month.',
+              },
+              409
+            ),
           });
         }
       }
