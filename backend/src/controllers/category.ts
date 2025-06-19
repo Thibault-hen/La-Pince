@@ -92,7 +92,7 @@ categoryRouter.basePath('/category')
     const userId = c.get('jwtPayload').userId;
     const { title, colorId } = c.req.valid('json');
 
-    await verifyDuplicateCategory(userId, title, false);
+    await verifyDuplicateCategory(userId, title, false,undefined, c);
     
     const category = await prisma.category.create({
       data: {
@@ -120,11 +120,11 @@ categoryRouter.basePath('/category')
   async (c) => {
     const userId = c.get('jwtPayload').userId;
     const categoryId = c.req.param('id');
-    await verifyCategoryExist(categoryId, userId);
+    await verifyCategoryExist(categoryId, userId, c);
 
     const { title, colorId } = c.req.valid('json');
 
-    await verifyDuplicateCategory(userId, title, true, categoryId);
+    await verifyDuplicateCategory(userId, title, true, categoryId, c);
 
     const updateCategory = await prisma.category.update({
       data: {
@@ -153,7 +153,7 @@ categoryRouter.basePath('/category')
   async (c) => {
     const userId = c.get('jwtPayload').userId;
     const categoryId = c.req.param('id');
-    await verifyCategoryExist(categoryId, userId);
+    await verifyCategoryExist(categoryId, userId, c);
 
     await prisma.category.delete({
       where: {
@@ -171,6 +171,7 @@ async function verifyDuplicateCategory(
   title: string,
   isUpdate: boolean,
   categoryId?: string,
+  c?: any
 ) {
   const duplicateCategory = await prisma.category.findFirst({
     where: {
@@ -180,13 +181,13 @@ async function verifyDuplicateCategory(
     },
   });
   if (duplicateCategory) {
-    throw new HTTPException(400, {
-      message: 'Category with the same title already exists.',
+    throw new HTTPException(409, {
+      res: c.json({ message: 'Category with the same title already exists' }, 404),
     });
   }
 }
 
-async function verifyCategoryExist(categoryId: string, userId: string) {
+async function verifyCategoryExist(categoryId: string, userId: string, c?: any) {
   const categoryExist = await prisma.category.findUnique({
       where: {
         id: categoryId,
@@ -194,8 +195,8 @@ async function verifyCategoryExist(categoryId: string, userId: string) {
       },
     });
   if (!categoryExist) {
-      throw new HTTPException(404, {
-      message: 'Category not found.',
+    throw new HTTPException(404, {
+      res: c.json({ message: 'Category not found' }, 404),
     });
   } 
 }

@@ -65,7 +65,7 @@ notificationRouter
       });
       if (!notificationExist) {
         throw new HTTPException(404, {
-          message: "Notification not found.",
+          res: c.json({ message: 'Notification not found' }, 404),
         });
       }
 

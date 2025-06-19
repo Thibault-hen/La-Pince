@@ -53,9 +53,6 @@ authRouter
       });
 
       if (userExists) {
-        // throw new HTTPException(400, {
-        //   message: 'User already exists.',
-        // });
         throw new HTTPException(400, {
           res: c.json({ message: 'User already exists.' }, 400),
         });
@@ -72,7 +69,7 @@ authRouter
       });
 
       const { password: _, ...safeUser } = newUser;
-      await createListCategories(safeUser.id);
+      await createListCategories(safeUser.id, c);
 
       return c.json(
         { message: 'User registered successfully', user: safeUser },
@@ -101,7 +98,7 @@ authRouter
 
       if (!user || !(await argon2.verify(user.password, password))) {
         throw new HTTPException(401, {
-          message: 'Invalid email or password.',
+          res: c.json({ message: 'Invalid email or password' }, 401),
         });
       }
 
@@ -203,7 +200,7 @@ authRouter
       if(!tokenExist || tokenExist.expiredAt < new Date()){
         console.log(tokenExist);
         throw new HTTPException(401, {
-          message: "Token invalid.",
+          res: c.json({ message: 'Token invalid' }, 401),
         });
       }
 
@@ -230,7 +227,7 @@ authRouter
     const token = await getSignedCookie(c, SECRET_JWT, TOKEN_JWT_NAME);
     if (!token) {
       throw new HTTPException(401, {
-        message: 'You are not logged in.',
+        res: c.json({ message: 'You are not logged in' }, 401),
       });
     }
 
@@ -239,7 +236,7 @@ authRouter
     return c.json({ message: 'Logged out' }, 200);
   });
 
-async function createListCategories(userId: string) {
+async function createListCategories(userId: string, c?: any) {
   const categories = [
     { name: 'category.food', color: 'color.yellow' },
     { name: 'category.houseRent', color: 'color.white' },
@@ -264,7 +261,7 @@ async function createListCategories(userId: string) {
 
     if (!findColor) {
       throw new HTTPException(404, {
-        message: 'Cannot found color.',
+        res: c.json({ message: 'Color not found' }, 404),
       });
     }
     const colorId = findColor.id;
