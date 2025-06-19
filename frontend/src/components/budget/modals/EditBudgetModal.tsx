@@ -72,7 +72,9 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
         >
           <DialogHeader className="mb-4">
             <DialogTitle className="font-medium text-xl">
-              {t('budget.edit.title', { title: budget?.category?.title || 'Budget' })}
+              {t('budget.edit.title', {
+                title: t(budget?.category?.title) || t('budget.edit.defaultTitle'),
+              })}
             </DialogTitle>
             <DialogDescription>{t('budget.edit.description')}</DialogDescription>
           </DialogHeader>
@@ -105,7 +107,14 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
               name="limitAlert"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>{t('budget.edit.form.limitAlert')}</Label>
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor={field.name}>{t('budget.edit.form.limitAlert')}</Label>
+                    <div className="text-xs flex gap-1 items-center">
+                      <span className="text-muted-foreground uppercase tracking-wider">Max</span>
+                      <span className="font-mono">({budget.amount})</span>
+                    </div>
+                  </div>
+
                   <Input
                     id={field.name}
                     placeholder={t('budget.edit.form.limitAlertPlaceholder')}
@@ -148,7 +157,11 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
                         <SelectGroup>
                           <SelectLabel>{t('budget.edit.form.categoryLabel')}</SelectLabel>
                           {categories?.map((category) => (
-                            <SelectItem key={category.id} value={category.id}>
+                            <SelectItem
+                              key={category.id}
+                              value={category.id}
+                              className="cursor-pointer"
+                            >
                               <span>
                                 {t(category.title, {
                                   defaultValue: category.title,

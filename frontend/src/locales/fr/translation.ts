@@ -78,6 +78,12 @@ export const fr = {
     error:
       'Impossible de récupérer les taux de change actuels. Les conversions de devises ne sont pas disponibles pour le moment.',
   },
+  currency: {
+    toast: {
+      updated: 'Votre devise a été mise à jour avec {{currency}}',
+      error: 'Une erreur est survenue lors de la mise à jour de ta devise',
+    },
+  },
   dashboard: {
     header: {
       title: 'Tableau de bord',
@@ -238,6 +244,7 @@ export const fr = {
       deleted: 'Ton budget a été supprimé',
       noCategory: 'Cette catégorie n’existe pas',
       categoryAlreadyUsed: 'Cette catégorie est déjà utilisée par un autre budget',
+      limitTooHigh: 'Le montant de l’alerte limite ne peut pas être supérieur au montant du budget',
       tooManyAttempts: 'Trop de tentatives. Veuillez réessayer plus tard',
       createError: 'Une erreur est survenue lors de la création de ton budget',
       updateError: 'Une erreur est survenue lors de la mise à jour de ton budget',
