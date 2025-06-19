@@ -95,11 +95,11 @@ accountRouter
         200: response200(updateUserPasswordSchema),
         400: response400(
           z.union([
-            z.literal('Current and new password are required'),
-            z.literal('Current password is incorrect'),
+            z.literal('Current and new password are required.'),
+            z.literal('Current password is incorrect.'),
           ])
         ),
-        404: response404(z.literal('User not found')),
+        404: response404(z.literal('User not found.')),
       },
     }),
     zValidator('json', updateUserPasswordSchema),
@@ -109,7 +109,7 @@ accountRouter
 
       if (!data.currentPassword || !data.newPassword) {
         throw new HTTPException(400, {
-          message: 'Current and new password are required',
+          message: 'Current and new password are required.',
         });
       }
 
@@ -118,7 +118,7 @@ accountRouter
       });
 
       if (!user) {
-        throw new HTTPException(404, { message: 'User not found' });
+        throw new HTTPException(404, { message: 'User not found.' });
       }
 
       const isPasswordValid = await argon2.verify(
@@ -127,7 +127,7 @@ accountRouter
       );
       if (!isPasswordValid) {
         throw new HTTPException(400, {
-          message: 'Current password is incorrect',
+          message: 'Current password is incorrect.',
         });
       }
 
@@ -155,7 +155,7 @@ accountRouter
       tags: ['account'],
       responses: {
         200: response200(updateUserCurrencySchema),
-        404: response404(z.literal('User not found')),
+        404: response404(z.literal('User not found.')),
       },
     }),
     zValidator('json', updateUserCurrencySchema),
@@ -168,7 +168,9 @@ accountRouter
       });
 
       if (!user) {
-        throw new HTTPException(404, { message: 'User not found' });
+        throw new HTTPException(422, {
+          res: c.json({ message: 'User not found.' }, 422),
+        });
       }
 
       const updatedCurrency = await prisma.user.update({
