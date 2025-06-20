@@ -13,8 +13,10 @@ export const incomeSelectSchema = z.object({
 export const incomeCreateOrUpdateSchema = incomeSelectSchema.omit({
   id: true,
   userId: true,
+  month: true,
+  year: true,
   createdAt: true,
   updatedAt: true,
-})
+});
 
 export type IncomeCreateOrUpdate = z.infer<typeof incomeCreateOrUpdateSchema>;
