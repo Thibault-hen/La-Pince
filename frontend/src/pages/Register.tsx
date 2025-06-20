@@ -2,8 +2,7 @@ import { RegisterForm } from '@/components/auth/RegisterForm';
 import { ModeToggle } from '@/components/theme/theme-toggle';
 import { House } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
-import preview1 from '@/assets/preview1.png';
-import preview2 from '@/assets/preview2.png';
+import preview from '@/assets/home-page/hero_img1.png';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 import { LanguageSelector } from '@/components/lang/LanguageSelector';
 
@@ -30,20 +29,9 @@ export const Register = () => {
             </div>
           </div>
         </div>
-        <div className="bg-primary border-l border-l-secondary-color hidden xl:block min-h-screen">
-          <div className="relative w-full h-full">
-            <img
-              src={preview1}
-              width={400}
-              className="absolute top-[40%] left-[40%] -translate-x-1/2 -translate-y-1/2"
-              alt="Apperçu Application"
-            />
-            <img
-              src={preview2}
-              width={400}
-              className="absolute top-[50%] left-[65%] -translate-x-1/2 -translate-y-1/2"
-              alt="Apperçu Application"
-            />
+        <div className="border-l border-l-secondary-color hidden xl:block min-h-screen">
+          <div className="relative w-full h-full grid place-items-center">
+            <img src={preview} width={480} alt="Application La Pince" />
           </div>
         </div>
       </div>

@@ -25,16 +25,9 @@ export default function Hero05() {
           </div>
 
           {/* Right Image */}
-          <div className="rounded-xl h-full md:bg-muted/70 md:p-3.5 md:ring-1 md:ring-inset md:ring-border">
-            <div className="relative h-full overflow-hidden rounded-xl border md:rounded-lg">
-              <img
-                alt="preview landing"
-                src={heroImage}
-                style={{
-                  height: '100%',
-                  width: '100%',
-                }}
-              />
+          <div className="h-full md:p-3.5">
+            <div className="relative h-full overflow-hidden grid place-items-center">
+              <img alt="Application La Pince" src={heroImage} />
             </div>
           </div>
         </div>
