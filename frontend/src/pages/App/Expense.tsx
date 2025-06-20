@@ -10,6 +10,8 @@ import { ExpenseDeleteModal } from '@/components/expense/modals/ExpenseDeleteMod
 import { useTranslation } from 'react-i18next';
 import { HandCoins } from 'lucide-react';
 import { useCurrency } from '@/hooks/use-currency';
+import { DefaultWrapper } from '@/layouts/DefaultWrapper';
+import { ExpenseSkeleton } from '@/components/expense/ExpenseSkeleton';
 
 export function Expense() {
   const [isModalOpen, setIsModalOpen] = useState(false);

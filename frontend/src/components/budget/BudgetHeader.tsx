@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 export const BudgetHeader = ({ onOpenAddModal }: { onOpenAddModal: () => void }) => {
   const { t } = useTranslation();
   return (
-    <div className="flex items-center justify-between mb-6">
+    <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
         <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
           <PiggyBank className="h-5 w-5 text-primary-color" />

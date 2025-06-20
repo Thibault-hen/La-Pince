@@ -2,13 +2,28 @@ import { ArrowUpRight, TrendingDown, Calendar } from 'lucide-react';
 import { Button } from '../ui/button';
 import type { Expense } from '@/types/dashboard';
 import { useNavigate } from 'react-router-dom';
+import { useCurrency } from '@/hooks/use-currency';
+import { useTranslation } from 'react-i18next';
 
 interface LastExpensesProps {
-  lastExpensesData: Expense[]
+  lastExpensesData: Expense[];
 }
 
-export const LastExpenses = ({lastExpensesData} : LastExpensesProps) => {
+export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
   const navigate = useNavigate();
+  const { formatAmount } = useCurrency();
+  const { i18n, t } = useTranslation();
+
+  const getLocale = (): string => {
+    switch (i18n.language) {
+      case 'fr':
+        return 'fr-FR';
+      case 'en':
+        return 'en-US';
+      default:
+        return navigator.language || 'fr-FR';
+    }
+  };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -17,11 +32,11 @@ export const LastExpenses = ({lastExpensesData} : LastExpensesProps) => {
     yesterday.setDate(yesterday.getDate() - 1);
 
     if (date.toDateString() === today.toDateString()) {
-      return "Aujourd'hui";
+      return t('dashboard.last10Expenses.today');
     } else if (date.toDateString() === yesterday.toDateString()) {
-      return 'Hier';
+      return t('dashboard.last10Expenses.yesterday');
     } else {
-      return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+      return date.toLocaleDateString(getLocale(), { day: 'numeric', month: 'short' });
     }
   };
 
@@ -37,18 +52,24 @@ export const LastExpenses = ({lastExpensesData} : LastExpensesProps) => {
                 <TrendingDown className="h-5 w-5 text-secondary-color" />
               </div>
               <div>
-                <h2 className="text-lg lg:text-lg font-bold text-white mb-1">Dernières Dépenses</h2>
-                <p className="text-white/70 text-sm font-medium">Vos 10 dernières transactions</p>
+                <h2 className="text-lg lg:text-lg font-bold mb-1 text-black dark:text-white">
+                  {t('dashboard.last10Expenses.title')}
+                </h2>
+                <p className="text-sm font-medium text-black dark:text-white">
+                  {t('dashboard.last10Expenses.subTitle')}
+                </p>
               </div>
             </div>
             <div className="text-right">
               <div className="flex items-center gap-2 mb-1">
                 <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse" />
-                <p className="text-lg md:text-xl font-bold text-white">
-                  -{totalAmount.toFixed(2)} €
+                <p className="text-lg md:text-xl font-bold text-black dark:text-white">
+                  -{formatAmount(totalAmount)}
                 </p>
               </div>
-              <p className="text-white/70 text-sm">Total des dépenses</p>
+              <p className="text-black dark:text-white text-sm">
+                {t('dashboard.last10Expenses.totalExpense')}
+              </p>
             </div>
           </div>
         </div>
@@ -75,7 +96,7 @@ export const LastExpenses = ({lastExpensesData} : LastExpensesProps) => {
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold truncate text-base">{expense.description}</h3>
                       <span className="text-sm font-bold text-red-500 ml-4">
-                        -{expense.amount.toFixed(2)} €
+                        -{formatAmount(expense.amount)}
                       </span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-gray-500">
@@ -91,8 +112,12 @@ export const LastExpenses = ({lastExpensesData} : LastExpensesProps) => {
             );
           })}
           <div className="p-6">
-            <Button className="w-full" variant="blue" onClick={() => navigate('/tableau-de-bord/depenses')}>
-              Voir toutes les transactions
+            <Button
+              className="w-full"
+              variant="blue"
+              onClick={() => navigate('/tableau-de-bord/depenses')}
+            >
+              {t('dashboard.last10Expenses.seeMore')}
             </Button>
           </div>
         </div>

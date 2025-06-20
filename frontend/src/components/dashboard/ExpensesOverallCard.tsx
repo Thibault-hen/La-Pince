@@ -1,29 +1,37 @@
 import { ArrowUpIcon } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { useCurrency } from '@/hooks/use-currency';
 
 interface FinanceCardProps {
   title: string;
-  amount: string;
+  amount: number;
   variant?: 'positive' | 'negative';
 }
 
 export function FinanceCard({ title, amount, variant = 'positive' }: FinanceCardProps) {
+  const { formatAmount } = useCurrency();
+
   return (
-    <Card className="w-full flex bg-primary shadow-md hover:shadow-lg transition-all duration-300 max-h-[200px]">
-      <CardContent className="space-y-4">
-        {/* Icon at the top */}
-        <div className="flex justify-start">
-          <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
+    <Card className="w-full dark:bg-primary shadow-md hover:shadow-lg transition-all duration-300">
+      <CardContent className="">
+        <div className="flex justify-start mb-3 sm:mb-4">
+          <div className="sm:p-2.5 bg-primary-color/10 border border-primary-color/20 rounded-lg">
             <ArrowUpIcon
-              className={`h-5 w-5 text-primary-color ${variant === 'negative' ? 'rotate-180' : ''}`}
+              className={`h-4 w-4 sm:h-5 sm:w-5 text-primary-color transition-transform duration-200 ${
+                variant === 'negative' ? 'rotate-180' : ''
+              }`}
             />
           </div>
         </div>
 
         {/* Content */}
-        <div className="space-y-2">
-          <h3 className="text-sm font-medium text-muted-foreground tracking-wide">{title}</h3>
-          <p className="text-base lg:text-2xl font-bold text-foreground tracking-tight">{amount}€</p>
+        <div className="space-y-1 sm:space-y-2">
+          <h3 className="text-xs sm:text-sm font-medium text-muted-foreground tracking-wide">
+            {title}
+          </h3>
+          <p className="text-lg sm:text-xl md:text-xl lg:text-2xl font-bold text-foreground tracking-tight break-all">
+            {formatAmount(amount)}
+          </p>
         </div>
       </CardContent>
     </Card>

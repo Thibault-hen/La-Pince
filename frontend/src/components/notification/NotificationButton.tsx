@@ -22,7 +22,11 @@ export default function NotificationButton() {
   return (
     <Sheet>
       <SheetTrigger>
-        <Button variant="outline" size="icon">
+        <Button
+          variant="outline"
+          size="icon"
+          className="shadow-none dark:bg-primary cursor-pointer hover:bg-secondary-color dark:hover:bg-secondary-color border"
+        >
           {notifications.length > 0 ? (
             <BellRing className="size-4 text-secondary-color" />
           ) : (

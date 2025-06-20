@@ -81,11 +81,58 @@ export const en = {
       error: 'An error has occurred while updating your currency',
     },
   },
+  income: {
+    toast: {
+      updated: 'Your income has been updated to {{value}}',
+      error: 'An error has occurred while updating your income',
+    },
+    modal: {
+      errorValue: 'The amount must be greater than 0',
+    },
+  },
   dashboard: {
     header: {
       title: 'Dashboard',
       subtitle: 'Overview of my finances',
       addButton: 'Update my income',
+    },
+    edit: {
+      title: 'Edit your income',
+      description: 'Enter the new information for your income',
+      form: {
+        amount: 'Amount',
+        cancel: 'Cancel',
+        update: 'Update',
+      },
+    },
+    overallCard: {
+      totalSpent: 'Total expenses spent this month',
+      ok: 'Your expenses are under control',
+      careful: 'Careful on your spending',
+      warning: 'You have spent more than your income this month',
+      expensePercentage: 'You have spent {{percentage}} of your income this month',
+    },
+    chart: {
+      title: 'Total spending over the last 6 months',
+    },
+    overallCards: {
+      spentToday: 'Spent today',
+      spentLast7Days: 'Spent in the last 7 days',
+      spentLastMonth: 'Spent in the last month',
+      averageSpent: 'Average spent per month',
+    },
+    cards: {
+      totalIncome: 'Total Income',
+      remaining: 'Remaining this month',
+      totalBudgets: 'Total Budgets',
+    },
+    last10Expenses: {
+      title: 'Last expenses',
+      subTitle: 'Your last 10 expenses',
+      totalExpense: 'Total expenses',
+      today: 'Today',
+      isYesterday: 'Yesterday',
+      seeMore: 'See all my expenses',
     },
   },
   expenses: {

@@ -1,9 +1,9 @@
-import type { Dashboard } from "@/types/dashboard";
-import { api } from "@/utils/api"
+import type { DashboardData } from '@/types/dashboard';
+import { api } from '@/utils/api';
 
 export const dashboardService = {
-  async getAll(): Promise<Dashboard> {
-    const response = await api.get<Dashboard>("/dashboard");
+  async getDashboard(): Promise<DashboardData> {
+    const response = await api.get<DashboardData>('/dashboard');
     return response.data;
   },
-}
+};
