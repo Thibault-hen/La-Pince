@@ -10,7 +10,7 @@ interface ExpensesOverallChartProps {
 
 export const ExpensesOverallChart = ({ last6MonthsExpensesByMonth }: ExpensesOverallChartProps) => {
   const { t } = useTranslation();
-  
+
   const chartConfig = {
     amount: {
       label: 'Montant',
@@ -22,7 +22,13 @@ export const ExpensesOverallChart = ({ last6MonthsExpensesByMonth }: ExpensesOve
 
   const CustomBarLabel = ({ x, y, width, value }: any) => {
     return (
-      <text x={x + width / 2} y={y - 8} fill="var(--foreground)" fontSize={8} textAnchor="middle">
+      <text
+        x={x + width / 2}
+        y={y - 8}
+        fill="var(--foreground)"
+        fontSize={10.5}
+        textAnchor="middle"
+      >
         {formatAmount(value)}
       </text>
     );

@@ -59,6 +59,7 @@ export const useCreateBudget = () => {
     onSuccess: (data) => {
       toast.success(t('budget.toast.created', { title: t(data.category.title) }));
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] });
     },
     onError: (error) => {
       toast.error(getErrorMessage(error));
@@ -99,6 +100,7 @@ export const useUpdateBudget = () => {
     onSuccess: (data) => {
       toast.success(t('budget.toast.updated', { title: t(data.category.title) }));
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] });
     },
     onError: (error) => {
       toast.error(getErrorMessage(error));
@@ -114,6 +116,7 @@ export const useDeleteBudget = () => {
     onSuccess: (_data) => {
       toast.success(t('budget.toast.deleted'));
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] });
     },
     onError: (_data) => {
       toast.error(t('budget.toast.deleteError'));
