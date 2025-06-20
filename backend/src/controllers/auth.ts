@@ -29,6 +29,7 @@ import {
 } from '../lib/tokens';
 import { getEnv } from '../utils/env';
 import { Resend } from 'resend';
+import { IncomeCreateOrUpdate } from '../validators/income';
 
 const authRouter = new Hono();
 
@@ -71,6 +72,7 @@ authRouter
 
       const { password: _, ...safeUser } = newUser;
       await createListCategories(safeUser.id, c);
+      await createIncome(safeUser.id, c);
 
       return c.json(
         { message: 'User registered successfully', user: safeUser },
@@ -279,6 +281,19 @@ async function createListCategories(userId: string, c?: any) {
   });
 }
 
-export { createListCategories };
+async function createIncome(userId: string, c?: any) {
+  const now = new Date();
+
+  await prisma.income.create({
+    data: {
+      userId,
+      value: 0,
+      month: now.getMonth() + 1,
+      year: now.getFullYear(),
+    },
+  });
+}
+
+export { createListCategories, createIncome };
 
 export default authRouter;
