@@ -15,18 +15,18 @@ export const BudgetSkeleton = () => {
         </div>
         <Skeleton className="h-8 w-[100px] rounded-md" />
       </div>
-      <div className="flex flex-col gap-4 h-[50vh] sm:flex-row">
-        <Skeleton className="w-3/5 rounded-md sm:w-full" />
-        <div className="grid grid-cols-1 w-2/5 gap-4">
+      <div className="flex flex-col gap-6 h-[50vh] lg:flex-row">
+        <Skeleton className="w-full h-full rounded-lg lg:w-3/5" />
+        <div className="w-full h-full grid grid-cols-1 gap-6 lg:w-2/5">
           {Array.from({ length: 3 }).map((_, index) => (
-            <Skeleton key={index} className="h-full w-full rounded-md" />
+            <Skeleton key={index} className="w-full h-full rounded-lg" />
           ))}
         </div>
       </div>
       <Skeleton className="h-5 w-[130px]" />
-      <div className="flex items-center gap-4 sm:flex-col">
+      <div className="flex flex-col items-center gap-4 lg:flex-row">
         {Array.from({ length: 3 }).map((_, index) => (
-          <Skeleton key={index} className="h-[100px] w-1/4 rounded-md sm:w-full" />
+          <Skeleton key={index} className="h-[100px] w-full rounded-md lg:w-1/4" />
         ))}
       </div>
     </div>
