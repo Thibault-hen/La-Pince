@@ -10,6 +10,10 @@ export const ColorPercentage = {
 };
 
 export const getColorStatus = (value: number, max: number): string => {
+  if (value === 0) return ColorStatus.ok;
+
+  if (max <= 0) return ColorStatus.ok;
+
   let percentage = (value / max) * 100;
 
   if (percentage < 60) return ColorStatus.ok;

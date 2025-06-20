@@ -85,11 +85,58 @@ export const fr = {
       error: 'Une erreur est survenue lors de la mise à jour de ta devise',
     },
   },
+  income: {
+    toast: {
+      updated: 'Votre revenu a été mis à jour avec {{value}}',
+      error: 'Une erreur est survenue lors de la mise à jour de votre revenu',
+    },
+    modal: {
+      errorValue: 'Le montant de votre revenu doit être supérieur à 0',
+    },
+  },
   dashboard: {
     header: {
       title: 'Tableau de bord',
       subtitle: "Vue d'ensemble de mes finances",
-      addButton: 'Update my income',
+      addButton: 'Mettre à jour mon revenu',
+    },
+    edit: {
+      title: 'Modifie ton revenu',
+      description: 'Entre le nouveau montant de ton revenu',
+      form: {
+        amount: 'Montant',
+        cancel: 'Annuler',
+        update: 'Modifier',
+      },
+    },
+    overallCard: {
+      totalSpent: 'Dépenses totales ce mois-ci',
+      ok: 'Vos dépenses sont sous contrôle',
+      careful: 'Attention à vos dépenses',
+      warning: 'Vous avez dépensé plus que vos revenus ce mois-ci',
+      expensePercentage: 'Vous avez dépensé {{percentage}} de vos revenus ce mois-ci',
+    },
+    chart: {
+      title: 'Dépenses totales au cours des 6 derniers mois',
+    },
+    overallCards: {
+      spentToday: 'Dépensé aujourd’hui',
+      spentLast7Days: 'Dépensé au cours des 7 derniers jours',
+      spentLastMonth: 'Dépensé le mois dernier',
+      averageSpent: 'Dépense moyenne par mois',
+    },
+    cards: {
+      totalIncome: 'Revenu total',
+      remaining: 'Reste ce mois-ci',
+      totalBudgets: 'Budgets totaux',
+    },
+    last10Expenses: {
+      title: 'Dernières dépenses',
+      subTitle: 'Vos 10 dernières dépenses',
+      totalExpense: 'Dépenses totales',
+      today: 'Aujourd’hui',
+      isYesterday: 'Hier',
+      seeMore: 'Voir toutes mes dépenses',
     },
   },
   expenses: {

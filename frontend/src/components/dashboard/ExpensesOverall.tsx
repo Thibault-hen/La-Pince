@@ -5,8 +5,12 @@ import { ExpensesOverallChart } from './ExpensesOverallChart';
 import { Progress } from '../ui/progress';
 import { getPercentage, getPercentageRaw } from '@/utils/percentage';
 import { AlertCircle, CheckCircle, TrendingDown } from 'lucide-react';
+import { useCurrency } from '@/hooks/use-currency';
+import { useTranslation } from 'react-i18next';
+import type { Income } from '@/types/income';
 
 interface ExpensesOverallProps {
+  currentMonthRevenue?: Income;
   currentMonthExpenses: number;
   todayExpenses: number;
   currentWeekExpenses: number;
@@ -16,30 +20,29 @@ interface ExpensesOverallProps {
 }
 
 export const ExpensesOverall = ({
+  currentMonthRevenue,
   currentMonthExpenses,
-  todayExpenses, 
-  currentWeekExpenses, 
-  previousMonthExpenses, 
+  todayExpenses,
+  currentWeekExpenses,
+  previousMonthExpenses,
   averageMonthlyExpenses,
-  last6MonthsExpensesByMonth
+  last6MonthsExpensesByMonth,
 }: ExpensesOverallProps) => {
-  const spent = 200;
-  const budget = 300;
-  const percentage = getPercentage(spent, budget);
-
+  const percentage = getPercentage(currentMonthExpenses, currentMonthRevenue?.value ?? 0);
+  const { formatAmount } = useCurrency();
+  const { t } = useTranslation();
   return (
     <div className="w-full space-y-6">
-      {/* First row - Enhanced Card and Chart side by side */}
       <div className="flex flex-col lg:flex-row gap-6">
-        <Card className="flex-1 dark:bg-primary border-none shadow-lg hover:shadow-xl transition-all duration-300 group">
+        <Card className="flex-1 dark:bg-primary border">
           <CardHeader className="pb-4 px-8 pt-6">
             <div className="flex items-center justify-between">
               <div className="space-y-2">
                 <CardTitle className="text-lg font-semibold text-muted-foreground tracking-wide">
-                  Total dépenses ce mois
+                  {t('dashboard.overallCard.totalSpent')}
                 </CardTitle>
                 <CardDescription className="text-4xl font-bold text-foreground tracking-tight">
-                  {currentMonthExpenses}€
+                  {formatAmount(currentMonthExpenses)}
                 </CardDescription>
               </div>
               <div className="p-3 bg-secondary-color/10 border border-secondary-color/20 rounded-full">
@@ -51,36 +54,65 @@ export const ExpensesOverall = ({
           <CardContent className="px-8 pb-8 space-y-4">
             {/* Status indicator */}
             <div className="flex items-center gap-2 text-sm">
-              {getPercentageRaw(200, 300) > ColorPercentage.warning ? (
-                <AlertCircle className="h-4 w-4" style={{ color: getColorStatus(200, 300) }} />
-              ) : getPercentageRaw(200, 300) > ColorPercentage.ok ? (
-                <AlertCircle className="h-4 w-4" style={{ color: getColorStatus(200, 300) }} />
+              {getPercentageRaw(currentMonthExpenses, currentMonthRevenue?.value ?? 0) >
+              ColorPercentage.warning ? (
+                <AlertCircle
+                  className="h-4 w-4"
+                  style={{
+                    color: getColorStatus(currentMonthExpenses, currentMonthRevenue?.value ?? 0),
+                  }}
+                />
+              ) : getPercentageRaw(currentMonthExpenses, currentMonthRevenue?.value ?? 0) >
+                ColorPercentage.ok ? (
+                <AlertCircle
+                  className="h-4 w-4"
+                  style={{
+                    color: getColorStatus(currentMonthExpenses, currentMonthRevenue?.value ?? 0),
+                  }}
+                />
               ) : (
-                <CheckCircle className="h-4 w-4" style={{ color: getColorStatus(200, 300) }} />
+                <CheckCircle
+                  className="h-4 w-4"
+                  style={{
+                    color: getColorStatus(currentMonthExpenses, currentMonthRevenue?.value ?? 0),
+                  }}
+                />
               )}
-              <span className="font-medium" style={{ color: getColorStatus(200, 300) }}>
-                {getPercentageRaw(200, 300) >= 100
-                  ? 'Budget atteint'
-                  : getPercentageRaw(200, 300) > ColorPercentage.ok
-                    ? 'Attention à votre budget'
-                    : 'Dans le budget'}
+              <span
+                className="font-medium"
+                style={{
+                  color: getColorStatus(currentMonthExpenses, currentMonthRevenue?.value ?? 0),
+                }}
+              >
+                {getPercentageRaw(currentMonthExpenses, currentMonthRevenue?.value ?? 0) >= 100
+                  ? t('dashboard.overallCard.warning')
+                  : getPercentageRaw(currentMonthExpenses, currentMonthRevenue?.value ?? 0) >
+                      ColorPercentage.ok
+                    ? t('dashboard.overallCard.careful')
+                    : t('dashboard.overallCard.ok')}
               </span>
             </div>
 
             {/* Progress section */}
             <div className="space-y-3">
               <span className="text-muted-foreground">
-                Vous avez dépensé <span className="font-semibold">{percentage}%</span> de votre
-                budget
+                {t('dashboard.overallCard.expensePercentage', { percentage: percentage })}
               </span>
 
               <Progress
-                value={200}
-                max={300}
+                value={
+                  currentMonthExpenses > (currentMonthRevenue?.value ?? 0)
+                    ? (currentMonthRevenue?.value ?? 0)
+                    : currentMonthExpenses
+                }
+                max={currentMonthRevenue?.value ?? 1}
                 className="w-full border [&>*]:bg-[var(--bg-color)] h-3 mt-2"
                 style={
                   {
-                    '--bg-color': getColorStatus(200, 300),
+                    '--bg-color': getColorStatus(
+                      currentMonthExpenses,
+                      currentMonthRevenue?.value ?? 0
+                    ),
                   } as React.CSSProperties
                 }
               />
@@ -94,11 +126,27 @@ export const ExpensesOverall = ({
       </div>
 
       {/* Second row - Enhanced FinanceCards grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <FinanceCard title="Dépensé aujourd'hui" amount={todayExpenses.toFixed(2)} variant="negative" />
-        <FinanceCard title="Dépensé cette semaine" amount={currentWeekExpenses.toFixed(2)} variant="negative" />
-        <FinanceCard title="Dépensé mois dernier" amount={previousMonthExpenses.toFixed(2)} variant="negative" />
-        <FinanceCard title="Moyenne par mois" amount={averageMonthlyExpenses.toFixed(2)} variant="positive" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 h-fit">
+        <FinanceCard
+          title={t('dashboard.overallCards.spentToday')}
+          amount={todayExpenses}
+          variant="negative"
+        />
+        <FinanceCard
+          title={t('dashboard.overallCards.spentLast7Days')}
+          amount={currentWeekExpenses}
+          variant="negative"
+        />
+        <FinanceCard
+          title={t('dashboard.overallCards.spentLastMonth')}
+          amount={previousMonthExpenses}
+          variant="negative"
+        />
+        <FinanceCard
+          title={t('dashboard.overallCards.averageSpent')}
+          amount={averageMonthlyExpenses}
+          variant="positive"
+        />
       </div>
     </div>
   );

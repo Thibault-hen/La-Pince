@@ -2,9 +2,8 @@ import { AppSidebar } from '@/components/app-sidebar';
 import { ProfileButton } from '@/components/profile/ProfileButton';
 import { ModeToggle } from '@/components/theme/theme-toggle';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { Outlet, useLocation } from 'react-router-dom';
-import { } from 'react';
-import { DefaultWrapper } from './DefaultWrapper';
+import { Outlet } from 'react-router-dom';
+import {} from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import type { User } from '@/services/auth';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +12,6 @@ import { CurrencyProvider } from '@/context/currency-context';
 import NotificationButton from '@/components/notification/NotificationButton';
 
 export const AppLayout = () => {
-  const location = useLocation();
   const queryClient = useQueryClient();
   const userData = queryClient.getQueryData<User>(['authUser']);
   const { t, i18n } = useTranslation();
@@ -52,11 +50,9 @@ export const AppLayout = () => {
               </div>
             </div>
           </header>
-          <DefaultWrapper key={location.pathname}>
-            <main className="3xl:py-4 3xl:px-26 space-y-6 p-6">
-              <Outlet />
-            </main>
-          </DefaultWrapper>
+          <main>
+            <Outlet />
+          </main>
         </SidebarInset>
       </SidebarProvider>
     </CurrencyProvider>

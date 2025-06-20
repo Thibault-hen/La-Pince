@@ -12,6 +12,7 @@ import { Terms } from './pages/Terms';
 import { ProtectedRoutes } from './components/auth/ProtectedRoutes';
 import { RootLayout } from './layouts/RootLayout';
 import { ResetPassword } from './pages/ResetPassword';
+import { NotFound } from './pages/NotFound';
 
 export const router = createBrowserRouter([
   {
@@ -70,5 +71,9 @@ export const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ]);

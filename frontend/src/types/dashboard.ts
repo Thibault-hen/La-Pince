@@ -1,3 +1,5 @@
+import type { Income } from './income';
+
 type Color = {
   name: string;
   value: string;
@@ -19,18 +21,18 @@ type Budget = {
 export type Expense = {
   description: string;
   amount: number;
-  date: string; 
+  date: string;
   budget: Budget;
 };
 
 export type DashboardData = {
   currentMonthExpenses: number;
-  last6MonthsExpensesByMonth: Record<string, number>;   
+  last6MonthsExpensesByMonth: Record<string, number>;
   todayExpenses: number;
   currentWeekExpenses: number;
   previousMonthExpenses: number;
   averageMonthlyExpenses: number;
-  currentMonthRevenue: number;
+  currentMonthRevenue: Income;
   currentMonthBudget: number;
   last10Expenses: Expense[];
 };

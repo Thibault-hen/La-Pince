@@ -1,16 +1,25 @@
+import { useCurrency } from '@/hooks/use-currency';
+import type { Income } from '@/types/income';
 import { Calculator, Euro, TrendingUp } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface DashboardCardsProps {
-  currentMonthRevenue: number;
+  currentMonthRevenue?: Income;
   currentMonthBudget: number;
   currentMonthExpenses: number;
 }
 
-export const DashboardCards = ({currentMonthRevenue, currentMonthBudget, currentMonthExpenses}: DashboardCardsProps) => {
+export const DashboardCards = ({
+  currentMonthRevenue,
+  currentMonthBudget,
+  currentMonthExpenses,
+}: DashboardCardsProps) => {
+  const { t } = useTranslation();
+  const { formatAmount } = useCurrency();
   return (
-    <div className="flex flex-col w-full xl:max-w-xl justify-between">
-      <div className="relative group">
-        <div className="relative bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
+    <div className="flex flex-col xl:flew-row 2xl:flex-col w-full 2xl:max-w-xl justify-between gap-4">
+      <div>
+        <div className=" bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
             <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
               <Euro className="h-5 w-5 text-primary-color" />
@@ -22,15 +31,15 @@ export const DashboardCards = ({currentMonthRevenue, currentMonthBudget, current
 
           <div className="space-y-1">
             <div className="text-xl md:text-3xl font-bold text-gray-900 dark:text-white">
-              {currentMonthRevenue.toFixed(2)}€
+              {formatAmount(currentMonthRevenue?.value ?? 0)}
             </div>
-            <p className="text-sm text-muted-foreground">Mon revenu ce mois ci</p>
+            <p className="text-sm text-muted-foreground">{t('dashboard.cards.totalIncome')}</p>
           </div>
         </div>
       </div>
 
-      <div className="relative group">
-        <div className="relative bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
+      <div>
+        <div className="bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
             <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
               <Calculator className="h-5 w-5 text-primary-color" />
@@ -41,14 +50,14 @@ export const DashboardCards = ({currentMonthRevenue, currentMonthBudget, current
           </div>
 
           <div className="space-y-1">
-            <div className="text-xl md:text-3xl font-bold">{currentMonthBudget.toFixed(2)}€</div>
-            <p className="text-sm text-muted-foreground">Budget total ce mois ci</p>
+            <div className="text-xl md:text-3xl font-bold"> {formatAmount(currentMonthBudget)}</div>
+            <p className="text-sm text-muted-foreground">{t('dashboard.cards.totalBudgets')}</p>
           </div>
         </div>
       </div>
 
-      <div className="relative group">
-        <div className="relative bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
+      <div>
+        <div className="bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
             <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
               <TrendingUp className="h-5 w-5 text-primary-color" />
@@ -59,8 +68,12 @@ export const DashboardCards = ({currentMonthRevenue, currentMonthBudget, current
           </div>
 
           <div className="space-y-1">
-            <div className="text-xl md:text-3xl font-bold">{(currentMonthRevenue - currentMonthExpenses).toFixed(2)}€</div>
-            <p className="text-sm text-muted-foreground">Restant ce mois ci</p>
+            <div className="text-xl md:text-3xl font-bold">
+              {(currentMonthRevenue?.value ?? 0 - currentMonthExpenses < 0)
+                ? formatAmount(0)
+                : formatAmount((currentMonthRevenue?.value ?? 0) - currentMonthExpenses)}
+            </div>
+            <p className="text-sm text-muted-foreground">{t('dashboard.cards.remaining')}</p>
           </div>
         </div>
       </div>
