@@ -35,8 +35,19 @@ export function Expense() {
   const locale = i18n.language === 'en' ? 'en-US' : 'fr-FR';
   const columns = createColumns(handleEdit, handleDelete, t, locale, formatAmount);
 
+  if (isLoading) {
+      return (
+        <DefaultWrapper>
+          <div className="3xl:py-4 3xl:px-26 space-y-6 p-6">
+            <ExpenseSkeleton />
+          </div>
+        </DefaultWrapper>
+      );
+    }
+  
   return (
-    <>
+    <DefaultWrapper>
+      <div className="3xl:py-4 3xl:px-26 space-y-6 p-6">
       {isModalOpen && (
         <ExpenseAddModal isModalOpen={isModalOpen} handleClose={() => setIsModalOpen(false)} />
       )}
@@ -75,6 +86,7 @@ export function Expense() {
           isLoading={isLoading}
         />
       </div>
-    </>
+      </div>
+    </DefaultWrapper>
   );
 }
