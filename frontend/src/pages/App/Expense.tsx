@@ -36,56 +36,56 @@ export function Expense() {
   const columns = createColumns(handleEdit, handleDelete, t, locale, formatAmount);
 
   if (isLoading) {
-      return (
-        <DefaultWrapper>
-          <div className="3xl:py-4 3xl:px-26 space-y-6 p-6">
-            <ExpenseSkeleton />
-          </div>
-        </DefaultWrapper>
-      );
-    }
-  
+    return (
+      <DefaultWrapper>
+        <div className="3xl:py-4 3xl:px-26 space-y-6 p-6">
+          <ExpenseSkeleton />
+        </div>
+      </DefaultWrapper>
+    );
+  }
+
   return (
-    <DefaultWrapper>
+    <DefaultWrapper key={String(isLoading)}>
       <div className="3xl:py-4 3xl:px-26 space-y-6 p-6">
-      {isModalOpen && (
-        <ExpenseAddModal isModalOpen={isModalOpen} handleClose={() => setIsModalOpen(false)} />
-      )}
-      <ExpenseEditModal
-        open={isEditModalOpen}
-        setOpen={setIsEditModalOpen}
-        expense={selectedExpense}
-      />
-      {isDeleteModalOpen && (
-        <ExpenseDeleteModal
-          open={isDeleteModalOpen}
-          setOpen={setIsDeleteModalOpen}
+        {isModalOpen && (
+          <ExpenseAddModal isModalOpen={isModalOpen} handleClose={() => setIsModalOpen(false)} />
+        )}
+        <ExpenseEditModal
+          open={isEditModalOpen}
+          setOpen={setIsEditModalOpen}
           expense={selectedExpense}
         />
-      )}
-      <div className="flex items-center gap-3">
-        <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
-          <HandCoins className="h-5 w-5 text-primary-color" />
+        {isDeleteModalOpen && (
+          <ExpenseDeleteModal
+            open={isDeleteModalOpen}
+            setOpen={setIsDeleteModalOpen}
+            expense={selectedExpense}
+          />
+        )}
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
+            <HandCoins className="h-5 w-5 text-primary-color" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">{t('expenses.header.title')}</h1>
+            <p className="text-sm text-muted-foreground">{t('expenses.header.subtitle')}</p>
+          </div>
         </div>
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">{t('expenses.header.title')}</h1>
-          <p className="text-sm text-muted-foreground">{t('expenses.header.subtitle')}</p>
-        </div>
-      </div>
 
-      <ChartBarInteractive />
-      <div className="flex flex-col gap-2 mt-6">
-        <DataTable
-          children={
-            <Button variant="blue" onClick={() => setIsModalOpen(true)}>
-              <span className="max-w-sm block text-sm m-2">{t('expenses.table.addButton')}</span>
-            </Button>
-          }
-          columns={columns}
-          data={expenses}
-          isLoading={isLoading}
-        />
-      </div>
+        <ChartBarInteractive />
+        <div className="flex flex-col gap-2 mt-6">
+          <DataTable
+            children={
+              <Button variant="blue" onClick={() => setIsModalOpen(true)}>
+                <span className="max-w-sm block text-sm m-2">{t('expenses.table.addButton')}</span>
+              </Button>
+            }
+            columns={columns}
+            data={expenses}
+            isLoading={isLoading}
+          />
+        </div>
       </div>
     </DefaultWrapper>
   );

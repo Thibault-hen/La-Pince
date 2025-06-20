@@ -54,27 +54,29 @@ export const BudgetPage = () => {
             remainingBudget={budgets?.budgetRemaining}
           />
         </div>
-        <section>
-          <h2 className="border-l-4 border-primary-color text-xl p-2 font-bold mb-4">
-            {t('budget.page.title')}
-          </h2>
-          <div className="grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
-            {budgets?.budgets?.map((budget) => (
-              <BudgetCard
-                key={budget.id}
-                budget={budget}
-                onOpenEditModal={() => {
-                  setOpenEditBudget(true);
-                  setSelectedBudget(budget);
-                }}
-                onOpenDeleteModal={() => {
-                  setOpenDeleteBudget(true);
-                  setSelectedBudget(budget);
-                }}
-              />
-            ))}
-          </div>
-        </section>
+        {budgets?.budgets?.length !== 0 ? (
+          <section>
+            <h2 className="border-l-4 border-primary-color text-xl p-2 font-bold mb-4">
+              {t('budget.page.title')}
+            </h2>
+            <div className="grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
+              {budgets?.budgets?.map((budget) => (
+                <BudgetCard
+                  key={budget.id}
+                  budget={budget}
+                  onOpenEditModal={() => {
+                    setOpenEditBudget(true);
+                    setSelectedBudget(budget);
+                  }}
+                  onOpenDeleteModal={() => {
+                    setOpenDeleteBudget(true);
+                    setSelectedBudget(budget);
+                  }}
+                />
+              ))}
+            </div>
+          </section>
+        ) : null}
       </div>
     </DefaultWrapper>
   );

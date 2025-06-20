@@ -43,106 +43,118 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
           </div>
           <CardTitle className="text-xl font-bold">{t('budget.chart.title')}</CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col xl:flex-row items-center justify-center gap-8 p-6">
-          {/* Chart Section */}
-          <div className="relative">
-            <ChartContainer
-              config={chartConfig}
-              className="mx-auto aspect-square max-h-[280px] min-h-[280px]"
-            >
-              <PieChart>
-                <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-                <Pie
-                  data={budgets?.budgets}
-                  dataKey="amount"
-                  nameKey="category.title"
-                  innerRadius={70}
-                  outerRadius={120}
-                  strokeWidth={3}
-                  stroke="rgba(255,255,255,0.1)"
-                >
-                  {budgets?.budgets.map((budget) => (
-                    <Cell key={`cell-${budget.id}`} fill={budget.category.color?.value} />
-                  ))}
-
-                  <Label
-                    content={({ viewBox }) => {
-                      if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
-                        return (
-                          <g>
-                            <text
-                              x={viewBox.cx}
-                              y={(viewBox.cy ?? 0) - 10}
-                              textAnchor="middle"
-                              dominantBaseline="middle"
-                              className="fill-gray-900 dark:fill-white text-lg font-bold"
-                            >
-                              {formatAmount(totalAmount ?? 0)}
-                            </text>
-                            <text
-                              x={viewBox.cx}
-                              y={(viewBox.cy ?? 0) + 15}
-                              textAnchor="middle"
-                              dominantBaseline="middle"
-                              className="fill-gray-500 dark:fill-gray-400 text-sm"
-                            >
-                              {t('budget.chart.totalLabel')}
-                            </text>
-                          </g>
-                        );
-                      }
-                      return null;
-                    }}
-                  />
-                </Pie>
-              </PieChart>
-            </ChartContainer>
+        {budgets?.budgets?.length === 0 ? (
+          <div className="bg-secondary-color/10 border border-secondary-color p-4 rounded-md text-center w-2/3 xl:w-1/2 mx-auto">
+            <p className="text-secondary-color text-sm">
+              <span className="font-semibold text-secondary-color">
+                {t('budget.chart.noBudgets1')}
+              </span>
+              .<br />
+              {t('budget.chart.noBudgets2')}
+            </p>
           </div>
+        ) : (
+          <CardContent className="flex flex-col xl:flex-row items-center justify-center gap-8 p-6">
+            {/* Chart Section */}
+            <div className="relative">
+              <ChartContainer
+                config={chartConfig}
+                className="mx-auto aspect-square max-h-[280px] min-h-[280px]"
+              >
+                <PieChart>
+                  <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+                  <Pie
+                    data={budgets?.budgets}
+                    dataKey="amount"
+                    nameKey="category.title"
+                    innerRadius={70}
+                    outerRadius={120}
+                    strokeWidth={3}
+                    stroke="rgba(255,255,255,0.1)"
+                  >
+                    {budgets?.budgets.map((budget) => (
+                      <Cell key={`cell-${budget.id}`} fill={budget.category.color?.value} />
+                    ))}
 
-          {/* Legend Section */}
-          <div className="flex flex-col gap-3 max-h-[280px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
-            {budgets?.budgets.map((budget) => {
-              const itemPercentage = percentage(budget.amount);
-              return (
-                <div
-                  key={budget.id}
-                  className="flex items-center gap-4 p-3 rounded-lg dark:bg-background transition-colors duration-200 min-w-[280px]"
-                >
-                  <div className="relative">
-                    <span
-                      className="block h-4 w-4 rounded-full shadow-sm"
-                      style={{
-                        backgroundColor: budget.category.color?.value,
+                    <Label
+                      content={({ viewBox }) => {
+                        if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+                          return (
+                            <g>
+                              <text
+                                x={viewBox.cx}
+                                y={(viewBox.cy ?? 0) - 10}
+                                textAnchor="middle"
+                                dominantBaseline="middle"
+                                className="fill-gray-900 dark:fill-white text-lg font-bold"
+                              >
+                                {formatAmount(totalAmount ?? 0)}
+                              </text>
+                              <text
+                                x={viewBox.cx}
+                                y={(viewBox.cy ?? 0) + 15}
+                                textAnchor="middle"
+                                dominantBaseline="middle"
+                                className="fill-gray-500 dark:fill-gray-400 text-sm"
+                              >
+                                {t('budget.chart.totalLabel')}
+                              </text>
+                            </g>
+                          );
+                        }
+                        return null;
                       }}
-                    ></span>
-                  </div>
+                    />
+                  </Pie>
+                </PieChart>
+              </ChartContainer>
+            </div>
 
-                  <div className="flex-1 flex items-center justify-between ">
-                    <span className="font-medium text-gray-700 dark:text-gray-300 text-sm truncate mr-2">
-                      {t(budget.category.title)}
-                    </span>
-
-                    <div className="flex items-center gap-3">
-                      <span className="font-bold text-gray-900 dark:text-white text-sm">
-                        {formatAmount(budget.amount ?? 0)}
-                      </span>
-
+            {/* Legend Section */}
+            <div className="flex flex-col gap-3 max-h-[280px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
+              {budgets?.budgets.map((budget) => {
+                const itemPercentage = percentage(budget.amount);
+                return (
+                  <div
+                    key={budget.id}
+                    className="flex items-center gap-4 p-3 rounded-lg dark:bg-background transition-colors duration-200 min-w-[280px]"
+                  >
+                    <div className="relative">
                       <span
-                        className="text-xs font-semibold px-2 py-1 rounded-full"
+                        className="block h-4 w-4 rounded-full shadow-sm"
                         style={{
-                          backgroundColor: `${budget.category.color?.value}20`,
-                          color: budget.category.color?.value,
+                          backgroundColor: budget.category.color?.value,
                         }}
-                      >
-                        {itemPercentage}
+                      ></span>
+                    </div>
+
+                    <div className="flex-1 flex items-center justify-between ">
+                      <span className="font-medium text-gray-700 dark:text-gray-300 text-sm truncate mr-2">
+                        {t(budget.category.title)}
                       </span>
+
+                      <div className="flex items-center gap-3">
+                        <span className="font-bold text-gray-900 dark:text-white text-sm">
+                          {formatAmount(budget.amount ?? 0)}
+                        </span>
+
+                        <span
+                          className="text-xs font-semibold px-2 py-1 rounded-full"
+                          style={{
+                            backgroundColor: `${budget.category.color?.value}20`,
+                            color: budget.category.color?.value,
+                          }}
+                        >
+                          {itemPercentage}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-        </CardContent>
+                );
+              })}
+            </div>
+          </CardContent>
+        )}
       </Card>
     </div>
   );

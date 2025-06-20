@@ -115,6 +115,7 @@ export const fr = {
       careful: 'Attention à vos dépenses',
       warning: 'Vous avez dépensé plus que vos revenus ce mois-ci',
       expensePercentage: 'Vous avez dépensé {{percentage}} de vos revenus ce mois-ci',
+      updateYourIncome: 'Mets à jour ton revenu pour voir ta progression',
     },
     chart: {
       title: 'Dépenses totales au cours des 6 derniers mois',
@@ -137,6 +138,8 @@ export const fr = {
       today: 'Aujourd’hui',
       isYesterday: 'Hier',
       seeMore: 'Voir toutes mes dépenses',
+      noExpenses1: 'Aucune dépense enregistrée',
+      noExpenses2: 'Ajoutez-en pour suivre ta progression.',
     },
   },
   expenses: {
@@ -301,6 +304,8 @@ export const fr = {
     chart: {
       title: "Vue d'ensemble des budgets",
       totalLabel: 'Budget total',
+      noBudgets1: 'Aucune budget trouvée',
+      noBudgets2: 'Ajoute-en un pour commencer',
     },
   },
   categories: {

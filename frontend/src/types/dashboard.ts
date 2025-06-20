@@ -22,7 +22,7 @@ export type Expense = {
   description: string;
   amount: number;
   date: string;
-  budget: Budget;
+  budget?: Budget;
 };
 
 export type DashboardData = {
