@@ -1,3 +1,4 @@
+import { notificationService } from '@/services/notification';
 import { en } from '../en/translation';
 
 export const fr = {
@@ -464,12 +465,12 @@ export const fr = {
     quentin: 'Quentin 🦩',
   },
   category: {
-    bills: 'Bills',
+    bills: 'Factures',
     transport: 'Transport',
-    entertainment: 'Entertainment',
-    health: 'Health',
+    entertainment: 'Loisirs',
+    health: 'Santé',
     shopping: 'Shopping',
-    food: 'Food',
+    food: 'Alimentation',
     other: 'Autres',
     sport: 'Sport',
     houseRent: 'Loyer',
@@ -480,5 +481,17 @@ export const fr = {
   },
   toast: {
     tooManyAttempts: 'Too many attempts, please try again later',
+  },
+  notification: {
+    noNotification: 'Aucunes nouvelles notifications',
+    budgetWarning: {
+      title: 'Your budget is almost exceeded',
+      content:
+        'Your budget <0>{{ budgetName }}</0> is approaching its limit.<1/>You have <2>{{budgetAmountRemaining}}</2> remaining.',
+    },
+    budgetExceeded: {
+      title: 'Votre budget a été dépassé',
+      content: 'Votre budget <0>{{ budgetName }}</0> a été dépassé.',
+    },
   },
 };

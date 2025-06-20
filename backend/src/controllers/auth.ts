@@ -1,14 +1,14 @@
-import { zValidator } from "@hono/zod-validator";
-import { Hono } from "hono";
+import { zValidator } from '@hono/zod-validator';
+import { Hono } from 'hono';
 import {
   resetUserPasswordSchema,
   userLoginSchema,
   userRegisterSchema,
   userSelectSchema,
-} from "../validators/user";
-import prisma from "../db/client";
-import argon2 from "argon2";
-import { describeRoute } from "hono-openapi";
+} from '../validators/user';
+import prisma from '../db/client';
+import argon2 from 'argon2';
+import { describeRoute } from 'hono-openapi';
 import {
   response200,
   response201,
@@ -16,38 +16,39 @@ import {
   response401,
   response409,
   response500,
-} from "../utils/openapi";
-import { HTTPException } from "hono/http-exception";
-import { z } from "zod";
-import "dotenv/config";
-import { getSignedCookie } from "hono/cookie";
+} from '../utils/openapi';
+import { HTTPException } from 'hono/http-exception';
+import { z } from 'zod';
+import 'dotenv/config';
+import { getSignedCookie } from 'hono/cookie';
 import {
   deleteUserCookie,
   generateRandomString,
   generateTokenCSRF,
   generateTokenJWT,
-} from "../lib/tokens";
-import { getEnv } from "../utils/env";
-import { Resend } from "resend";
+} from '../lib/tokens';
+import { getEnv } from '../utils/env';
+import { Resend } from 'resend';
+import { IncomeCreateOrUpdate } from '../validators/income';
 
 const authRouter = new Hono();
 
 authRouter
-  .basePath("/auth")
+  .basePath('/auth')
   .post(
-    "/register",
+    '/register',
     describeRoute({
-      description: "Register a new user",
-      tags: ["auth"],
+      description: 'Register a new user',
+      tags: ['auth'],
       responses: {
         201: response201(userSelectSchema),
-        400: response400(z.literal("User already exists.")),
-        409: response409(z.literal("User already exists.")),
+        400: response400(z.literal('User already exists.')),
+        409: response409(z.literal('User already exists.')),
       },
     }),
-    zValidator("json", userRegisterSchema),
+    zValidator('json', userRegisterSchema),
     async (c) => {
-      const { email, password, name } = c.req.valid("json");
+      const { email, password, name } = c.req.valid('json');
 
       const userExists = await prisma.user.findUnique({
         where: { email },
@@ -55,7 +56,7 @@ authRouter
 
       if (userExists) {
         throw new HTTPException(409, {
-          res: c.json({ message: "User already exists." }, 409),
+          res: c.json({ message: 'User already exists.' }, 409),
         });
       }
 
@@ -63,7 +64,7 @@ authRouter
         data: {
           email,
           alert: true,
-          currency: "EUR",
+          currency: 'EUR',
           name,
           password: await argon2.hash(password),
         },
@@ -71,27 +72,28 @@ authRouter
 
       const { password: _, ...safeUser } = newUser;
       await createListCategories(safeUser.id, c);
+      await createIncome(safeUser.id, c);
 
       return c.json(
-        { message: "User registered successfully", user: safeUser },
-        201,
+        { message: 'User registered successfully', user: safeUser },
+        201
       );
-    },
+    }
   )
   .post(
-    "/login",
+    '/login',
     describeRoute({
-      description: "Login",
-      tags: ["auth"],
+      description: 'Login',
+      tags: ['auth'],
       responses: {
         200: response200(userSelectSchema),
-        401: response400(z.literal("Invalid email or password.")),
-        500: response500(z.literal("JWT secret is not set.")),
+        401: response400(z.literal('Invalid email or password.')),
+        500: response500(z.literal('JWT secret is not set.')),
       },
     }),
-    zValidator("json", userLoginSchema),
+    zValidator('json', userLoginSchema),
     async (c) => {
-      const { email, password } = c.req.valid("json");
+      const { email, password } = c.req.valid('json');
 
       const user = await prisma.user.findUnique({
         where: { email },
@@ -99,7 +101,7 @@ authRouter
 
       if (!user || !(await argon2.verify(user.password, password))) {
         throw new HTTPException(401, {
-          res: c.json({ message: "Invalid email or password" }, 401),
+          res: c.json({ message: 'Invalid email or password' }, 401),
         });
       }
 
@@ -110,24 +112,24 @@ authRouter
       const tokenCSRF = await generateTokenCSRF(c);
 
       return c.json(
-        { message: "success", user: safeUser, token: tokenCSRF },
-        200,
+        { message: 'success', user: safeUser, token: tokenCSRF },
+        200
       );
-    },
+    }
   )
   .post(
-    "/request-reset",
+    '/request-reset',
     describeRoute({
-      description: "Request a reset password",
-      tags: ["auth"],
+      description: 'Request a reset password',
+      tags: ['auth'],
       responses: {
         200: response200(userSelectSchema),
-        401: response400(z.literal("Invalid email or password.")),
+        401: response400(z.literal('Invalid email or password.')),
       },
     }),
-    zValidator("json", userLoginSchema.pick({ email: true })),
+    zValidator('json', userLoginSchema.pick({ email: true })),
     async (c) => {
-      const { email } = c.req.valid("json");
+      const { email } = c.req.valid('json');
       const user = await prisma.user.findUnique({
         where: { email },
       });
@@ -172,28 +174,28 @@ authRouter
       `;
 
       await resend.emails.send({
-        from: "La pince - Oclock <onboarding@resend.dev>",
-        to: ["giselle.magalong@gmail.com"],
-        subject: "Reinitialisation de votre mot de passe",
+        from: 'La pince - Oclock <onboarding@resend.dev>',
+        to: ['giselle.magalong@gmail.com'],
+        subject: 'Reinitialisation de votre mot de passe',
         html: htmlContent,
       });
 
-      return c.json({ message: "Send reset password link successfuly" }, 200);
-    },
+      return c.json({ message: 'Send reset password link successfuly' }, 200);
+    }
   )
   .post(
-    "/reset-password",
+    '/reset-password',
     describeRoute({
-      description: "Reset password",
-      tags: ["auth"],
+      description: 'Reset password',
+      tags: ['auth'],
       responses: {
         200: response200(userSelectSchema),
-        401: response401(z.literal("Token invalid.")),
+        401: response401(z.literal('Token invalid.')),
       },
     }),
-    zValidator("json", resetUserPasswordSchema),
+    zValidator('json', resetUserPasswordSchema),
     async (c) => {
-      const data = c.req.valid("json");
+      const data = c.req.valid('json');
       const tokenExist = await prisma.resetPassword.findFirst({
         where: {
           token: data.token,
@@ -202,7 +204,7 @@ authRouter
 
       if (!tokenExist || tokenExist.expiredAt < new Date()) {
         throw new HTTPException(401, {
-          res: c.json({ message: "Token invalid" }, 401),
+          res: c.json({ message: 'Token invalid' }, 401),
         });
       }
 
@@ -223,36 +225,36 @@ authRouter
       });
 
       return c.json(safeUser, 200);
-    },
+    }
   )
-  .get("/logout", async (c) => {
+  .get('/logout', async (c) => {
     const { TOKEN_JWT_NAME, SECRET_JWT } = getEnv();
     const token = await getSignedCookie(c, SECRET_JWT, TOKEN_JWT_NAME);
     if (!token) {
       throw new HTTPException(401, {
-        res: c.json({ message: "You are not logged in" }, 401),
+        res: c.json({ message: 'You are not logged in' }, 401),
       });
     }
 
     deleteUserCookie(c);
 
-    return c.json({ message: "Logged out" }, 200);
+    return c.json({ message: 'Logged out' }, 200);
   });
 
 async function createListCategories(userId: string, c?: any) {
   const categories = [
-    { name: "category.food", color: "color.yellow" },
-    { name: "category.houseRent", color: "color.white" },
-    { name: "category.transport", color: "color.orange" },
-    { name: "category.health", color: "color.green" },
-    { name: "category.shopping", color: "color.pink" },
-    { name: "category.entertainment", color: "color.blue" },
-    { name: "category.subscriptions", color: "color.violet" },
-    { name: "category.other", color: "color.gray" },
-    { name: "category.pet", color: "color.green" },
-    { name: "category.sport", color: "color.blue" },
-    { name: "category.education", color: "color.blue" },
-    { name: "category.bills", color: "color.blue" },
+    { name: 'category.food', color: 'color.yellow' },
+    { name: 'category.houseRent', color: 'color.red' },
+    { name: 'category.transport', color: 'color.orange' },
+    { name: 'category.health', color: 'color.green' },
+    { name: 'category.shopping', color: 'color.pink' },
+    { name: 'category.entertainment', color: 'color.blue' },
+    { name: 'category.subscriptions', color: 'color.violet' },
+    { name: 'category.other', color: 'color.gray' },
+    { name: 'category.pet', color: 'color.green' },
+    { name: 'category.sport', color: 'color.blue' },
+    { name: 'category.education', color: 'color.blue' },
+    { name: 'category.bills', color: 'color.blue' },
   ];
 
   categories.map(async (category) => {
@@ -264,7 +266,7 @@ async function createListCategories(userId: string, c?: any) {
 
     if (!findColor) {
       throw new HTTPException(404, {
-        res: c.json({ message: "Color not found" }, 404),
+        res: c.json({ message: 'Color not found' }, 404),
       });
     }
     const colorId = findColor.id;
@@ -279,6 +281,19 @@ async function createListCategories(userId: string, c?: any) {
   });
 }
 
-export { createListCategories };
+async function createIncome(userId: string, c?: any) {
+  const now = new Date();
+
+  await prisma.income.create({
+    data: {
+      userId,
+      value: 0,
+      month: now.getMonth() + 1,
+      year: now.getFullYear(),
+    },
+  });
+}
+
+export { createListCategories, createIncome };
 
 export default authRouter;

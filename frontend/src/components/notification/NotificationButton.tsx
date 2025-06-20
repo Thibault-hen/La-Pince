@@ -6,9 +6,11 @@ import { useNotifications } from '@/hooks/use-notification';
 import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 
 export default function NotificationButton() {
   const { notifications } = useNotifications();
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
   useEffect(() => {
     const ws = new WebSocket(`${import.meta.env.VITE_WS_URL}`);
@@ -42,9 +44,15 @@ export default function NotificationButton() {
           </div>
         </SheetHeader>
         <div className="flex flex-col  gap-2 overflow-auto mb-2 shadow-inner shadow-20  px-2 rounded-md ">
-          {notifications.map((notification) => {
-            return <Notification key={notification.id} notification={notification} />;
-          })}
+          {notifications.length === 0 ? (
+            <div className="mt-3 text-center text-muted-foreground">
+              {t('notification.noNotification')}
+            </div>
+          ) : (
+            notifications.map((notification) => {
+              return <Notification key={notification.id} notification={notification} />;
+            })
+          )}
         </div>
       </SheetContent>
     </Sheet>

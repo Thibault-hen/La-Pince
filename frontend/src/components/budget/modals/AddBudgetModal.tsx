@@ -127,15 +127,26 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>{t('budget.add.form.categoryLabel')}</SelectLabel>
-                        {categories?.map((category) => (
-                          <SelectItem key={category.id} value={category.id}>
-                            <span>{t(category.title)}</span>
-                            <div
-                              style={{ backgroundColor: category?.color?.value }}
-                              className="h-3 w-3 rounded-lg"
-                            ></div>
-                          </SelectItem>
-                        ))}
+                        {categories
+                          ?.slice()
+                          .sort((a, b) => {
+                            const aActive = a.budgets?.length > 0;
+                            const bActive = b.budgets?.length > 0;
+                            return Number(bActive) - Number(aActive);
+                          })
+                          .map((category) => (
+                            <SelectItem
+                              disabled={category.budgets?.length === 0}
+                              key={category.id}
+                              value={category.id}
+                            >
+                              <span>{t(category.title)}</span>
+                              <div
+                                style={{ backgroundColor: category?.color?.value }}
+                                className="h-3 w-3 rounded-lg"
+                              ></div>
+                            </SelectItem>
+                          ))}
                       </SelectGroup>
                     </SelectContent>
                   </Select>

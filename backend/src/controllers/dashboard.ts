@@ -1,39 +1,37 @@
-import { Hono } from "hono";
-import prisma from "../db/client";
-import { describeRoute } from "hono-openapi";
-import { response200 } from "../utils/openapi";
-import { dashboardSchema, Expense } from "../validators/dashboard";
+import { Hono } from 'hono';
+import prisma from '../db/client';
+import { describeRoute } from 'hono-openapi';
+import { response200 } from '../utils/openapi';
+import { dashboardSchema, Expense } from '../validators/dashboard';
 
-const dashboardRouter  = new Hono();
+const dashboardRouter = new Hono();
 
-dashboardRouter
-  .basePath('/dashboard')
-  .get(
-    '/',
-    describeRoute({
-      tags: ['dashboard'],
-      summary: 'Get dashboard data',
-      description: 'Retrieve dashboard data.',
-      responses: {
-        200: response200(dashboardSchema),
-      },
-    }),
-    async (c) => {
+dashboardRouter.basePath('/dashboard').get(
+  '/',
+  describeRoute({
+    tags: ['dashboard'],
+    summary: 'Get dashboard data',
+    description: 'Retrieve dashboard data.',
+    responses: {
+      200: response200(dashboardSchema),
+    },
+  }),
+  async (c) => {
     const userId = c.get('jwtPayload').userId;
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth() + 1;
 
     const [
-      currentMonthExpenses, 
-      last6MonthsExpenses, 
-      todayExpenses, 
-      currentWeekExpenses, 
-      previousMonthExpenses, 
-      averageMonthlyExpenses, 
-      currentMonthIncome, 
-      currentMonthBudget, 
-      last10Expenses
+      currentMonthExpenses,
+      last6MonthsExpenses,
+      todayExpenses,
+      currentWeekExpenses,
+      previousMonthExpenses,
+      averageMonthlyExpenses,
+      currentMonthIncome,
+      currentMonthBudget,
+      last10Expenses,
     ] = await Promise.all([
       prisma.expense.aggregate({
         _sum: { amount: true },
@@ -50,7 +48,7 @@ dashboardRouter
           userId,
           date: {
             gte: new Date(year, month - 6, 1),
-            lt: new Date(year,  month, 0),
+            lt: new Date(year, month, 0),
           },
         },
         omit: {
@@ -97,8 +95,8 @@ dashboardRouter
           userId,
         },
       }),
-      prisma.income.aggregate({
-        _sum: { value: true },
+      prisma.income.findFirst({
+        // _sum: { value: true },
         where: {
           userId,
           year,
@@ -107,11 +105,11 @@ dashboardRouter
       }),
       prisma.budget.aggregate({
         _sum: { amount: true },
-        where:{
+        where: {
           userId,
           year,
-          month
-        }
+          month,
+        },
       }),
       prisma.expense.findMany({
         where: {
@@ -151,30 +149,36 @@ dashboardRouter
                       id: true,
                       createdAt: true,
                       updatedAt: true,
-                    }
-                  }
-                }
-              }
-            }
-          }
+                    },
+                  },
+                },
+              },
+            },
+          },
         },
         take: 10,
       }),
     ]);
 
-    const last6MonthsExpensesByMonth = formatLast6MonthsExpensesByMonth(last6MonthsExpenses);
+    const last6MonthsExpensesByMonth =
+      formatLast6MonthsExpensesByMonth(last6MonthsExpenses);
 
-    return c.json({
-      currentMonthExpenses: currentMonthExpenses._sum.amount || 0,
-      last6MonthsExpensesByMonth: last6MonthsExpensesByMonth,
-      todayExpenses: todayExpenses._sum.amount || 0,
-      currentWeekExpenses: currentWeekExpenses._sum.amount || 0,
-      previousMonthExpenses: previousMonthExpenses._sum.amount || 0,
-      averageMonthlyExpenses: averageMonthlyExpenses?._avg?.amount || 0,
-      currentMonthRevenue: currentMonthIncome._sum.value || 0,
-      currentMonthBudget:  currentMonthBudget?._sum?.amount || 0,
-      last10Expenses: last10Expenses}, 200);
-  });
+    return c.json(
+      {
+        currentMonthExpenses: currentMonthExpenses._sum.amount || 0,
+        last6MonthsExpensesByMonth: last6MonthsExpensesByMonth,
+        todayExpenses: todayExpenses._sum.amount || 0,
+        currentWeekExpenses: currentWeekExpenses._sum.amount || 0,
+        previousMonthExpenses: previousMonthExpenses._sum.amount || 0,
+        averageMonthlyExpenses: averageMonthlyExpenses?._avg?.amount || 0,
+        currentMonthRevenue: currentMonthIncome,
+        currentMonthBudget: currentMonthBudget?._sum?.amount || 0,
+        last10Expenses: last10Expenses,
+      },
+      200
+    );
+  }
+);
 
 function formatLast6MonthsExpensesByMonth(
   last6MonthsExpenses: Expense[]
@@ -182,26 +186,26 @@ function formatLast6MonthsExpensesByMonth(
   const result: Record<string, number> = {};
   const now = new Date();
 
-    for (let i = 5; i >= 0; i--) {
-      const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const year = date.getFullYear();
-      const key = `${month}/${year}`;
-      result[key] = 0;
+  for (let i = 5; i >= 0; i--) {
+    const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const key = `${month}/${year}`;
+    result[key] = 0;
+  }
+
+  for (const expense of last6MonthsExpenses) {
+    const date = new Date(expense.date);
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    const key = `${month}/${year}`;
+
+    if (key in result) {
+      result[key] += expense.amount;
     }
+  }
 
-    for (const expense of last6MonthsExpenses) {
-      const date = new Date(expense.date);
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const year = date.getFullYear();
-      const key = `${month}/${year}`;
-
-      if (key in result) {
-        result[key] += expense.amount;
-      }
-    }
-
-    return result;
+  return result;
 }
 
 export default dashboardRouter;

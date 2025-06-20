@@ -10,6 +10,7 @@ interface ExpensesOverallChartProps {
 
 export const ExpensesOverallChart = ({ last6MonthsExpensesByMonth }: ExpensesOverallChartProps) => {
   const { t } = useTranslation();
+  
   const chartConfig = {
     amount: {
       label: 'Montant',
