@@ -14,8 +14,8 @@ export const useUpdateIncome = () => {
       return response;
     },
     onSuccess: (data) => {
-      toast.success(t('income.toast.updated', { income: data.value }));
-      queryClient.invalidateQueries({ queryKey: ['account'] });
+      toast.success(t('income.toast.updated', { value: data.value }));
+      queryClient.invalidateQueries({ queryKey: ['dashboard'] });
     },
     onError: (_error) => {
       toast.error(t('income.toast.error'));
