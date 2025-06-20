@@ -433,6 +433,7 @@ export const en = {
     tooManyAttempts: 'Too many attempts, please try again later',
   },
   notification: {
+    noNotification: 'No new notifications',
     budgetWarning: {
       title: 'Your budget is almost exceeded',
       content:

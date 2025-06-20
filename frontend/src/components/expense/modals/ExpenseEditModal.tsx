@@ -27,6 +27,7 @@ import { useBudgets } from '@/hooks/use-budget';
 import { DatePicker } from '../DatePicker';
 import { useTranslation } from 'react-i18next';
 import { useCurrency } from '@/hooks/use-currency';
+import { useEffect } from 'react';
 
 interface ExpenseEditModalProps {
   open: boolean;
@@ -39,6 +40,10 @@ export const ExpenseEditModal = ({ expense, open, setOpen }: ExpenseEditModalPro
   const { mutateAsync: updateExpense } = useUpdateExpense();
   const { t } = useTranslation();
   const { formatAmount } = useCurrency();
+
+  useEffect(() => {
+    form.reset();
+  }, [expense]);
 
   const form = useForm({
     defaultValues: {

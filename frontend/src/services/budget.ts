@@ -3,7 +3,6 @@ import { api } from '@/utils/api';
 
 export const budgetService = {
   async getAllBudgets(): Promise<BudgetResponse> {
-    console.log('Fetching all budgets');
     const response = await api.get<BudgetResponse>('/budget');
     return response.data;
   },

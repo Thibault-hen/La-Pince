@@ -11,7 +11,7 @@ interface ExpensesOverallChartProps {
   last6MonthsExpensesByMonth: Record<string, number>[];
 }
 
-export const ExpensesOverallChart = ({last6MonthsExpensesByMonth}: ExpensesOverallChartProps) => {
+export const ExpensesOverallChart = ({ last6MonthsExpensesByMonth }: ExpensesOverallChartProps) => {
   const chartConfig = {
     desktop: {
       label: 'Desktop',
@@ -19,9 +19,7 @@ export const ExpensesOverallChart = ({last6MonthsExpensesByMonth}: ExpensesOvera
     },
   } satisfies ChartConfig;
 
-  console.log('last6 :>> ', last6MonthsExpensesByMonth);
-
-  const chartData  = Object.entries(last6MonthsExpensesByMonth).map(([month, value]) => ({
+  const chartData = Object.entries(last6MonthsExpensesByMonth).map(([month, value]) => ({
     month: month,
     desktop: value,
   }));
