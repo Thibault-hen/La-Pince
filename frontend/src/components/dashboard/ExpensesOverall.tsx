@@ -6,11 +6,26 @@ import { Progress } from '../ui/progress';
 import { getPercentage, getPercentageRaw } from '@/utils/percentage';
 import { AlertCircle, CheckCircle, TrendingDown } from 'lucide-react';
 
-export const ExpensesOverall = () => {
+interface ExpensesOverallProps {
+  currentMonthExpenses: number;
+  todayExpenses: number;
+  currentWeekExpenses: number;
+  previousMonthExpenses: number;
+  averageMonthlyExpenses: number;
+  last6MonthsExpensesByMonth: Record<string, number>;
+}
+
+export const ExpensesOverall = ({
+  currentMonthExpenses,
+  todayExpenses, 
+  currentWeekExpenses, 
+  previousMonthExpenses, 
+  averageMonthlyExpenses,
+  last6MonthsExpensesByMonth
+}: ExpensesOverallProps) => {
   const spent = 200;
   const budget = 300;
   const percentage = getPercentage(spent, budget);
-  const statusColor = getColorStatus(spent, budget);
 
   return (
     <div className="w-full space-y-6">
@@ -24,7 +39,7 @@ export const ExpensesOverall = () => {
                   Total dépenses ce mois
                 </CardTitle>
                 <CardDescription className="text-4xl font-bold text-foreground tracking-tight">
-                  1,892€
+                  {currentMonthExpenses}€
                 </CardDescription>
               </div>
               <div className="p-3 bg-secondary-color/10 border border-secondary-color/20 rounded-full">
@@ -74,16 +89,16 @@ export const ExpensesOverall = () => {
         </Card>
 
         <div className="flex-1">
-          <ExpensesOverallChart />
+          <ExpensesOverallChart last6MonthsExpensesByMonth={last6MonthsExpensesByMonth} />
         </div>
       </div>
 
       {/* Second row - Enhanced FinanceCards grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <FinanceCard title="Dépensé aujourd'hui" amount="110,00 €" variant="negative" />
-        <FinanceCard title="Dépensé cette semaine" amount="322,00 €" variant="negative" />
-        <FinanceCard title="Dépensé mois dernier" amount="1,982,00 €" variant="negative" />
-        <FinanceCard title="Moyenne par mois" amount="1,734,00 €" variant="positive" />
+        <FinanceCard title="Dépensé aujourd'hui" amount={todayExpenses.toFixed(2)} variant="negative" />
+        <FinanceCard title="Dépensé cette semaine" amount={currentWeekExpenses.toFixed(2)} variant="negative" />
+        <FinanceCard title="Dépensé mois dernier" amount={previousMonthExpenses.toFixed(2)} variant="negative" />
+        <FinanceCard title="Moyenne par mois" amount={averageMonthlyExpenses.toFixed(2)} variant="positive" />
       </div>
     </div>
   );
