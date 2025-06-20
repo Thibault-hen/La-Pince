@@ -136,7 +136,7 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
                           })
                           .map((category) => (
                             <SelectItem
-                              disabled={category.budgets?.length === 0}
+                              disabled={category.budgets?.length !== 0}
                               key={category.id}
                               value={category.id}
                             >

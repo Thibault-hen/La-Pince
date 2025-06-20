@@ -59,6 +59,7 @@ export const useCreateBudget = () => {
     onSuccess: (data) => {
       toast.success(t('budget.toast.created', { title: t(data.category.title) }));
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
+      queryClient.invalidateQueries({ queryKey: ['categories'] });
     },
     onError: (error) => {
       toast.error(getErrorMessage(error));
