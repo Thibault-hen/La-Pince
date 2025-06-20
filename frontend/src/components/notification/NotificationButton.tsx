@@ -27,7 +27,7 @@ export default function NotificationButton() {
         <Button
           variant="outline"
           size="icon"
-          className="shadow-none dark:bg-primary cursor-pointer hover:bg-secondary-color dark:hover:bg-secondary-color border"
+          className="shadow-none dark:bg-primary cursor-pointer hover:bg-primary-color dark:hover:bg-primary-color border"
         >
           {notifications.length > 0 ? (
             <BellRing className="size-4 text-secondary-color" />

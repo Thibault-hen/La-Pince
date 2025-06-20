@@ -111,6 +111,7 @@ export const en = {
       careful: 'Careful on your spending',
       warning: 'You have spent more than your income this month',
       expensePercentage: 'You have spent {{percentage}} of your income this month',
+      updateYourIncome: 'Update your income to track progress',
     },
     chart: {
       title: 'Total spending over the last 6 months',
@@ -133,6 +134,8 @@ export const en = {
       today: 'Today',
       isYesterday: 'Yesterday',
       seeMore: 'See all my expenses',
+      noExpenses1: 'No expenses recorded yet',
+      noExpenses2: 'Start by adding your first expense to track your spending.',
     },
   },
   expenses: {
@@ -250,6 +253,8 @@ export const en = {
     chart: {
       title: 'Budget Overview',
       totalLabel: 'Total Budget',
+      noBudgets1: 'Cannot find any budgets',
+      noBudgets2: 'Create your first budget to start',
     },
     add: {
       title: 'Create a new budget',

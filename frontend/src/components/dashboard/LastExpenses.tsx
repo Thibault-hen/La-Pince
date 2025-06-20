@@ -43,7 +43,7 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
   const totalAmount = lastExpensesData.reduce((sum, expense) => sum + expense.amount, 0);
 
   return (
-    <div className="w-full max-w-xl shadow-xl dark:bg-primary rounded-lg border">
+    <div className="w-full md:max-w-xl shadow-xl dark:bg-primary rounded-lg border">
       <div className="text-white relative overflow-hidden px-8 py-4">
         <div className="relative z-10">
           <div className="flex items-center justify-between">
@@ -62,9 +62,8 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
             </div>
             <div className="text-right">
               <div className="flex items-center gap-2 mb-1">
-                <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse" />
                 <p className="text-lg md:text-xl font-bold text-black dark:text-white">
-                  -{formatAmount(totalAmount)}
+                  -{formatAmount(totalAmount ?? 0)}
                 </p>
               </div>
               <p className="text-black dark:text-white text-sm">
@@ -87,8 +86,18 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
                 <div className="flex items-center gap-4">
                   {/* Color indicator */}
                   <div
-                    className="w-4 h-4 rounded-full shadow-sm"
-                    style={{ backgroundColor: expense.budget.category.color.value }}
+                    className="w-4 h-4 rounded-lg shadow-sm"
+                    style={{
+                      background: !expense.budget?.category
+                        ? 'linear-gradient(135deg, #FFFFFF, #bb6f64, #c9a29c)' // special fallback style
+                        : (expense.budget.category.color?.value ?? '#f0f0f0'),
+
+                      boxShadow: !expense.budget?.category
+                        ? '0 0 15px rgba(245, 87, 108, 0.5)'
+                        : 'none',
+
+                      color: '#fff',
+                    }}
                   />
 
                   {/* Content */}
@@ -112,13 +121,25 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
             );
           })}
           <div className="p-6">
-            <Button
-              className="w-full"
-              variant="blue"
-              onClick={() => navigate('/tableau-de-bord/depenses')}
-            >
-              {t('dashboard.last10Expenses.seeMore')}
-            </Button>
+            {lastExpensesData.length > 0 ? (
+              <Button
+                className="w-full"
+                variant="blue"
+                onClick={() => navigate('/tableau-de-bord/depenses')}
+              >
+                {t('dashboard.last10Expenses.seeMore')}
+              </Button>
+            ) : (
+              <div className="bg-secondary-color/10 border border-secondary-color p-4 rounded-md text-center">
+                <p className="text-secondary-color text-sm">
+                  <span className="font-semibold text-secondary-color">
+                    {t('dashboard.last10Expenses.noExpenses1')}
+                  </span>
+                  .<br />
+                  {t('dashboard.last10Expenses.noExpenses2')}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -30,7 +30,7 @@ export const AppLayout = () => {
               </div>
               <div className="flex gap-2 items-center justify-between w-full">
                 <div>
-                  <h2 className="text-lg font-bold text-foreground">
+                  <h2 className="text-xs font-bold text-foreground md:text-sm lg:text-lg">
                     {t('header.greeting', { name: userData?.user.name })}
                   </h2>
                   <p className="text-xs text-muted-foreground">

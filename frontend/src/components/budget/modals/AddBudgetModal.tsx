@@ -121,7 +121,7 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
                     onValueChange={(value) => field.handleChange(value)}
                     required
                   >
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full cursor-pointer">
                       <SelectValue placeholder={t('budget.add.form.categoryPlaceholder')} />
                     </SelectTrigger>
                     <SelectContent>
@@ -130,8 +130,8 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
                         {categories
                           ?.slice()
                           .sort((a, b) => {
-                            const aActive = a.budgets?.length > 0;
-                            const bActive = b.budgets?.length > 0;
+                            const aActive = (a.budgets?.length ?? 0) > 0;
+                            const bActive = (b.budgets?.length ?? 0) > 0;
                             return Number(bActive) - Number(aActive);
                           })
                           .map((category) => (
@@ -139,6 +139,7 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
                               disabled={category.budgets?.length !== 0}
                               key={category.id}
                               value={category.id}
+                              className="cursor-pointer"
                             >
                               <span>{t(category.title)}</span>
                               <div

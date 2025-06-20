@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query';
 import type { DashboardData } from '@/types/dashboard';
 import { useCurrency } from './use-currency';
 import { useTranslation } from 'react-i18next';
-import { delay } from '@/utils/delay';
 
 export function useDashboard() {
   const { convertFromEUR } = useCurrency();
@@ -44,7 +43,7 @@ export function useDashboard() {
       currentMonthBudget: convertFromEUR(data.currentMonthBudget),
       currentMonthRevenue: {
         ...data.currentMonthRevenue,
-        amount: convertFromEUR(data.currentMonthRevenue.value),
+        value: convertFromEUR(data.currentMonthRevenue.value),
       },
       last10Expenses: data.last10Expenses.map((expense) => ({
         ...expense,

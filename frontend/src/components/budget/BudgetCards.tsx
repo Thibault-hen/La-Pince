@@ -55,7 +55,7 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
     if (remainingBudget === 0) {
       setDisplayRemaining('0.00');
     }
-  }, [totalBudget, activeBudget, remainingBudget]);
+  }, [totalBudget, activeBudget, remainingBudget, count, remaining, total]);
 
   return (
     <div className="flex flex-col gap-4 w-full xl:max-w-xl">

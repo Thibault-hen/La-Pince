@@ -38,10 +38,6 @@ export const EditCategoryModal = ({ category, colors, open, setOpen }: AddCatego
   const { mutateAsync: updateCategory } = useUpdateCategory();
   const { t } = useTranslation();
 
-  useEffect(() => {
-    form.reset();
-  }, [category]);
-
   const form = useForm({
     defaultValues: {
       title: category?.title ?? '',
@@ -56,6 +52,10 @@ export const EditCategoryModal = ({ category, colors, open, setOpen }: AddCatego
       setOpen(false);
     },
   });
+
+  useEffect(() => {
+    form.reset();
+  }, [category, form]);
 
   if (!category) return null;
 

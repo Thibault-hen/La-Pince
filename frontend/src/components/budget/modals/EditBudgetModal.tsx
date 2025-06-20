@@ -39,10 +39,6 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
   const { mutateAsync: updateBudget } = useUpdateBudget();
   const { t } = useTranslation();
 
-  useEffect(() => {
-    form.reset();
-  }, [budget]);
-
   const form = useForm({
     defaultValues: {
       amount: budget?.amount ?? 0,
@@ -58,6 +54,10 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
       setOpen(false);
     },
   });
+
+  useEffect(() => {
+    form.reset();
+  }, [budget, form]);
 
   if (!budget) return null;
 
@@ -150,7 +150,7 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
                       defaultValue={selectedCategory?.id}
                       required
                     >
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger className="w-full cursor-pointer">
                         <SelectValue placeholder={t('budget.edit.form.categoryPlaceholder')} />
                       </SelectTrigger>
                       <SelectContent>
