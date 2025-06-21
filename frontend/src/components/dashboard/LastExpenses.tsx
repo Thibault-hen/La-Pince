@@ -52,7 +52,7 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
                 <TrendingDown className="h-5 w-5 text-secondary-color" />
               </div>
               <div>
-                <h2 className="text-lg lg:text-lg font-bold mb-1 text-black dark:text-white">
+                <h2 className="text-sm lg:text-lg font-bold mb-1 text-black dark:text-white">
                   {t('dashboard.last10Expenses.title')}
                 </h2>
                 <p className="text-sm font-medium text-black dark:text-white">
@@ -62,7 +62,7 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
             </div>
             <div className="text-right">
               <div className="flex items-center gap-2 mb-1">
-                <p className="text-lg md:text-xl font-bold text-black dark:text-white">
+                <p className="text-base md:text-xl font-bold text-black dark:text-white">
                   -{formatAmount(totalAmount ?? 0)}
                 </p>
               </div>
@@ -103,14 +103,16 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
                   {/* Content */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-semibold truncate text-base">{expense.description}</h3>
-                      <span className="text-sm font-bold text-red-500 ml-4">
+                      <h3 className="font-semibold truncate text-xs md:text-base">
+                        {expense.description}
+                      </h3>
+                      <span className="text-xs md:text-sm font-bold text-red-500 ml-4">
                         -{formatAmount(expense.amount)}
                       </span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-gray-500">
                       <Calendar className="h-3 w-3" />
-                      <span>{formatDate(expense.date)}</span>
+                      <span className="text-xs md:text-base">{formatDate(expense.date)}</span>
                       <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <ArrowUpRight className="h-4 w-4 text-gray-400 group-hover:text-blue-500" />
                       </div>

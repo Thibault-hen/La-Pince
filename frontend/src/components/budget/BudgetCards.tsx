@@ -16,7 +16,7 @@ type BudgetCardsProps = {
 export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: BudgetCardsProps) => {
   const { formatAmount } = useCurrency();
   const [displayTotal, setDisplayTotal] = useState<string>('0.00');
-  const [displayCount, setDisplayCount] = useState<string>('0.00');
+  const [displayCount, setDisplayCount] = useState<string>('0');
   const [displayRemaining, setDisplayRemaining] = useState<string>('0.00');
   const { t } = useTranslation();
 

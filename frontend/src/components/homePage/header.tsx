@@ -51,7 +51,7 @@ export default function Header() {
                   <Button variant="blue" asChild>
                     <Link to="/connexion">{t('home.nav.login')}</Link>
                   </Button>
-                  <Button variant="blue">
+                  <Button variant="blue" asChild>
                     <Link to="/inscription">{t('home.nav.register')}</Link>
                   </Button>
                 </>

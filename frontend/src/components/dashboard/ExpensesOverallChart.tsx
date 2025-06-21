@@ -46,7 +46,7 @@ export const ExpensesOverallChart = ({ last6MonthsExpensesByMonth }: ExpensesOve
   const year = today.getFullYear();
 
   return (
-    <Card className="w-full h-fit dark:bg-primary border">
+    <Card className="w-full h-full dark:bg-primary border">
       <CardHeader className="pb-4">
         <CardTitle>{t('dashboard.chart.title')}</CardTitle>
         <CardDescription>

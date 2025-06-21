@@ -48,7 +48,7 @@ const getItems = (t: any) => [
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const location = useLocation();
-  const { open, openMobile } = useSidebar();
+  const { open, openMobile, setOpenMobile } = useSidebar();
   const { t } = useTranslation();
   const items = getItems(t);
   return (
@@ -77,7 +77,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     isActive={isActive}
                     className="py-5 px-6 duration-200 transition-all"
                   >
-                    <NavLink to={item.url} className="p-1">
+                    <NavLink
+                      to={item.url}
+                      className="p-1"
+                      onClick={() => {
+                        if (openMobile) {
+                          setOpenMobile(false);
+                        }
+                      }}
+                    >
                       <item.icon />
                       <span>{item.title}</span>
                     </NavLink>

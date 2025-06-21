@@ -18,7 +18,7 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
   const getErrorMessage = (error: any): string | null => {
     if (!error) return null;
 
-    if (error.response?.status === 400) {
+    if (error.response?.status === 409) {
       return t('register.errorMessages.emailExists');
     }
     if (error.response?.status === 429) {
