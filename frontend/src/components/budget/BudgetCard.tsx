@@ -109,7 +109,7 @@ export const BudgetCard = ({ budget, onOpenEditModal, onOpenDeleteModal }: Budge
           <div className="flex w-full flex-col">
             <Progress
               value={budget.totalExpense > budget.amount ? budget.amount : budget.totalExpense}
-              max={budget.amount}
+              max={budget.amount > 0 ? budget.amount : 100}
               className="w-full border [&>*]:bg-[var(--bg-color)] h-3 mt-2"
               style={
                 {

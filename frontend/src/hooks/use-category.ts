@@ -19,6 +19,7 @@ export const useCategories = () => {
         })),
       })),
     staleTime: 1000 * 60 * 5,
+    retry: false,
   });
 
   return {

@@ -4,7 +4,7 @@ import { FinanceCard } from './ExpensesOverallCard';
 import { ExpensesOverallChart } from './ExpensesOverallChart';
 import { Progress } from '../ui/progress';
 import { getPercentage, getPercentageRaw } from '@/utils/percentage';
-import { AlertCircle, CheckCircle, TrendingDown } from 'lucide-react';
+import { AlertCircle, BadgePercent, CheckCircle, TrendingDown } from 'lucide-react';
 import { useCurrency } from '@/hooks/use-currency';
 import { useTranslation } from 'react-i18next';
 import type { Income } from '@/types/income';
@@ -138,26 +138,20 @@ export const ExpensesOverall = ({
       </div>
 
       {/* Second row - Enhanced FinanceCards grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 h-fit">
-        <FinanceCard
-          title={t('dashboard.overallCards.spentToday')}
-          amount={todayExpenses}
-          variant="negative"
-        />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <FinanceCard title={t('dashboard.overallCards.spentToday')} amount={todayExpenses} />
         <FinanceCard
           title={t('dashboard.overallCards.spentLast7Days')}
           amount={currentWeekExpenses}
-          variant="negative"
         />
         <FinanceCard
           title={t('dashboard.overallCards.spentLastMonth')}
           amount={previousMonthExpenses}
-          variant="negative"
         />
         <FinanceCard
           title={t('dashboard.overallCards.averageSpent')}
           amount={averageMonthlyExpenses}
-          variant="positive"
+          icon={<BadgePercent className="w-4 h-4 text-primary-color" />}
         />
       </div>
     </div>

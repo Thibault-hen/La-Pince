@@ -31,8 +31,8 @@ export const Dashboard = () => {
           income={dashboardData?.currentMonthRevenue}
         />
         <DashboardHeader onOpenEditModal={() => setOpenEditIncome(true)} />
-        <div className="flex flex-col 2xl:flex-row gap-4">
-          <div className="flex 2xl:w-3/4">
+        <div className="flex flex-col 2xl:flex-row gap-4 2xl:items-stretch">
+          <div className="2xl:w-3/4">
             <ExpensesOverall
               currentMonthRevenue={dashboardData?.currentMonthRevenue}
               currentMonthExpenses={dashboardData?.currentMonthExpenses ?? 0}
@@ -43,7 +43,7 @@ export const Dashboard = () => {
               last6MonthsExpensesByMonth={dashboardData?.last6MonthsExpensesByMonth ?? {}}
             />
           </div>
-          <div className="flex 2xl:w-1/4">
+          <div className="2xl:w-1/4 flex justify-between flex-col xl:flex-row 2xl:flex-col w-full gap-4">
             <DashboardCards
               currentMonthRevenue={dashboardData?.currentMonthRevenue}
               currentMonthBudget={dashboardData?.currentMonthBudget ?? 0}

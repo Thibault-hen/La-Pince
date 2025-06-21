@@ -15,9 +15,8 @@ export const useCurrency = () => {
   } = useQuery<CurrencyRates>({
     queryKey: ['currencyRates'],
     queryFn: async () => {
-      throw Error;
-      // const response = await currencyService.getCurrencyRates();
-      // return response.rates;
+      const response = await currencyService.getCurrencyRates();
+      return response.rates;
     },
     refetchOnMount: false, // pas de refetch au montage
     refetchOnWindowFocus: false, // pas de refetch quand je reviens sur la apge

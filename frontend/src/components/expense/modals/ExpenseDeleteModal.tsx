@@ -35,7 +35,10 @@ export const ExpenseDeleteModal = ({ open, setOpen, expense }: DeleteBudgetProps
             {t('expenses.delete.title')}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            {t('expenses.delete.description', { title: expense?.title, amount: expense?.amount })}
+            {t('expenses.delete.description', {
+              title: expense?.title,
+              amount: expense?.amount.toFixed(2),
+            })}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

@@ -1,6 +1,3 @@
-import { notificationService } from '@/services/notification';
-import { en } from '../en/translation';
-
 export const fr = {
   home: {
     nav: {
@@ -14,7 +11,7 @@ export const fr = {
     hero: {
       title: 'Maîtrisez vos finances, simplement.',
       description:
-        'Avec La Pince, suivez vos dépenses, gérez vos budgets et recevez des alertes avant les dépassements. Une application claire et efficace pour reprendre le contrôle de votre argent — dès aujourd’hui. Créez un compte gratuitement et commencez à économiser.',
+        'Avec La Pince, suivez vos dépenses, gérez vos budgets et recevez des alertes avant les dépassements. Une application claire et efficace pour reprendre le contrôle de votre argent, dès aujourd’hui. Créez un compte gratuitement et commencez à économiser.',
     },
     card: {
       mainTitle: 'Reprenez le contrôle de vos dépenses',
@@ -111,9 +108,9 @@ export const fr = {
     },
     overallCard: {
       totalSpent: 'Dépenses totales ce mois-ci',
-      ok: 'Vos dépenses sont sous contrôle',
-      careful: 'Attention à vos dépenses',
-      warning: 'Vous avez dépensé plus que vos revenus ce mois-ci',
+      ok: 'Tes dépenses sont sous contrôle',
+      careful: 'Attention à tes dépenses',
+      warning: 'Tu as dépensé plus que ton revenu ce mois-ci',
       expensePercentage: 'Vous avez dépensé {{percentage}} de vos revenus ce mois-ci',
       updateYourIncome: 'Mets à jour ton revenu pour voir ta progression',
     },
@@ -153,6 +150,8 @@ export const fr = {
         title: 'Vos dépenses de ce mois',
         totalAmount: 'Montant total',
       },
+      noExpensesThisMonth1: 'Aucune dépense enregistrée ce mois-ci',
+      noExpensesThisMonth2: 'Ajoute-en une pour suivre ta progression',
     },
     table: {
       addButton: 'Ajouter une dépense',

@@ -55,19 +55,19 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
-      <div className="relative flex justify-between items-center py-4 ">
+      <div className="relative flex flex-col md:flex-row justify-between items-center py-4 ">
         <Search className="absolute left-3 top-6.5 h-4 w-4 text-muted-foreground" />
         <Input
           placeholder={t('expenses.table.filterPlaceholder')}
           value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}
           onChange={(event) => table.getColumn('title')?.setFilterValue(event.target.value)}
-          className="max-w-sm pl-10"
+          className="w-full md:max-w-sm pl-10 mb-6 md:mb-0"
         />
         {children}
       </div>
       <div className="rounded-md border dark:bg-primary">
         <Table>
-          <TableHeader >
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
                 key={headerGroup.id}
@@ -75,7 +75,7 @@ export function DataTable<TData, TValue>({
               >
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead className=' font-bold text-lg' key={header.id}>
+                    <TableHead className=" font-bold text-lg" key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(header.column.columnDef.header, header.getContext())}
@@ -126,7 +126,7 @@ export function DataTable<TData, TValue>({
             <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
               <BanknoteArrowDown className="w-4 h-4 text-primary-color" />
             </div>
-            <span className="">{filteredItems}</span>
+            <span>{filteredItems}</span>
             <span className="text-muted-foreground font-bold">
               {filteredItems === 1
                 ? t('expenses.table.singularCount')

@@ -22,11 +22,13 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-function getExpensesThisMonth<T extends { date: string; amount: number }>(expenses: T[]): { date: string; amount: number }[] {
+function getExpensesThisMonth<T extends { date: string; amount: number }>(
+  expenses: T[]
+): { date: string; amount: number }[] {
   const date = new Date();
   const month = date.getMonth();
   const year = date.getFullYear();
-  
+
   const map: { [date: string]: { date: string; amount: number } } = {};
 
   expenses.forEach((expense) => {
@@ -90,7 +92,7 @@ export function ChartBarInteractive() {
               >
                 <span className="text-muted-foreground text-xs">{t(chartConfig[chart].label)}</span>
                 <span className="text-lg leading-none font-bold sm:text-3xl">
-                  {formatAmount(Number(displayTotal))}
+                  {formatAmount(Number(displayTotal ?? 0))}
                 </span>
               </button>
             );
@@ -98,49 +100,61 @@ export function ChartBarInteractive() {
         </div>
       </CardHeader>
       <CardContent className="px-2 sm:p-6">
-        <ChartContainer config={chartConfig} className="aspect-auto h-[150px] w-full">
-          <BarChart
-            accessibilityLayer
-            data={expensesThisMonth}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={true} />
-            <XAxis
-              dataKey="date"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              minTickGap={32}
-              tickFormatter={(value) => {
-                const date = new Date(value);
-                return date.toLocaleDateString(locale, {
-                  month: 'short',
-                  day: 'numeric',
-                });
+        {expensesThisMonth.length === 0 ? (
+          <div className="bg-secondary-color/10 border border-secondary-color p-4 rounded-md text-center w-5/6 xl:w-1/2 mx-auto mb-6">
+            <p className="text-secondary-color text-xs lg:text-sm">
+              <span className="font-semibold text-secondary-color">
+                {t('expenses.chart.noExpensesThisMonth1')}
+              </span>
+              .<br />
+              {t('expenses.chart.noExpensesThisMonth2')}
+            </p>
+          </div>
+        ) : (
+          <ChartContainer config={chartConfig} className="aspect-auto h-[150px] w-full">
+            <BarChart
+              accessibilityLayer
+              data={expensesThisMonth}
+              margin={{
+                left: 12,
+                right: 12,
               }}
-            />
-            <ChartTooltip
-              content={
-                <ChartTooltipContent
-                  className="w-[150px]"
-                  nameKey="amount"
-                  labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString(locale, {
-                      month: 'long',
-                      day: 'numeric',
-                      year: 'numeric',
-                    });
-                  }}
-                  formatter={(value) => formatAmount(Number(value))}
-                />
-              }
-            />
-            <Bar dataKey={activeChart} fill={'var(--color-primary-color)'} />
-          </BarChart>
-        </ChartContainer>
+            >
+              <CartesianGrid vertical={true} />
+              <XAxis
+                dataKey="date"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                minTickGap={32}
+                tickFormatter={(value) => {
+                  const date = new Date(value);
+                  return date.toLocaleDateString(locale, {
+                    month: 'short',
+                    day: 'numeric',
+                  });
+                }}
+              />
+              <ChartTooltip
+                content={
+                  <ChartTooltipContent
+                    className="w-[150px]"
+                    nameKey="amount"
+                    labelFormatter={(value) => {
+                      return new Date(value).toLocaleDateString(locale, {
+                        month: 'long',
+                        day: 'numeric',
+                        year: 'numeric',
+                      });
+                    }}
+                    formatter={(value) => formatAmount(Number(value))}
+                  />
+                }
+              />
+              <Bar dataKey={activeChart} fill={'var(--color-primary-color)'} />
+            </BarChart>
+          </ChartContainer>
+        )}
       </CardContent>
     </Card>
   );

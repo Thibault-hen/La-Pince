@@ -11,7 +11,7 @@ export const en = {
     hero: {
       title: 'Master your finances, simply.',
       description:
-        'With La Pince, track your expenses, manage your budgets, and receive alerts before overspending. A clear and efficient app to take control of your money — starting today. Create a free account and start saving.',
+        'With La Pince, track your expenses, manage your budgets, and receive alerts before overspending. A clear and efficient app to take control of your money, starting today. Create a free account and start saving.',
     },
     card: {
       mainTitle: 'Take back control of your spending',
@@ -149,6 +149,8 @@ export const en = {
         title: 'Your expenses this month',
         totalAmount: 'Total amount',
       },
+      noExpensesThisMonth1: 'Cannot find any expenses this month',
+      noExpensesThisMonth2: 'Add your first expense to start tracking your spending this month',
     },
     table: {
       addButton: 'Add an expense',
