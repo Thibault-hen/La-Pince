@@ -34,7 +34,7 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
     if (date.toDateString() === today.toDateString()) {
       return t('dashboard.last10Expenses.today');
     } else if (date.toDateString() === yesterday.toDateString()) {
-      return t('dashboard.last10Expenses.yesterday');
+      return t('dashboard.last10Expenses.isYesterday');
     } else {
       return date.toLocaleDateString(getLocale(), { day: 'numeric', month: 'short' });
     }
