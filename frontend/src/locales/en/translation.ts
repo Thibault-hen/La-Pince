@@ -203,7 +203,6 @@ export const en = {
         cancel: 'Cancel',
         update: 'Update',
       },
-      uncategorized: 'Uncategorized',
     },
     delete: {
       title: 'Delete an expense',
@@ -220,6 +219,7 @@ export const en = {
       updateError: 'An error occurred while updating your expense',
       deleteError: 'An error occurred while deleting your expense',
     },
+    uncategorized: 'Uncategorized',
   },
   sidebar: {
     dashboard: 'Dashboard',
