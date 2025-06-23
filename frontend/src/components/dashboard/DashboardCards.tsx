@@ -17,9 +17,9 @@ export const DashboardCards = ({
   const { t } = useTranslation();
   const { formatAmount } = useCurrency();
   return (
-    <>
-      <div className="flex-1">
-        <div className="shadow-md dark:bg-primary p-5 rounded-xl border hover:shadow-xl transition-all duration-300">
+    <div className="flex flex-col xl:flew-row 2xl:flex-col w-full 2xl:max-w-xl justify-between gap-4">
+      <div>
+        <div className=" bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
             <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
               <Euro className="h-5 w-5 text-primary-color" />
@@ -38,8 +38,8 @@ export const DashboardCards = ({
         </div>
       </div>
 
-      <div className="flex-1">
-        <div className="shadow-md dark:bg-primary p-5 rounded-xl border hover:shadow-xl transition-all duration-300">
+      <div>
+        <div className="bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
             <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
               <Calculator className="h-5 w-5 text-primary-color" />
@@ -50,14 +50,14 @@ export const DashboardCards = ({
           </div>
 
           <div className="space-y-1">
-            <div className="text-xl md:text-3xl font-bold">{formatAmount(currentMonthBudget)}</div>
+            <div className="text-xl md:text-3xl font-bold"> {formatAmount(currentMonthBudget)}</div>
             <p className="text-sm text-muted-foreground">{t('dashboard.cards.totalBudgets')}</p>
           </div>
         </div>
       </div>
 
-      <div className="flex-1">
-        <div className="shadow-md dark:bg-primary p-5 rounded-xl border hover:shadow-xl transition-all duration-300">
+      <div>
+        <div className="bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
             <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
               <TrendingUp className="h-5 w-5 text-primary-color" />
@@ -69,14 +69,16 @@ export const DashboardCards = ({
 
           <div className="space-y-1">
             <div className="text-xl md:text-3xl font-bold">
-              {(currentMonthRevenue?.value ?? 0 - currentMonthExpenses < 0)
-                ? formatAmount(0)
-                : formatAmount((currentMonthRevenue?.value ?? 0) - currentMonthExpenses)}
+              <span>
+                {(currentMonthRevenue?.value ?? 0) - currentMonthExpenses <= 0
+                  ? formatAmount(0)
+                  : formatAmount((currentMonthRevenue?.value ?? 0) - currentMonthExpenses)}
+              </span>
             </div>
             <p className="text-sm text-muted-foreground">{t('dashboard.cards.remaining')}</p>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
