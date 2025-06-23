@@ -7,7 +7,7 @@ import { useCurrency } from './use-currency';
 export type Expense = {
   id: string;
   title: string;
-  budgetId: string;
+  budgetId?: string;
   category: {
     title: string;
     color: string;
@@ -29,12 +29,12 @@ export function useExpenses() {
           id: expense.id,
           title: expense.description,
           category: {
-            title: expense.category.title,
-            color: expense.category.color.value,
+            title: expense.category?.title,
+            color: expense.category?.color.value,
           },
           amount: convertFromEUR(expense.amount),
           date: expense.date,
-          budgetId: expense.budgetId,
+          budgetId: expense.budgetId? expense.budgetId : undefined,
         };
       });
     },

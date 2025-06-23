@@ -81,6 +81,7 @@ export const fr = {
       updated: 'Votre devise a été mise à jour avec {{currency}}',
       error: 'Une erreur est survenue lors de la mise à jour de ta devise',
     },
+    select: 'Selectionne ta devise',
   },
   income: {
     toast: {
@@ -218,6 +219,7 @@ export const fr = {
       updateError: 'Une erreur est survenue lors de la mise à jour de ta dépense',
       deleteError: 'Une erreur est survenue lors de la suppression de ta dépense',
     },
+    uncategorized: 'Non catégorisée',
   },
   sidebar: {
     dashboard: 'Tableau de bord',

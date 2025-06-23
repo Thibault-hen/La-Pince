@@ -70,15 +70,15 @@ export const CurrencySelector = () => {
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>Selectionne ta devise</SelectLabel>
+            <SelectLabel>{t('currency.select')}</SelectLabel>
             {currencies?.map((currency, idx) => (
               <SelectItem key={idx} value={currency.code} className="flex cursor-pointer">
-                <div className="flex items-center justify-center w-6 h-6">
-                  <span className=" p-2 bg-secondary-color border border-secondary-color/40 px-1.5 py-0.5 rounded-md">
+                <div className="flex items-center justify-center w-10 h-6">
+                  <span className="w-10 h-6 flex items-center justify-center bg-secondary-color border border-secondary-color/40 rounded-md">
                     {currency.symbol}
                   </span>
                 </div>
-                <div className="flex flex-col ml-2 flex-start">
+                <div className="flex flex-col ml-2 ">
                   <span className="font-bold">{currency.code}</span>
                   <span className="font-bold text-muted-foreground text-xs">{currency.name}</span>
                 </div>

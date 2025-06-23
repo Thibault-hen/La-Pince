@@ -53,7 +53,7 @@ export const createColumns = (
             className={'!border align-center items-center capitalize min-w-26'}
             style={{ backgroundColor: category.color, color: '#fff' } as React.CSSProperties}
           >
-            <span className="font-bold text-xs">{t(category.title)}</span>
+            <span className="font-bold text-xs">{t(category.title || 'expenses.uncategorized' )}</span>
           </Badge>
         </div>
       );
