@@ -54,6 +54,10 @@ expenseRouter.basePath('/expense')
       const formattedExpenses = expenses.map(expense => {
         const { budget, ...restOfExpense } = expense;
 
+        if (!budget) {
+          return restOfExpense;
+        }
+
         return ({
           ...restOfExpense,
           category: budget.category,

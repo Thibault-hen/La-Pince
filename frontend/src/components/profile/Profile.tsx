@@ -122,11 +122,10 @@ export const Profile = ({ userData }: ProfileProps) => {
           <form.Field
             name="currency"
             children={(field) => (
-              <div className="space-y-2 max-w-1/4">
+              <div className="space-y-2 lg:max-w-1/3">
                 <Label htmlFor={field.name} className="text-sm font-medium">
                   {t('account.profile.form.favoriteCurrency')}
                 </Label>
-
                 <Select
                   required
                   onValueChange={field.handleChange}
@@ -137,17 +136,23 @@ export const Profile = ({ userData }: ProfileProps) => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectLabel>Selectionne ta monnaie</SelectLabel>
+                      <SelectLabel>{t('currency.select')}</SelectLabel>
                       {currencies?.map((currency, idx) => (
-                        <SelectItem key={idx} value={currency.code} className="flex cursor-pointer">
-                          <div className="flex max-w-16 min-w-[45px]">
-                            <span className="p-2 bg-secondary-color border border-secondary-color/40 px-1.5 py-0.5 rounded-md">
+                        <SelectItem
+                          key={idx}
+                          value={currency.code}
+                          className="flex cursor-pointer group data-[state=checked]:bg-primary-color/10 data-[state=checked]:text-primary-color"
+                        >
+                          <div className="flex items-center justify-center w-10 h-6">
+                            <span className="w-10 h-6 flex items-center justify-center text-primary-color bg-primary-color/10 border border-primary-color/20 rounded-md group-hover:bg-secondary-color group-hover:border-secondary-color/40">
                               {currency.symbol}
                             </span>
                           </div>
-                          <div className="flex items-center gap-2">
-                            <span className="font-bold">{currency.code}</span>
-                            <span className="font-bold text-muted-foreground text-xs">
+                          <div className="flex flex-col ml-2">
+                            <span className="font-bold group-hover:text-secondary-color">
+                              {currency.code}
+                            </span>
+                            <span className="font-bold text-muted-foreground text-xs group-hover:text-secondary-color">
                               {currency.name}
                             </span>
                           </div>

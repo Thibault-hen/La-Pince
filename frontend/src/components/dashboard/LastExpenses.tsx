@@ -63,7 +63,8 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
             <div className="text-right">
               <div className="flex items-center gap-2 mb-1">
                 <p className="text-base md:text-xl font-bold text-black dark:text-white">
-                  -{formatAmount(totalAmount ?? 0)}
+                  {totalAmount ? '-' : ''}
+                  {formatAmount(totalAmount ?? 0)}
                 </p>
               </div>
               <p className="text-black dark:text-white text-sm">

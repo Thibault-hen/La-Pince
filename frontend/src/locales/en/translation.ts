@@ -80,6 +80,7 @@ export const en = {
       updated: 'Your currency has been updated to {{currency}}',
       error: 'An error has occurred while updating your currency',
     },
+    select: 'Select your currency',
   },
   income: {
     toast: {
@@ -202,6 +203,7 @@ export const en = {
         cancel: 'Cancel',
         update: 'Update',
       },
+      uncategorized: 'Uncategorized',
     },
     delete: {
       title: 'Delete an expense',
