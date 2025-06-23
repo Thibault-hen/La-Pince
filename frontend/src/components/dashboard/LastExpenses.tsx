@@ -90,7 +90,7 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
                     className="w-4 h-4 rounded-lg shadow-sm"
                     style={{
                       background: !expense.budget?.category
-                        ? 'linear-gradient(135deg, #FFFFFF, #bb6f64, #c9a29c)' // special fallback style
+                        ? 'linear-gradient(135deg, #FFFFFF, #bb6f64, #c9a29c)'
                         : (expense.budget.category.color?.value ?? '#f0f0f0'),
 
                       boxShadow: !expense.budget?.category

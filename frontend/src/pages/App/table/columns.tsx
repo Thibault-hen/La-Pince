@@ -47,13 +47,22 @@ export const createColumns = (
     ),
     cell: ({ row }) => {
       const category: { title: string; color: string } = row.getValue('category');
+      console.log('category', category);
       return (
         <div className="flex justify-center">
           <Badge
             className={'!border align-center items-center capitalize min-w-26'}
-            style={{ backgroundColor: category.color, color: '#fff' } as React.CSSProperties}
+            style={{
+              background: !category?.title
+                ? 'linear-gradient(135deg, #FFFFFF, #bb6f64, #c9a29c)'
+                : (category.color ?? '#f0f0f0'),
+
+              boxShadow: !category?.title ? '0 0 15px rgba(245, 87, 108, 0.5)' : 'none',
+            }}
           >
-            <span className="font-bold text-xs">{t(category.title || 'expenses.uncategorized' )}</span>
+            <span className="font-bold text-xs">
+              {t(category.title) || t('expenses.uncategorized')}
+            </span>
           </Badge>
         </div>
       );
