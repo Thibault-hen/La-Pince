@@ -47,7 +47,6 @@ export const createColumns = (
     ),
     cell: ({ row }) => {
       const category: { title: string; color: string } = row.getValue('category');
-      console.log('category', category);
       return (
         <div className="flex justify-center">
           <Badge
@@ -60,7 +59,7 @@ export const createColumns = (
               boxShadow: !category?.title ? '0 0 15px rgba(245, 87, 108, 0.5)' : 'none',
             }}
           >
-            <span className="font-bold text-xs">
+            <span className="font-bold text-xs text-white">
               {t(category.title) || t('expenses.uncategorized')}
             </span>
           </Badge>

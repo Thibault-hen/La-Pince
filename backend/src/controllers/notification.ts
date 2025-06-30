@@ -1,63 +1,69 @@
-import { describeRoute } from "hono-openapi";
-import { response200, response204, response404 } from "../utils/openapi";
-import prisma from "../db/client";
-import { notificationSelectSchema } from "../validators/notification";
-import { zValidator } from "@hono/zod-validator";
-import { paramsWithId } from "../validators/utils";
-import { HTTPException } from "hono/http-exception";
-import { notifiableUsers } from "../websockets/notifiableUsers";
-import { Hono } from "hono";
+import { describeRoute } from 'hono-openapi';
+import { response200, response204, response404 } from '../utils/openapi';
+import prisma from '../db/client';
+import { notificationSelectSchema } from '../validators/notification';
+import { zValidator } from '@hono/zod-validator';
+import { paramsWithId } from '../validators/utils';
+import { HTTPException } from 'hono/http-exception';
+import { notifiableUsers } from '../websockets/notifiableUsers';
+import { Hono } from 'hono';
+import { includes } from 'zod/v4';
 
 const notificationRouter = new Hono();
 
 notificationRouter
-  .basePath("/notification")
+  .basePath('/notification')
   .get(
-    "/",
+    '/',
     describeRoute({
-      description: "Get all notifications of a user",
-      tags: ["notification"],
+      description: 'Get all notifications of a user',
+      tags: ['notification'],
       responses: {
         200: response200(notificationSelectSchema),
       },
     }),
     async (c) => {
-      const userId = c.get("jwtPayload").userId;
+      const userId = c.get('jwtPayload').userId;
       const notifications = await prisma.notification.findMany({
         where: { userId: userId },
-        orderBy: { createdAt: "desc" },
+        orderBy: { createdAt: 'desc' },
         include: {
           budget: {
             include: {
-              category: {},
+              category: {
+                include: {
+                  color: true,
+                },
+              },
             },
           },
         },
       });
-
+      console.log('notifications', JSON.stringify(notifications, null, 2));
       return c.json(
         notifications.map(({ budget, ...notification }) => ({
           ...notification,
           budgetName: budget.category.title,
+          color: budget.category.color,
         })),
         200,
       );
     },
   )
   .delete(
-    "/:id",
+    '/:id',
     describeRoute({
-      description: "Delete a notification",
-      tags: ["notification"],
+      description: 'Delete a notification',
+      tags: ['notification'],
       responses: {
         204: response204(),
         404: response404(),
       },
     }),
-    zValidator("param", paramsWithId),
+    zValidator('param', paramsWithId),
     async (c) => {
-      const userId = c.get("jwtPayload").userId;
-      const notificationId = c.req.param("id");
+      const userId = c.get('jwtPayload').userId;
+      const notificationId = c.req.param('id');
       const notificationExist = await prisma.notification.findUnique({
         where: {
           id: notificationId,
@@ -66,7 +72,7 @@ notificationRouter
       });
       if (!notificationExist) {
         throw new HTTPException(404, {
-          res: c.json({ message: "Notification not found" }, 404),
+          res: c.json({ message: 'Notification not found' }, 404),
         });
       }
 
@@ -112,10 +118,10 @@ export async function tryCreateBudgetNotification(
         maximumAmount: maxAmount,
         totalAmount: totalExpenseAmount,
         notificationType:
-          totalExpenseAmount > maxAmount ? "budgetExceeded" : "budgetWarning",
+          totalExpenseAmount > maxAmount ? 'budgetExceeded' : 'budgetWarning',
       },
     });
-    notifiableUsers.get(userId)?.forEach((ws) => ws.send(""));
+    notifiableUsers.get(userId)?.forEach((ws) => ws.send(''));
   } catch (error) {}
 }
 

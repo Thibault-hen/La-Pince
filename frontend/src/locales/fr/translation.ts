@@ -489,6 +489,9 @@ export const fr = {
     tooManyAttempts: 'Too many attempts, please try again later',
   },
   notification: {
+    header: {
+      subtitle: 'Mes notifications',
+    },
     noNotification: 'Aucunes nouvelles notifications',
     budgetWarning: {
       title: 'Your budget is almost exceeded',

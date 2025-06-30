@@ -1,3 +1,5 @@
+import { sub } from 'date-fns';
+
 export const en = {
   home: {
     nav: {
@@ -489,6 +491,9 @@ export const en = {
     tooManyAttempts: 'Too many attempts, please try again later',
   },
   notification: {
+    header: {
+      subtitle: 'My notifications',
+    },
     noNotification: 'No new notifications',
     budgetWarning: {
       title: 'Your budget is almost exceeded',
