@@ -100,16 +100,28 @@ export async function tryCreateBudgetNotification(
         expenses: {},
       },
     });
+
     if (!budget) return;
 
     const totalExpenseAmount = budget.expenses.reduce(
       (acc, expense) => acc + expense.amount,
       0,
     );
+
     const limitAlert = budget.limitAlert;
     const maxAmount = budget.amount;
 
     if (totalExpenseAmount < limitAlert) return;
+
+    const existingNotification = await prisma.notification.findFirst({
+      where: {
+        userId,
+        budgetId,
+        notificationType: 'budgetExceeded',
+      },
+    });
+
+    if (existingNotification) return;
 
     await prisma.notification.create({
       data: {
