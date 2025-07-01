@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import type { Expense } from '@/hooks/use-expense';
 import type { TFunction } from 'i18next';
+import { ca } from 'date-fns/locale';
 
 export const createColumns = (
   onEdit: (expense: Expense) => void,
@@ -21,8 +22,20 @@ export const createColumns = (
   {
     accessorKey: 'id',
     header: '',
-    cell: () => {
-      return '';
+    cell: ({ row }) => {
+      const category: { title: string; color: string } = row.getValue('category');
+      const rowIndex = row.index + 1;
+
+      return (
+        <div
+          className="font-bold text-sm w-full h-full min-w-[80px] lg:min-w-auto flex items-center justify-center -m-4 p-4 dark:text-white"
+          style={{
+            background: `linear-gradient(90deg, ${category.color}, transparent 80%)`,
+          }}
+        >
+          {rowIndex}
+        </div>
+      );
     },
   },
   {
@@ -34,7 +47,11 @@ export const createColumns = (
     ),
     cell: ({ row }) => {
       const title: string = row.getValue('title');
-      return <div className="font-medium text-xs lg:text-sm">{title}</div>;
+      return (
+        <div className="font-medium text-xs lg:text-sm -m-4 p-4 h-full w-full flex items-center">
+          {title}
+        </div>
+      );
     },
     filterFn: 'includesString',
   },
@@ -52,11 +69,7 @@ export const createColumns = (
           <Badge
             className={'!border align-center items-center capitalize min-w-26'}
             style={{
-              background: !category?.title
-                ? 'linear-gradient(135deg, #FFFFFF, #bb6f64, #c9a29c)'
-                : (category.color ?? '#f0f0f0'),
-
-              boxShadow: !category?.title ? '0 0 15px rgba(245, 87, 108, 0.5)' : 'none',
+              background: category.color,
             }}
           >
             <span className="font-bold text-xs text-white">

@@ -8,6 +8,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { Badge } from '../ui/badge';
+import { showInfoToast } from '@/utils/toasts';
 
 export default function NotificationButton() {
   const { notifications } = useNotifications();
@@ -21,7 +22,7 @@ export default function NotificationButton() {
     const ws = new WebSocket(`${import.meta.env.VITE_WS_URL}`);
     ws.onmessage = () => {
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
-      toast.info('New notification received', { position: 'top-center' });
+      showInfoToast(t('notification.newNotification'));
     };
     return () => ws.close();
   }, []);

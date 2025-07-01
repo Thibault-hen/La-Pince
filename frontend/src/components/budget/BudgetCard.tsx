@@ -33,19 +33,28 @@ export const BudgetCard = ({ budget, onOpenEditModal, onOpenDeleteModal }: Budge
   };
 
   return (
-    <Card className="flex justify-around p-4 dark:bg-primary hover:border-secondary-color transition-all duration-200 ease-in-out">
+    <Card className="flex relative justify-around p-4 dark:bg-primary transition-all duration-200 ease-in-out hover:scale-[1.02] hover:-translate-y-1">
+      <div
+        className="absolute top-0 left-0 w-full h-1.5 rounded-t-full opacity-60"
+        style={{
+          background: `linear-gradient(90deg, ${budget.category.color?.value}, transparent 70%)`,
+        }}
+      />
       <CardHeader className="p-0">
         <div className="flex items-center justify-between">
           <CardTitle
-            className="border-l-4 px-2 flex gap-2 items-center"
+            className="border-l-4 px-2 flex gap-2 items-center relative"
             style={{ borderLeftColor: budget.category.color?.value }}
           >
             {t(budget.category.title)}
             {budget.totalExpense > (budget.amount ?? 0) && (
-              <TriangleAlert
-                size={30}
-                className="text-red-500 bg-red-500/20 p-1 rounded-xl border border-red-500"
-              />
+              <div className="relative z-10">
+                <TriangleAlert
+                  size={24}
+                  className="text-red-600 dark:text-red-400 drop-shadow-sm relative z-10"
+                />
+                <div className="absolute -inset-1 bg-red-500/20 rounded-full blur-sm z-0" />
+              </div>
             )}
           </CardTitle>
           <CardDescription className="flex gap-1">
