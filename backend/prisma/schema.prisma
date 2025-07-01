@@ -113,8 +113,9 @@ model Notification {
   userId           String   @map("user_id")
   notificationType String   @map("notification_type")
   budgetId         String   @map("budget_id")
-  maximumAmount     Float    @map("maximum_amount")
+  maximumAmount    Float    @map("maximum_amount")
   totalAmount      Float    @map("total_amount")
+  isRead           Boolean  @default(false) @map("is_read")
 
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")

@@ -1,25 +1,39 @@
-import { notificationService } from "@/services/notification";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { notificationService } from '@/services/notification';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import type { Color } from '@/types/color';
+
+export type TransformedNotification = {
+  id: string;
+  notificationType: 'budgetWarning' | 'budgetExceeded';
+  createdAt: string;
+  budgetName: string;
+  budgetAmount: number;
+  isRead: boolean;
+  color: Color;
+};
 
 export function useNotifications() {
-  const { data = [], isLoading } = useQuery({
+  const { data = [], ...others } = useQuery({
     queryKey: ['notifications'],
     queryFn: async () => {
       return notificationService.getAll();
     },
-    select: (data) => data.map((notification) => {
-      return {
-        id: notification.id,
-        type: notification.notificationType,
-        date: notification.createdAt,
-        budgetName: notification.budgetName,
-        budgetAmount: notification.maximumAmount - notification.totalAmount,
-      }
-    }),
+    select: (data) =>
+      data.map((notification): TransformedNotification => {
+        return {
+          id: notification.id,
+          notificationType: notification.notificationType,
+          createdAt: notification.createdAt,
+          budgetName: notification.budgetName,
+          budgetAmount: notification.maximumAmount - notification.totalAmount,
+          isRead: notification.isRead,
+          color: notification.color,
+        };
+      }),
   });
   return {
     notifications: data,
-    isLoading,
+    others,
   };
 }
 
@@ -33,10 +47,8 @@ export function useDeleteNotification() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
     },
-  })
+  });
   return {
-    deleteNotification
+    deleteNotification,
   };
 }
-
-

@@ -489,15 +489,29 @@ export const fr = {
     tooManyAttempts: 'Too many attempts, please try again later',
   },
   notification: {
+    header: {
+      subtitle: 'Mes notifications',
+    },
     noNotification: 'Aucunes nouvelles notifications',
+    newNotification: 'Vous avez une nouvelle notification',
     budgetWarning: {
-      title: 'Your budget is almost exceeded',
+      title: 'Votre budget approche de sa limite',
       content:
-        'Your budget <0>{{ budgetName }}</0> is approaching its limit.<1/>You have <2>{{budgetAmountRemaining}}</2> remaining.',
+        "Votre budget <0>{{ budgetName }}</0> approche de sa limite.<1/>Il vous reste <2>{{budgetAmountRemaining}}</2> avant d'atteindre la limite.",
     },
     budgetExceeded: {
       title: 'Votre budget a été dépassé',
       content: 'Votre budget <0>{{ budgetName }}</0> a été dépassé.',
+    },
+    time: {
+      seconds_singular: 'il y a {{count}} seconde',
+      seconds_plural: 'il y a {{count}} secondes',
+      minutes_singular: 'il y a {{count}} minute',
+      minutes_plural: 'il y a {{count}} minutes',
+      hours_singular: 'il y a {{count}} heure',
+      hours_plural: 'il y a {{count}} heures',
+      days_singular: 'il y a {{count}} jour',
+      days_plural: 'il y a {{count}} jours',
     },
   },
 };

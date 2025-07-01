@@ -26,14 +26,13 @@ export const CategoryCard = ({ category, onOpenDeleteModal, onOpenEditModal }: I
   const { formatAmount } = useCurrency();
 
   return (
-    <Card
-      className="flex justify-around p-4 dark:bg-primary hover:border-secondary-color transition-all duration-200 ease-in-out gap-1 shadow"
-      style={
-        {
-          '--hover-card': category?.color,
-        } as React.CSSProperties
-      }
-    >
+    <Card className="flex relative justify-around p-4 dark:bg-primary transition-all duration-200 ease-in-out gap-1 hover:scale-[1.02] hover:-translate-y-1">
+      <div
+        className="absolute top-0 left-0 w-full h-1.5 rounded-t-full opacity-60"
+        style={{
+          background: `linear-gradient(90deg, ${category?.color?.value}, transparent 70%)`,
+        }}
+      />
       <CardHeader className="p-0">
         <div className="flex items-center justify-between">
           <CardTitle

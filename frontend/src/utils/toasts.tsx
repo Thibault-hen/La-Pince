@@ -11,3 +11,10 @@ export const showErrorToast = (message: string) => {
     closeButton: true,
   });
 };
+
+export const showInfoToast = (message: string) => {
+  toast.info(message, {
+    position: 'top-center',
+    closeButton: true,
+  });
+};

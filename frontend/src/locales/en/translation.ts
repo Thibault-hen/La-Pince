@@ -1,3 +1,5 @@
+import { sub } from 'date-fns';
+
 export const en = {
   home: {
     nav: {
@@ -489,7 +491,11 @@ export const en = {
     tooManyAttempts: 'Too many attempts, please try again later',
   },
   notification: {
+    header: {
+      subtitle: 'My notifications',
+    },
     noNotification: 'No new notifications',
+    newNotification: 'You have a new notification',
     budgetWarning: {
       title: 'Your budget is almost exceeded',
       content:
@@ -498,6 +504,16 @@ export const en = {
     budgetExceeded: {
       title: 'Your budget has been exceeded',
       content: 'Your budget <0>{{ budgetName }}</0> has been exceeded.',
+    },
+    time: {
+      seconds_singular: '{{count}} second ago',
+      seconds_plural: '{{count}} seconds ago',
+      minutes_singular: '{{count}} minute ago',
+      minutes_plural: '{{count}} minutes ago',
+      hours_singular: '{{count}} hour ago',
+      hours_plural: '{{count}} hours ago',
+      days_singular: '{{count}} day ago',
+      days_plural: '{{count}} days ago',
     },
   },
 };
