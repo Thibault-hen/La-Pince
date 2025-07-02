@@ -115,6 +115,7 @@ export const en = {
       warning: 'You have spent more than your income this month',
       expensePercentage: 'You have spent {{percentage}} of your income this month',
       updateYourIncome: 'Update your income to track progress',
+      used: 'used',
     },
     chart: {
       title: 'Total spending over the last 6 months',
@@ -129,6 +130,10 @@ export const en = {
       totalIncome: 'Total Income',
       remaining: 'Remaining this month',
       totalBudgets: 'Total Budgets',
+      income: 'Income',
+      totalBudget: 'Total Budget',
+      remaining2: 'Remaining',
+      expenses: 'Expenses',
     },
     last10Expenses: {
       title: 'Last expenses',

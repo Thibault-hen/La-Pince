@@ -114,6 +114,7 @@ export const fr = {
       warning: 'Tu as dépensé plus que ton revenu ce mois-ci',
       expensePercentage: 'Vous avez dépensé {{percentage}} de vos revenus ce mois-ci',
       updateYourIncome: 'Mets à jour ton revenu pour voir ta progression',
+      used: 'utilisé',
     },
     chart: {
       title: 'Dépenses totales au cours des 6 derniers mois',
@@ -128,6 +129,10 @@ export const fr = {
       totalIncome: 'Revenu total',
       remaining: 'Reste ce mois-ci',
       totalBudgets: 'Budgets totaux',
+      income: 'Revenu',
+      totalBudget: 'Budget total',
+      remaining2: 'Restant',
+      expenses: 'Dépenses',
     },
     last10Expenses: {
       title: 'Dernières dépenses',

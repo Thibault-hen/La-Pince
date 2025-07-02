@@ -20,35 +20,16 @@ export const createColumns = (
   formatAmount: (amount: number) => string
 ): ColumnDef<Expense>[] => [
   {
-    accessorKey: 'id',
-    header: '',
-    cell: ({ row }) => {
-      const category: { title: string; color: string } = row.getValue('category');
-      const rowIndex = row.index + 1;
-
-      return (
-        <div
-          className="font-bold text-sm w-full h-full min-w-[80px] lg:min-w-auto flex items-center justify-center -m-4 p-4 dark:text-white"
-          style={{
-            background: `linear-gradient(90deg, ${category.color}, transparent 80%)`,
-          }}
-        >
-          {rowIndex}
-        </div>
-      );
-    },
-  },
-  {
     accessorKey: 'title',
     header: () => (
-      <div className="text-left text-sm lg:text-base tracking-wider">
+      <div className="text-left text-sm lg:text-base tracking-wider ml-4 -m-1 p-4">
         {t('expenses.table.columns.title')}
       </div>
     ),
     cell: ({ row }) => {
       const title: string = row.getValue('title');
       return (
-        <div className="font-medium text-xs lg:text-sm -m-4 p-4 h-full w-full flex items-center">
+        <div className="font-medium text-xs lg:text-sm -m-4 p-4 h-full w-full flex items-center ml-4">
           {title}
         </div>
       );

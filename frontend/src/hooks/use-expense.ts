@@ -34,10 +34,12 @@ export function useExpenses() {
           },
           amount: convertFromEUR(expense.amount),
           date: expense.date,
-          budgetId: expense.budgetId? expense.budgetId : undefined,
+          budgetId: expense.budgetId ? expense.budgetId : undefined,
         };
       });
     },
+    staleTime: 1000 * 60 * 5,
+    retry: false,
   });
 
   return {
