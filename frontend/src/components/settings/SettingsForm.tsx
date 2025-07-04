@@ -4,6 +4,7 @@ import { Security } from '../profile/Security';
 import { useTranslation } from 'react-i18next';
 import { useAtomValue } from 'jotai';
 import { userAtom } from '@/stores/authStore';
+import { DeleteAccount } from '../profile/DeleteAccount';
 
 export const SettingsForm = () => {
   const user = useAtomValue(userAtom);
@@ -21,10 +22,9 @@ export const SettingsForm = () => {
       </div>
 
       <div className="grid gap-6">
-        <div className="dark:bg-primary border rounded-xl">
-          <Profile user={user} />
-        </div>
+        <Profile user={user} />
         <Security />
+        <DeleteAccount />
       </div>
     </>
   );

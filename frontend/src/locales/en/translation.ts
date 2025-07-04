@@ -425,9 +425,21 @@ export const en = {
     },
   },
   account: {
+    delete: {
+      header: {
+        title: 'Delete Account',
+        subtitle: 'Permanently delete your account',
+      },
+      list: {
+        item1: 'All your data will be permanently deleted',
+        item2: 'You will lose access to your budgets and expenses',
+        item3: 'This action cannot be undone',
+      },
+      button: 'Delete my account',
+    },
     header: {
       title: 'Account Settings',
-      subtitle: 'Manage your personal information',
+      subtitle: 'Deleting your account is permanent and cannot be undone.',
     },
     profile: {
       title: 'Profile Settings',

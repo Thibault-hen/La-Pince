@@ -423,6 +423,18 @@ export const fr = {
     },
   },
   account: {
+    delete: {
+      header: {
+        title: 'Supprimer le compte',
+        subtitle: 'Supprimer définitivement ton compte',
+      },
+      list: {
+        item1: 'Toutes tes données seront définitivement supprimées',
+        item2: 'Tu perdras l’accès à tes budgets et dépenses',
+        item3: 'Cette action est irréversible',
+      },
+      button: 'Supprimer mon compte',
+    },
     header: {
       title: 'Paramètre du compte',
       subtitle: 'Gérez mes informations personnelles',
