@@ -7,13 +7,13 @@ import {
   SelectLabel,
   SelectItem,
 } from '@/components/ui/select';
-import type { User } from '@/services/auth';
-import { useQueryClient } from '@tanstack/react-query';
 import { useCurrency } from '@/hooks/use-currency';
 import { useTranslation } from 'react-i18next';
 import { CloudAlert } from 'lucide-react';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 import { useUpdateCurrency } from '@/hooks/use-account';
+import { useAtomValue } from 'jotai';
+import { userAtom } from '@/stores/authStore';
 
 type Currency = {
   name: string;
@@ -45,8 +45,7 @@ export const currencies = [
 ] as Currency[];
 
 export const CurrencySelector = () => {
-  const queryClient = useQueryClient();
-  const userData = queryClient.getQueryData<User>(['authUser']);
+  const user = useAtomValue(userAtom);
   const { setCurrency, error, isLoading } = useCurrency();
   const { t } = useTranslation();
   const { mutateAsync: updateCurrency } = useUpdateCurrency();
@@ -62,7 +61,7 @@ export const CurrencySelector = () => {
       <Select
         disabled={isLoading || error !== null}
         required
-        defaultValue={userData?.user.currency ?? 'EUR'}
+        defaultValue={user?.currency ?? 'EUR'}
         onValueChange={(value) => handleUpdateCurrency(value)}
       >
         <SelectTrigger className="w-full">

@@ -26,7 +26,7 @@ export function DatePicker({ name, required, value, onChange }: DatePickerProps)
           <Button
             type="button"
             variant="outline"
-            className="  w-full justify-start text-center font-normal"
+            className="w-full justify-start text-center font-normal dark:bg-primary"
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
             {format(value, 'PPP', { locale: dateLocale })}

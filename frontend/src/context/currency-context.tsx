@@ -1,6 +1,5 @@
-// currency-context.tsx
-import type { User } from '@/services/auth';
-import { useQueryClient } from '@tanstack/react-query';
+import { userAtom } from '@/stores/authStore';
+import { useAtomValue } from 'jotai';
 import React, { createContext, useContext, useState } from 'react';
 
 const CurrencyContext = createContext<{
@@ -12,9 +11,8 @@ const CurrencyContext = createContext<{
 });
 
 export const CurrencyProvider = ({ children }: { children: React.ReactNode }) => {
-  const queryClient = useQueryClient();
-  const userData = queryClient.getQueryData<User>(['authUser']);
-  const [currency, setCurrency] = useState(userData?.user.currency ?? 'EUR');
+  const user = useAtomValue(userAtom);
+  const [currency, setCurrency] = useState(user?.currency ?? 'EUR');
   return (
     <CurrencyContext.Provider value={{ currency, setCurrency }}>
       {children}

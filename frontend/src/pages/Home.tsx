@@ -1,8 +1,8 @@
-import Contact from '@/components/blocks/contact';
-import Footer01 from '@/components/blocks/footer-01';
-import Hero05 from '@/components/blocks/hero-05';
-import Problem01 from '@/components/blocks/problem-01';
-import Header from '@/components/homePage/header.tsx';
+import Contact from '@/components/homepage/contact';
+import Footer from '@/components/homepage/Footer';
+import Header from '@/components/homepage/Header';
+import HeroSection from '@/components/homepage/HeroSection';
+import ProblemSection from '@/components/homepage/ProblemSection';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 
 export const Home = () => {
@@ -10,10 +10,10 @@ export const Home = () => {
     <DefaultWrapper>
       <div className="w-full place-items-center ">
         <Header />
-        <Hero05 />
-        <Problem01 />
+        <HeroSection />
+        <ProblemSection />
         <Contact />
-        <Footer01 />
+        <Footer />
       </div>
     </DefaultWrapper>
   );

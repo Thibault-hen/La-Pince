@@ -2,24 +2,18 @@ import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import laPinceLogo from '@/assets/logo.webp';
 
-// Import your logo (you'll need to replace this with your actual import)
-// import laPinceLogo from '@/assets/logo.webp';
-
 export const NotFound = () => {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="max-w-2xl w-full text-center">
-        {/* Logo Section */}
         <div className="mb-8 flex justify-center">
           <img src={laPinceLogo} alt="La Pince" className="w-24 h-24" />
         </div>
 
-        {/* 404 Animation */}
         <div className="mb-8 relative">
           <div className="text-9xl font-bold text-primary-color">404</div>
         </div>
 
-        {/* Content */}
         <div className="mb-12 space-y-4">
           <h1 className="text-3xl md:text-4xl font-bold text-secondary-color mb-4">
             Page Not Found
@@ -30,7 +24,6 @@ export const NotFound = () => {
           </p>
         </div>
 
-        {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
           <Button variant="blue" onClick={() => window.history.back()}>
             <ArrowLeft className="w-4 h-4" />

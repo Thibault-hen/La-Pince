@@ -61,7 +61,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'form'>)
   return (
     <form
       className={cn(
-        'flex flex-col gap-6 dark:bg-primary rounded-md border p-6 sm:p-16 shadow',
+        'flex flex-col gap-6 dark:bg-background rounded-md border p-6 sm:p-16 shadow',
         className
       )}
       {...props}

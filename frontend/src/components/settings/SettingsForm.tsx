@@ -1,13 +1,12 @@
 import { Settings } from 'lucide-react';
-import { useQueryClient } from '@tanstack/react-query';
-import type { User as UserType } from '@/services/auth';
 import { Profile } from '../profile/Profile';
 import { Security } from '../profile/Security';
 import { useTranslation } from 'react-i18next';
+import { useAtomValue } from 'jotai';
+import { userAtom } from '@/stores/authStore';
 
 export const SettingsForm = () => {
-  const queryClient = useQueryClient();
-  const userData = queryClient.getQueryData<UserType>(['authUser']);
+  const user = useAtomValue(userAtom);
   const { t } = useTranslation();
   return (
     <>
@@ -23,7 +22,7 @@ export const SettingsForm = () => {
 
       <div className="grid gap-6">
         <div className="dark:bg-primary border rounded-xl">
-          <Profile userData={userData?.user} />
+          <Profile user={user} />
         </div>
         <Security />
       </div>

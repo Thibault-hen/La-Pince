@@ -1,19 +1,17 @@
-import { AppSidebar } from '@/components/app-sidebar';
+import { AppSidebar } from '@/components/AppSidebar';
 import { ProfileButton } from '@/components/profile/ProfileButton';
 import { ModeToggle } from '@/components/theme/theme-toggle';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { Outlet } from 'react-router-dom';
-import {} from 'react';
-import { useQueryClient } from '@tanstack/react-query';
-import type { User } from '@/services/auth';
 import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from '@/components/lang/LanguageSelector';
 import { CurrencyProvider } from '@/context/currency-context';
 import NotificationButton from '@/components/notification/NotificationButton';
+import { userAtom } from '@/stores/authStore';
+import { useAtomValue } from 'jotai';
 
 export const AppLayout = () => {
-  const queryClient = useQueryClient();
-  const userData = queryClient.getQueryData<User>(['authUser']);
+  const user = useAtomValue(userAtom);
   const { t, i18n } = useTranslation();
   const locale = i18n.language === 'en' ? 'en-US' : 'fr-FR';
   return (
@@ -31,7 +29,7 @@ export const AppLayout = () => {
               <div className="flex gap-2 items-center justify-between w-full">
                 <div>
                   <h2 className="text-xs font-bold text-foreground md:text-sm lg:text-lg">
-                    {t('header.greeting', { name: userData?.user.name })}
+                    {t('header.greeting', { name: user?.name })}
                   </h2>
                   <p className="text-xs text-muted-foreground">
                     {new Date().toLocaleDateString(locale, {

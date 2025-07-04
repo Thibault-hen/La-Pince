@@ -5,7 +5,6 @@ import Notification from './Notification';
 import { useNotifications } from '@/hooks/use-notification';
 import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { Badge } from '../ui/badge';
 import { showInfoToast } from '@/utils/toasts';
@@ -14,8 +13,6 @@ export default function NotificationButton() {
   const { notifications } = useNotifications();
 
   const notificationCount = notifications.filter((n) => !n.isRead).length;
-  console.log('Notification count:', notificationCount);
-  console.log('Notifications:', notifications);
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   useEffect(() => {
@@ -24,7 +21,11 @@ export default function NotificationButton() {
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
       showInfoToast(t('notification.newNotification'));
     };
-    return () => ws.close();
+    return () => {
+      if (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING) {
+        ws.close();
+      }
+    };
   }, []);
 
   return (

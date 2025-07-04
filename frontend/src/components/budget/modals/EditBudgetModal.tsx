@@ -42,7 +42,7 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
   const form = useForm({
     defaultValues: {
       amount: budget?.amount ?? 0,
-      limitAlert: budget?.amount ?? 0,
+      limitAlert: budget?.limitAlert ?? 0,
       categoryId: budget?.categoryId ?? '',
     },
     validators: {

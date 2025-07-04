@@ -1,6 +1,8 @@
 import type { LoginUser, RegisterUser } from '@/schemas/auth.schemas';
 import type { GenericMessageResponse } from '@/schemas/global.schema';
+import { csrfTokenAtom } from '@/stores/authStore';
 import { api } from '@/utils/api';
+import { getDefaultStore } from 'jotai';
 
 export type User = {
   user: {
@@ -15,10 +17,11 @@ export type User = {
   token: string;
 };
 
+const store = getDefaultStore();
+
 export const authService = {
   async login(data: LoginUser): Promise<User> {
     const response = await api.post<User>('/auth/login', data);
-    api.defaults.headers.common['csrf_token'] = response.data.token;
     return response.data;
   },
 
@@ -34,7 +37,6 @@ export const authService = {
 
   async me(): Promise<User> {
     const response = await api.get<User>('/account/me');
-    api.defaults.headers.common['csrf_token'] = response.data.token;
     return response.data;
   },
 
@@ -50,5 +52,17 @@ export const authService = {
     });
     return response.data;
   },
-
 };
+
+api.interceptors.request.use(
+  (config) => {
+    const csrfToken = store.get(csrfTokenAtom);
+    if (csrfToken) {
+      config.headers['csrf_token'] = csrfToken;
+    }
+    return config;
+  },
+  (error) => {
+    Promise.reject(error);
+  }
+);

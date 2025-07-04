@@ -13,10 +13,10 @@ import { Suspense } from 'react';
 import { ModeToggle } from '@/components/theme/theme-toggle.tsx';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { useQueryClient } from '@tanstack/react-query';
-import type { User } from '@/services/auth';
 import { LanguageSelector } from '../lang/LanguageSelector';
 import { useTranslation } from 'react-i18next';
+import { useAtomValue } from 'jotai';
+import { userAtom } from '@/stores/authStore';
 
 const TopMenu = [
   { name: 'home.nav.contact', to: '#contact' },
@@ -24,9 +24,8 @@ const TopMenu = [
 ];
 
 export default function Header() {
-  const queryClient = useQueryClient();
   const { t } = useTranslation();
-  const userData = queryClient.getQueryData<User>(['authUser']);
+  const user = useAtomValue(userAtom);
   return (
     <header className="sticky top-5 z-50 flex justify-center container ">
       <div className="min-w-full border rounded-md w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-2.5 px-4 ">
@@ -46,7 +45,7 @@ export default function Header() {
           </div>
           <div className="items-center flex">
             <div className="flex items-center gap-2">
-              {!userData ? (
+              {!user ? (
                 <>
                   <Button variant="blue" asChild>
                     <Link to="/connexion">{t('home.nav.login')}</Link>
@@ -80,7 +79,7 @@ export default function Header() {
               </Link>
             </div>
             <div className="items-center my-2 flex gap-2">
-              {!userData ? (
+              {!user ? (
                 <>
                   <Button variant="blue" className="font-semibold text-sm p-5 justify-end">
                     <Link to="/connexion">{t('home.nav.login')}</Link>
