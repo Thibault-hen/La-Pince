@@ -1,14 +1,14 @@
-import { useQueryClient } from '@tanstack/react-query';
 import { Navigate, Outlet } from 'react-router-dom';
-import type { User } from '@/services/auth';
+import { authLoadingAtom, isAuthenticatedAtom } from '@/stores/authStore';
+import { useAtomValue } from 'jotai';
 
 export const ProtectedRoutes = () => {
-  const queryClient = useQueryClient();
-  const authUser = queryClient.getQueryData<User>(['authUser']);
+  const isAuthenticated = useAtomValue(isAuthenticatedAtom);
+  const isAuthLoading = useAtomValue(authLoadingAtom);
 
-  const isError = queryClient.getQueryState(['authUser'])?.error;
+  if (isAuthLoading) return null;
 
-  if (!authUser || isError) return <Navigate to="/connexion" replace />;
+  if (!isAuthenticated) return <Navigate to="/connexion" replace />;
 
   return <Outlet />;
 };

@@ -21,19 +21,19 @@ import { useTranslation } from 'react-i18next';
 import { currencies } from '../currency/CurrencySelector';
 
 interface ProfileProps {
-  userData: UserAccount | undefined;
+  user: UserAccount | null;
 }
 
-export const Profile = ({ userData }: ProfileProps) => {
+export const Profile = ({ user }: ProfileProps) => {
   const { mutateAsync: updateUserProfile } = useUpdateUserProfile();
   const { t } = useTranslation();
 
   const form = useForm({
     defaultValues: {
-      name: userData?.name || '',
-      email: userData?.email || '',
-      currency: userData?.currency || 'EUR',
-      alert: userData?.alert || false,
+      name: user?.name || '',
+      email: user?.email || '',
+      currency: user?.currency || 'EUR',
+      alert: user?.alert || false,
     },
     validators: {
       onSubmit: userAccountSchema,

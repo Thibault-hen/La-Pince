@@ -7,29 +7,24 @@ import {
   DropdownMenuItem,
 } from '@/components/ui/dropdown-menu';
 import { InitialAvatar } from './InitialAvatar';
-import { authService, type User } from '@/services/auth';
-import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { useAtomValue } from 'jotai';
+import { userAtom } from '@/stores/authStore';
+import { useLogout } from '@/hooks/use-auth';
 
 export const ProfileButton = () => {
-  const queryClient = useQueryClient();
   const naviguate = useNavigate();
-  const userData = queryClient.getQueryData<User>(['authUser']);
+  const user = useAtomValue(userAtom);
+  const { mutateAsync: logout } = useLogout();
 
   const handleLogout = async () => {
-    try {
-      await authService.logout();
-      queryClient.clear();
-      naviguate('/', { replace: true });
-    } catch (error) {
-      console.error('Logout failed:', error);
-    }
+    logout();
   };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <InitialAvatar className="h-8 w-8 cursor-pointer" name={userData?.user.name || ':)'} />
+        <InitialAvatar className="h-8 w-8 cursor-pointer" name={user?.name || ':)'} />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-48">
