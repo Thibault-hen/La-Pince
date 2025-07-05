@@ -12,7 +12,7 @@ export default function Notification({ notification }: NotificationProps) {
   const { formatAmount } = useCurrency();
   return (
     <div className="relative group">
-      <div className="flex flex-col gap-3 p-5 dark:bg-primary backdrop-blur-sm border rounded-xl shadow-sm transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-0.5">
+      <div className="flex flex-col gap-3 p-5 dark:bg-primary backdrop-blur-sm border rounded-xl shadow-sm transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-1">
         <div
           className="absolute top-0 left-0 w-full h-1.5 rounded-t-full opacity-60"
           style={{

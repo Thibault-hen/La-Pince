@@ -3,7 +3,11 @@ import { Button } from '../ui/button';
 import { useTranslation } from 'react-i18next';
 import { UserRoundX } from 'lucide-react';
 
-export const DeleteAccount = () => {
+interface DeleteAccountProps {
+  onOpenDeleteModal: () => void;
+}
+
+export const DeleteAccount = ({ onOpenDeleteModal }: DeleteAccountProps) => {
   const { t } = useTranslation();
   return (
     <Card className="dark:bg-primary">
@@ -24,7 +28,7 @@ export const DeleteAccount = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="pt-1">
-          <Button type="submit" size="lg" variant="red">
+          <Button type="submit" size="lg" variant="red" onClick={onOpenDeleteModal}>
             {t('account.delete.button')}
           </Button>
         </div>

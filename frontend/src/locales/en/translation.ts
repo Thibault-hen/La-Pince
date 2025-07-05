@@ -426,6 +426,12 @@ export const en = {
   },
   account: {
     delete: {
+      modal: {
+        title: 'Delete Account',
+        description: 'Do you really want to delete your account? This action is irreversible.',
+        cancel: 'Cancel',
+        confirm: 'Delete',
+      },
       header: {
         title: 'Delete Account',
         subtitle: 'Permanently delete your account',
@@ -474,6 +480,8 @@ export const en = {
       passwordUpdated: 'Your password has been updated',
       wrongPassword: 'The current password is incorrect',
       emailAlreadyUsed: 'This email is already used by another account',
+      deleted: 'Your account has been deleted',
+      deleteError: 'An error occurred while deleting your account',
     },
   },
   color: {
