@@ -4,12 +4,18 @@ import { Security } from '../profile/Security';
 import { useTranslation } from 'react-i18next';
 import { useAtomValue } from 'jotai';
 import { userAtom } from '@/stores/authStore';
+import { DeleteAccount } from '../profile/DeleteAccount';
+import { useState } from 'react';
+import { DeleteAccountModal } from '../profile/modals/DeleteAccountModal';
 
 export const SettingsForm = () => {
   const user = useAtomValue(userAtom);
   const { t } = useTranslation();
+  const [openDeleteAccount, setOpenDeleteAccount] = useState(false);
+
   return (
     <>
+      <DeleteAccountModal open={openDeleteAccount} setOpen={setOpenDeleteAccount} />
       <div className="flex items-center gap-3">
         <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
           <Settings className="h-5 w-5 text-primary-color" />
@@ -21,10 +27,13 @@ export const SettingsForm = () => {
       </div>
 
       <div className="grid gap-6">
-        <div className="dark:bg-primary border rounded-xl">
-          <Profile user={user} />
-        </div>
+        <Profile user={user} />
         <Security />
+        <DeleteAccount
+          onOpenDeleteModal={() => {
+            setOpenDeleteAccount(true);
+          }}
+        />
       </div>
     </>
   );

@@ -29,7 +29,6 @@ import {
 } from '../lib/tokens';
 import { getEnv } from '../utils/env';
 import { Resend } from 'resend';
-import { IncomeCreateOrUpdate } from '../validators/income';
 
 const authRouter = new Hono();
 
@@ -76,9 +75,9 @@ authRouter
 
       return c.json(
         { message: 'User registered successfully', user: safeUser },
-        201
+        201,
       );
-    }
+    },
   )
   .post(
     '/login',
@@ -113,9 +112,9 @@ authRouter
 
       return c.json(
         { message: 'success', user: safeUser, token: tokenCSRF },
-        200
+        200,
       );
-    }
+    },
   )
   .post(
     '/request-reset',
@@ -181,7 +180,7 @@ authRouter
       });
 
       return c.json({ message: 'Send reset password link successfuly' }, 200);
-    }
+    },
   )
   .post(
     '/reset-password',
@@ -225,7 +224,7 @@ authRouter
       });
 
       return c.json(safeUser, 200);
-    }
+    },
   )
   .get('/logout', async (c) => {
     const { TOKEN_JWT_NAME, SECRET_JWT } = getEnv();

@@ -66,3 +66,21 @@ api.interceptors.request.use(
     Promise.reject(error);
   }
 );
+
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response?.status === 401) {
+      store.set(csrfTokenAtom, null);
+      const currentPath = window.location.pathname;
+      const authPages = ['/tableau-de-bord'];
+
+      if (authPages.some((page) => currentPath.includes(page))) {
+        window.location.href = '/connexion';
+      }
+    }
+    return Promise.reject(error);
+  }
+);

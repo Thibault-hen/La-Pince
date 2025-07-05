@@ -425,9 +425,27 @@ export const en = {
     },
   },
   account: {
+    delete: {
+      modal: {
+        title: 'Delete Account',
+        description: 'Do you really want to delete your account? This action is irreversible.',
+        cancel: 'Cancel',
+        confirm: 'Delete',
+      },
+      header: {
+        title: 'Delete Account',
+        subtitle: 'Permanently delete your account',
+      },
+      list: {
+        item1: 'All your data will be permanently deleted',
+        item2: 'You will lose access to your budgets and expenses',
+        item3: 'This action cannot be undone',
+      },
+      button: 'Delete my account',
+    },
     header: {
       title: 'Account Settings',
-      subtitle: 'Manage your personal information',
+      subtitle: 'Deleting your account is permanent and cannot be undone.',
     },
     profile: {
       title: 'Profile Settings',
@@ -462,6 +480,8 @@ export const en = {
       passwordUpdated: 'Your password has been updated',
       wrongPassword: 'The current password is incorrect',
       emailAlreadyUsed: 'This email is already used by another account',
+      deleted: 'Your account has been deleted',
+      deleteError: 'An error occurred while deleting your account',
     },
   },
   color: {

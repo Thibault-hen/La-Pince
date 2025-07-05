@@ -1,4 +1,4 @@
-import Contact from '@/components/homepage/contact';
+import Contact from '@/components/homepage/Contact';
 import Footer from '@/components/homepage/Footer';
 import Header from '@/components/homepage/Header';
 import HeroSection from '@/components/homepage/HeroSection';

@@ -1,5 +1,7 @@
+import { DeleteAccountModal } from '@/components/profile/modals/DeleteAccountModal';
 import { SettingsForm } from '@/components/settings/SettingsForm';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
+import { useState } from 'react';
 
 export const SettingsPage = () => {
   return (

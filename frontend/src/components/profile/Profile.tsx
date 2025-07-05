@@ -51,7 +51,7 @@ export const Profile = ({ user }: ProfileProps) => {
         form.handleSubmit();
       }}
     >
-      <Card className="bg-transparent border-none">
+      <Card className="dark:bg-primary border">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">

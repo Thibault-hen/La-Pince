@@ -1,16 +1,25 @@
-import crypto from "node:crypto";
+import crypto from 'node:crypto';
 import { Context } from 'hono';
 import { deleteCookie, setCookie, setSignedCookie } from 'hono/cookie';
 import { HTTPException } from 'hono/http-exception';
 import { sign } from 'hono/jwt';
 import { getEnv } from '../utils/env';
 
-export async function generateTokenJWT(id: string, c: Context): Promise<string> {
-  const { COOKIE_SECURE, SECRET_JWT, TOKEN_JWT_NAME } = getEnv();
+export async function generateTokenJWT(
+  id: string,
+  c: Context,
+): Promise<string> {
+  const { SECRET_JWT, TOKEN_JWT_NAME, NODE_ENV } = getEnv();
+
+  // 7 days expiration for JWT
+  const AUTH_EXPIRATION_DAYS = 7;
+  const AUTH_EXPIRATION_SECONDS = 60 * 60 * 24 * AUTH_EXPIRATION_DAYS;
+  const AUTH_EXPIRATION_MS = AUTH_EXPIRATION_SECONDS * 1000;
+  const isProduction = NODE_ENV === 'production';
 
   const payload = {
     userId: id,
-    exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7, 
+    exp: Math.floor(Date.now() / 1000) + AUTH_EXPIRATION_SECONDS,
   };
 
   if (!SECRET_JWT) {
@@ -23,34 +32,34 @@ export async function generateTokenJWT(id: string, c: Context): Promise<string> 
 
   await setSignedCookie(c, TOKEN_JWT_NAME, token, SECRET_JWT, {
     httpOnly: true,
-    //secure: process.env.NODE_ENV === 'production', // Mettre à true en production (nécessite HTTPS)
-    secure: COOKIE_SECURE,
-    sameSite: 'strict',
-    expires: new Date(Date.now() + 60 * 60 * 24 * 30),
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
+    expires: new Date(Date.now() + AUTH_EXPIRATION_MS),
     path: '/',
   });
 
-  return token ;
+  return token;
 }
 
 export async function generateTokenCSRF(c: Context): Promise<string> {
-  const { COOKIE_SECURE, TOKEN_CSRF_NAME } = getEnv();
+  const { TOKEN_CSRF_NAME, NODE_ENV } = getEnv();
   const csrfToken = generateRandomString();
 
-  const payload = {
-    csrf_token: csrfToken,
-    exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7,
-  };
+  //1 hour expiration for CSRF token
+  const AUTH_EXPIRATION_MINUTES = 60;
+  const AUTH_EXPIRATION_SECONDS = 60 * AUTH_EXPIRATION_MINUTES;
+  const AUTH_EXPIRATION_MS = AUTH_EXPIRATION_SECONDS * 1000;
+  const isProduction = NODE_ENV === 'production';
 
   setCookie(c, TOKEN_CSRF_NAME, csrfToken, {
     httpOnly: true,
-    //secure: process.env.NODE_ENV === 'production', // Mettre à true en production (nécessite HTTPS)
-    secure: COOKIE_SECURE,
-    sameSite: 'strict',
-    expires: new Date(Date.now() + 60 * 60 * 24 * 30),
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
+    expires: new Date(Date.now() + AUTH_EXPIRATION_MS),
+    path: '/',
   });
 
-  return  csrfToken;
+  return csrfToken;
 }
 
 export function deleteUserCookie(c: Context) {
@@ -70,6 +79,5 @@ export function deleteUserCookie(c: Context) {
 }
 
 export function generateRandomString() {
-  return crypto.randomBytes(128).toString("base64");
+  return crypto.randomBytes(128).toString('base64');
 }
-

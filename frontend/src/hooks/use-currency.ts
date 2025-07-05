@@ -19,13 +19,13 @@ export const useCurrency = () => {
       // const response = await currencyService.getCurrencyRates();
       // return response.rates;
     },
-    refetchOnMount: false, // pas de refetch au montage
-    refetchOnWindowFocus: false, // pas de refetch quand je reviens sur la apge
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
     refetchOnReconnect: false,
-    retry: false, // pas de refetch si l'api try
+    retry: false,
     staleTime: Infinity,
 
-    // Données de fallback en cas d'erreur
+    // fallback data to avoid errors in the UI
     placeholderData: (previousData) => previousData,
   });
 

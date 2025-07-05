@@ -17,4 +17,8 @@ export const accountService = {
     const response = await api.patch<UserAccount>('/account/currency', currency);
     return response.data;
   },
+
+  async deleteAccount(): Promise<void> {
+    await api.delete('/account');
+  },
 };

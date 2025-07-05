@@ -1,6 +1,13 @@
 import { Bell, BellRing } from 'lucide-react';
 import { Button } from '../ui/button';
-import { Sheet, SheetTrigger, SheetContent, SheetHeader } from '../ui/sheet';
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from '../ui/sheet';
 import Notification from './Notification';
 import { useNotifications } from '@/hooks/use-notification';
 import { useEffect } from 'react';
@@ -46,15 +53,19 @@ export default function NotificationButton() {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
-              <Bell className="h-5 w-5 text-primary-color" />
+          <SheetTitle>
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
+                <Bell className="h-5 w-5 text-primary-color" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-foreground">Notifications</p>
+                <SheetDescription className="text-sm text-muted-foreground">
+                  {t('notification.header.subtitle')}
+                </SheetDescription>
+              </div>
             </div>
-            <div>
-              <h1 className="text-2xl font-bold text-foreground">Notifications</h1>
-              <p className="text-sm text-muted-foreground">{t('notification.header.subtitle')}</p>
-            </div>
-          </div>
+          </SheetTitle>
         </SheetHeader>
         <div className="flex flex-col  gap-2 overflow-auto mb-2 shadow-inner shadow-20  px-2 rounded-md ">
           {notifications.length === 0 ? (

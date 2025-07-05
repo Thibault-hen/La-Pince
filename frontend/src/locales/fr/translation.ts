@@ -423,6 +423,24 @@ export const fr = {
     },
   },
   account: {
+    delete: {
+      modal: {
+        title: 'Supprimer le compte',
+        description: 'Tu veux vraiment supprimer ton compte ? Cette action est irréversible.',
+        cancel: 'Annuler',
+        confirm: 'Supprimer',
+      },
+      header: {
+        title: 'Supprimer le compte',
+        subtitle: 'Supprimer définitivement ton compte',
+      },
+      list: {
+        item1: 'Toutes tes données seront définitivement supprimées',
+        item2: 'Tu perdras l’accès à tes budgets et dépenses',
+        item3: 'Cette action est irréversible',
+      },
+      button: 'Supprimer mon compte',
+    },
     header: {
       title: 'Paramètre du compte',
       subtitle: 'Gérez mes informations personnelles',
@@ -460,6 +478,8 @@ export const fr = {
       passwordUpdated: 'Ton mot de passe a été mis à jour',
       wrongPassword: 'Le mot de passe actuel est incorrect',
       emailAlreadyUsed: 'Cet email est déjà utilisé par un autre compte',
+      deleted: 'Ton compte a été supprimé',
+      deleteError: 'Une erreur est survenue lors de la suppression de ton compte',
     },
   },
   color: {
