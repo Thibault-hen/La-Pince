@@ -9,12 +9,13 @@ export async function generateTokenJWT(
   id: string,
   c: Context,
 ): Promise<string> {
-  const { COOKIE_SECURE, SECRET_JWT, TOKEN_JWT_NAME } = getEnv();
+  const { SECRET_JWT, TOKEN_JWT_NAME, NODE_ENV } = getEnv();
 
   // 7 days expiration for JWT
   const AUTH_EXPIRATION_DAYS = 7;
   const AUTH_EXPIRATION_SECONDS = 60 * 60 * 24 * AUTH_EXPIRATION_DAYS;
   const AUTH_EXPIRATION_MS = AUTH_EXPIRATION_SECONDS * 1000;
+  const isProduction = NODE_ENV === 'production';
 
   const payload = {
     userId: id,
@@ -31,8 +32,8 @@ export async function generateTokenJWT(
 
   await setSignedCookie(c, TOKEN_JWT_NAME, token, SECRET_JWT, {
     httpOnly: true,
-    secure: COOKIE_SECURE,
-    sameSite: 'none',
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
     expires: new Date(Date.now() + AUTH_EXPIRATION_MS),
     path: '/',
   });
@@ -41,19 +42,21 @@ export async function generateTokenJWT(
 }
 
 export async function generateTokenCSRF(c: Context): Promise<string> {
-  const { COOKIE_SECURE, TOKEN_CSRF_NAME } = getEnv();
+  const { TOKEN_CSRF_NAME, NODE_ENV } = getEnv();
   const csrfToken = generateRandomString();
 
   //1 hour expiration for CSRF token
   const AUTH_EXPIRATION_MINUTES = 60;
   const AUTH_EXPIRATION_SECONDS = 60 * AUTH_EXPIRATION_MINUTES;
   const AUTH_EXPIRATION_MS = AUTH_EXPIRATION_SECONDS * 1000;
+  const isProduction = NODE_ENV === 'production';
 
   setCookie(c, TOKEN_CSRF_NAME, csrfToken, {
     httpOnly: true,
-    secure: COOKIE_SECURE,
-    sameSite: 'none',
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
     expires: new Date(Date.now() + AUTH_EXPIRATION_MS),
+    path: '/',
   });
 
   return csrfToken;

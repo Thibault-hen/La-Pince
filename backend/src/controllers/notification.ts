@@ -39,7 +39,7 @@ notificationRouter
           },
         },
       });
-      console.log('notifications', JSON.stringify(notifications, null, 2));
+
       return c.json(
         notifications.map(({ budget, ...notification }) => ({
           ...notification,
