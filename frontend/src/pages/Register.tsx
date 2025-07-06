@@ -6,7 +6,7 @@ import preview from '@/assets/home-page/hero_img1.png';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 import { LanguageSelector } from '@/components/lang/LanguageSelector';
 
-export const Register = () => {
+const Register = () => {
   const location = useLocation();
 
   return (
@@ -38,3 +38,5 @@ export const Register = () => {
     </DefaultWrapper>
   );
 };
+
+export default Register;

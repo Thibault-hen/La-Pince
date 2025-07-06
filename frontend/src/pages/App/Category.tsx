@@ -9,7 +9,8 @@ import { useColors } from '@/hooks/use-color';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 import type { Category } from '@/types/category';
 import { useState } from 'react';
-export const CategoryPage = () => {
+
+const CategoryPage = () => {
   const [openAddCategory, setOpenAddCategory] = useState(false);
   const [openEditCategory, setOpenEditCategory] = useState(false);
   const [openDeleteCategory, setOpenDeleteCategory] = useState(false);
@@ -66,3 +67,5 @@ export const CategoryPage = () => {
     </DefaultWrapper>
   );
 };
+
+export default CategoryPage;

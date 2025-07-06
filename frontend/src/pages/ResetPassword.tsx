@@ -5,7 +5,7 @@ import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 import { ResetPasswordForm } from '@/components/auth/ResetPasswordForm';
 import { SendResetPasswordEmailForm } from '@/components/auth/SendResetPasswordEmailForm';
 
-export const ResetPassword = () => {
+const ResetPassword = () => {
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
@@ -27,11 +27,7 @@ export const ResetPassword = () => {
           </div>
           <div className="flex flex-1 items-center justify-center">
             <div className="w-full max-w-lg">
-              {showResetForm
-                ? <ResetPasswordForm />
-                : <SendResetPasswordEmailForm />
-              }
-
+              {showResetForm ? <ResetPasswordForm /> : <SendResetPasswordEmailForm />}
             </div>
           </div>
         </div>
@@ -40,3 +36,4 @@ export const ResetPassword = () => {
   );
 };
 
+export default ResetPassword;

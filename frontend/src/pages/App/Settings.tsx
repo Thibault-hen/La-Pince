@@ -1,9 +1,7 @@
-import { DeleteAccountModal } from '@/components/profile/modals/DeleteAccountModal';
 import { SettingsForm } from '@/components/settings/SettingsForm';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
-import { useState } from 'react';
 
-export const SettingsPage = () => {
+const SettingsPage = () => {
   return (
     <DefaultWrapper>
       <div className="3xl:py-4 3xl:px-26 space-y-6 p-6">
@@ -12,3 +10,5 @@ export const SettingsPage = () => {
     </DefaultWrapper>
   );
 };
+
+export default SettingsPage;

@@ -22,7 +22,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ColorPercentage, getColorStatus } from '@/utils/colorStatus';
 
-export const Dashboard = () => {
+const Dashboard = () => {
   const { data: dashboardData, isLoading } = useDashboard();
   const { formatAmount } = useCurrency();
   const { t } = useTranslation();
@@ -252,3 +252,5 @@ export const Dashboard = () => {
     </DefaultWrapper>
   );
 };
+
+export default Dashboard;

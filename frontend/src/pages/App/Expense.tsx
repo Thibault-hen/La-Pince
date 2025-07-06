@@ -13,7 +13,7 @@ import { useCurrency } from '@/hooks/use-currency';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 import { ExpenseSkeleton } from '@/components/expense/ExpenseSkeleton';
 
-export function Expense() {
+const Expense = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -89,4 +89,6 @@ export function Expense() {
       </div>
     </DefaultWrapper>
   );
-}
+};
+
+export default Expense;

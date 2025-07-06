@@ -2,7 +2,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import laPinceLogo from '@/assets/logo.webp';
 
-export const NotFound = () => {
+const NotFound = () => {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="max-w-2xl w-full text-center">
@@ -34,3 +34,5 @@ export const NotFound = () => {
     </div>
   );
 };
+
+export default NotFound;
