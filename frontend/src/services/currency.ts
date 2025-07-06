@@ -1,9 +1,9 @@
 import type { Currency } from '@/types/currency';
-import axios from 'axios';
+import { api } from '@/utils/api';
 
 export const currencyService = {
   async getCurrencyRates(): Promise<Currency> {
-    const response = await axios.get<Currency>('https://api.exchangerate-api.com/v4/latest/EUR');
+    const response = await api.get<Currency>('exchange-rate');
     return response.data;
   },
 };

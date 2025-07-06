@@ -20,7 +20,7 @@ exchangeRateRouter.basePath('/exchange-rate').get(
 
     if (cachedRates) {
       console.log('Using cached exchange rates');
-      return c.json({ data: JSON.parse(cachedRates) }, 200);
+      return c.json(JSON.parse(cachedRates), 200);
     }
 
     const response = await fetch('https://open.er-api.com/v6/latest/EUR');
@@ -37,7 +37,7 @@ exchangeRateRouter.basePath('/exchange-rate').get(
     });
 
     console.log('Fetched new exchange rates from API');
-    return c.json({ data: rates }, 200);
+    return c.json(rates, 200);
   },
 );
 
