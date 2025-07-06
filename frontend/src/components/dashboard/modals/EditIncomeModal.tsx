@@ -66,7 +66,7 @@ export const EditIncomeModal = ({ income, open, setOpen }: EditIncomeProps) => {
                     type="number"
                     required
                     step={0.01}
-                    value={field.state.value.toFixed(2) || ''}
+                    value={field.state.value || ''}
                     onChange={(e) => {
                       field.handleChange(Number(e.target.value));
                     }}

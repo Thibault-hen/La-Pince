@@ -18,6 +18,8 @@ import {
 } from '../utils/openapi';
 import { paramsWithId, zodValidatorMessage } from '../validators/utils';
 import { HTTPException } from 'hono/http-exception';
+import { Decimal } from '@prisma/client/runtime/library';
+import { formatDecimal } from '../utils/formatDecimal';
 
 const budgetRouter = new Hono();
 
@@ -67,47 +69,45 @@ budgetRouter
         },
       });
 
-      const round = (value: number, decimals = 2) => {
-        return Number(
-          Math.round(Number(value + 'e' + decimals)) + 'e-' + decimals
-        );
-      };
-
       const budgetsWithTotalExpense = budgets.map(
         (budget: (typeof budgets)[number]) => {
           const totalExpense =
             budget.expenses?.reduce(
-              (sum: number, exp: { amount: number }) => sum + exp.amount,
-              0
-            ) || 0;
+              (sum: Decimal, exp: { amount: Decimal }) => sum.add(exp.amount),
+              new Decimal(0),
+            ) || new Decimal(0);
 
           const { expenses, ...budgetWithoutExpenses } = budget;
           return {
             ...budgetWithoutExpenses,
-            totalExpense: round(totalExpense),
+            amount: formatDecimal(budget.amount),
+            limitAlert: formatDecimal(budget.limitAlert),
+            totalExpense: formatDecimal(totalExpense),
           };
-        }
+        },
       );
 
       const budgetCount = budgetsWithTotalExpense.length;
 
-      const budgetTotal = round(
+      const budgetTotal = formatDecimal(
         budgetsWithTotalExpense.reduce(
-          (sum: number, budget: (typeof budgetsWithTotalExpense)[number]) =>
-            sum + Number(budget.amount),
-          0
-        )
+          (sum: Decimal, budget: (typeof budgetsWithTotalExpense)[number]) =>
+            sum.add(new Decimal(budget.amount)),
+          new Decimal(0),
+        ),
       );
 
-      const totalExpenses = round(
+      const totalExpenses = formatDecimal(
         budgetsWithTotalExpense.reduce(
-          (sum: number, budget: (typeof budgetsWithTotalExpense)[number]) =>
-            sum + Number(budget.totalExpense),
-          0
-        )
+          (sum: Decimal, budget: (typeof budgetsWithTotalExpense)[number]) =>
+            sum.add(new Decimal(budget.totalExpense)),
+          new Decimal(0),
+        ),
       );
 
-      const budgetRemaining = round(Math.max(budgetTotal - totalExpenses, 0));
+      const budgetRemaining = formatDecimal(
+        new Decimal(budgetTotal).minus(totalExpenses),
+      );
 
       return c.json(
         {
@@ -117,9 +117,9 @@ budgetRouter
           budgetRemaining,
           totalExpenses,
         },
-        200
+        200,
       );
-    }
+    },
   )
   .post(
     '/',
@@ -130,18 +130,18 @@ budgetRouter
         201: response201(createBudgetSchema),
         404: response404(z.literal('Category not found.')),
         422: response422(
-          z.literal('The limit cannot be higher than the amount.')
+          z.literal('The limit cannot be higher than the amount.'),
         ),
         409: response409(
           z.literal(
-            'A budget already exists for this category in the current month.'
-          )
+            'A budget already exists for this category in the current month.',
+          ),
         ),
       },
     }),
     zValidator('json', createBudgetSchema),
     zValidator('json', createBudgetSchema, (result, c) =>
-      zodValidatorMessage(result, c)
+      zodValidatorMessage(result, c),
     ),
     async (c) => {
       const userId = c.get('jwtPayload').userId;
@@ -155,17 +155,12 @@ budgetRouter
         },
       });
       if (!categoryExists) {
-        throw new HTTPException(404, {
-          res: c.json({ message: 'Category not found.' }, 404),
-        });
+        throw new HTTPException(404, { message: 'Category not found.' });
       }
 
       if (budget.limitAlert > budget.amount) {
         throw new HTTPException(422, {
-          res: c.json(
-            { message: 'The limit cannot be higher than the amount.' },
-            422
-          ),
+          message: 'The limit cannot be higher than the amount.',
         });
       }
 
@@ -180,13 +175,8 @@ budgetRouter
 
       if (existingBudget) {
         throw new HTTPException(409, {
-          res: c.json(
-            {
-              message:
-                'A budget already exists for this category in the current month.',
-            },
-            409
-          ),
+          message:
+            'A budget already exists for this category in the current month.',
         });
       }
 
@@ -206,8 +196,15 @@ budgetRouter
         },
       });
 
-      return c.json(createBudget, 201);
-    }
+      return c.json(
+        {
+          ...createBudget,
+          amount: formatDecimal(createBudget.amount),
+          limitAlert: formatDecimal(createBudget.limitAlert),
+        },
+        201,
+      );
+    },
   )
   .patch(
     '/:id',
@@ -220,21 +217,21 @@ budgetRouter
           z.union([
             z.literal('Budget not found.'),
             z.literal('Category not found.'),
-          ])
+          ]),
         ),
         422: response422(
-          z.literal('The limit cannot be higher than the amount.')
+          z.literal('The limit cannot be higher than the amount.'),
         ),
         409: response409(
           z.literal(
-            'A budget already exists for this category in the current month.'
-          )
+            'A budget already exists for this category in the current month.',
+          ),
         ),
       },
     }),
     zValidator('param', paramsWithId),
     zValidator('json', updateBudgetSchema, (result, c) =>
-      zodValidatorMessage(result, c)
+      zodValidatorMessage(result, c),
     ),
     async (c) => {
       const userId = c.get('jwtPayload').userId;
@@ -248,10 +245,9 @@ budgetRouter
           userId: userId,
         },
       });
+
       if (!budgetExists) {
-        throw new HTTPException(404, {
-          res: c.json({ message: 'Budget not found.' }, 404),
-        });
+        throw new HTTPException(404, { message: 'Budget not found.' });
       }
 
       if (budgetData.categoryId) {
@@ -261,10 +257,9 @@ budgetRouter
             userId: userId,
           },
         });
+
         if (!categoryExists) {
-          throw new HTTPException(404, {
-            res: c.json({ message: 'Category not found.' }, 404),
-          });
+          throw new HTTPException(404, { message: 'Category not found.' });
         }
 
         const existingBudget = await prisma.budget.findFirst({
@@ -281,13 +276,8 @@ budgetRouter
 
         if (existingBudget) {
           throw new HTTPException(409, {
-            res: c.json(
-              {
-                message:
-                  'A budget already exists for this category in the current month.',
-              },
-              409
-            ),
+            message:
+              'A budget already exists for this category in the current month.',
           });
         }
       }
@@ -298,10 +288,7 @@ budgetRouter
         budgetData.limitAlert > budgetData.amount
       ) {
         throw new HTTPException(422, {
-          res: c.json(
-            { message: 'The limit cannot be higher than the amount.' },
-            422
-          ),
+          message: 'The limit cannot be higher than the amount.',
         });
       }
 
@@ -324,8 +311,15 @@ budgetRouter
         },
       });
 
-      return c.json(updatedBudget, 200);
-    }
+      return c.json(
+        {
+          ...updatedBudget,
+          amount: formatDecimal(updatedBudget.amount),
+          limitAlert: formatDecimal(updatedBudget.limitAlert),
+        },
+        200,
+      );
+    },
   )
   .delete(
     '/:id',
@@ -348,10 +342,9 @@ budgetRouter
           userId: userId,
         },
       });
+
       if (!budgetExists) {
-        throw new HTTPException(404, {
-          res: c.json({ message: 'Budget not found.' }, 404),
-        });
+        throw new HTTPException(404, { message: 'Budget not found.' });
       }
 
       await prisma.budget.delete({
@@ -362,7 +355,7 @@ budgetRouter
       });
 
       return c.body(null, 204);
-    }
+    },
   );
 
 export default budgetRouter;

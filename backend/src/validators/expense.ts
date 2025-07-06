@@ -16,6 +16,6 @@ export const expenseCreateOrUpdateSchema = expenseSelectSchema.omit({
   userId: true,
   createdAt: true,
   updatedAt: true,
-})
+});
 
 export type ExpenseCreateOrUpdate = z.infer<typeof expenseCreateOrUpdateSchema>;
