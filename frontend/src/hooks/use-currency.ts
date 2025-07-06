@@ -7,6 +7,18 @@ import { useTranslation } from 'react-i18next';
 export const useCurrency = () => {
   const { currency, setCurrency } = useCurrencyContext();
   const { i18n } = useTranslation();
+
+  const getLocale = (): string => {
+    switch (i18n.language) {
+      case 'fr':
+        return 'fr-FR';
+      case 'en':
+        return 'en-US';
+      default:
+        return navigator.language || 'fr-FR';
+    }
+  };
+
   const {
     data: rates = {},
     isError,
@@ -15,9 +27,8 @@ export const useCurrency = () => {
   } = useQuery<CurrencyRates>({
     queryKey: ['currencyRates'],
     queryFn: async () => {
-      throw Error('API not implemented yet');
-      // const response = await currencyService.getCurrencyRates();
-      // return response.rates;
+      const response = await currencyService.getCurrencyRates();
+      return response.rates;
     },
     refetchOnMount: false,
     refetchOnWindowFocus: false,
@@ -29,36 +40,12 @@ export const useCurrency = () => {
     placeholderData: (previousData) => previousData,
   });
 
-  const convertFromEUR = (amount: number): number => {
-    if (currency === 'EUR') return amount;
+  const getRate = () => rates[currency] || 1;
 
-    if (!rates[currency]) {
-      return amount;
-    }
-    return amount * rates[currency];
-  };
-
-  const convertToEUR = (amount: number): number => {
-    if (currency === 'EUR') return amount;
-
-    if (!rates[currency]) {
-      return amount;
-    }
-    return amount / rates[currency];
-  };
+  const convertFromEUR = (amount: number): number => amount * getRate();
+  const convertToEUR = (amount: number): number => amount / getRate();
 
   const formatAmount = (amount: number): string => {
-    const getLocale = (): string => {
-      switch (i18n.language) {
-        case 'fr':
-          return 'fr-FR';
-        case 'en':
-          return 'en-US';
-        default:
-          return navigator.language || 'fr-FR';
-      }
-    };
-
     const formattedAmount = new Intl.NumberFormat(getLocale(), {
       style: 'currency',
       currency: rates[currency] ? currency : 'EUR',

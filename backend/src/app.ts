@@ -10,11 +10,14 @@ import { createNodeWebSocket } from '@hono/node-ws';
 import { getSignedCookie } from 'hono/cookie';
 import { authentify } from './middlewares/auth.middleware';
 import { notifiableUsers } from './websockets/notifiableUsers';
+import { initRedis } from './utils/redis';
 
 const app = new Hono();
 const { injectWebSocket, upgradeWebSocket } = createNodeWebSocket({ app });
 
 const { FRONTEND_URL } = getEnv();
+
+initRedis();
 
 app.use(
   '*',
