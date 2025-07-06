@@ -15,6 +15,7 @@ const envSchema = z.object({
   TOKEN_CSRF_NAME: z.string().default('auth_token'),
   RESEND_API_KEY: z.string().default('resend_api_key'),
   FRONTEND_URL: z.string().default('http://localhost:5173'),
+  REDIS_URL: z.string().default('redis://redis:6379'),
 });
 
 export function getEnv() {
