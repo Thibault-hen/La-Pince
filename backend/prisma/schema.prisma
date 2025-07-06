@@ -70,8 +70,8 @@ model Budget {
   @@map("budget")
 
   id               String   @id @default(cuid())    
-  amount           Float
-  limitAlert       Float    @map("limit_alert")
+  amount           Decimal  @db.Decimal(10, 2)
+  limitAlert       Decimal  @db.Decimal(10, 2)    @map("limit_alert")
   month            Int
   year             Int
   categoryId       String     @map("category_id")
@@ -94,7 +94,7 @@ model Expense {
 
   id               String   @id @default(cuid())
   description      String
-  amount           Float
+  amount           Decimal  @db.Decimal(10, 2) 
   date             DateTime
   budgetId         String?   @map("budget_id")
   userId           String    @map("user_id")
@@ -113,8 +113,8 @@ model Notification {
   userId           String   @map("user_id")
   notificationType String   @map("notification_type")
   budgetId         String   @map("budget_id")
-  maximumAmount    Float    @map("maximum_amount")
-  totalAmount      Float    @map("total_amount")
+  maximumAmount    Decimal  @db.Decimal(10, 2) @map("maximum_amount")
+  totalAmount      Decimal  @db.Decimal(10, 2) @map("total_amount")
   isRead           Boolean  @default(false) @map("is_read")
 
   createdAt        DateTime @default(now()) @map("created_at")
@@ -128,7 +128,7 @@ model Income {
   @@map("income")
 
   id               String   @id @default(cuid())
-  value            Float
+  value            Decimal  @db.Decimal(10, 2)
   month            Int
   year             Int
   userId           String   @map("user_id")

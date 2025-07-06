@@ -23,7 +23,7 @@ services:
     # Attend que la base de données soit prête avant de lancer
     depends_on:
       - db
-    command: sh -c "npx prisma migrate reset --force && npx tsx src/db/seeding.ts && npm run dev"
+    command: sh -c "npx prisma generate && npx prisma migrate reset --force && npx tsx src/db/seeding.ts && npm run dev"
 
   db:
     # Image officielle de PostgreSQL légère

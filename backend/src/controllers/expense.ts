@@ -2,27 +2,39 @@ import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { paramsWithId, zodValidatorMessage } from '../validators/utils';
 import { describeRoute } from 'hono-openapi';
-import { response200, response201, response204, response404 } from '../utils/openapi';
-import { ExpenseCreateOrUpdate, expenseCreateOrUpdateSchema, expenseSelectSchema } from '../validators/expense';
+import {
+  response200,
+  response201,
+  response204,
+  response404,
+} from '../utils/openapi';
+import {
+  ExpenseCreateOrUpdate,
+  expenseCreateOrUpdateSchema,
+  expenseSelectSchema,
+} from '../validators/expense';
 import prisma from '../db/client';
 import { HTTPException } from 'hono/http-exception';
 import { tryCreateBudgetNotification } from './notification';
+import { formatDecimal } from '../utils/formatDecimal';
 
 const expenseRouter = new Hono();
 
-expenseRouter.basePath('/expense')
-  .get('/',
+expenseRouter
+  .basePath('/expense')
+  .get(
+    '/',
     describeRoute({
       description: 'Get expenses by user ID',
       tags: ['expense'],
       responses: {
         200: response200(expenseSelectSchema),
-      }
+      },
     }),
     async (c) => {
       const expenses = await prisma.expense.findMany({
         where: {
-          userId: c.get('jwtPayload').userId
+          userId: c.get('jwtPayload').userId,
         },
         orderBy: {
           date: 'desc',
@@ -34,7 +46,7 @@ expenseRouter.basePath('/expense')
                 omit: {
                   userId: true,
                   id: true,
-                  colorId: true
+                  colorId: true,
                 },
                 include: {
                   color: {
@@ -42,37 +54,40 @@ expenseRouter.basePath('/expense')
                       id: true,
                       createdAt: true,
                       updatedAt: true,
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       });
 
-      const formattedExpenses = expenses.map(expense => {
+      const formattedExpenses = expenses.map((expense) => {
         const { budget, ...restOfExpense } = expense;
 
         if (!budget) {
           return restOfExpense;
         }
 
-        return ({
+        return {
           ...restOfExpense,
+          amount: formatDecimal(expense.amount),
           category: budget.category,
-        });
+        };
       });
 
       return c.json(formattedExpenses, 200);
-    })
-  .get('/:id',
+    },
+  )
+  .get(
+    '/:id',
     describeRoute({
       description: 'Get expense by user ID and budget ID',
       tags: ['expense'],
       responses: {
         200: response200(expenseSelectSchema),
-      }
+      },
     }),
     zValidator('param', paramsWithId),
     async (c) => {
@@ -97,7 +112,7 @@ expenseRouter.basePath('/expense')
                 omit: {
                   userId: true,
                   id: true,
-                  colorId: true
+                  colorId: true,
                 },
                 include: {
                   color: {
@@ -105,29 +120,36 @@ expenseRouter.basePath('/expense')
                       id: true,
                       createdAt: true,
                       updatedAt: true,
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       });
 
-      return c.json(expense, 200);
-    }
+      return c.json(
+        {
+          ...expense[0],
+          amount: formatDecimal(expense[0].amount),
+        },
+        200,
+      );
+    },
   )
-  .post('/',
+  .post(
+    '/',
     describeRoute({
       description: 'Create an expense',
       tags: ['expense'],
       responses: {
         201: response201(expenseSelectSchema),
         404: response404(),
-      }
+      },
     }),
     zValidator('json', expenseCreateOrUpdateSchema, (result, c) =>
-      zodValidatorMessage(result, c)
+      zodValidatorMessage(result, c),
     ),
     async (c) => {
       const expense = c.req.valid('json') as ExpenseCreateOrUpdate;
@@ -140,9 +162,7 @@ expenseRouter.basePath('/expense')
       });
 
       if (!budgetExists) {
-        throw new HTTPException(404, {
-          res: c.json({ message: 'Budget not found' }, 404),
-        });
+        throw new HTTPException(404, { message: 'Budget not found' });
       }
 
       const createdExpense = await prisma.expense.create({
@@ -152,22 +172,32 @@ expenseRouter.basePath('/expense')
         },
       });
 
-      await tryCreateBudgetNotification(expense.budgetId, c.get('jwtPayload').userId);
-      return c.json(createdExpense);
-    }
+      await tryCreateBudgetNotification(
+        expense.budgetId,
+        c.get('jwtPayload').userId,
+      );
+      return c.json(
+        {
+          ...createdExpense,
+          amount: formatDecimal(createdExpense.amount),
+        },
+        201,
+      );
+    },
   )
-  .put('/:id',
+  .put(
+    '/:id',
     describeRoute({
       description: 'Update an expense',
       tags: ['expense'],
       responses: {
         200: response200(expenseSelectSchema),
-        404: response404()
-      }
+        404: response404(),
+      },
     }),
     zValidator('param', paramsWithId),
     zValidator('json', expenseCreateOrUpdateSchema, (result, c) =>
-      zodValidatorMessage(result, c)
+      zodValidatorMessage(result, c),
     ),
     async (c) => {
       const expenseId = c.req.param('id');
@@ -181,9 +211,7 @@ expenseRouter.basePath('/expense')
       });
 
       if (!budgetExists) {
-        throw new HTTPException(404, {
-          res: c.json({ message: 'Budget not found' }, 404),
-        });
+        throw new HTTPException(404, { message: 'Budget not found' });
       }
 
       const expense = await prisma.expense.findUnique({
@@ -194,9 +222,7 @@ expenseRouter.basePath('/expense')
       });
 
       if (!expense) {
-        throw new HTTPException(404, {
-          res: c.json({ message: 'Expense not found' }, 404),
-        });
+        throw new HTTPException(404, { message: 'Expense not found' });
       }
 
       const updatedExpense = await prisma.expense.update({
@@ -207,18 +233,29 @@ expenseRouter.basePath('/expense')
         },
       });
 
-      await tryCreateBudgetNotification(expense.budgetId, c.get('jwtPayload').userId);
-      return c.json(updatedExpense, 201);
-    }
+      await tryCreateBudgetNotification(
+        expense.budgetId ?? '',
+        c.get('jwtPayload').userId,
+      );
+
+      return c.json(
+        {
+          ...updatedExpense,
+          amount: formatDecimal(updatedExpense.amount),
+        },
+        201,
+      );
+    },
   )
-  .delete('/:id',
+  .delete(
+    '/:id',
     describeRoute({
       description: 'Delete an expense',
       tags: ['expense'],
       responses: {
         204: response204(),
-        404: response404()
-      }
+        404: response404(),
+      },
     }),
     zValidator('param', paramsWithId),
     async (c) => {
@@ -233,9 +270,7 @@ expenseRouter.basePath('/expense')
       });
 
       if (!expense) {
-        throw new HTTPException(404, {
-          res: c.json({ message: 'Expense not found' }, 404),
-        });
+        throw new HTTPException(404, { message: 'Expense not found' });
       }
 
       await prisma.expense.delete({
@@ -246,7 +281,7 @@ expenseRouter.basePath('/expense')
       });
 
       return c.json(204);
-    }
+    },
   );
 
 export default expenseRouter;

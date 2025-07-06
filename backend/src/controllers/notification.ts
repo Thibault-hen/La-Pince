@@ -7,7 +7,8 @@ import { paramsWithId } from '../validators/utils';
 import { HTTPException } from 'hono/http-exception';
 import { notifiableUsers } from '../websockets/notifiableUsers';
 import { Hono } from 'hono';
-import { includes } from 'zod/v4';
+import { Decimal } from '@prisma/client/runtime/library';
+import { formatDecimal } from '../utils/formatDecimal';
 
 const notificationRouter = new Hono();
 
@@ -103,15 +104,17 @@ export async function tryCreateBudgetNotification(
 
     if (!budget) return;
 
-    const totalExpenseAmount = budget.expenses.reduce(
-      (acc, expense) => acc + expense.amount,
-      0,
+    const totalExpenseAmount = formatDecimal(
+      budget.expenses.reduce(
+        (acc: Decimal, expense) => acc.add(expense.amount),
+        new Decimal(0),
+      ),
     );
 
     const limitAlert = budget.limitAlert;
     const maxAmount = budget.amount;
 
-    if (totalExpenseAmount < limitAlert) return;
+    if (totalExpenseAmount < Number(limitAlert)) return;
 
     const existingNotification = await prisma.notification.findFirst({
       where: {
@@ -130,7 +133,9 @@ export async function tryCreateBudgetNotification(
         maximumAmount: maxAmount,
         totalAmount: totalExpenseAmount,
         notificationType:
-          totalExpenseAmount > maxAmount ? 'budgetExceeded' : 'budgetWarning',
+          totalExpenseAmount > Number(maxAmount)
+            ? 'budgetExceeded'
+            : 'budgetWarning',
       },
     });
     notifiableUsers.get(userId)?.forEach((ws) => ws.send(''));

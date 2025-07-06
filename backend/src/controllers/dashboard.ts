@@ -3,6 +3,7 @@ import prisma from '../db/client';
 import { describeRoute } from 'hono-openapi';
 import { response200 } from '../utils/openapi';
 import { dashboardSchema, Expense } from '../validators/dashboard';
+import { formatDecimal } from '../utils/formatDecimal';
 
 const dashboardRouter = new Hono();
 
@@ -160,28 +161,49 @@ dashboardRouter.basePath('/dashboard').get(
       }),
     ]);
 
-    const last6MonthsExpensesByMonth =
-      formatLast6MonthsExpensesByMonth(last6MonthsExpenses);
+    const last6MonthsExpensesByMonth = formatLast6MonthsExpensesByMonth(
+      last6MonthsExpenses.map((expense) => ({
+        ...expense,
+        amount: Number(expense.amount),
+      })),
+    );
 
     return c.json(
       {
-        currentMonthExpenses: currentMonthExpenses._sum.amount || 0,
+        currentMonthExpenses: formatDecimal(currentMonthExpenses._sum.amount),
         last6MonthsExpensesByMonth: last6MonthsExpensesByMonth,
-        todayExpenses: todayExpenses._sum.amount || 0,
-        currentWeekExpenses: currentWeekExpenses._sum.amount || 0,
-        previousMonthExpenses: previousMonthExpenses._sum.amount || 0,
-        averageMonthlyExpenses: averageMonthlyExpenses?._avg?.amount || 0,
-        currentMonthRevenue: currentMonthIncome,
-        currentMonthBudget: currentMonthBudget?._sum?.amount || 0,
-        last10Expenses: last10Expenses,
+        todayExpenses: formatDecimal(todayExpenses._sum.amount),
+        currentWeekExpenses: formatDecimal(currentWeekExpenses._sum.amount),
+        previousMonthExpenses: formatDecimal(previousMonthExpenses._sum.amount),
+        averageMonthlyExpenses: formatDecimal(
+          averageMonthlyExpenses?._avg?.amount,
+        ),
+        currentMonthRevenue: {
+          ...currentMonthIncome,
+          value: formatDecimal(currentMonthIncome?.value),
+        },
+
+        currentMonthBudget: formatDecimal(currentMonthBudget?._sum?.amount),
+        last10Expenses: last10Expenses.map((exp) => ({
+          ...exp,
+          amount: formatDecimal(exp.amount),
+          budget: {
+            ...exp.budget,
+            amount: formatDecimal(exp.budget?.amount),
+            limitAlert: formatDecimal(exp.budget?.limitAlert),
+            category: {
+              ...exp.budget?.category,
+            },
+          },
+        })),
       },
-      200
+      200,
     );
-  }
+  },
 );
 
 function formatLast6MonthsExpensesByMonth(
-  last6MonthsExpenses: Expense[]
+  last6MonthsExpenses: Expense[],
 ): Record<string, number> {
   const result: Record<string, number> = {};
   const now = new Date();

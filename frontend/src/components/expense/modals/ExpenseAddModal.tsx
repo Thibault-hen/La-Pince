@@ -46,8 +46,11 @@ export default function ExpenseAddModal({ isModalOpen, handleClose }: ExpenseAdd
       onSubmit: createExpenseSchema,
     },
     defaultValues: {
+      description: '',
+      budgetId: hadBudgets ? budgets[0].id : '',
+      amount: 0,
       date: new Date().toISOString(),
-    } as Partial<z.infer<typeof createExpenseSchema>>,
+    },
     async onSubmit({ value }) {
       const expense = createExpenseSchema.parse(value);
       await createExpense(expense);
