@@ -53,16 +53,37 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const items = getItems(t);
   return (
     <Sidebar {...props}>
-      <SidebarHeader className="flex">
+      <SidebarHeader className="flex items-center justify-center p-3">
         {open || openMobile ? (
-          <div className="flex items-center justify-center">
-            <img src={laPinceLogo} width={60} alt="Application logo" />
-            <NavLink to="/" className="flex text-xl tracking-wide font-bold">
-              La Pince
-            </NavLink>
-          </div>
+          <NavLink to="/" className="flex items-center gap-3 group transition-all duration-300">
+            <div className="relative">
+              <img
+                src={laPinceLogo}
+                width={48}
+                height={48}
+                className="transition-all duration-300 group-hover:drop-shadow-lg"
+                alt="Application logo"
+              />
+            </div>
+            <span className="text-lg font-bold">{t('home.nav.title')}</span>
+          </NavLink>
         ) : (
-          <img src={laPinceLogo} width={60} />
+          <NavLink
+            to="/"
+            className="flex items-center justify-center group transition-all duration-300 hover:scale-110"
+          >
+            <div className="relative">
+              <img
+                src={laPinceLogo}
+                width={40}
+                height={40}
+                className="transition-all duration-300 group-hover:drop-shadow-lg"
+                alt="Application logo"
+              />
+              {/* Subtle glow effect for collapsed state */}
+              <div className="absolute inset-0 bg-primary-color/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
+            </div>
+          </NavLink>
         )}
       </SidebarHeader>
       <SidebarContent>

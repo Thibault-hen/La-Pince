@@ -41,14 +41,14 @@ export default function NotificationButton() {
         <Button
           variant="outline"
           size="icon"
-          className="relative shadow-none dark:bg-primary cursor-pointer hover:bg-primary-color dark:hover:bg-primary-color border"
+          className="relative shadow-none dark:bg-primary cursor-pointer hover:bg-secondary-color dark:hover:bg-secondary-color border"
         >
           {notificationCount > 0 && (
-            <Badge className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-secondary-color font-bold text-xs text-white">
+            <Badge className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-secondary-color font-bold text-xs text-white border border-black/50">
               {notificationCount}
             </Badge>
           )}
-          <Bell className="size-4 opacity-50"></Bell>
+          <Bell />
         </Button>
       </SheetTrigger>
       <SheetContent>
