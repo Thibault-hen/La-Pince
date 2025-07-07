@@ -8,8 +8,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { Menu } from 'lucide-react';
-import { Suspense } from 'react';
+import { Menu, X } from 'lucide-react';
+import { Suspense, useState } from 'react';
 import { ModeToggle } from '@/components/theme/theme-toggle.tsx';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -26,110 +26,138 @@ const TopMenu = [
 export default function Header() {
   const { t } = useTranslation();
   const user = useAtomValue(userAtom);
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <header className="sticky top-5 z-50 flex justify-center container ">
-      <div className="min-w-full border rounded-md w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-2.5 px-4 ">
-        <nav className="hidden justify-between lg:flex">
-          <div className="flex items-center gap-8">
-            <Link to="/" className="flex items-center gap-1">
-              <img src={laPinceLogo} width={60} className="text-red-500" />
-              <span className="text-xl font-bold">{t('home.nav.title')}</span>
-            </Link>
-            <div className="items-center flex">
+    <header className="sticky top-0 z-50 w-full">
+      {/* Gradient background with blur effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/95 to-background/80 backdrop-blur-xl border-b border-border/50" />
+
+      {/* Main container */}
+      <div className="relative container mx-auto px-4 lg:px-6">
+        <nav className="flex items-center justify-between h-16 lg:h-20">
+          {/* Logo Section */}
+          <Link to="/" className="flex items-center gap-3">
+            <div className="relative">
+              <img src={laPinceLogo} width={48} height={48} alt="Logo" />
+            </div>
+            <span className="text-xl lg:text-2xl font-bold">{t('home.nav.title')}</span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center gap-8">
+            {/* Navigation Links */}
+            <div className="flex items-center gap-2">
               {TopMenu.map((menu, idx) => (
-                <a key={idx} className={cn(buttonVariants({ variant: 'ghost' }))} href={menu.to}>
+                <a
+                  key={idx}
+                  href={menu.to}
+                  className={cn(
+                    'relative px-4 py-2 text-sm font-medium transition-all duration-300',
+                    'hover:text-primary-color',
+                    'before:absolute before:inset-x-0 before:bottom-0 before:h-0.5',
+                    'before:bg-gradient-to-r before:from-primary-color before:to-secondary-color',
+                    'before:scale-x-0 before:transition-transform before:duration-300',
+                    'hover:before:scale-x-100'
+                  )}
+                >
                   {t(menu.name)}
                 </a>
               ))}
             </div>
+
+            {/* Auth Buttons */}
+            <div className="flex items-center gap-3">
+              {!user ? (
+                <>
+                  <Button variant="blue" asChild>
+                    <Link to="/connexion">{t('home.nav.login')}</Link>
+                  </Button>
+                  <Button asChild variant="orange">
+                    <Link to="/inscription">{t('home.nav.register')}</Link>
+                  </Button>
+                </>
+              ) : (
+                <Button asChild variant="blue">
+                  <Link to="/tableau-de-bord">{t('home.nav.dashboard')}</Link>
+                </Button>
+              )}
+            </div>
+
+            {/* Theme & Language Controls */}
+            <div className="flex items-center gap-2 ml-4 pl-4 border-l border-border/50">
+              <LanguageSelector />
+              <ModeToggle />
+            </div>
           </div>
-          <div className="items-center flex">
+
+          {/* Mobile Menu */}
+          <div className="flex lg:hidden items-center gap-3">
+            {/* Mobile Auth Buttons */}
             <div className="flex items-center gap-2">
               {!user ? (
                 <>
                   <Button variant="blue" asChild>
                     <Link to="/connexion">{t('home.nav.login')}</Link>
                   </Button>
-                  <Button variant="blue" asChild>
+                  <Button asChild variant="orange">
                     <Link to="/inscription">{t('home.nav.register')}</Link>
                   </Button>
                 </>
               ) : (
-                <Button variant="blue" asChild>
+                <Button asChild variant="blue">
                   <Link to="/tableau-de-bord">{t('home.nav.dashboard')}</Link>
                 </Button>
               )}
             </div>
-            <Suspense>
-              <div className="flex items-center gap-2 ml-4">
-                <LanguageSelector />
-                <ModeToggle />
-              </div>
-            </Suspense>
-          </div>
-        </nav>
 
-        {/* Mobile Menu */}
-        <div className="  block lg:hidden container ">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              <Link to="/" className="flex items-center gap-1">
-                <img src={laPinceLogo} width={60} className="text-red-500" />
-                <span className="hidden sm:flex text-xl font-bold">{t('home.nav.title')}</span>
-              </Link>
-            </div>
-            <div className="items-center my-2 flex gap-2">
-              {!user ? (
-                <>
-                  <Button variant="blue" className="font-semibold text-sm p-5 justify-end">
-                    <Link to="/connexion">{t('home.nav.login')}</Link>
-                  </Button>
-                  <Button variant="blue" className="font-semibold text-sm p-5 justify-end">
-                    <Link to="/inscription">{t('home.nav.register')}</Link>
-                  </Button>
-                </>
-              ) : (
-                <Button variant="blue" className="font-semibold text-sm m-2 p-5 justify-end">
-                  <Link to="/tableau-de-bord">{t('home.nav.dashboard')}</Link>
+            {/* Mobile Menu Trigger */}
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="shadow-none dark:bg-primary cursor-pointer hover:bg-secondary-color dark:hover:bg-secondary-color border transition-all duration-300"
+                >
+                  <Menu className="h-5 w-5" />
                 </Button>
-              )}
+              </SheetTrigger>
+              <SheetContent
+                side="right"
+                className="w-full sm:w-80 bg-gradient-to-br from-background via-background/95 to-background/90 backdrop-blur-xl border-l border-border/50"
+              >
+                <SheetHeader className="pb-6">
+                  <SheetTitle className="flex items-center justify-center gap-3">
+                    <div className="relative">
+                      <img src={laPinceLogo} width={48} height={48} alt="Logo" />
+                    </div>
+                    <span className="text-xl font-bold">{t('home.nav.title')}</span>
+                  </SheetTitle>
+                </SheetHeader>
 
-              <Sheet>
-                <SheetTrigger asChild>
-                  <Button className="p-5" variant={'outline'} size={'icon'}>
-                    <Menu className="size-4" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent className="flex  flex-col overflow-y-auto">
-                  <SheetHeader>
-                    <SheetTitle className="items-center flex justify-center align-center ">
-                      <div className="flex">
-                        <img src={laPinceLogo} width={60} className="text-red-500" />
-                      </div>
-                    </SheetTitle>
-                  </SheetHeader>
+                {/* Mobile Navigation Links */}
+                <div className="flex flex-col gap-3 py-6">
                   {TopMenu.map((menu, idx) => (
                     <SheetClose key={idx} asChild>
-                      <Button
-                        variant="blue"
-                        asChild
-                        key={idx}
-                        className="font-semibold text-lg m-2 p-6"
+                      <a
+                        href={menu.to}
+                        className="flex items-center justify-center py-4 px-6 text-lg font-medium hover:text-secondary-color transition-all duration-300 hover:scale-105 hover:shadow-lg"
                       >
-                        <a href={menu.to}>{t(menu.name)}</a>
-                      </Button>
+                        {t(menu.name)}
+                      </a>
                     </SheetClose>
                   ))}
-                  <div className="flex justify-center items-center pt-4">
-                    <Suspense fallback={null}>
-                      <ModeToggle />
-                    </Suspense>
-                  </div>
-                </SheetContent>
-              </Sheet>
-            </div>
+                </div>
+
+                {/* Mobile Theme & Language Controls */}
+                <div className="flex items-center justify-center gap-4 pt-6 border-t border-border/50">
+                  <LanguageSelector />
+                  <ModeToggle />
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
-        </div>
+        </nav>
       </div>
     </header>
   );
