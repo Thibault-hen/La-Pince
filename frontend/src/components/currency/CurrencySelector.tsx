@@ -12,8 +12,6 @@ import { useTranslation } from 'react-i18next';
 import { CloudAlert } from 'lucide-react';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 import { useUpdateCurrency } from '@/hooks/use-account';
-import { useAtomValue } from 'jotai';
-import { userAtom } from '@/stores/authStore';
 
 type Currency = {
   name: string;
@@ -45,8 +43,7 @@ export const currencies = [
 ] as Currency[];
 
 export const CurrencySelector = () => {
-  const user = useAtomValue(userAtom);
-  const { setCurrency, error, isLoading } = useCurrency();
+  const { currency, setCurrency, error, isLoading } = useCurrency();
   const { t } = useTranslation();
   const { mutateAsync: updateCurrency } = useUpdateCurrency();
 
@@ -61,7 +58,7 @@ export const CurrencySelector = () => {
       <Select
         disabled={isLoading || error !== null}
         required
-        defaultValue={user?.currency ?? 'EUR'}
+        value={currency}
         onValueChange={(value) => handleUpdateCurrency(value)}
       >
         <SelectTrigger className="w-full">

@@ -40,6 +40,7 @@ export const Profile = ({ user }: ProfileProps) => {
     },
     onSubmit: async ({ value }) => {
       await updateUserProfile(value);
+      form.reset();
     },
   });
 
@@ -190,9 +191,14 @@ export const Profile = ({ user }: ProfileProps) => {
             )}
           />
           <div className="">
-            <Button type="submit" size="lg" variant="blue">
-              {t('account.profile.form.saveButton')}
-            </Button>
+            <form.Subscribe
+              selector={(state) => [state.isDirty, state.isSubmitting]}
+              children={([isDirty, isSubmitting]) => (
+                <Button disabled={!isDirty || isSubmitting} type="submit" size="lg" variant="blue">
+                  {t('account.profile.form.saveButton')}
+                </Button>
+              )}
+            />
           </div>
         </CardContent>
       </Card>

@@ -22,7 +22,12 @@ export const Security = () => {
       onSubmit: passwordChangeSchema,
     },
     onSubmit: async ({ value }) => {
-      updatePassword(value);
+      try {
+        await updatePassword(value);
+        form.reset();
+      } catch (err) {
+        console.error('Error updating password:', err);
+      }
     },
   });
 
@@ -127,9 +132,14 @@ export const Security = () => {
             )}
           />
           <div className="pt-1">
-            <Button type="submit" size="lg" variant="blue">
-              {t('account.security.form.changePasswordButton')}
-            </Button>
+            <form.Subscribe
+              selector={(state) => [state.isDirty, state.isSubmitting]}
+              children={([isDirty, isSubmitting]) => (
+                <Button disabled={!isDirty || isSubmitting} type="submit" size="lg" variant="blue">
+                  {t('account.security.form.changePasswordButton')}
+                </Button>
+              )}
+            />
           </div>
         </CardContent>
       </Card>

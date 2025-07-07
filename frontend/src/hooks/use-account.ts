@@ -6,11 +6,13 @@ import { useTranslation } from 'react-i18next';
 import { updateCurrencySchema, type UpdateCurrency } from '@/schemas/account.schema';
 import { useSetAtom } from 'jotai';
 import { csrfTokenAtom, userAtom } from '@/stores/authStore';
+import { useCurrencyContext } from '@/context/currency-context';
 
 export const useUpdateUserProfile = () => {
   const queryClient = useQueryClient();
   const { t } = useTranslation();
   const setUser = useSetAtom(userAtom);
+  const { setCurrency } = useCurrencyContext();
 
   const getErrorMessage = (error: any): string | null => {
     if (!error) return null;
@@ -29,6 +31,7 @@ export const useUpdateUserProfile = () => {
     onSuccess: (data) => {
       toast.success(t('account.toast.updated'));
       queryClient.invalidateQueries({ queryKey: ['account'] });
+      setCurrency(data.currency);
       setUser(data);
     },
     onError: (error) => {
@@ -55,7 +58,7 @@ export const useUpdatePassword = () => {
 
   return useMutation({
     mutationFn: accountService.updateUserPassword,
-    onSuccess: (data) => {
+    onSuccess: (_data) => {
       toast.success(t('account.toast.passwordUpdated'));
       queryClient.invalidateQueries({ queryKey: ['account'] });
     },

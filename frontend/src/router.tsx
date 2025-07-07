@@ -5,7 +5,6 @@ import { ProtectedRoutes } from './components/auth/ProtectedRoutes';
 import { RootLayout } from './layouts/RootLayout';
 import { MainLoader } from './components/ui/MainLoader';
 
-// ✅ Lazy loading des pages
 const Home = lazy(() => import('./pages/Home'));
 const Dashboard = lazy(() => import('./pages/App/Dashboard'));
 const BudgetPage = lazy(() => import('./pages/App/Budget'));
