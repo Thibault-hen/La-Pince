@@ -7,6 +7,7 @@ import { getEnv } from '../utils/env';
 
 export async function generateTokenJWT(
   id: string,
+  isAlertActive: boolean,
   c: Context,
 ): Promise<string> {
   const { SECRET_JWT, TOKEN_JWT_NAME, NODE_ENV } = getEnv();
@@ -19,6 +20,7 @@ export async function generateTokenJWT(
 
   const payload = {
     userId: id,
+    alert: isAlertActive,
     exp: Math.floor(Date.now() / 1000) + AUTH_EXPIRATION_SECONDS,
   };
 

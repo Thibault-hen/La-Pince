@@ -89,16 +89,21 @@ notificationRouter
 
 export async function tryCreateBudgetNotification(
   budgetId: string,
+  isAlertActive: boolean,
   userId: string,
 ) {
   try {
+    // If the alert is not active, do not create a notification
+    if (!isAlertActive) return;
+
+    // Ensure userId is set
     const budget = await prisma.budget.findUnique({
       where: {
         id: budgetId,
         userId,
       },
       include: {
-        expenses: {},
+        expenses: true,
       },
     });
 
@@ -111,10 +116,10 @@ export async function tryCreateBudgetNotification(
       ),
     );
 
-    const limitAlert = budget.limitAlert;
-    const maxAmount = budget.amount;
+    const limitAlert = new Decimal(budget.limitAlert);
+    const maxAmount = new Decimal(budget.amount);
 
-    if (totalExpenseAmount < Number(limitAlert)) return;
+    if (new Decimal(totalExpenseAmount).lt(limitAlert)) return;
 
     const existingNotification = await prisma.notification.findFirst({
       where: {
@@ -139,7 +144,9 @@ export async function tryCreateBudgetNotification(
       },
     });
     notifiableUsers.get(userId)?.forEach((ws) => ws.send(''));
-  } catch (error) {}
+  } catch (error) {
+    console.error('Failed to create budget notification:', error);
+  }
 }
 
 export default notificationRouter;
