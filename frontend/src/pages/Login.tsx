@@ -6,7 +6,7 @@ import { ModeToggle } from '@/components/theme/theme-toggle';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 import { LanguageSelector } from '@/components/lang/LanguageSelector';
 
-export const Login = () => {
+const Login = () => {
   const location = useLocation();
 
   return (
@@ -38,3 +38,5 @@ export const Login = () => {
     </DefaultWrapper>
   );
 };
+
+export default Login;

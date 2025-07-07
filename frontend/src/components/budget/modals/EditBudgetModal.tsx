@@ -27,6 +27,7 @@ import type { Budget } from '@/types/budget';
 import { useEffect } from 'react';
 import { useCategories } from '@/hooks/use-category';
 import { useTranslation } from 'react-i18next';
+import { useCurrency } from '@/hooks/use-currency';
 
 interface AddBudgetProps {
   open: boolean;
@@ -109,9 +110,9 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
                 <div className="grid gap-3">
                   <div className="flex items-center justify-between">
                     <Label htmlFor={field.name}>{t('budget.edit.form.limitAlert')}</Label>
-                    <div className="text-xs flex gap-1 items-center">
+                    <div className="text-xs flex gap-1 items-center justify-center">
                       <span className="text-muted-foreground uppercase tracking-wider">Max</span>
-                      <span className="font-mono">({budget.amount})</span>
+                      <span className="font-mono">({budget.amount.toFixed(2)})</span>
                     </div>
                   </div>
 

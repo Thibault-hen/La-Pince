@@ -174,6 +174,7 @@ expenseRouter
 
       await tryCreateBudgetNotification(
         expense.budgetId,
+        c.get('jwtPayload').alert,
         c.get('jwtPayload').userId,
       );
       return c.json(
@@ -235,6 +236,7 @@ expenseRouter
 
       await tryCreateBudgetNotification(
         expense.budgetId ?? '',
+        c.get('jwtPayload').alert,
         c.get('jwtPayload').userId,
       );
 

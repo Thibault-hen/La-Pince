@@ -1,18 +1,25 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Home } from './pages/Home';
-import { Dashboard } from './pages/App/Dashboard';
-import { BudgetPage } from './pages/App/Budget';
-import { CategoryPage } from './pages/App/Category';
-import { Expense } from './pages/App/Expense';
-import { SettingsPage } from './pages/App/Settings';
+import { lazy, Suspense } from 'react';
 import { AppLayout } from './layouts/AppLayout';
-import { Login } from './pages/Login';
-import { Register } from './pages/Register';
-import { Terms } from './pages/Terms';
 import { ProtectedRoutes } from './components/auth/ProtectedRoutes';
 import { RootLayout } from './layouts/RootLayout';
-import { ResetPassword } from './pages/ResetPassword';
-import { NotFound } from './pages/NotFound';
+import { MainLoader } from './components/ui/MainLoader';
+
+const Home = lazy(() => import('./pages/Home'));
+const Dashboard = lazy(() => import('./pages/App/Dashboard'));
+const BudgetPage = lazy(() => import('./pages/App/Budget'));
+const CategoryPage = lazy(() => import('./pages/App/Category'));
+const Expense = lazy(() => import('./pages/App/Expense'));
+const SettingsPage = lazy(() => import('./pages/App/Settings'));
+const Login = lazy(() => import('./pages/Login'));
+const Register = lazy(() => import('./pages/Register'));
+const Terms = lazy(() => import('./pages/Terms'));
+const ResetPassword = lazy(() => import('./pages/ResetPassword'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+
+const SuspenseWrapper = ({ children }: { children: React.ReactNode }) => (
+  <Suspense fallback={<MainLoader />}>{children}</Suspense>
+);
 
 export const router = createBrowserRouter([
   {
@@ -21,23 +28,43 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: (
+          <SuspenseWrapper>
+            <Home />
+          </SuspenseWrapper>
+        ),
       },
       {
         path: '/reset-password',
-        element: <ResetPassword />,
+        element: (
+          <SuspenseWrapper>
+            <ResetPassword />
+          </SuspenseWrapper>
+        ),
       },
       {
         path: '/connexion',
-        element: <Login />,
+        element: (
+          <SuspenseWrapper>
+            <Login />
+          </SuspenseWrapper>
+        ),
       },
       {
         path: '/inscription',
-        element: <Register />,
+        element: (
+          <SuspenseWrapper>
+            <Register />
+          </SuspenseWrapper>
+        ),
       },
       {
         path: '/mentions-legales',
-        element: <Terms />,
+        element: (
+          <SuspenseWrapper>
+            <Terms />
+          </SuspenseWrapper>
+        ),
       },
       {
         path: '/tableau-de-bord',
@@ -48,23 +75,43 @@ export const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <Dashboard />,
+                element: (
+                  <SuspenseWrapper>
+                    <Dashboard />
+                  </SuspenseWrapper>
+                ),
               },
               {
                 path: 'budgets',
-                element: <BudgetPage />,
+                element: (
+                  <SuspenseWrapper>
+                    <BudgetPage />
+                  </SuspenseWrapper>
+                ),
               },
               {
                 path: 'depenses',
-                element: <Expense />,
+                element: (
+                  <SuspenseWrapper>
+                    <Expense />
+                  </SuspenseWrapper>
+                ),
               },
               {
                 path: 'categories',
-                element: <CategoryPage />,
+                element: (
+                  <SuspenseWrapper>
+                    <CategoryPage />
+                  </SuspenseWrapper>
+                ),
               },
               {
                 path: 'parametres',
-                element: <SettingsPage />,
+                element: (
+                  <SuspenseWrapper>
+                    <SettingsPage />
+                  </SuspenseWrapper>
+                ),
               },
             ],
           },
@@ -74,6 +121,10 @@ export const router = createBrowserRouter([
   },
   {
     path: '*',
-    element: <NotFound />,
+    element: (
+      <SuspenseWrapper>
+        <NotFound />
+      </SuspenseWrapper>
+    ),
   },
 ]);

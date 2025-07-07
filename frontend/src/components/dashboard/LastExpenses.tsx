@@ -55,19 +55,19 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
                 <h2 className="text-sm lg:text-lg font-bold mb-1 text-black dark:text-white">
                   {t('dashboard.last10Expenses.title')}
                 </h2>
-                <p className="text-sm font-medium text-black dark:text-white">
+                <p className="text-xs font-medium text-muted-foreground tracking-wide truncate">
                   {t('dashboard.last10Expenses.subTitle')}
                 </p>
               </div>
             </div>
-            <div className="text-right">
-              <div className="flex items-center gap-2 mb-1">
-                <p className="text-base md:text-xl font-bold text-black dark:text-white">
+            <div className="text-right justify-end">
+              <div className="flex items-center gap-2 bg-secondary-color/10 border mb-1 border-secondary-color/20 rounded-lg p-2">
+                <p className="text-sm md:text-base font-bold text-secondary-color">
                   {totalAmount ? '-' : ''}
                   {formatAmount(totalAmount ?? 0)}
                 </p>
               </div>
-              <p className="text-black dark:text-white text-sm">
+              <p className="text-xs font-medium text-muted-foreground tracking-wide truncate">
                 {t('dashboard.last10Expenses.totalExpense')}
               </p>
             </div>
@@ -84,9 +84,15 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
                 key={index}
                 className="relative p-2 px-6 dark:bg-primary transition-all duration-300 cursor-pointer"
               >
+                <div
+                  className="absolute top-0 left-0 w-full h-1 opacity-60"
+                  style={{
+                    background: `linear-gradient(90deg, ${expense.budget?.category.color?.value}, transparent 70%)`,
+                  }}
+                />
                 <div className="flex items-center gap-4">
                   {/* Color indicator */}
-                  <div
+                  {/* <div
                     className="w-4 h-4 rounded-lg shadow-sm"
                     style={{
                       background: !expense.budget?.category
@@ -99,21 +105,21 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
 
                       color: '#fff',
                     }}
-                  />
+                  /> */}
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-semibold truncate text-xs md:text-base">
+                      <h3 className="font-semibold truncate text-xs md:text-sm">
                         {expense.description}
                       </h3>
-                      <span className="text-xs md:text-sm font-bold text-red-500 ml-4">
+                      <span className="text-xs md:text-sm text-red-500 py-0.5 px-2 bg-red-500/5 border border-red-500/20 rounded-lg">
                         -{formatAmount(expense.amount)}
                       </span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-gray-500">
                       <Calendar className="h-3 w-3" />
-                      <span className="text-xs md:text-base">{formatDate(expense.date)}</span>
+                      <span className="text-xs md:text-sm">{formatDate(expense.date)}</span>
                       <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <ArrowUpRight className="h-4 w-4 text-gray-400 group-hover:text-blue-500" />
                       </div>

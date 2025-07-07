@@ -5,7 +5,7 @@ import HeroSection from '@/components/homepage/HeroSection';
 import ProblemSection from '@/components/homepage/ProblemSection';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 
-export const Home = () => {
+const Home = () => {
   return (
     <DefaultWrapper>
       <div className="w-full place-items-center ">
@@ -18,3 +18,5 @@ export const Home = () => {
     </DefaultWrapper>
   );
 };
+
+export default Home;

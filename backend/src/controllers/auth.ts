@@ -107,7 +107,7 @@ authRouter
       const { password: _, ...safeUser } = user;
 
       //JWT
-      await generateTokenJWT(user.id, c);
+      await generateTokenJWT(user.id, user.alert, c);
       const tokenCSRF = await generateTokenCSRF(c);
 
       return c.json(

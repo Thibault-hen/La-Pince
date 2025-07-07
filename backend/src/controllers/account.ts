@@ -19,7 +19,12 @@ import {
 import { updateUserSchema } from '../validators/user';
 import z from 'zod';
 import { describeRoute } from 'hono-openapi';
-import { deleteUserCookie, generateTokenCSRF } from '../lib/tokens';
+import {
+  deleteUserCookie,
+  generateTokenCSRF,
+  generateTokenJWT,
+} from '../lib/tokens';
+import { updateJWTPayload } from '../middlewares/auth.middleware';
 
 const accountRouter = new Hono();
 
@@ -47,7 +52,7 @@ accountRouter
       const tokenCSRF = await generateTokenCSRF(c);
 
       return c.json({ user: user, token: tokenCSRF }, 200);
-    }
+    },
   )
   .patch(
     '/',
@@ -75,16 +80,17 @@ accountRouter
           });
         }
       }
-
       const updatedUser = await prisma.user.update({
         where: { id: userId },
         data,
       });
 
+      await generateTokenJWT(updatedUser.id, updatedUser.alert, c);
+      await updateJWTPayload(c);
       const { password: _, ...safeUser } = updatedUser;
 
       return c.json(safeUser, 200);
-    }
+    },
   )
   .patch(
     '/reset-password',
@@ -97,7 +103,7 @@ accountRouter
           z.union([
             z.literal('Current and new password are required.'),
             z.literal('Current password is incorrect.'),
-          ])
+          ]),
         ),
         404: response404(z.literal('User not found.')),
       },
@@ -111,7 +117,7 @@ accountRouter
         throw new HTTPException(400, {
           res: c.json(
             { message: 'Current and new password are required.' },
-            400
+            400,
           ),
         });
       }
@@ -128,7 +134,7 @@ accountRouter
 
       const isPasswordValid = await argon2.verify(
         user.password,
-        data.currentPassword
+        data.currentPassword,
       );
       if (!isPasswordValid) {
         throw new HTTPException(400, {
@@ -151,7 +157,7 @@ accountRouter
       const { password: _, ...safeUser } = updatedUser;
 
       return c.json(safeUser, 200);
-    }
+    },
   )
   .patch(
     '/currency',
@@ -186,7 +192,7 @@ accountRouter
       const { password: _, ...safeUser } = updatedCurrency;
 
       return c.json(safeUser, 200);
-    }
+    },
   )
   .delete(
     '/',
@@ -207,7 +213,7 @@ accountRouter
       deleteUserCookie(c);
 
       return c.body(null, 204);
-    }
+    },
   );
 
 export default accountRouter;

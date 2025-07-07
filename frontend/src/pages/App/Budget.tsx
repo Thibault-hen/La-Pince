@@ -12,7 +12,7 @@ import type { Budget } from '@/types/budget';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const BudgetPage = () => {
+const BudgetPage = () => {
   const [openAddBudget, setOpenAddBudget] = useState(false);
   const [openEditBudget, setOpenEditBudget] = useState(false);
   const [openDeleteBudget, setOpenDeleteBudget] = useState(false);
@@ -81,3 +81,5 @@ export const BudgetPage = () => {
     </DefaultWrapper>
   );
 };
+
+export default BudgetPage;
