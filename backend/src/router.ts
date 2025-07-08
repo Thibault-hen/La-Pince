@@ -10,9 +10,11 @@ import { isAuthenticated } from './middlewares/auth.middleware';
 import colorRouter from './controllers/color';
 import dashboardRouter from './controllers/dashboard';
 import exchangeRateRouter from './controllers/exchangeRate';
+import { apiRateLimit } from './utils/rateLimits';
 
 const router = new Hono();
 
+router.use('/api/*', apiRateLimit);
 router.route('/api/v1', authRouter);
 router.use('/api/v1/*', isAuthenticated);
 router.route('/api/v1', accountRouter);
