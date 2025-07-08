@@ -11,6 +11,7 @@ import { getSignedCookie } from 'hono/cookie';
 import { authentify } from './middlewares/auth.middleware';
 import { notifiableUsers } from './websockets/notifiableUsers';
 import { initRedis } from './utils/redis';
+import { secureHeaders } from 'hono/secure-headers';
 
 const app = new Hono();
 const { injectWebSocket, upgradeWebSocket } = createNodeWebSocket({ app });
@@ -20,10 +21,19 @@ const { FRONTEND_URL } = getEnv();
 initRedis();
 
 app.use(
+  secureHeaders({
+    strictTransportSecurity: `max-age=31536000; includeSubDomains`,
+    referrerPolicy: 'strict-origin-when-cross-origin',
+  }),
+);
+
+app.use(
   '*',
   cors({
     origin: FRONTEND_URL,
+    allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     credentials: true,
+    maxAge: 86400,
   }),
 );
 
@@ -71,7 +81,9 @@ app.get(
       );
 
       if (!token) {
-        return {};
+        throw new HTTPException(401, {
+          message: 'You are not logged in.',
+        });
       }
 
       const payload = (await authentify(token, SECRET_JWT, c)) as {
@@ -92,7 +104,11 @@ app.get(
         },
       };
     } catch (error) {
-      return {};
+      console.error('WebSocket connection error:', error);
+      return {
+        onOpen: async () => {},
+        onClose: async () => {},
+      };
     }
   }),
 );
