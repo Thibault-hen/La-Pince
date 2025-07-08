@@ -29,6 +29,11 @@ import {
 } from '../lib/tokens';
 import { getEnv } from '../utils/env';
 import { Resend } from 'resend';
+import {
+  loginRateLimit,
+  registerRateLimit,
+  resetPasswordRateLimit,
+} from '../utils/rateLimits';
 
 const authRouter = new Hono();
 
@@ -36,6 +41,7 @@ authRouter
   .basePath('/auth')
   .post(
     '/register',
+    registerRateLimit,
     describeRoute({
       description: 'Register a new user',
       tags: ['auth'],
@@ -81,6 +87,7 @@ authRouter
   )
   .post(
     '/login',
+    loginRateLimit,
     describeRoute({
       description: 'Login',
       tags: ['auth'],
@@ -118,6 +125,7 @@ authRouter
   )
   .post(
     '/request-reset',
+    resetPasswordRateLimit,
     describeRoute({
       description: 'Request a reset password',
       tags: ['auth'],
