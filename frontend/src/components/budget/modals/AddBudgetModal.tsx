@@ -1,3 +1,6 @@
+/** biome-ignore-all lint/correctness/noChildrenProp: TanStack Form uses children prop pattern */
+import { useForm } from '@tanstack/react-form';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -8,6 +11,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Loader } from '@/components/ui/loader';
 import {
   Select,
   SelectContent,
@@ -17,14 +23,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { useCreateBudget } from '@/hooks/use-budget';
-import { useForm } from '@tanstack/react-form';
-import { createBudgetSchema } from '@/schemas/budget.schemas';
-import { Loader } from '@/components/ui/loader';
 import { useCategories } from '@/hooks/use-category';
-import { useTranslation } from 'react-i18next';
+import { createBudgetSchema } from '@/schemas/budget.schemas';
 
 interface AddBudgetProps {
   open: boolean;
@@ -61,7 +62,9 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
           }}
         >
           <DialogHeader className="mb-4">
-            <DialogTitle className="font-medium text-xl">{t('budget.add.title')}</DialogTitle>
+            <DialogTitle className="font-medium text-xl">
+              {t('budget.add.title')}
+            </DialogTitle>
             <DialogDescription>{t('budget.add.description')}</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
@@ -69,7 +72,9 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
               name="amount"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>{t('budget.add.form.amount')}</Label>
+                  <Label htmlFor={field.name}>
+                    {t('budget.add.form.amount')}
+                  </Label>
                   <Input
                     id={field.name}
                     placeholder={t('budget.add.form.amountPlaceholder')}
@@ -92,7 +97,9 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
               name="limitAlert"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>{t('budget.add.form.limitAlert')}</Label>
+                  <Label htmlFor={field.name}>
+                    {t('budget.add.form.limitAlert')}
+                  </Label>
                   <Input
                     id={field.name}
                     placeholder={t('budget.add.form.limitAlertPlaceholder')}
@@ -115,18 +122,24 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
               name="categoryId"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>{t('budget.add.form.category')}</Label>
+                  <Label htmlFor={field.name}>
+                    {t('budget.add.form.category')}
+                  </Label>
                   <Select
                     name={field.name}
                     onValueChange={(value) => field.handleChange(value)}
                     required
                   >
                     <SelectTrigger className="w-full cursor-pointer">
-                      <SelectValue placeholder={t('budget.add.form.categoryPlaceholder')} />
+                      <SelectValue
+                        placeholder={t('budget.add.form.categoryPlaceholder')}
+                      />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectLabel>{t('budget.add.form.categoryLabel')}</SelectLabel>
+                        <SelectLabel>
+                          {t('budget.add.form.categoryLabel')}
+                        </SelectLabel>
                         {categories
                           ?.slice()
                           .sort((a, b) => {
@@ -143,7 +156,9 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
                             >
                               <span>{t(category.title)}</span>
                               <div
-                                style={{ backgroundColor: category?.color?.value }}
+                                style={{
+                                  backgroundColor: category?.color?.value,
+                                }}
                                 className="h-3 w-3 rounded-lg"
                               ></div>
                             </SelectItem>

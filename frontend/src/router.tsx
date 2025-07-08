@@ -1,21 +1,21 @@
-import { createBrowserRouter } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
-import { AppLayout } from './layouts/AppLayout';
+import { createBrowserRouter } from 'react-router-dom';
 import { ProtectedRoutes } from './components/auth/ProtectedRoutes';
-import { RootLayout } from './layouts/RootLayout';
 import { MainLoader } from './components/ui/MainLoader';
+import { AppLayout } from './layouts/AppLayout';
+import { RootLayout } from './layouts/RootLayout';
 
-const Home = lazy(() => import('./pages/Home'));
-const Dashboard = lazy(() => import('./pages/App/Dashboard'));
+const HomePage = lazy(() => import('./pages/Home'));
+const DashboardPage = lazy(() => import('./pages/App/Dashboard'));
 const BudgetPage = lazy(() => import('./pages/App/Budget'));
 const CategoryPage = lazy(() => import('./pages/App/Category'));
-const Expense = lazy(() => import('./pages/App/Expense'));
+const ExpensePage = lazy(() => import('./pages/App/Expense'));
 const SettingsPage = lazy(() => import('./pages/App/Settings'));
-const Login = lazy(() => import('./pages/Login'));
-const Register = lazy(() => import('./pages/Register'));
-const Terms = lazy(() => import('./pages/Terms'));
-const ResetPassword = lazy(() => import('./pages/ResetPassword'));
-const NotFound = lazy(() => import('./pages/NotFound'));
+const LoginPage = lazy(() => import('./pages/Login'));
+const RegisterPage = lazy(() => import('./pages/Register'));
+const TermsPage = lazy(() => import('./pages/Terms'));
+const ResetPasswordPage = lazy(() => import('./pages/ResetPassword'));
+const NotFoundPage = lazy(() => import('./pages/NotFound'));
 
 const SuspenseWrapper = ({ children }: { children: React.ReactNode }) => (
   <Suspense fallback={<MainLoader />}>{children}</Suspense>
@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
         index: true,
         element: (
           <SuspenseWrapper>
-            <Home />
+            <HomePage />
           </SuspenseWrapper>
         ),
       },
@@ -38,7 +38,7 @@ export const router = createBrowserRouter([
         path: '/reset-password',
         element: (
           <SuspenseWrapper>
-            <ResetPassword />
+            <ResetPasswordPage />
           </SuspenseWrapper>
         ),
       },
@@ -46,7 +46,7 @@ export const router = createBrowserRouter([
         path: '/connexion',
         element: (
           <SuspenseWrapper>
-            <Login />
+            <LoginPage />
           </SuspenseWrapper>
         ),
       },
@@ -54,7 +54,7 @@ export const router = createBrowserRouter([
         path: '/inscription',
         element: (
           <SuspenseWrapper>
-            <Register />
+            <RegisterPage />
           </SuspenseWrapper>
         ),
       },
@@ -62,7 +62,7 @@ export const router = createBrowserRouter([
         path: '/mentions-legales',
         element: (
           <SuspenseWrapper>
-            <Terms />
+            <TermsPage />
           </SuspenseWrapper>
         ),
       },
@@ -77,7 +77,7 @@ export const router = createBrowserRouter([
                 index: true,
                 element: (
                   <SuspenseWrapper>
-                    <Dashboard />
+                    <DashboardPage />
                   </SuspenseWrapper>
                 ),
               },
@@ -93,7 +93,7 @@ export const router = createBrowserRouter([
                 path: 'depenses',
                 element: (
                   <SuspenseWrapper>
-                    <Expense />
+                    <ExpensePage />
                   </SuspenseWrapper>
                 ),
               },
@@ -123,7 +123,7 @@ export const router = createBrowserRouter([
     path: '*',
     element: (
       <SuspenseWrapper>
-        <NotFound />
+        <NotFoundPage />
       </SuspenseWrapper>
     ),
   },

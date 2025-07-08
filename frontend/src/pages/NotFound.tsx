@@ -1,7 +1,7 @@
 import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import laPinceLogo from '@/assets/logo.webp';
 import { useLocation } from 'react-router-dom';
+import laPinceLogo from '@/assets/logo.webp';
+import { Button } from '@/components/ui/button';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 
 const NotFound = () => {
@@ -23,8 +23,8 @@ const NotFound = () => {
               Page Not Found
             </h1>
             <p className="text-lg max-w-md mx-auto leading-relaxed">
-              Oops! It looks like this page has gone missing from your financial dashboard. Don't
-              worry, your money is still safe with us.
+              Oops! It looks like this page has gone missing from your financial
+              dashboard. Don't worry, your money is still safe with us.
             </p>
           </div>
 

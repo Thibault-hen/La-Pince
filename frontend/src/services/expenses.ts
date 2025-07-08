@@ -26,7 +26,7 @@ export type CreateExpense = {
   amount: number;
   budgetId: string;
   date: string;
-}
+};
 
 type ExpenseResponse = {
   id: string;
@@ -34,8 +34,7 @@ type ExpenseResponse = {
   amount: number;
   date: string;
   budgetId: string;
-}
-
+};
 
 export const expenseService = {
   async getAll(): Promise<GetExpensesResponse> {

@@ -1,8 +1,12 @@
 import { Tags } from 'lucide-react';
-import { Button } from '../ui/button';
 import { useTranslation } from 'react-i18next';
+import { Button } from '../ui/button';
 
-export const CategoryHeader = ({ onOpenAddModal }: { onOpenAddModal: () => void }) => {
+export const CategoryHeader = ({
+  onOpenAddModal,
+}: {
+  onOpenAddModal: () => void;
+}) => {
   const { t } = useTranslation();
   return (
     <div className="flex items-center justify-between mb-6">
@@ -12,8 +16,12 @@ export const CategoryHeader = ({ onOpenAddModal }: { onOpenAddModal: () => void 
             <Tags className="h-5 w-5 text-primary-color" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-foreground">{t('categories.header.title')}</h1>
-            <p className="text-sm text-muted-foreground">{t('categories.header.subtitle')}</p>
+            <h1 className="text-2xl font-bold text-foreground">
+              {t('categories.header.title')}
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              {t('categories.header.subtitle')}
+            </p>
           </div>
         </div>
       </div>

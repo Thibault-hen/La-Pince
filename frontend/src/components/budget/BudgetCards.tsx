@@ -1,11 +1,11 @@
-import { TrendingUp, Hash, Euro } from 'lucide-react';
-import { Progress } from '../ui/progress';
+import { Euro, Hash, TrendingUp } from 'lucide-react';
 import { useSpring } from 'motion/react';
 import { useEffect, useState } from 'react';
-import { getColorStatus } from '@/utils/colorStatus';
-import { getPercentage } from '@/utils/percentage';
 import { useTranslation } from 'react-i18next';
 import { useCurrency } from '@/hooks/use-currency';
+import { getColorStatus } from '@/utils/colorStatus';
+import { getPercentage } from '@/utils/percentage';
+import { Progress } from '../ui/progress';
 
 type BudgetCardsProps = {
   totalBudget?: number;
@@ -13,7 +13,11 @@ type BudgetCardsProps = {
   remainingBudget?: number;
 };
 
-export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: BudgetCardsProps) => {
+export const BudgetCards = ({
+  totalBudget,
+  activeBudget,
+  remainingBudget,
+}: BudgetCardsProps) => {
   const { formatAmount } = useCurrency();
   const [displayTotal, setDisplayTotal] = useState<string>('0.00');
   const [displayCount, setDisplayCount] = useState<string>('0');
@@ -74,7 +78,9 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
             <div className="text-xl md:text-3xl font-bold text-gray-900 dark:text-white">
               {formatAmount(Number(displayTotal))}
             </div>
-            <p className="text-sm text-muted-foreground">{t('budget.cards.totalBudget')}</p>
+            <p className="text-sm text-muted-foreground">
+              {t('budget.cards.totalBudget')}
+            </p>
           </div>
         </div>
       </div>
@@ -92,7 +98,9 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
 
           <div className="space-y-1">
             <div className="text-xl md:text-3xl font-bold"> {displayCount}</div>
-            <p className="text-sm text-muted-foreground">{t('budget.cards.activeBudgets')}</p>
+            <p className="text-sm text-muted-foreground">
+              {t('budget.cards.activeBudgets')}
+            </p>
           </div>
         </div>
       </div>
@@ -112,7 +120,9 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
             <div className="text-xl md:text-3xl font-bold ">
               <span> {formatAmount(Number(displayRemaining))}</span>
             </div>
-            <p className="text-sm text-muted-foreground">{t('budget.cards.remainingBudget')}</p>
+            <p className="text-sm text-muted-foreground">
+              {t('budget.cards.remainingBudget')}
+            </p>
 
             <div className="mt-3">
               <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
@@ -120,7 +130,10 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
                 <span>
                   {remainingBudget === totalBudget
                     ? '0%'
-                    : getPercentage((totalBudget ?? 0) - (remainingBudget ?? 0), totalBudget ?? 0)}
+                    : getPercentage(
+                        (totalBudget ?? 0) - (remainingBudget ?? 0),
+                        totalBudget ?? 0,
+                      )}
                 </span>
               </div>
               <Progress
@@ -134,7 +147,7 @@ export const BudgetCards = ({ totalBudget, activeBudget, remainingBudget }: Budg
                         ? ''
                         : getColorStatus(
                             (totalBudget ?? 0) - (remainingBudget ?? 0),
-                            totalBudget ?? 0
+                            totalBudget ?? 0,
                           ),
                   } as React.CSSProperties
                 }

@@ -1,5 +1,5 @@
 {
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "eslint.validate": ["javascript", "typescript", "typescriptreact"]
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "biomejs.biome",
+	"biome.lsp.bin": "./frontend/node_modules/@biomejs/cli-win32-x64/biome.exe"
 }

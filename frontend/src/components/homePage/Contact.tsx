@@ -1,8 +1,10 @@
 'use client';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { z } from 'zod';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import {
   Form,
   FormControl,
@@ -12,7 +14,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
@@ -21,7 +22,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { useTranslation } from 'react-i18next';
 
 const formSchema = z.object({
   firstName: z.string().min(2, { message: 'Nom requis' }).max(255),
@@ -87,7 +87,10 @@ export default function Contact() {
           <CardHeader className="text-primary text-2xl"> </CardHeader>
           <CardContent>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className=" grid w-full gap-4">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className=" grid w-full gap-4"
+              >
                 <div className=" flex flex-col md:!flex-row gap-8">
                   <FormField
                     control={form.control}
@@ -96,7 +99,10 @@ export default function Contact() {
                       <FormItem className="w-full">
                         <FormLabel>{t('home.contact.firstName')}</FormLabel>
                         <FormControl>
-                          <Input placeholder={t('home.contact.firstNamePlaceholder')} {...field} />
+                          <Input
+                            placeholder={t('home.contact.firstNamePlaceholder')}
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -109,7 +115,10 @@ export default function Contact() {
                       <FormItem className="w-full">
                         <FormLabel>{t('home.contact.lastName')}</FormLabel>
                         <FormControl>
-                          <Input placeholder={t('home.contact.lastNamePlaceholder')} {...field} />
+                          <Input
+                            placeholder={t('home.contact.lastNamePlaceholder')}
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -142,15 +151,25 @@ export default function Contact() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>{t('home.contact.subject')}</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
                           <FormControl>
                             <SelectTrigger className="w-full">
-                              <SelectValue placeholder={t('home.contact.subjectPlaceholder')} />
+                              <SelectValue
+                                placeholder={t(
+                                  'home.contact.subjectPlaceholder',
+                                )}
+                              />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            {subjets.map((subject, id) => (
-                              <SelectItem key={id} value={subject.value}>
+                            {subjets.map((subject) => (
+                              <SelectItem
+                                key={subject.value}
+                                value={subject.value}
+                              >
                                 {t(subject.title)}
                               </SelectItem>
                             ))}

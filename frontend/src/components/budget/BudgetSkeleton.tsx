@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
 import { Skeleton } from '../ui/skeleton';
 
 export const BudgetSkeleton = () => {
@@ -26,7 +27,10 @@ export const BudgetSkeleton = () => {
       <Skeleton className="h-5 w-[130px]" />
       <div className="flex flex-col items-center gap-4 lg:flex-row">
         {Array.from({ length: 3 }).map((_, index) => (
-          <Skeleton key={index} className="h-[100px] w-full rounded-md lg:w-1/4" />
+          <Skeleton
+            key={index}
+            className="h-[100px] w-full rounded-md lg:w-1/4"
+          />
         ))}
       </div>
     </div>

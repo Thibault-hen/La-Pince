@@ -1,14 +1,3 @@
-import { DashboardHeader } from '@/components/dashboard/DashboardHeader';
-import { DasboardSkeleton } from '@/components/dashboard/DashboardSkeleton';
-import { LastExpenses } from '@/components/dashboard/LastExpenses';
-import { EditIncomeModal } from '@/components/dashboard/modals/EditIncomeModal';
-import { ExpensesOverallChart } from '@/components/dashboard/ExpensesOverallChart';
-import { FinanceCard } from '@/components/dashboard/ExpensesOverallCard';
-import { Progress } from '@/components/ui/progress';
-import { useDashboard } from '@/hooks/use-dashboard';
-import { useCurrency } from '@/hooks/use-currency';
-import { DefaultWrapper } from '@/layouts/DefaultWrapper';
-import { getPercentage, getPercentageRaw } from '@/utils/percentage';
 import {
   AlertCircle,
   BadgePercent,
@@ -20,7 +9,18 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { DashboardHeader } from '@/components/dashboard/DashboardHeader';
+import { DasboardSkeleton } from '@/components/dashboard/DashboardSkeleton';
+import { FinanceCard } from '@/components/dashboard/ExpensesOverallCard';
+import { ExpensesOverallChart } from '@/components/dashboard/ExpensesOverallChart';
+import { LastExpenses } from '@/components/dashboard/LastExpenses';
+import { EditIncomeModal } from '@/components/dashboard/modals/EditIncomeModal';
+import { Progress } from '@/components/ui/progress';
+import { useCurrency } from '@/hooks/use-currency';
+import { useDashboard } from '@/hooks/use-dashboard';
+import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 import { ColorPercentage, getColorStatus } from '@/utils/colorStatus';
+import { getPercentage, getPercentageRaw } from '@/utils/percentage';
 
 const Dashboard = () => {
   const { data: dashboardData, isLoading } = useDashboard();
@@ -64,7 +64,9 @@ const Dashboard = () => {
                 <div className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">
                   {formatAmount(dashboardData?.currentMonthRevenue?.value ?? 0)}
                 </div>
-                <p className="text-sm text-muted-foreground">{t('dashboard.cards.totalIncome')}</p>
+                <p className="text-sm text-muted-foreground">
+                  {t('dashboard.cards.totalIncome')}
+                </p>
               </div>
             </div>
 
@@ -82,7 +84,9 @@ const Dashboard = () => {
                 <div className="text-xl md:text-2xl font-bold">
                   {formatAmount(dashboardData?.currentMonthBudget ?? 0)}
                 </div>
-                <p className="text-sm text-muted-foreground">{t('dashboard.cards.totalBudgets')}</p>
+                <p className="text-sm text-muted-foreground">
+                  {t('dashboard.cards.totalBudgets')}
+                </p>
               </div>
             </div>
 
@@ -105,11 +109,13 @@ const Dashboard = () => {
                       ? formatAmount(0)
                       : formatAmount(
                           (dashboardData?.currentMonthRevenue?.value ?? 0) -
-                            (dashboardData?.currentMonthExpenses ?? 0)
+                            (dashboardData?.currentMonthExpenses ?? 0),
                         )}
                   </span>
                 </div>
-                <p className="text-sm text-muted-foreground">{t('dashboard.cards.remaining')}</p>
+                <p className="text-sm text-muted-foreground">
+                  {t('dashboard.cards.remaining')}
+                </p>
               </div>
             </div>
 
@@ -142,27 +148,27 @@ const Dashboard = () => {
                       <div className="flex items-center gap-2 text-sm">
                         {getPercentageRaw(
                           dashboardData?.currentMonthExpenses,
-                          dashboardData?.currentMonthRevenue?.value ?? 0
+                          dashboardData?.currentMonthRevenue?.value ?? 0,
                         ) > ColorPercentage.warning ? (
                           <AlertCircle
                             className="h-4 w-4"
                             style={{
                               color: getColorStatus(
                                 dashboardData?.currentMonthExpenses,
-                                dashboardData?.currentMonthRevenue?.value ?? 0
+                                dashboardData?.currentMonthRevenue?.value ?? 0,
                               ),
                             }}
                           />
                         ) : getPercentageRaw(
                             dashboardData?.currentMonthExpenses,
-                            dashboardData?.currentMonthRevenue?.value ?? 0
+                            dashboardData?.currentMonthRevenue?.value ?? 0,
                           ) > ColorPercentage.ok ? (
                           <AlertCircle
                             className="h-4 w-4"
                             style={{
                               color: getColorStatus(
                                 dashboardData?.currentMonthExpenses,
-                                dashboardData?.currentMonthRevenue?.value ?? 0
+                                dashboardData?.currentMonthRevenue?.value ?? 0,
                               ),
                             }}
                           />
@@ -172,7 +178,7 @@ const Dashboard = () => {
                             style={{
                               color: getColorStatus(
                                 dashboardData?.currentMonthExpenses,
-                                dashboardData?.currentMonthRevenue?.value ?? 0
+                                dashboardData?.currentMonthRevenue?.value ?? 0,
                               ),
                             }}
                           />
@@ -180,7 +186,7 @@ const Dashboard = () => {
                         <span className="text-xs font-medium">
                           {getPercentage(
                             dashboardData?.currentMonthExpenses ?? 0,
-                            dashboardData?.currentMonthRevenue?.value ?? 0
+                            dashboardData?.currentMonthRevenue?.value ?? 0,
                           )}{' '}
                           {t('dashboard.overallCard.used')}
                         </span>
@@ -189,7 +195,7 @@ const Dashboard = () => {
                       <Progress
                         value={Math.min(
                           dashboardData?.currentMonthExpenses ?? 0,
-                          dashboardData?.currentMonthRevenue?.value ?? 0
+                          dashboardData?.currentMonthRevenue?.value ?? 0,
                         )}
                         max={dashboardData?.currentMonthRevenue?.value ?? 1}
                         className="w-full h-2 border [&>*]:bg-[var(--bg-color)]"
@@ -197,7 +203,7 @@ const Dashboard = () => {
                           {
                             '--bg-color': getColorStatus(
                               dashboardData?.currentMonthExpenses,
-                              dashboardData?.currentMonthRevenue?.value ?? 0
+                              dashboardData?.currentMonthRevenue?.value ?? 0,
                             ),
                           } as React.CSSProperties
                         }
@@ -220,7 +226,9 @@ const Dashboard = () => {
             {/* Monthly Chart */}
             <div className="lg:col-span-1">
               <ExpensesOverallChart
-                last6MonthsExpensesByMonth={dashboardData?.last6MonthsExpensesByMonth ?? {}}
+                last6MonthsExpensesByMonth={
+                  dashboardData?.last6MonthsExpensesByMonth ?? {}
+                }
               />
             </div>
 

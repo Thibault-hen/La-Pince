@@ -1,5 +1,5 @@
-import heroImage from '@/assets/home-page/hero_img1.png';
 import { useTranslation } from 'react-i18next';
+import heroImage from '@/assets/home-page/hero_img1.png';
 
 export default function Hero05() {
   const { t } = useTranslation();

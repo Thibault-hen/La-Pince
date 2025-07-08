@@ -1,15 +1,16 @@
-import { cn } from '@/lib/utils';
+/** biome-ignore-all lint/correctness/noChildrenProp: TanStack Form uses children prop pattern */
+import { useForm } from '@tanstack/react-form';
+import { Mail } from 'lucide-react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import laPinceLogo from '@/assets/logo.webp';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import laPinceLogo from '@/assets/logo.webp';
-import { useForm } from '@tanstack/react-form';
+import { cn } from '@/lib/utils';
 import { sendResetEmailSchema } from '@/schemas/auth.schemas';
-import { Loader } from '../ui/loader';
-import { useState } from 'react';
-import { Mail } from 'lucide-react';
 import { authService } from '@/services/auth';
-import { useTranslation } from 'react-i18next';
+import { Loader } from '../ui/loader';
 
 type SendResetEmailMessages = {
   messages: {
@@ -18,8 +19,12 @@ type SendResetEmailMessages = {
   };
 };
 
-export function SendResetPasswordEmailForm({ className, ...props }: React.ComponentProps<'form'>) {
-  const [sendEmailMessage, setSendEmailMessage] = useState<SendResetEmailMessages | null>(null);
+export function SendResetPasswordEmailForm({
+  className,
+  ...props
+}: React.ComponentProps<'form'>) {
+  const [sendEmailMessage, setSendEmailMessage] =
+    useState<SendResetEmailMessages | null>(null);
   const { t } = useTranslation();
 
   const form = useForm({
@@ -38,7 +43,7 @@ export function SendResetPasswordEmailForm({ className, ...props }: React.Compon
             errorMessage: '',
           },
         });
-      } catch (error) {
+      } catch {
         setSendEmailMessage({
           messages: {
             successMessage: '',
@@ -53,7 +58,7 @@ export function SendResetPasswordEmailForm({ className, ...props }: React.Compon
     <form
       className={cn(
         'flex flex-col gap-6 dark:bg-primary rounded-md border p-6 sm:p-16 shadow',
-        className
+        className,
       )}
       {...props}
       onSubmit={async (e) => {
@@ -65,7 +70,9 @@ export function SendResetPasswordEmailForm({ className, ...props }: React.Compon
         <img src={laPinceLogo} width={100} alt="Application logo" />
       </div>
       <div className="grid gap-6">
-        <h1 className="text-2xl font-semibold text-left">{t('user.sendResetPassword.title')}</h1>
+        <h1 className="text-2xl font-semibold text-left">
+          {t('user.sendResetPassword.title')}
+        </h1>
         <form.Field
           name="email"
           children={(field) => (
@@ -86,7 +93,12 @@ export function SendResetPasswordEmailForm({ className, ...props }: React.Compon
                 }}
               />
               {field.state.meta.errors.length > 0 && (
-                <span className="text-red-500 text-sm">{t(field.state.meta.errors[0]!.message)}</span>
+                <span className="text-red-500 text-sm">
+                  {t(
+                    field.state.meta.errors[0]?.message ||
+                      'default.error.message',
+                  )}
+                </span>
               )}
             </div>
           )}
@@ -114,4 +126,3 @@ export function SendResetPasswordEmailForm({ className, ...props }: React.Compon
     </form>
   );
 }
-

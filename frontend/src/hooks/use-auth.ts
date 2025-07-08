@@ -1,9 +1,9 @@
-import { authService } from '@/services/auth';
-import { authLoadingAtom, csrfTokenAtom, userAtom } from '@/stores/authStore';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { authService } from '@/services/auth';
+import { authLoadingAtom, csrfTokenAtom, userAtom } from '@/stores/authStore';
 
 export const useLogin = () => {
   const queryClient = useQueryClient();
@@ -27,7 +27,12 @@ export const useRegister = () => {
     mutationFn: authService.register,
     onSuccess: (data) => {
       navigate('/connexion', {
-        state: { messages: { successMessage: 'Compte créé avec succès', email: data.user.email } },
+        state: {
+          messages: {
+            successMessage: 'Compte créé avec succès',
+            email: data.user.email,
+          },
+        },
       });
     },
   });

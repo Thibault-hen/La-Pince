@@ -1,18 +1,24 @@
 import { EllipsisVertical, Pencil, Trash2, TriangleAlert } from 'lucide-react';
-import { Button } from '../ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { Progress } from '../ui/progress';
+import { useTranslation } from 'react-i18next';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useCurrency } from '@/hooks/use-currency';
+import type { Budget } from '@/types/budget';
 import { getColorStatus } from '@/utils/colorStatus';
 import { getPercentage } from '@/utils/percentage';
-import type { Budget } from '@/types/budget';
-import { useTranslation } from 'react-i18next';
-import { useCurrency } from '@/hooks/use-currency';
+import { Button } from '../ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '../ui/card';
+import { Progress } from '../ui/progress';
 
 interface BudgetProps {
   budget: Budget;
@@ -20,7 +26,11 @@ interface BudgetProps {
   onOpenDeleteModal: () => void;
 }
 
-export const BudgetCard = ({ budget, onOpenEditModal, onOpenDeleteModal }: BudgetProps) => {
+export const BudgetCard = ({
+  budget,
+  onOpenEditModal,
+  onOpenDeleteModal,
+}: BudgetProps) => {
   const { t } = useTranslation();
   const { formatAmount } = useCurrency();
 
@@ -95,7 +105,9 @@ export const BudgetCard = ({ budget, onOpenEditModal, onOpenDeleteModal }: Budge
         <CardDescription className="flex flex-col space-x-1 items-center">
           <div className="flex justify-between w-full">
             <div className="flex gap-1 items-center">
-              <span className="text-xs text-muted-foreground">{t('budget.card.spent')}</span>
+              <span className="text-xs text-muted-foreground">
+                {t('budget.card.spent')}
+              </span>
               <span
                 className="text-xs"
                 style={
@@ -108,7 +120,9 @@ export const BudgetCard = ({ budget, onOpenEditModal, onOpenDeleteModal }: Budge
               </span>
             </div>
             <div className="flex items-center gap-1">
-              <span className={`${budget.totalExpense > budget.amount ? 'text-red-500' : ''}`}>
+              <span
+                className={`${budget.totalExpense > budget.amount ? 'text-red-500' : ''}`}
+              >
                 {formatAmount(budget.totalExpense)}
               </span>
               <span>/</span>
@@ -117,17 +131,25 @@ export const BudgetCard = ({ budget, onOpenEditModal, onOpenDeleteModal }: Budge
           </div>
           <div className="flex w-full flex-col">
             <Progress
-              value={budget.totalExpense > budget.amount ? budget.amount : budget.totalExpense}
+              value={
+                budget.totalExpense > budget.amount
+                  ? budget.amount
+                  : budget.totalExpense
+              }
               max={budget.amount > 0 ? budget.amount : 100}
               className="w-full border [&>*]:bg-[var(--bg-color)] h-3 mt-2"
               style={
                 {
-                  '--bg-color': getColorStatus(budget.totalExpense, budget.amount),
+                  '--bg-color': getColorStatus(
+                    budget.totalExpense,
+                    budget.amount,
+                  ),
                 } as React.CSSProperties
               }
             />
             <span className="flex self-end p-1 text-xs text-muted-foreground font-bold">
-              {formatAmount(Number(getRemainingBudget()))} {t('budget.card.remaining')}
+              {formatAmount(Number(getRemainingBudget()))}{' '}
+              {t('budget.card.remaining')}
             </span>
           </div>
         </CardDescription>

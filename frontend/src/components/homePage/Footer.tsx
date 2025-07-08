@@ -1,8 +1,8 @@
-import { Separator } from '@/components/ui/separator';
-import { Twitter, Instagram, Youtube } from 'lucide-react';
-import laPinceLogo from '@/assets/logo.png';
-import { Link } from 'react-router-dom';
+import { Instagram, Twitter, Youtube } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import laPinceLogo from '@/assets/logo.png';
+import { Separator } from '@/components/ui/separator';
 
 const footerLinks = {
   product: [
@@ -31,17 +31,29 @@ export default function Footer01() {
           <div className="flex flex-col gap-6 md:flex-row md:justify-between">
             <div className="space-y-4">
               <Link to="/" className="flex items-center gap-1 text-primary">
-                <img src={laPinceLogo} height={10} width={60} />
-                <span className="text-xl font-bold text-white">{t('home.footer.title')}</span>
+                <img
+                  src={laPinceLogo}
+                  height={10}
+                  width={60}
+                  alt="Application logo"
+                />
+                <span className="text-xl font-bold text-white">
+                  {t('home.footer.title')}
+                </span>
               </Link>
             </div>
             <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
               <div className="space-y-3">
-                <h4 className="text-white font-semibold">{t('home.footer.product')}</h4>
+                <h4 className="text-white font-semibold">
+                  {t('home.footer.product')}
+                </h4>
                 <ul className="space-y-2">
                   {footerLinks.product.map((link) => (
                     <li key={link.name}>
-                      <a href={link.href} className="text-sm text-white hover:text-foreground">
+                      <a
+                        href={link.href}
+                        className="text-sm text-white hover:text-foreground"
+                      >
                         {t(link.name)}
                       </a>
                     </li>
@@ -49,11 +61,16 @@ export default function Footer01() {
                 </ul>
               </div>
               <div className="space-y-3">
-                <h4 className="text-white font-semibold">{t('home.footer.links')}</h4>
+                <h4 className="text-white font-semibold">
+                  {t('home.footer.links')}
+                </h4>
                 <ul className="space-y-2">
                   {footerLinks.company.map((link) => (
                     <li key={link.name}>
-                      <a href={link.href} className="text-sm text-white hover:text-foreground">
+                      <a
+                        href={link.href}
+                        className="text-sm text-white hover:text-foreground"
+                      >
                         {t(link.name)}
                       </a>
                     </li>
@@ -61,11 +78,16 @@ export default function Footer01() {
                 </ul>
               </div>
               <div className="space-y-3">
-                <h4 className="text-white font-semibold">{t('home.footer.legal')}</h4>
+                <h4 className="text-white font-semibold">
+                  {t('home.footer.legal')}
+                </h4>
                 <ul className="space-y-2">
                   {footerLinks.legal.map((link) => (
                     <li key={link.name}>
-                      <Link to={link.href} className="text-sm text-white hover:text-foreground">
+                      <Link
+                        to={link.href}
+                        className="text-sm text-white hover:text-foreground"
+                      >
                         {t(link.name)}
                       </Link>
                     </li>
@@ -80,7 +102,7 @@ export default function Footer01() {
             <div className="flex items-center space-x-4">
               <ul className="flex items-center gap-4">
                 {socialLinks.map(({ icon: Icon, href }, idx) => (
-                  <li key={idx}>
+                  <li key={socialLinks[idx].name}>
                     <a
                       href={href}
                       className="group inline-flex cursor-pointer items-center justify-start gap-1 text-white duration-200 hover:text-foreground hover:opacity-90"

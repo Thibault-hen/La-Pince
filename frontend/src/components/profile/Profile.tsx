@@ -1,8 +1,21 @@
-import { Bell, DollarSign, Mail, User } from 'lucide-react';
+/** biome-ignore-all lint/correctness/noChildrenProp: TanStack Form uses children prop pattern */
+import { useForm } from '@tanstack/react-form';
+import { Bell, Mail, User } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { useUpdateUserProfile } from '@/hooks/use-account';
+import { userAccountSchema } from '@/schemas/account.schema';
+import type { UserAccount } from '@/types/account';
+import { currencies } from '../currency/CurrencySelector';
 import { Button } from '../ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { Label } from '../ui/label';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '../ui/card';
 import { Input } from '../ui/input';
+import { Label } from '../ui/label';
 import {
   Select,
   SelectContent,
@@ -13,12 +26,6 @@ import {
   SelectValue,
 } from '../ui/select';
 import { Switch } from '../ui/switch';
-import { useForm } from '@tanstack/react-form';
-import { useUpdateUserProfile } from '@/hooks/use-account';
-import type { UserAccount } from '@/types/account';
-import { userAccountSchema } from '@/schemas/account.schema';
-import { useTranslation } from 'react-i18next';
-import { currencies } from '../currency/CurrencySelector';
 
 interface ProfileProps {
   user: UserAccount | null;
@@ -57,7 +64,9 @@ export const Profile = ({ user }: ProfileProps) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <User className="h-5 w-5 text-primary-color" />
-              <CardTitle className="text-xl">{t('account.profile.title')}</CardTitle>
+              <CardTitle className="text-xl">
+                {t('account.profile.title')}
+              </CardTitle>
             </div>
           </div>
           <CardDescription>{t('account.profile.description')}</CardDescription>
@@ -140,7 +149,7 @@ export const Profile = ({ user }: ProfileProps) => {
                       <SelectLabel>{t('currency.select')}</SelectLabel>
                       {currencies?.map((currency, idx) => (
                         <SelectItem
-                          key={idx}
+                          key={currencies[idx].code}
                           value={currency.code}
                           className="group cursor-pointer p-2 hover:bg-gradient-to-r hover:from-primary-color/10 hover:to-secondary-color/10 transition-all duration-300 hover:shadow-md border-b border-border/20 last:border-b-0 focus:bg-gradient-to-r focus:from-primary-color/15 focus:to-secondary-color/15"
                         >
@@ -199,7 +208,12 @@ export const Profile = ({ user }: ProfileProps) => {
             <form.Subscribe
               selector={(state) => [state.isDirty, state.isSubmitting]}
               children={([isDirty, isSubmitting]) => (
-                <Button disabled={!isDirty || isSubmitting} type="submit" size="lg" variant="blue">
+                <Button
+                  disabled={!isDirty || isSubmitting}
+                  type="submit"
+                  size="lg"
+                  variant="blue"
+                >
                   {t('account.profile.form.saveButton')}
                 </Button>
               )}

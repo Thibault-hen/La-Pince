@@ -1,28 +1,33 @@
-import { cn } from '@/lib/utils';
+/** biome-ignore-all lint/correctness/noChildrenProp: TanStack Form uses children prop pattern */
+import { useForm } from '@tanstack/react-form';
+import { AxiosError } from 'axios';
+import { Lock, Mail, User } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { NavLink } from 'react-router-dom';
+import laPinceLogo from '@/assets/logo.webp';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import laPinceLogo from '@/assets/logo.webp';
-import { NavLink } from 'react-router-dom';
 import { useRegister } from '@/hooks/use-auth';
-import { useForm } from '@tanstack/react-form';
+import { cn } from '@/lib/utils';
 import { registerSchema } from '@/schemas/auth.schemas';
 import { Loader } from '../ui/loader';
-import { Lock, Mail, User } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 
-export function RegisterForm({ className, ...props }: React.ComponentProps<'form'>) {
+export function RegisterForm({
+  className,
+  ...props
+}: React.ComponentProps<'form'>) {
   const { mutateAsync: register, error } = useRegister();
   const { t } = useTranslation();
 
-  const getErrorMessage = (error: any): string | null => {
-    if (!error) return null;
-
-    if (error.response?.status === 409) {
-      return t('register.errorMessages.emailExists');
-    }
-    if (error.response?.status === 429) {
-      return t('register.errorMessages.tooManyAttempts');
+  const getErrorMessage = (error: unknown): string | null => {
+    if (error instanceof AxiosError) {
+      if (error.response?.status === 409) {
+        return t('register.errorMessages.emailExists');
+      }
+      if (error.response?.status === 429) {
+        return t('register.errorMessages.tooManyAttempts');
+      }
     }
     return t('register.errorMessages.error');
   };
@@ -46,7 +51,7 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
     <form
       className={cn(
         'flex flex-col gap-6 dark:bg-background rounded-md border p-6 sm:p-16 shadow',
-        className
+        className,
       )}
       {...props}
       onSubmit={async (e) => {
@@ -146,7 +151,9 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
           children={(field) => (
             <div className="relative grid gap-3">
               <div className="flex items-center">
-                <Label htmlFor={field.name}>{t('register.form.confirmPassword')}</Label>
+                <Label htmlFor={field.name}>
+                  {t('register.form.confirmPassword')}
+                </Label>
               </div>
               <Lock className="absolute left-3 top-9 h-4 w-4 text-muted-foreground" />
               <Input
@@ -177,12 +184,17 @@ export function RegisterForm({ className, ...props }: React.ComponentProps<'form
           )}
         />
         {error && (
-          <span className="text-sm text-red-500 text-center">{getErrorMessage(error)}</span>
+          <span className="text-sm text-red-500 text-center">
+            {getErrorMessage(error)}
+          </span>
         )}
       </div>
       <div className="text-center text-sm">
         <p>{t('register.form.alreadyHaveAccount')}</p>
-        <NavLink to="/connexion" className="underline underline-offset-4 text-primary-color">
+        <NavLink
+          to="/connexion"
+          className="underline underline-offset-4 text-primary-color"
+        >
           {t('register.form.loginLink')}
         </NavLink>
       </div>

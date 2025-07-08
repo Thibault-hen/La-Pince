@@ -1,9 +1,9 @@
-import { ArrowUpRight, TrendingDown, Calendar } from 'lucide-react';
-import { Button } from '../ui/button';
-import type { Expense } from '@/types/dashboard';
+import { ArrowUpRight, Calendar, TrendingDown } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useCurrency } from '@/hooks/use-currency';
-import { useTranslation } from 'react-i18next';
+import type { Expense } from '@/types/dashboard';
+import { Button } from '../ui/button';
 
 interface LastExpensesProps {
   lastExpensesData: Expense[];
@@ -36,11 +36,17 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
     } else if (date.toDateString() === yesterday.toDateString()) {
       return t('dashboard.last10Expenses.isYesterday');
     } else {
-      return date.toLocaleDateString(getLocale(), { day: 'numeric', month: 'short' });
+      return date.toLocaleDateString(getLocale(), {
+        day: 'numeric',
+        month: 'short',
+      });
     }
   };
 
-  const totalAmount = lastExpensesData.reduce((sum, expense) => sum + expense.amount, 0);
+  const totalAmount = lastExpensesData.reduce(
+    (sum, expense) => sum + expense.amount,
+    0,
+  );
 
   return (
     <div className="w-full md:max-w-xl shadow-xl dark:bg-primary rounded-lg border">
@@ -78,10 +84,10 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
       <div>
         {/* Expense List */}
         <div>
-          {lastExpensesData.map((expense, index) => {
+          {lastExpensesData.map((expense) => {
             return (
               <div
-                key={index}
+                key={expense.date}
                 className="relative p-2 px-6 dark:bg-primary transition-all duration-300 cursor-pointer"
               >
                 <div
@@ -91,22 +97,6 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
                   }}
                 />
                 <div className="flex items-center gap-4">
-                  {/* Color indicator */}
-                  {/* <div
-                    className="w-4 h-4 rounded-lg shadow-sm"
-                    style={{
-                      background: !expense.budget?.category
-                        ? 'linear-gradient(135deg, #FFFFFF, #bb6f64, #c9a29c)'
-                        : (expense.budget.category.color?.value ?? '#f0f0f0'),
-
-                      boxShadow: !expense.budget?.category
-                        ? '0 0 15px rgba(245, 87, 108, 0.5)'
-                        : 'none',
-
-                      color: '#fff',
-                    }}
-                  /> */}
-
                   {/* Content */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
@@ -119,7 +109,9 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
                     </div>
                     <div className="flex items-center gap-2 text-sm text-gray-500">
                       <Calendar className="h-3 w-3" />
-                      <span className="text-xs md:text-sm">{formatDate(expense.date)}</span>
+                      <span className="text-xs md:text-sm">
+                        {formatDate(expense.date)}
+                      </span>
                       <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <ArrowUpRight className="h-4 w-4 text-gray-400 group-hover:text-blue-500" />
                       </div>

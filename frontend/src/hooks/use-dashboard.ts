@@ -1,8 +1,8 @@
-import { dashboardService } from '@/services/dashboard';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import { dashboardService } from '@/services/dashboard';
 import type { DashboardData } from '@/types/dashboard';
 import { useCurrency } from './use-currency';
-import { useTranslation } from 'react-i18next';
 
 export function useDashboard() {
   const { convertFromEUR } = useCurrency();
@@ -29,12 +29,20 @@ export function useDashboard() {
       ...data,
       currentMonthExpenses: convertFromEUR(data.currentMonthExpenses),
       last6MonthsExpensesByMonth: Object.fromEntries(
-        Object.entries(data.last6MonthsExpensesByMonth).map(([month, amount]) => {
-          const [monthNumber, yearNumber] = month.split('/');
-          const date = new Date(Number(yearNumber), Number(monthNumber) - 1, 1);
-          const formattedMonth = date.toLocaleString(getLocale(), { month: 'long' });
-          return [`${formattedMonth}`, convertFromEUR(amount)];
-        })
+        Object.entries(data.last6MonthsExpensesByMonth).map(
+          ([month, amount]) => {
+            const [monthNumber, yearNumber] = month.split('/');
+            const date = new Date(
+              Number(yearNumber),
+              Number(monthNumber) - 1,
+              1,
+            );
+            const formattedMonth = date.toLocaleString(getLocale(), {
+              month: 'long',
+            });
+            return [`${formattedMonth}`, convertFromEUR(amount)];
+          },
+        ),
       ),
       todayExpenses: convertFromEUR(data.todayExpenses),
       currentWeekExpenses: convertFromEUR(data.currentWeekExpenses),

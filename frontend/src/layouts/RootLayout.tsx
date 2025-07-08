@@ -1,7 +1,7 @@
-import { Outlet } from 'react-router-dom';
-import { AuthProvider } from '@/providers/AuthProvider';
-import { Toaster } from '@/components/ui/sonner';
 import { BellRing, Check, CircleX } from 'lucide-react';
+import { Outlet } from 'react-router-dom';
+import { Toaster } from '@/components/ui/sonner';
+import { AuthProvider } from '@/providers/AuthProvider';
 
 export const RootLayout = () => {
   return (

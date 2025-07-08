@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -7,7 +8,12 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-
+import { BanknoteArrowDown, Search } from 'lucide-react';
+import { useId, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Table,
   TableBody,
@@ -16,12 +22,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Skeleton } from '@/components/ui/skeleton';
-import { useTranslation } from 'react-i18next';
-import { Button } from '@/components/ui/button';
-import { BanknoteArrowDown, Search } from 'lucide-react';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -53,6 +53,8 @@ export function DataTable<TData, TValue>({
 
   const filteredItems = table.getFilteredRowModel().rows.length;
 
+  const skeletonId = useId();
+
   return (
     <>
       <div className="relative flex flex-col md:flex-row justify-between items-center py-4 ">
@@ -60,7 +62,9 @@ export function DataTable<TData, TValue>({
         <Input
           placeholder={t('expenses.table.filterPlaceholder')}
           value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('title')?.setFilterValue(event.target.value)}
+          onChange={(event) =>
+            table.getColumn('title')?.setFilterValue(event.target.value)
+          }
           className="w-full md:max-w-sm pl-10 mb-6 md:mb-0"
         />
         {children}
@@ -78,7 +82,10 @@ export function DataTable<TData, TValue>({
                     <TableHead className=" font-bold text-lg" key={header.id}>
                       {header.isPlaceholder
                         ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
                     </TableHead>
                   );
                 })}
@@ -89,8 +96,11 @@ export function DataTable<TData, TValue>({
             {isLoading ? (
               new Array(5).fill(0).map((_, idx) => {
                 return (
-                  <TableRow key={idx + 1}>
-                    <TableCell colSpan={columns.length} className=" text-center">
+                  <TableRow key={`${skeletonId}-${idx}`}>
+                    <TableCell
+                      colSpan={columns.length}
+                      className=" text-center"
+                    >
                       <Skeleton className="bg-primary-color/50 h-10 w-full" />
                     </TableCell>
                   </TableRow>
@@ -105,14 +115,20 @@ export function DataTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
                   {t('expenses.table.noResults')}
                 </TableCell>
               </TableRow>

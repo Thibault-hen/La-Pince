@@ -1,15 +1,17 @@
+import { useLanguage } from '@/hooks/use-language';
+import { Button } from '../ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
-import { Button } from '../ui/button';
-import { useLanguage } from '@/hooks/use-language';
 
 export const LanguageSelector = () => {
   const { changeLanguage, currentLanguage, languages } = useLanguage();
-  const selectedLanguage = languages.find((lang) => lang.code === currentLanguage);
+  const selectedLanguage = languages.find(
+    (lang) => lang.code === currentLanguage,
+  );
 
   return (
     <DropdownMenu>
@@ -18,7 +20,9 @@ export const LanguageSelector = () => {
         className="shadow-none dark:bg-primary cursor-pointer hover:bg-secondary-color dark:hover:bg-secondary-color border focus:outline-none focus-visible:ring-2"
       >
         <Button variant="outline" size="icon">
-          <span className="sr-only">{selectedLanguage ? selectedLanguage.name : 'Français'}</span>
+          <span className="sr-only">
+            {selectedLanguage ? selectedLanguage.name : 'Français'}
+          </span>
           <img
             src={selectedLanguage?.flag || '/flags/fr.svg'}
             alt="Language Flag"

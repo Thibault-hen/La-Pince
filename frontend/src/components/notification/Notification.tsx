@@ -1,7 +1,10 @@
-import { useCurrency } from '@/hooks/use-currency';
-import { useDeleteNotification, type TransformedNotification } from '@/hooks/use-notification';
 import { CircleAlert, Trash2, TriangleAlert } from 'lucide-react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useCurrency } from '@/hooks/use-currency';
+import {
+  type TransformedNotification,
+  useDeleteNotification,
+} from '@/hooks/use-notification';
 import { Button } from '../ui/button';
 
 type NotificationProps = { notification: TransformedNotification };
@@ -66,18 +69,22 @@ export default function Notification({ notification }: NotificationProps) {
               i18nKey={`notification.${notification.notificationType}.content`}
               values={{
                 budgetName: t(notification.budgetName),
-                budgetAmountRemaining: formatAmount(notification?.budgetAmount ?? 0),
+                budgetAmountRemaining: formatAmount(
+                  notification?.budgetAmount ?? 0,
+                ),
               }}
               components={[
                 <span
+                  key="notification-color"
                   className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium text-white shadow-sm"
                   style={{
                     backgroundColor: notification.color.value,
                     boxShadow: `0 0 0 1px ${notification.color.value}20`,
                   }}
                 />,
-                <br />,
+                <br key="notification-break" />,
                 <span
+                  key="notification-type-color"
                   className={`font-medium ${
                     notification.notificationType === 'budgetWarning'
                       ? 'text-amber-700 dark:text-amber-300'
@@ -95,7 +102,7 @@ export default function Notification({ notification }: NotificationProps) {
                 const now = new Date();
                 const notificationDate = new Date(notification.createdAt);
                 const diffInSeconds = Math.floor(
-                  (now.getTime() - notificationDate.getTime()) / 1000
+                  (now.getTime() - notificationDate.getTime()) / 1000,
                 );
 
                 if (diffInSeconds < 60) {
@@ -103,23 +110,32 @@ export default function Notification({ notification }: NotificationProps) {
                     `notification.time.seconds_${diffInSeconds === 1 ? 'singular' : 'plural'}`,
                     {
                       count: diffInSeconds,
-                    }
+                    },
                   );
                 } else if (diffInSeconds < 3600) {
                   const minutes = Math.floor(diffInSeconds / 60);
-                  return t(`notification.time.minutes_${minutes === 1 ? 'singular' : 'plural'}`, {
-                    count: minutes,
-                  });
+                  return t(
+                    `notification.time.minutes_${minutes === 1 ? 'singular' : 'plural'}`,
+                    {
+                      count: minutes,
+                    },
+                  );
                 } else if (diffInSeconds < 86400) {
                   const hours = Math.floor(diffInSeconds / 3600);
-                  return t(`notification.time.hours_${hours === 1 ? 'singular' : 'plural'}`, {
-                    count: hours,
-                  });
+                  return t(
+                    `notification.time.hours_${hours === 1 ? 'singular' : 'plural'}`,
+                    {
+                      count: hours,
+                    },
+                  );
                 } else {
                   const days = Math.floor(diffInSeconds / 86400);
-                  return t(`notification.time.days_${days === 1 ? 'singular' : 'plural'}`, {
-                    count: days,
-                  });
+                  return t(
+                    `notification.time.days_${days === 1 ? 'singular' : 'plural'}`,
+                    {
+                      count: days,
+                    },
+                  );
                 }
               })()}
             </time>

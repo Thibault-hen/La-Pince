@@ -1,16 +1,18 @@
-import { cn } from '@/lib/utils';
+/** biome-ignore-all lint/correctness/noChildrenProp: TanStack Form uses children prop pattern */
+import { useForm } from '@tanstack/react-form';
+import { AxiosError } from 'axios';
+import { Lock, Mail } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { NavLink, useLocation } from 'react-router-dom';
+import laPinceLogo from '@/assets/logo.webp';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import laPinceLogo from '@/assets/logo.webp';
-import { NavLink, useLocation } from 'react-router-dom';
 import { useLogin } from '@/hooks/use-auth';
-import { useForm } from '@tanstack/react-form';
+import { cn } from '@/lib/utils';
 import { loginSchema } from '@/schemas/auth.schemas';
 import { Loader } from '../ui/loader';
-import { useEffect, useState } from 'react';
-import { Lock, Mail } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 
 type createdAccountMessages = {
   messages: {
@@ -19,22 +21,24 @@ type createdAccountMessages = {
   };
 };
 
-export function LoginForm({ className, ...props }: React.ComponentProps<'form'>) {
+export function LoginForm({
+  className,
+  ...props
+}: React.ComponentProps<'form'>) {
   const { mutateAsync: login, error } = useLogin();
   const location = useLocation();
   const { t } = useTranslation();
-  const [createdAccountMessage, setCreatedAccountMessage] = useState<createdAccountMessages | null>(
-    location.state || null
-  );
+  const [createdAccountMessage, setCreatedAccountMessage] =
+    useState<createdAccountMessages | null>(location.state || null);
 
-  const getErrorMessage = (error: any): string | null => {
-    if (!error) return null;
-
-    if (error.response?.status === 401) {
-      return t('login.errorMessages.credentials');
-    }
-    if (error.response?.status === 429) {
-      return t('login.errorMessages.tooManyAttempts');
+  const getErrorMessage = (error: unknown): string => {
+    if (error instanceof AxiosError) {
+      if (error.response?.status === 401) {
+        return t('login.errorMessages.credentials');
+      }
+      if (error.response?.status === 429) {
+        return t('login.errorMessages.tooManyAttempts');
+      }
     }
     return t('login.errorMessages.error');
   };
@@ -62,7 +66,7 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'form'>)
     <form
       className={cn(
         'flex flex-col gap-6 dark:bg-background rounded-md border p-6 sm:p-16 shadow',
-        className
+        className,
       )}
       {...props}
       onSubmit={async (e) => {
@@ -112,7 +116,10 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'form'>)
             <div className="relative grid gap-3">
               <div className="flex items-center">
                 <Label htmlFor={field.name}>{t('login.form.password')}</Label>
-                <a href="#" className="ml-auto text-sm underline-offset-4 hover:underline">
+                <a
+                  href="/forgot-password"
+                  className="ml-auto text-sm underline-offset-4 hover:underline"
+                >
                   {t('login.form.forgotPassword')}
                 </a>
               </div>
@@ -146,19 +153,22 @@ export function LoginForm({ className, ...props }: React.ComponentProps<'form'>)
           )}
         />
         {error && (
-          <span className="text-red-500 text-sm text-center">{getErrorMessage(error)}</span>
+          <span className="text-red-500 text-sm text-center">
+            {getErrorMessage(error)}
+          </span>
         )}
         {createdAccountMessage?.messages.successMessage && (
-          <>
-            <span className="text-green-700 text-sm text-center">
-              {createdAccountMessage?.messages.successMessage}
-            </span>
-          </>
+          <span className="text-green-700 text-sm text-center">
+            {createdAccountMessage?.messages.successMessage}
+          </span>
         )}
       </div>
       <div className="text-center text-sm">
         <p>{t('login.form.noAccount')}</p>
-        <NavLink to="/inscription" className="underline underline-offset-4 text-primary-color">
+        <NavLink
+          to="/inscription"
+          className="underline underline-offset-4 text-primary-color"
+        >
           {t('login.form.registerLink')}
         </NavLink>
       </div>

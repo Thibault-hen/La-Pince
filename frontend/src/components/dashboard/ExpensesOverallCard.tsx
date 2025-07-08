@@ -16,7 +16,11 @@ export const FinanceCard = ({ title, amount, icon }: FinanceCardProps) => {
       <CardContent className="h-full flex flex-col justify-between gap-2">
         <div className="flex justify-between items-start">
           <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
-            {icon ? icon : <BanknoteArrowDown className="w-4 h-4 text-primary-color" />}
+            {icon ? (
+              icon
+            ) : (
+              <BanknoteArrowDown className="w-4 h-4 text-primary-color" />
+            )}
           </div>
         </div>
 

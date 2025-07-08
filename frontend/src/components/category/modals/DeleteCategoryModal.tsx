@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,7 +12,6 @@ import {
 import { useDeleteCategory } from '@/hooks/use-category';
 import type { Budget } from '@/types/budget';
 import type { Category } from '@/types/category';
-import { useTranslation } from 'react-i18next';
 
 interface DeleteBudgetProps {
   open: boolean;
@@ -21,7 +21,11 @@ interface DeleteBudgetProps {
   };
 }
 
-export const DeleteCategoryModal = ({ open, setOpen, category }: DeleteBudgetProps) => {
+export const DeleteCategoryModal = ({
+  open,
+  setOpen,
+  category,
+}: DeleteBudgetProps) => {
   const { mutateAsync: deleteCategory } = useDeleteCategory();
   const { t } = useTranslation();
 

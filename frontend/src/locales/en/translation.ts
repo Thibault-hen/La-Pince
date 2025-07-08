@@ -1,5 +1,3 @@
-import { sub } from 'date-fns';
-
 export const en = {
   home: {
     nav: {
@@ -17,7 +15,8 @@ export const en = {
     },
     card: {
       mainTitle: 'Take back control of your spending',
-      mainDescription: 'Hundreds of users trust La Pince to better manage their budget',
+      mainDescription:
+        'Hundreds of users trust La Pince to better manage their budget',
       title1: 'Lack of visibility',
       description1:
         'Without a dedicated tool, it is difficult to know where your money goes, making daily management stressful and imprecise.',
@@ -113,7 +112,8 @@ export const en = {
       ok: 'Your expenses are under control',
       careful: 'Careful on your spending',
       warning: 'You have spent more than your income this month',
-      expensePercentage: 'You have spent {{percentage}} of your income this month',
+      expensePercentage:
+        'You have spent {{percentage}} of your income this month',
       updateYourIncome: 'Update your income to track progress',
       used: 'used',
     },
@@ -158,7 +158,8 @@ export const en = {
         totalAmount: 'Total amount',
       },
       noExpensesThisMonth1: 'Cannot find any expenses this month',
-      noExpensesThisMonth2: 'Add your first expense to start tracking your spending this month',
+      noExpensesThisMonth2:
+        'Add your first expense to start tracking your spending this month',
     },
     table: {
       addButton: 'Add an expense',
@@ -213,7 +214,8 @@ export const en = {
     },
     delete: {
       title: 'Delete an expense',
-      description: 'Do you really want to delete your expense {{title}} of {{amount}} €?',
+      description:
+        'Do you really want to delete your expense {{title}} of {{amount}} €?',
       cancel: 'Cancel',
       confirm: 'Delete',
     },
@@ -299,7 +301,8 @@ export const en = {
     },
     delete: {
       title: 'Delete a budget',
-      description: 'Do you really want to delete your budget {{title}} of {{amount}} ?',
+      description:
+        'Do you really want to delete your budget {{title}} of {{amount}} ?',
       cancel: 'Cancel',
       confirm: 'Delete',
     },
@@ -355,7 +358,8 @@ export const en = {
     },
     delete: {
       title: 'Delete a category',
-      description: 'Do you really want to delete your category {{title}} of {{total}} ?',
+      description:
+        'Do you really want to delete your category {{title}} of {{total}} ?',
       cancel: 'Cancel',
       confirm: 'Delete',
     },
@@ -428,7 +432,8 @@ export const en = {
     delete: {
       modal: {
         title: 'Delete Account',
-        description: 'Do you really want to delete your account? This action is irreversible.',
+        description:
+          'Do you really want to delete your account? This action is irreversible.',
         cancel: 'Cancel',
         confirm: 'Delete',
       },

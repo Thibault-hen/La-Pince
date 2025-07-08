@@ -1,5 +1,11 @@
+import { useAtomValue } from 'jotai';
+import { Menu } from 'lucide-react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import laPinceLogo from '@/assets/logo.png';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { ModeToggle } from '@/components/theme/theme-toggle.tsx';
+import { Button } from '@/components/ui/button';
 import {
   Sheet,
   SheetClose,
@@ -8,15 +14,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { Menu, X } from 'lucide-react';
-import { Suspense, useState } from 'react';
-import { ModeToggle } from '@/components/theme/theme-toggle.tsx';
-import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { LanguageSelector } from '../lang/LanguageSelector';
-import { useTranslation } from 'react-i18next';
-import { useAtomValue } from 'jotai';
 import { userAtom } from '@/stores/authStore';
+import { LanguageSelector } from '../lang/LanguageSelector';
 
 const TopMenu = [
   { name: 'home.nav.contact', to: '#contact' },
@@ -41,16 +41,18 @@ export default function Header() {
             <div className="relative">
               <img src={laPinceLogo} width={48} height={48} alt="Logo" />
             </div>
-            <span className="text-xl lg:text-2xl font-bold">{t('home.nav.title')}</span>
+            <span className="text-xl lg:text-2xl font-bold">
+              {t('home.nav.title')}
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
             {/* Navigation Links */}
             <div className="flex items-center gap-2">
-              {TopMenu.map((menu, idx) => (
+              {TopMenu.map((menu) => (
                 <a
-                  key={idx}
+                  key={menu.name}
                   href={menu.to}
                   className={cn(
                     'relative px-4 py-2 text-sm font-medium transition-all duration-300',
@@ -58,7 +60,7 @@ export default function Header() {
                     'before:absolute before:inset-x-0 before:bottom-0 before:h-0.5',
                     'before:bg-gradient-to-r before:from-primary-color before:to-secondary-color',
                     'before:scale-x-0 before:transition-transform before:duration-300',
-                    'hover:before:scale-x-100'
+                    'hover:before:scale-x-100',
                   )}
                 >
                   {t(menu.name)}
@@ -129,16 +131,23 @@ export default function Header() {
                 <SheetHeader className="pb-6">
                   <SheetTitle className="flex items-center justify-center gap-3">
                     <div className="relative">
-                      <img src={laPinceLogo} width={48} height={48} alt="Logo" />
+                      <img
+                        src={laPinceLogo}
+                        width={48}
+                        height={48}
+                        alt="Logo"
+                      />
                     </div>
-                    <span className="text-xl font-bold">{t('home.nav.title')}</span>
+                    <span className="text-xl font-bold">
+                      {t('home.nav.title')}
+                    </span>
                   </SheetTitle>
                 </SheetHeader>
 
                 {/* Mobile Navigation Links */}
                 <div className="flex flex-col gap-3 py-6">
-                  {TopMenu.map((menu, idx) => (
-                    <SheetClose key={idx} asChild>
+                  {TopMenu.map((menu) => (
+                    <SheetClose key={menu.name} asChild>
                       <a
                         href={menu.to}
                         className="flex items-center justify-center py-4 px-6 text-lg font-medium hover:text-secondary-color transition-all duration-300 hover:scale-105 hover:shadow-lg"

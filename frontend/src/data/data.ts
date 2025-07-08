@@ -18,15 +18,69 @@ export interface IBudget {
 }
 
 export const budgets = [
-  { id: '1', title: 'Nourriture', amount: 200, value: '#FF5733', totalExpenses: 201 },
-  { id: '2', title: 'Voyages', amount: 200, value: '#33FF57', totalExpenses: 250 },
-  { id: '3', title: 'Vêtements', amount: 287, value: '#3357FF', totalExpenses: 60 },
-  { id: '4', title: 'Loisirs', amount: 173, value: '#FF33A1', totalExpenses: 520 },
-  { id: '5', title: 'Autres', amount: 190, value: '#A133FF', totalExpenses: 130 },
-  { id: '6', title: 'Loisirs', amount: 173, value: '#FF33A1', totalExpenses: 50 },
-  { id: '7', title: 'Autres', amount: 190, value: '#A133FF', totalExpenses: 103 },
-  { id: '8', title: 'Loisirs', amount: 173, value: '#FF33A1', totalExpenses: 50 },
-  { id: '9', title: 'Autres', amount: 190, value: '#A133FF', totalExpenses: 103 },
+  {
+    id: '1',
+    title: 'Nourriture',
+    amount: 200,
+    value: '#FF5733',
+    totalExpenses: 201,
+  },
+  {
+    id: '2',
+    title: 'Voyages',
+    amount: 200,
+    value: '#33FF57',
+    totalExpenses: 250,
+  },
+  {
+    id: '3',
+    title: 'Vêtements',
+    amount: 287,
+    value: '#3357FF',
+    totalExpenses: 60,
+  },
+  {
+    id: '4',
+    title: 'Loisirs',
+    amount: 173,
+    value: '#FF33A1',
+    totalExpenses: 520,
+  },
+  {
+    id: '5',
+    title: 'Autres',
+    amount: 190,
+    value: '#A133FF',
+    totalExpenses: 130,
+  },
+  {
+    id: '6',
+    title: 'Loisirs',
+    amount: 173,
+    value: '#FF33A1',
+    totalExpenses: 50,
+  },
+  {
+    id: '7',
+    title: 'Autres',
+    amount: 190,
+    value: '#A133FF',
+    totalExpenses: 103,
+  },
+  {
+    id: '8',
+    title: 'Loisirs',
+    amount: 173,
+    value: '#FF33A1',
+    totalExpenses: 50,
+  },
+  {
+    id: '9',
+    title: 'Autres',
+    amount: 190,
+    value: '#A133FF',
+    totalExpenses: 103,
+  },
 ] as IBudget[];
 
 export const chartData = [

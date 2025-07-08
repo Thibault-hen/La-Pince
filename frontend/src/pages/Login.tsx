@@ -1,10 +1,10 @@
-import { LoginForm } from '@/components/auth/LoginForm';
-import preview from '@/assets/home-page/hero_img1.png';
 import { House } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
+import preview from '@/assets/home-page/hero_img1.png';
+import { LoginForm } from '@/components/auth/LoginForm';
+import { LanguageSelector } from '@/components/lang/LanguageSelector';
 import { ModeToggle } from '@/components/theme/theme-toggle';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
-import { LanguageSelector } from '@/components/lang/LanguageSelector';
 
 const Login = () => {
   const location = useLocation();

@@ -1,23 +1,22 @@
-import { EllipsisVertical, Pencil, Trash2 } from 'lucide-react';
 import type { ColumnDef } from '@tanstack/react-table';
+import type { TFunction } from 'i18next';
+import { EllipsisVertical, Pencil, Trash2 } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import type { Expense } from '@/hooks/use-expense';
-import type { TFunction } from 'i18next';
-import { ca } from 'date-fns/locale';
 
 export const createColumns = (
   onEdit: (expense: Expense) => void,
   onDelete: (expense: Expense) => void,
   t: TFunction,
   locale: string = 'fr-FR',
-  formatAmount: (amount: number) => string
+  formatAmount: (amount: number) => string,
 ): ColumnDef<Expense>[] => [
   {
     accessorKey: 'title',
@@ -44,7 +43,8 @@ export const createColumns = (
       </div>
     ),
     cell: ({ row }) => {
-      const category: { title: string; color: string } = row.getValue('category');
+      const category: { title: string; color: string } =
+        row.getValue('category');
       return (
         <div className="flex justify-center">
           <Badge
@@ -88,7 +88,11 @@ export const createColumns = (
       </div>
     ),
     cell: ({ row }) => {
-      return <div className="text-right font-medium">{formatAmount(row.getValue('amount'))}</div>;
+      return (
+        <div className="text-right font-medium">
+          {formatAmount(row.getValue('amount'))}
+        </div>
+      );
     },
   },
   {
@@ -109,7 +113,10 @@ export const createColumns = (
                 <EllipsisVertical />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="outline  rounded-md shadow-lg" align="start">
+            <DropdownMenuContent
+              className="outline  rounded-md shadow-lg"
+              align="start"
+            >
               <DropdownMenuItem
                 className="p-2 dark:bg-primary cursor-pointer hover:!bg-secondary-color transition-all duration-150 ease-in-out"
                 onSelect={() => onEdit(row.original)}

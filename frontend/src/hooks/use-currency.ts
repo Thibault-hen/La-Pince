@@ -1,8 +1,8 @@
+import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { useCurrencyContext } from '@/context/currency-context';
 import { currencyService } from '@/services/currency';
 import type { CurrencyRates } from '@/types/currency';
-import { useQuery } from '@tanstack/react-query';
-import { useTranslation } from 'react-i18next';
 
 export const useCurrency = () => {
   const { currency, setCurrency } = useCurrencyContext();
@@ -21,7 +21,6 @@ export const useCurrency = () => {
 
   const {
     data: rates = {},
-    isError,
     error,
     ...others
   } = useQuery<CurrencyRates>({

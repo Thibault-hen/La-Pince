@@ -1,8 +1,9 @@
-import * as React from 'react';
+import type { TFunction } from 'i18next';
 import { HandCoins, Home, PiggyBank, Settings, Tags } from 'lucide-react';
-import laPinceLogo from '@/assets/logo.webp';
+import type * as React from 'react';
 import { useTranslation } from 'react-i18next';
-
+import { NavLink, useLocation } from 'react-router-dom';
+import laPinceLogo from '@/assets/logo.webp';
 import {
   Sidebar,
   SidebarContent,
@@ -15,10 +16,9 @@ import {
   SidebarRail,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { NavLink, useLocation } from 'react-router-dom';
 import { CurrencySelector } from './currency/CurrencySelector';
 
-const getItems = (t: any) => [
+const getItems = (t: TFunction) => [
   {
     title: t('sidebar.dashboard'),
     url: '/tableau-de-bord',
@@ -55,7 +55,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar {...props}>
       <SidebarHeader className="flex items-center justify-center p-3">
         {open || openMobile ? (
-          <NavLink to="/" className="flex items-center gap-3 group transition-all duration-300">
+          <NavLink
+            to="/"
+            className="flex items-center gap-3 group transition-all duration-300"
+          >
             <div className="relative">
               <img
                 src={laPinceLogo}

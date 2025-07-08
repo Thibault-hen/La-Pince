@@ -2,7 +2,9 @@ import z from 'zod';
 
 export const loginSchema = z.object({
   email: z.string().email({ message: 'login.errorMessages.invalidEmail' }),
-  password: z.string().min(8, { message: 'login.errorMessages.invalidPassword' }),
+  password: z
+    .string()
+    .min(8, { message: 'login.errorMessages.invalidPassword' }),
 });
 
 export const registerSchema = loginSchema

@@ -1,12 +1,12 @@
-import { useTranslation } from "react-i18next";
-import frFlag from '@/assets/flags/fr.svg';
+import { useTranslation } from 'react-i18next';
 import enFlag from '@/assets/flags/en.svg';
+import frFlag from '@/assets/flags/fr.svg';
 
 type Languages = {
-  code: string, 
-  name: string,
-  flag: string
-}
+  code: string;
+  name: string;
+  flag: string;
+};
 
 export const useLanguage = () => {
   const { i18n } = useTranslation();
@@ -20,7 +20,7 @@ export const useLanguage = () => {
   const languages = [
     { code: 'fr', name: 'Français', flag: frFlag },
     { code: 'en', name: 'English', flag: enFlag },
-  ] as Languages[]
+  ] as Languages[];
 
   return {
     changeLanguage,
@@ -28,4 +28,3 @@ export const useLanguage = () => {
     languages,
   };
 };
-
