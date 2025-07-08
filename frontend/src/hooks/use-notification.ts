@@ -1,5 +1,5 @@
-import { notificationService } from '@/services/notification';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { notificationService } from '@/services/notification';
 import type { Color } from '@/types/color';
 
 export type TransformedNotification = {

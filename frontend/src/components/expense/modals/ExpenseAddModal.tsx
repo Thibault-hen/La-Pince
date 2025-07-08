@@ -1,14 +1,7 @@
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+/** biome-ignore-all lint/correctness/noChildrenProp: TanStack Form uses children prop pattern */
+import { useForm } from '@tanstack/react-form';
+import { useTranslation } from 'react-i18next';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -18,23 +11,33 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { DatePicker } from '../DatePicker';
-import { useBudgets } from '@/hooks/use-budget';
-import { createExpenseSchema } from '@/schemas/expense.schemas';
-import { useForm } from '@tanstack/react-form';
-import { useCreateExpense } from '@/hooks/use-expense';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Loader } from '@/components/ui/loader';
-import type z from 'zod';
-import { useTranslation } from 'react-i18next';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { useBudgets } from '@/hooks/use-budget';
 import { useCurrency } from '@/hooks/use-currency';
+import { useCreateExpense } from '@/hooks/use-expense';
+import { createExpenseSchema } from '@/schemas/expense.schemas';
+import { DatePicker } from '../DatePicker';
 
 type ExpenseAddModalProps = {
   isModalOpen: boolean;
   handleClose: () => void;
 };
 
-export default function ExpenseAddModal({ isModalOpen, handleClose }: ExpenseAddModalProps) {
+export default function ExpenseAddModal({
+  isModalOpen,
+  handleClose,
+}: ExpenseAddModalProps) {
   const { data: { budgets = [] } = {} } = useBudgets();
   const hadBudgets = budgets.length > 0;
   const { mutateAsync: createExpense } = useCreateExpense();
@@ -73,15 +76,21 @@ export default function ExpenseAddModal({ isModalOpen, handleClose }: ExpenseAdd
           }}
         >
           <DialogHeader>
-            <DialogTitle className="font-medium text-xl">{t('expenses.add.title')}</DialogTitle>
-            <DialogDescription>{t('expenses.add.description')}</DialogDescription>
+            <DialogTitle className="font-medium text-xl">
+              {t('expenses.add.title')}
+            </DialogTitle>
+            <DialogDescription>
+              {t('expenses.add.description')}
+            </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <form.Field
               name="description"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>{t('expenses.add.form.title')}</Label>
+                  <Label htmlFor={field.name}>
+                    {t('expenses.add.form.title')}
+                  </Label>
                   <Input
                     id={field.name}
                     type="text"
@@ -103,7 +112,9 @@ export default function ExpenseAddModal({ isModalOpen, handleClose }: ExpenseAdd
               name="amount"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>{t('expenses.add.form.amount')}</Label>
+                  <Label htmlFor={field.name}>
+                    {t('expenses.add.form.amount')}
+                  </Label>
                   <Input
                     id={field.name}
                     step={0.01}
@@ -127,7 +138,9 @@ export default function ExpenseAddModal({ isModalOpen, handleClose }: ExpenseAdd
               name="budgetId"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>{t('expenses.add.form.budget')}</Label>
+                  <Label htmlFor={field.name}>
+                    {t('expenses.add.form.budget')}
+                  </Label>
                   <Select
                     disabled={!hadBudgets}
                     name={field.name}
@@ -136,16 +149,27 @@ export default function ExpenseAddModal({ isModalOpen, handleClose }: ExpenseAdd
                     required
                   >
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder={t('expenses.add.form.budgetPlaceholder')} />
+                      <SelectValue
+                        placeholder={t('expenses.add.form.budgetPlaceholder')}
+                      />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectLabel>{t('expenses.add.form.budgetLabel')}</SelectLabel>
+                        <SelectLabel>
+                          {t('expenses.add.form.budgetLabel')}
+                        </SelectLabel>
                         {budgets.map((budget) => (
-                          <SelectItem key={budget.id} value={budget.id} className="cursor-pointer">
-                            {t(budget.category.title)} - {formatAmount(budget.amount)}
+                          <SelectItem
+                            key={budget.id}
+                            value={budget.id}
+                            className="cursor-pointer"
+                          >
+                            {t(budget.category.title)} -{' '}
+                            {formatAmount(budget.amount)}
                             <div
-                              style={{ backgroundColor: budget?.category.color?.value }}
+                              style={{
+                                backgroundColor: budget?.category.color?.value,
+                              }}
                               className="h-3 w-3 rounded-lg"
                             ></div>
                           </SelectItem>
@@ -166,7 +190,9 @@ export default function ExpenseAddModal({ isModalOpen, handleClose }: ExpenseAdd
               name="date"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>{t('expenses.add.form.date')}</Label>
+                  <Label htmlFor={field.name}>
+                    {t('expenses.add.form.date')}
+                  </Label>
                   <DatePicker
                     name={field.name}
                     required

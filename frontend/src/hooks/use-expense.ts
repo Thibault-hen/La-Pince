@@ -1,7 +1,12 @@
-import { expenseService, type CreateExpense, type EditExpense } from '@/services/expenses';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
+import {
+  type CreateExpense,
+  type EditExpense,
+  expenseService,
+} from '@/services/expenses';
 import { useCurrency } from './use-currency';
 
 export type Expense = {
@@ -53,14 +58,14 @@ export function useCreateExpense() {
   const { t } = useTranslation();
   const { convertToEUR } = useCurrency();
 
-  const getErrorMessage = (error: any): string | null => {
-    if (!error) return null;
-
-    if (error.response?.status === 404) {
-      return t('expenses.toast.noBudget');
-    }
-    if (error.response?.status === 429) {
-      return t('toast.tooManyAttempts');
+  const getErrorMessage = (error: unknown): string => {
+    if (error instanceof AxiosError) {
+      if (error.response?.status === 404) {
+        return t('expenses.toast.noBudget');
+      }
+      if (error.response?.status === 429) {
+        return t('toast.tooManyAttempts');
+      }
     }
     return t('expenses.toast.createError');
   };
@@ -73,7 +78,9 @@ export function useCreateExpense() {
         amount: convertToEUR(data.amount),
       }),
     onSuccess: (expense) => {
-      toast.success(t('expenses.toast.created', { title: expense.description }));
+      toast.success(
+        t('expenses.toast.created', { title: expense.description }),
+      );
       queryClient.invalidateQueries({ queryKey: ['expenses'] });
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
       queryClient.invalidateQueries({ queryKey: ['dashboard'] });
@@ -91,14 +98,14 @@ export function useUpdateExpense() {
   const { t } = useTranslation();
   const { convertToEUR } = useCurrency();
 
-  const getErrorMessage = (error: any): string | null => {
-    if (!error) return null;
-
-    if (error.response?.status === 404) {
-      return t('expenses.toast.noBudget');
-    }
-    if (error.response?.status === 429) {
-      return t('toast.tooManyAttempts');
+  const getErrorMessage = (error: unknown): string => {
+    if (error instanceof AxiosError) {
+      if (error.response?.status === 404) {
+        return t('expenses.toast.noBudget');
+      }
+      if (error.response?.status === 429) {
+        return t('toast.tooManyAttempts');
+      }
     }
     return t('expenses.toast.updateError');
   };

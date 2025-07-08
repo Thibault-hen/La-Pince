@@ -1,23 +1,25 @@
+import { HandCoins } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ChartBarInteractive } from '@/components/expense/BarChart';
+import { ExpenseSkeleton } from '@/components/expense/ExpenseSkeleton';
+import ExpenseAddModal from '@/components/expense/modals/ExpenseAddModal';
+import { ExpenseDeleteModal } from '@/components/expense/modals/ExpenseDeleteModal';
+import { ExpenseEditModal } from '@/components/expense/modals/ExpenseEditModal';
+import { Button } from '@/components/ui/button';
+import { useCurrency } from '@/hooks/use-currency';
+import { type Expense, useExpenses } from '@/hooks/use-expense';
+import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 import { createColumns } from './table/columns';
 import { DataTable } from './table/data-table';
-import { Button } from '@/components/ui/button';
-import ExpenseAddModal from '@/components/expense/modals/ExpenseAddModal';
-import { ExpenseEditModal } from '@/components/expense/modals/ExpenseEditModal';
-import { useExpenses, type Expense } from '@/hooks/use-expense';
-import { ChartBarInteractive } from '@/components/expense/BarChart';
-import { ExpenseDeleteModal } from '@/components/expense/modals/ExpenseDeleteModal';
-import { useTranslation } from 'react-i18next';
-import { HandCoins } from 'lucide-react';
-import { useCurrency } from '@/hooks/use-currency';
-import { DefaultWrapper } from '@/layouts/DefaultWrapper';
-import { ExpenseSkeleton } from '@/components/expense/ExpenseSkeleton';
 
-const Expense = () => {
+const ExpensePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [selectedExpense, setSelectedExpense] = useState<Expense | undefined>(undefined);
+  const [selectedExpense, setSelectedExpense] = useState<Expense | undefined>(
+    undefined,
+  );
   const { expenses, isLoading } = useExpenses();
   const { t, i18n } = useTranslation();
 
@@ -33,7 +35,13 @@ const Expense = () => {
 
   const { formatAmount } = useCurrency();
   const locale = i18n.language === 'en' ? 'en-US' : 'fr-FR';
-  const columns = createColumns(handleEdit, handleDelete, t, locale, formatAmount);
+  const columns = createColumns(
+    handleEdit,
+    handleDelete,
+    t,
+    locale,
+    formatAmount,
+  );
 
   if (isLoading) {
     return (
@@ -49,7 +57,10 @@ const Expense = () => {
     <DefaultWrapper key={String(isLoading)}>
       <div className="3xl:py-4 3xl:px-26 space-y-6 p-6">
         {isModalOpen && (
-          <ExpenseAddModal isModalOpen={isModalOpen} handleClose={() => setIsModalOpen(false)} />
+          <ExpenseAddModal
+            isModalOpen={isModalOpen}
+            handleClose={() => setIsModalOpen(false)}
+          />
         )}
         <ExpenseEditModal
           open={isEditModalOpen}
@@ -68,27 +79,28 @@ const Expense = () => {
             <HandCoins className="h-5 w-5 text-primary-color" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-foreground">{t('expenses.header.title')}</h1>
-            <p className="text-sm text-muted-foreground">{t('expenses.header.subtitle')}</p>
+            <h1 className="text-2xl font-bold text-foreground">
+              {t('expenses.header.title')}
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              {t('expenses.header.subtitle')}
+            </p>
           </div>
         </div>
 
         <ChartBarInteractive />
         <div className="flex flex-col gap-2 mt-6">
-          <DataTable
-            children={
-              <Button variant="blue" onClick={() => setIsModalOpen(true)}>
-                <span className="max-w-sm block text-sm m-2">{t('expenses.table.addButton')}</span>
-              </Button>
-            }
-            columns={columns}
-            data={expenses}
-            isLoading={isLoading}
-          />
+          <DataTable columns={columns} data={expenses} isLoading={isLoading}>
+            <Button variant="blue" onClick={() => setIsModalOpen(true)}>
+              <span className="max-w-sm block text-sm m-2">
+                {t('expenses.table.addButton')}
+              </span>
+            </Button>
+          </DataTable>
         </div>
       </div>
     </DefaultWrapper>
   );
 };
 
-export default Expense;
+export default ExpensePage;

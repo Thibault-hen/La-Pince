@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,7 +10,6 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { useDeleteAccount } from '@/hooks/use-account';
-import { useTranslation } from 'react-i18next';
 
 interface DeleteAccountProps {
   open: boolean;
@@ -32,7 +32,10 @@ export const DeleteAccountModal = ({ open, setOpen }: DeleteAccountProps) => {
             {' '}
             {t('account.delete.modal.title')}
           </AlertDialogTitle>
-          <AlertDialogDescription> {t('account.delete.modal.description')}</AlertDialogDescription>
+          <AlertDialogDescription>
+            {' '}
+            {t('account.delete.modal.description')}
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel className="cursor-pointer">

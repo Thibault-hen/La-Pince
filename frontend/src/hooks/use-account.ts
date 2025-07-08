@@ -1,12 +1,16 @@
-import { accountService } from '@/services/account';
-import type { UserAccount } from '@/types/account';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
-import { useTranslation } from 'react-i18next';
-import { updateCurrencySchema, type UpdateCurrency } from '@/schemas/account.schema';
+import { AxiosError } from 'axios';
 import { useSetAtom } from 'jotai';
-import { csrfTokenAtom, userAtom } from '@/stores/authStore';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
 import { useCurrencyContext } from '@/context/currency-context';
+import {
+  type UpdateCurrency,
+  updateCurrencySchema,
+} from '@/schemas/account.schema';
+import { accountService } from '@/services/account';
+import { csrfTokenAtom, userAtom } from '@/stores/authStore';
+import type { UserAccount } from '@/types/account';
 
 export const useUpdateUserProfile = () => {
   const queryClient = useQueryClient();
@@ -14,14 +18,14 @@ export const useUpdateUserProfile = () => {
   const setUser = useSetAtom(userAtom);
   const { setCurrency } = useCurrencyContext();
 
-  const getErrorMessage = (error: any): string | null => {
-    if (!error) return null;
-
-    if (error.response?.status === 409) {
-      return t('budget.toast.emailAlreadyUsed');
-    }
-    if (error.response?.status === 429) {
-      return t('toast.tooManyAttempts');
+  const getErrorMessage = (error: unknown): string => {
+    if (error instanceof AxiosError) {
+      if (error.response?.status === 409) {
+        return t('budget.toast.emailAlreadyUsed');
+      }
+      if (error.response?.status === 429) {
+        return t('toast.tooManyAttempts');
+      }
     }
     return t('account.toast.updateProfileError');
   };
@@ -44,14 +48,14 @@ export const useUpdatePassword = () => {
   const queryClient = useQueryClient();
   const { t } = useTranslation();
 
-  const getErrorMessage = (error: any): string | null => {
-    if (!error) return null;
-
-    if (error.response?.status === 403 || error.response?.status === 400) {
-      return t('account.toast.wrongPassword');
-    }
-    if (error.response?.status === 429) {
-      return t('toast.tooManyAttempts');
+  const getErrorMessage = (error: unknown): string => {
+    if (error instanceof AxiosError) {
+      if (error.response?.status === 403 || error.response?.status === 400) {
+        return t('account.toast.wrongPassword');
+      }
+      if (error.response?.status === 429) {
+        return t('toast.tooManyAttempts');
+      }
     }
     return t('account.toast.updatePasswordError');
   };

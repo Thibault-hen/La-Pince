@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { MainLoader } from '@/components/ui/MainLoader';
 import { useAuthUser } from '@/hooks/use-auth';
 

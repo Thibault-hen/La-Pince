@@ -1,16 +1,16 @@
+import { useAtomValue } from 'jotai';
+import { useNavigate } from 'react-router-dom';
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuItem,
+  DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { InitialAvatar } from './InitialAvatar';
-import { useNavigate } from 'react-router-dom';
-import { useAtomValue } from 'jotai';
-import { userAtom } from '@/stores/authStore';
 import { useLogout } from '@/hooks/use-auth';
+import { userAtom } from '@/stores/authStore';
+import { InitialAvatar } from './InitialAvatar';
 
 export const ProfileButton = () => {
   const naviguate = useNavigate();
@@ -24,7 +24,10 @@ export const ProfileButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <InitialAvatar className="h-8 w-8 cursor-pointer" name={user?.name || ':)'} />
+        <InitialAvatar
+          className="h-8 w-8 cursor-pointer"
+          name={user?.name || ':)'}
+        />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-48">

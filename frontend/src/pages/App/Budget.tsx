@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BudgetCard } from '@/components/budget/BudgetCard';
 import { BudgetCards } from '@/components/budget/BudgetCards';
 import { BudgetChart } from '@/components/budget/BudgetChart';
@@ -9,8 +11,6 @@ import { EditBudgetModal } from '@/components/budget/modals/EditBudgetModal';
 import { useBudgets } from '@/hooks/use-budget';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 import type { Budget } from '@/types/budget';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 const BudgetPage = () => {
   const [openAddBudget, setOpenAddBudget] = useState(false);

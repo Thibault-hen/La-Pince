@@ -1,10 +1,10 @@
-import { RegisterForm } from '@/components/auth/RegisterForm';
-import { ModeToggle } from '@/components/theme/theme-toggle';
 import { House } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import preview from '@/assets/home-page/hero_img1.png';
-import { DefaultWrapper } from '@/layouts/DefaultWrapper';
+import { RegisterForm } from '@/components/auth/RegisterForm';
 import { LanguageSelector } from '@/components/lang/LanguageSelector';
+import { ModeToggle } from '@/components/theme/theme-toggle';
+import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 
 const Register = () => {
   const location = useLocation();

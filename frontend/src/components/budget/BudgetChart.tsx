@@ -1,6 +1,7 @@
+import { TrendingUp } from 'lucide-react';
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Cell, Label, Pie, PieChart } from 'recharts';
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   type ChartConfig,
@@ -8,10 +9,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
-import { TrendingUp } from 'lucide-react';
-import type { BudgetResponse } from '@/types/budget';
-import { useTranslation } from 'react-i18next';
 import { useCurrency } from '@/hooks/use-currency';
+import type { BudgetResponse } from '@/types/budget';
 
 export const description = 'A donut chart with text';
 
@@ -29,7 +28,7 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
   }, [budgets?.budgets]);
 
   const percentage = (amount: number): string => {
-    return ((amount / (totalAmount ?? 0)) * 100).toFixed(1) + '%';
+    return `${((amount / (totalAmount ?? 0)) * 100).toFixed(1)}%`;
   };
 
   return (
@@ -41,7 +40,9 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
               <TrendingUp className="h-5 w-5 text-primary-color" />
             </div>
           </div>
-          <CardTitle className="text-xl font-bold">{t('budget.chart.title')}</CardTitle>
+          <CardTitle className="text-xl font-bold">
+            {t('budget.chart.title')}
+          </CardTitle>
         </CardHeader>
         {budgets?.budgets?.length === 0 ? (
           <div className="bg-secondary-color/10 border border-secondary-color p-4 rounded-md text-center w-2/3 xl:w-1/2 mx-auto">
@@ -62,7 +63,10 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
                 className="mx-auto aspect-square max-h-[280px] min-h-[280px]"
               >
                 <PieChart>
-                  <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent hideLabel />}
+                  />
                   <Pie
                     data={budgets?.budgets}
                     dataKey="amount"
@@ -73,7 +77,10 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
                     stroke="rgba(255,255,255,0.1)"
                   >
                     {budgets?.budgets.map((budget) => (
-                      <Cell key={`cell-${budget.id}`} fill={budget.category.color?.value} />
+                      <Cell
+                        key={`cell-${budget.id}`}
+                        fill={budget.category.color?.value}
+                      />
                     ))}
 
                     <Label

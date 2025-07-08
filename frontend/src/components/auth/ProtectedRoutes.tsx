@@ -1,6 +1,6 @@
+import { useAtomValue } from 'jotai';
 import { Navigate, Outlet } from 'react-router-dom';
 import { authLoadingAtom, isAuthenticatedAtom } from '@/stores/authStore';
-import { useAtomValue } from 'jotai';
 
 export const ProtectedRoutes = () => {
   const isAuthenticated = useAtomValue(isAuthenticatedAtom);

@@ -1,9 +1,9 @@
 import { House } from 'lucide-react';
 import { NavLink, useLocation, useSearchParams } from 'react-router-dom';
-import { ModeToggle } from '@/components/theme/theme-toggle';
-import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 import { ResetPasswordForm } from '@/components/auth/ResetPasswordForm';
 import { SendResetPasswordEmailForm } from '@/components/auth/SendResetPasswordEmailForm';
+import { ModeToggle } from '@/components/theme/theme-toggle';
+import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 
 const ResetPassword = () => {
   const location = useLocation();
@@ -27,7 +27,11 @@ const ResetPassword = () => {
           </div>
           <div className="flex flex-1 items-center justify-center">
             <div className="w-full max-w-lg">
-              {showResetForm ? <ResetPasswordForm /> : <SendResetPasswordEmailForm />}
+              {showResetForm ? (
+                <ResetPasswordForm />
+              ) : (
+                <SendResetPasswordEmailForm />
+              )}
             </div>
           </div>
         </div>

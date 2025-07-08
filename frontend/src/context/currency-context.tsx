@@ -1,6 +1,7 @@
-import { userAtom } from '@/stores/authStore';
 import { useAtomValue } from 'jotai';
-import React, { createContext, useContext, useState } from 'react';
+import type React from 'react';
+import { createContext, useContext, useState } from 'react';
+import { userAtom } from '@/stores/authStore';
 
 const CurrencyContext = createContext<{
   currency: string;
@@ -10,7 +11,11 @@ const CurrencyContext = createContext<{
   setCurrency: () => {},
 });
 
-export const CurrencyProvider = ({ children }: { children: React.ReactNode }) => {
+export const CurrencyProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const user = useAtomValue(userAtom);
   const [currency, setCurrency] = useState(user?.currency ?? 'EUR');
   return (

@@ -1,4 +1,4 @@
-import { Brain, Zap, Shield } from 'lucide-react';
+import { Brain, Shield, Zap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export default function Problem01() {
@@ -35,9 +35,9 @@ export default function Problem01() {
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-8 px-0 xl:px-30">
-          {problems.map((problem, index) => (
+          {problems.map((problem) => (
             <div
-              key={index}
+              key={problem.title}
               className="last:lg:col-span-1 last:md:col-span-2 transform transition-all rounded-lg border text-card-foreground bg-background shadow-none p-5"
               style={{
                 opacity: 1,
@@ -56,7 +56,9 @@ export default function Problem01() {
               </h3>
 
               {/* Description */}
-              <p className="text-muted-foreground text-sm lg:text-base">{t(problem.description)}</p>
+              <p className="text-muted-foreground text-sm lg:text-base">
+                {t(problem.description)}
+              </p>
             </div>
           ))}
         </div>

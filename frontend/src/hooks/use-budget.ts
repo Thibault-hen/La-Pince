@@ -1,8 +1,14 @@
-import { budgetService } from '@/services/budget';
-import type { Budget, BudgetResponse, CreateBudget, UpdateBudget } from '@/types/budget';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
+import { budgetService } from '@/services/budget';
+import type {
+  Budget,
+  BudgetResponse,
+  CreateBudget,
+  UpdateBudget,
+} from '@/types/budget';
 import { useCurrency } from './use-currency';
 
 export const useBudgets = () => {
@@ -31,20 +37,20 @@ export const useCreateBudget = () => {
   const { t } = useTranslation();
   const { convertToEUR } = useCurrency();
 
-  const getErrorMessage = (error: any): string | null => {
-    if (!error) return null;
-
-    if (error.response?.status === 404) {
-      return t('budget.toast.noCategory');
-    }
-    if (error.response?.status === 422) {
-      return t('budget.toast.limitTooHigh');
-    }
-    if (error.response?.status === 409) {
-      return t('budget.toast.categoryAlreadyUsed');
-    }
-    if (error.response?.status === 429) {
-      return t('toast.tooManyAttempts');
+  const getErrorMessage = (error: unknown): string | null => {
+    if (error instanceof AxiosError) {
+      if (error.response?.status === 404) {
+        return t('budget.toast.noCategory');
+      }
+      if (error.response?.status === 422) {
+        return t('budget.toast.limitTooHigh');
+      }
+      if (error.response?.status === 409) {
+        return t('budget.toast.categoryAlreadyUsed');
+      }
+      if (error.response?.status === 429) {
+        return t('toast.tooManyAttempts');
+      }
     }
     return t('budget.toast.createError');
   };
@@ -58,7 +64,9 @@ export const useCreateBudget = () => {
       });
     },
     onSuccess: (data) => {
-      toast.success(t('budget.toast.created', { title: t(data.category.title) }));
+      toast.success(
+        t('budget.toast.created', { title: t(data.category.title) }),
+      );
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
       queryClient.invalidateQueries({ queryKey: ['dashboard'] });
       queryClient.invalidateQueries({ queryKey: ['categories'] });
@@ -74,20 +82,20 @@ export const useUpdateBudget = () => {
   const { t } = useTranslation();
   const { convertToEUR } = useCurrency();
 
-  const getErrorMessage = (error: any): string | null => {
-    if (!error) return null;
-
-    if (error.response?.status === 404) {
-      return t('budget.toast.noCategory');
-    }
-    if (error.response?.status === 422) {
-      return t('budget.toast.limitTooHigh');
-    }
-    if (error.response?.status === 409) {
-      return t('budget.toast.categoryAlreadyUsed');
-    }
-    if (error.response?.status === 429) {
-      return t('toast.tooManyAttempts');
+  const getErrorMessage = (error: unknown): string => {
+    if (error instanceof AxiosError) {
+      if (error.response?.status === 404) {
+        return t('budget.toast.noCategory');
+      }
+      if (error.response?.status === 422) {
+        return t('budget.toast.limitTooHigh');
+      }
+      if (error.response?.status === 409) {
+        return t('budget.toast.categoryAlreadyUsed');
+      }
+      if (error.response?.status === 429) {
+        return t('toast.tooManyAttempts');
+      }
     }
     return t('budget.toast.updateError');
   };
@@ -100,7 +108,9 @@ export const useUpdateBudget = () => {
         limitAlert: convertToEUR(data.limitAlert ?? 0),
       }),
     onSuccess: (data) => {
-      toast.success(t('budget.toast.updated', { title: t(data.category.title) }));
+      toast.success(
+        t('budget.toast.updated', { title: t(data.category.title) }),
+      );
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
       queryClient.invalidateQueries({ queryKey: ['dashboard'] });
     },

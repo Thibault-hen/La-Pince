@@ -1,5 +1,5 @@
-import type { UserAccount } from '@/types/account';
 import { atom } from 'jotai';
+import type { UserAccount } from '@/types/account';
 
 export const userAtom = atom<UserAccount | null>(null);
 export const csrfTokenAtom = atom<string | null>(null);

@@ -1,20 +1,20 @@
-import { Bell, BellRing } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
+import { Bell } from 'lucide-react';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNotifications } from '@/hooks/use-notification';
+import { showInfoToast } from '@/utils/toasts';
+import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import {
   Sheet,
-  SheetTrigger,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetDescription,
+  SheetTrigger,
 } from '../ui/sheet';
 import Notification from './Notification';
-import { useNotifications } from '@/hooks/use-notification';
-import { useEffect } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
-import { useTranslation } from 'react-i18next';
-import { Badge } from '../ui/badge';
-import { showInfoToast } from '@/utils/toasts';
 
 export default function NotificationButton() {
   const { notifications } = useNotifications();
@@ -29,11 +29,14 @@ export default function NotificationButton() {
       showInfoToast(t('notification.newNotification'));
     };
     return () => {
-      if (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING) {
+      if (
+        ws.readyState === WebSocket.OPEN ||
+        ws.readyState === WebSocket.CONNECTING
+      ) {
         ws.close();
       }
     };
-  }, []);
+  }, [queryClient, t]);
 
   return (
     <Sheet>
@@ -59,7 +62,9 @@ export default function NotificationButton() {
                 <Bell className="h-5 w-5 text-primary-color" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-foreground">Notifications</p>
+                <p className="text-2xl font-bold text-foreground">
+                  Notifications
+                </p>
                 <SheetDescription className="text-sm text-muted-foreground">
                   {t('notification.header.subtitle')}
                 </SheetDescription>
@@ -74,7 +79,12 @@ export default function NotificationButton() {
             </div>
           ) : (
             notifications.map((notification) => {
-              return <Notification key={notification.id} notification={notification} />;
+              return (
+                <Notification
+                  key={notification.id}
+                  notification={notification}
+                />
+              );
             })
           )}
         </div>

@@ -14,7 +14,7 @@ export const getColorStatus = (value: number, max: number): string => {
 
   if (max <= 0) return ColorStatus.ok;
 
-  let percentage = (value / max) * 100;
+  const percentage = (value / max) * 100;
 
   if (percentage < 60) return ColorStatus.ok;
   if (percentage < 90) return ColorStatus.warning;

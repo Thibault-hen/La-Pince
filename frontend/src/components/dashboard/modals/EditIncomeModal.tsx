@@ -1,3 +1,6 @@
+/** biome-ignore-all lint/correctness/noChildrenProp: TanStack Form uses children prop pattern */
+import { useForm } from '@tanstack/react-form';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -10,12 +13,10 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useForm } from '@tanstack/react-form';
 import { Loader } from '@/components/ui/loader';
-import { useTranslation } from 'react-i18next';
+import { useUpdateIncome } from '@/hooks/use-income';
 import { updateIncomeSchema } from '@/schemas/income.schema';
 import type { Income } from '@/types/income';
-import { useUpdateIncome } from '@/hooks/use-income';
 
 interface EditIncomeProps {
   open: boolean;
@@ -51,15 +52,21 @@ export const EditIncomeModal = ({ income, open, setOpen }: EditIncomeProps) => {
           }}
         >
           <DialogHeader className="mb-4">
-            <DialogTitle className="font-medium text-xl">{t('dashboard.edit.title')}</DialogTitle>
-            <DialogDescription>{t('dashboard.edit.description')}</DialogDescription>
+            <DialogTitle className="font-medium text-xl">
+              {t('dashboard.edit.title')}
+            </DialogTitle>
+            <DialogDescription>
+              {t('dashboard.edit.description')}
+            </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <form.Field
               name="value"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>{t('dashboard.edit.form.amount')}</Label>
+                  <Label htmlFor={field.name}>
+                    {t('dashboard.edit.form.amount')}
+                  </Label>
                   <Input
                     id={field.name}
                     placeholder={t('dashboard.edit.form.amountPlaceholder')}
@@ -82,7 +89,9 @@ export const EditIncomeModal = ({ income, open, setOpen }: EditIncomeProps) => {
           </div>
           <DialogFooter className="flex justify-between items-center mt-4">
             <DialogClose asChild>
-              <Button variant="outline">{t('dashboard.edit.form.cancel')}</Button>
+              <Button variant="outline">
+                {t('dashboard.edit.form.cancel')}
+              </Button>
             </DialogClose>
             <form.Subscribe
               selector={(state) => [state.isSubmitting]}

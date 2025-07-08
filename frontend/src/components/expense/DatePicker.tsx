@@ -1,11 +1,14 @@
 import { format } from 'date-fns';
+import { enUS, fr } from 'date-fns/locale';
 import { Calendar as CalendarIcon } from 'lucide-react';
-
-import { Calendar } from '@/components/ui/calendar';
-import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { fr, enUS } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
 interface DatePickerProps {
   name: string;
@@ -14,7 +17,12 @@ interface DatePickerProps {
   onChange: (date: Date) => void;
 }
 
-export function DatePicker({ name, required, value, onChange }: DatePickerProps) {
+export function DatePicker({
+  name,
+  required,
+  value,
+  onChange,
+}: DatePickerProps) {
   const { i18n } = useTranslation();
 
   const dateLocale = i18n.language === 'en' ? enUS : fr;

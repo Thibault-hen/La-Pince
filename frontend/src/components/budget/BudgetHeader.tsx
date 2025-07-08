@@ -1,8 +1,12 @@
 import { PiggyBank } from 'lucide-react';
-import { Button } from '../ui/button';
 import { useTranslation } from 'react-i18next';
+import { Button } from '../ui/button';
 
-export const BudgetHeader = ({ onOpenAddModal }: { onOpenAddModal: () => void }) => {
+export const BudgetHeader = ({
+  onOpenAddModal,
+}: {
+  onOpenAddModal: () => void;
+}) => {
   const { t } = useTranslation();
   return (
     <div className="flex items-center justify-between">
@@ -11,8 +15,12 @@ export const BudgetHeader = ({ onOpenAddModal }: { onOpenAddModal: () => void })
           <PiggyBank className="h-5 w-5 text-primary-color" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-foreground">{t('budget.header.title')}</h1>
-          <p className="text-sm text-muted-foreground">{t('budget.header.subtitle')}</p>
+          <h1 className="text-2xl font-bold text-foreground">
+            {t('budget.header.title')}
+          </h1>
+          <p className="text-sm text-muted-foreground">
+            {t('budget.header.subtitle')}
+          </p>
         </div>
       </div>
       <div>

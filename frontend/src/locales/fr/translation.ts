@@ -112,7 +112,8 @@ export const fr = {
       ok: 'Tes dépenses sont sous contrôle',
       careful: 'Attention à tes dépenses',
       warning: 'Tu as dépensé plus que ton revenu ce mois-ci',
-      expensePercentage: 'Vous avez dépensé {{percentage}} de vos revenus ce mois-ci',
+      expensePercentage:
+        'Vous avez dépensé {{percentage}} de vos revenus ce mois-ci',
       updateYourIncome: 'Mets à jour ton revenu pour voir ta progression',
       used: 'utilisé',
     },
@@ -212,7 +213,8 @@ export const fr = {
     },
     delete: {
       title: 'Supprimer une dépense',
-      description: 'Tu veux vraiment supprimer ta dépense {{title}} de {{amount}} € ?',
+      description:
+        'Tu veux vraiment supprimer ta dépense {{title}} de {{amount}} € ?',
       cancel: 'Annuler',
       confirm: 'Supprimer',
     },
@@ -221,8 +223,10 @@ export const fr = {
       updated: 'Ta dépense a été mise à jour',
       deleted: 'Ta dépense a été supprimée',
       createError: 'Une erreur est survenue lors de la création de ta dépense',
-      updateError: 'Une erreur est survenue lors de la mise à jour de ta dépense',
-      deleteError: 'Une erreur est survenue lors de la suppression de ta dépense',
+      updateError:
+        'Une erreur est survenue lors de la mise à jour de ta dépense',
+      deleteError:
+        'Une erreur est survenue lors de la suppression de ta dépense',
     },
     uncategorized: 'Non catégorisée',
   },
@@ -291,7 +295,8 @@ export const fr = {
     },
     delete: {
       title: 'Supprimer un budget',
-      description: 'Tu veux vraiment supprimer ton budget {{title}} de {{amount}} ?',
+      description:
+        'Tu veux vraiment supprimer ton budget {{title}} de {{amount}} ?',
       cancel: 'Annuler',
       confirm: 'Supprimer',
     },
@@ -300,12 +305,16 @@ export const fr = {
       updated: 'Ton budget {{title}} a été mis à jour',
       deleted: 'Ton budget a été supprimé',
       noCategory: 'Cette catégorie n’existe pas',
-      categoryAlreadyUsed: 'Cette catégorie est déjà utilisée par un autre budget',
-      limitTooHigh: 'Le montant de l’alerte limite ne peut pas être supérieur au montant du budget',
+      categoryAlreadyUsed:
+        'Cette catégorie est déjà utilisée par un autre budget',
+      limitTooHigh:
+        'Le montant de l’alerte limite ne peut pas être supérieur au montant du budget',
       tooManyAttempts: 'Trop de tentatives. Veuillez réessayer plus tard',
       createError: 'Une erreur est survenue lors de la création de ton budget',
-      updateError: 'Une erreur est survenue lors de la mise à jour de ton budget',
-      deleteError: 'Une erreur est survenue lors de la suppression de ton budget',
+      updateError:
+        'Une erreur est survenue lors de la mise à jour de ton budget',
+      deleteError:
+        'Une erreur est survenue lors de la suppression de ton budget',
     },
     chart: {
       title: "Vue d'ensemble des budgets",
@@ -353,7 +362,8 @@ export const fr = {
     },
     delete: {
       title: 'Supprimer une catégorie',
-      description: 'Tu veux vraiment supprimer ta catégorie {{title}} de {{total}} €?',
+      description:
+        'Tu veux vraiment supprimer ta catégorie {{title}} de {{total}} €?',
       cancel: 'Annuler',
       confirm: 'Supprimer',
     },
@@ -362,9 +372,12 @@ export const fr = {
       updated: 'Ta catégorie {{title}} a été mise à jour',
       deleted: 'Ta catégorie a été supprimé',
       categoryAlreadyExist: 'Cette catégorie existe déjà',
-      createError: 'Une erreur est survenue lors de la création de ta catégorie',
-      updateError: 'Une erreur est survenue lors de la mise à jour de ta catégorie',
-      deleteError: 'Une erreur est survenue lors de la suppression de ta catégorie',
+      createError:
+        'Une erreur est survenue lors de la création de ta catégorie',
+      updateError:
+        'Une erreur est survenue lors de la mise à jour de ta catégorie',
+      deleteError:
+        'Une erreur est survenue lors de la suppression de ta catégorie',
     },
   },
   login: {
@@ -400,7 +413,8 @@ export const fr = {
     errorMessages: {
       emailExists: 'Un compte avec cet email existe déjà',
       tooManyAttempts: 'Trop de tentatives. Veuillez réessayer plus tard',
-      error: "Une erreur est survenue lors de l'inscription. Veuillez réessayer",
+      error:
+        "Une erreur est survenue lors de l'inscription. Veuillez réessayer",
       matchPassword: 'Les mot de passe ne correspondent pas',
       invalidName: 'Le nom doit comporter au moins 2 caractères',
     },
@@ -426,7 +440,8 @@ export const fr = {
     delete: {
       modal: {
         title: 'Supprimer le compte',
-        description: 'Tu veux vraiment supprimer ton compte ? Cette action est irréversible.',
+        description:
+          'Tu veux vraiment supprimer ton compte ? Cette action est irréversible.',
         cancel: 'Annuler',
         confirm: 'Supprimer',
       },
@@ -447,13 +462,15 @@ export const fr = {
     },
     profile: {
       title: 'Paramètres du profil',
-      description: 'Modifie les informations d’identification de ton compte et préférences',
+      description:
+        'Modifie les informations d’identification de ton compte et préférences',
       form: {
         name: 'Nom',
         email: 'Email',
         favoriteCurrency: 'Devise préférée',
         alert: 'Alerte de budget',
-        alertDescription: 'Recevoir des notifications lorsque tu approches de tes limites',
+        alertDescription:
+          'Recevoir des notifications lorsque tu approches de tes limites',
         saveButton: 'Enregistrer les modifications',
       },
     },
@@ -473,13 +490,16 @@ export const fr = {
     },
     toast: {
       updated: 'Ton profil a été mis à jour',
-      updateProfileError: 'AUne erreur est survenue lors de la mise à jour de ton profil',
-      updatePasswordError: 'Une erreur est survenue lors de la mise à jour de ton mot de passe',
+      updateProfileError:
+        'AUne erreur est survenue lors de la mise à jour de ton profil',
+      updatePasswordError:
+        'Une erreur est survenue lors de la mise à jour de ton mot de passe',
       passwordUpdated: 'Ton mot de passe a été mis à jour',
       wrongPassword: 'Le mot de passe actuel est incorrect',
       emailAlreadyUsed: 'Cet email est déjà utilisé par un autre compte',
       deleted: 'Ton compte a été supprimé',
-      deleteError: 'Une erreur est survenue lors de la suppression de ton compte',
+      deleteError:
+        'Une erreur est survenue lors de la suppression de ton compte',
     },
   },
   color: {

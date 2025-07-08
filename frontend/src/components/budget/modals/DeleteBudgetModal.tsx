@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,7 +12,6 @@ import {
 import { useDeleteBudget } from '@/hooks/use-budget';
 import { useCurrency } from '@/hooks/use-currency';
 import type { Budget } from '@/types/budget';
-import { useTranslation } from 'react-i18next';
 
 interface DeleteBudgetProps {
   open: boolean;
@@ -19,7 +19,11 @@ interface DeleteBudgetProps {
   budget?: Budget;
 }
 
-export const DeleteBudgetModal = ({ open, setOpen, budget }: DeleteBudgetProps) => {
+export const DeleteBudgetModal = ({
+  open,
+  setOpen,
+  budget,
+}: DeleteBudgetProps) => {
   const { mutateAsync: deleteBudget } = useDeleteBudget();
   const { t } = useTranslation();
   const { formatAmount } = useCurrency();

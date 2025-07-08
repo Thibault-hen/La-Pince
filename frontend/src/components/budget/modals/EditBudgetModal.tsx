@@ -1,3 +1,7 @@
+/** biome-ignore-all lint/correctness/noChildrenProp: TanStack Form uses children prop pattern */
+import { useForm } from '@tanstack/react-form';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -8,6 +12,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Loader } from '@/components/ui/loader';
 import {
   Select,
   SelectContent,
@@ -17,17 +24,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { useUpdateBudget } from '@/hooks/use-budget';
-import { useForm } from '@tanstack/react-form';
-import { updateBudgetSchema } from '@/schemas/budget.schemas';
-import { Loader } from '@/components/ui/loader';
-import type { Budget } from '@/types/budget';
-import { useEffect } from 'react';
 import { useCategories } from '@/hooks/use-category';
-import { useTranslation } from 'react-i18next';
-import { useCurrency } from '@/hooks/use-currency';
+import { updateBudgetSchema } from '@/schemas/budget.schemas';
+import type { Budget } from '@/types/budget';
 
 interface AddBudgetProps {
   open: boolean;
@@ -56,6 +56,7 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
     },
   });
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     form.reset();
   }, [budget, form]);
@@ -74,17 +75,22 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
           <DialogHeader className="mb-4">
             <DialogTitle className="font-medium text-xl">
               {t('budget.edit.title', {
-                title: t(budget?.category?.title) || t('budget.edit.defaultTitle'),
+                title:
+                  t(budget?.category?.title) || t('budget.edit.defaultTitle'),
               })}
             </DialogTitle>
-            <DialogDescription>{t('budget.edit.description')}</DialogDescription>
+            <DialogDescription>
+              {t('budget.edit.description')}
+            </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <form.Field
               name="amount"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>{t('budget.edit.form.amount')}</Label>
+                  <Label htmlFor={field.name}>
+                    {t('budget.edit.form.amount')}
+                  </Label>
                   <Input
                     id={field.name}
                     placeholder={t('budget.edit.form.amountPlaceholder')}
@@ -109,10 +115,16 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
               children={(field) => (
                 <div className="grid gap-3">
                   <div className="flex items-center justify-between">
-                    <Label htmlFor={field.name}>{t('budget.edit.form.limitAlert')}</Label>
+                    <Label htmlFor={field.name}>
+                      {t('budget.edit.form.limitAlert')}
+                    </Label>
                     <div className="text-xs flex gap-1 items-center justify-center">
-                      <span className="text-muted-foreground uppercase tracking-wider">Max</span>
-                      <span className="font-mono">({budget.amount.toFixed(2)})</span>
+                      <span className="text-muted-foreground uppercase tracking-wider">
+                        Max
+                      </span>
+                      <span className="font-mono">
+                        ({budget.amount.toFixed(2)})
+                      </span>
                     </div>
                   </div>
 
@@ -139,11 +151,13 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
               name="categoryId"
               children={(field) => {
                 const selectedCategory = categories?.find(
-                  (category) => category.id === budget.categoryId
+                  (category) => category.id === budget.categoryId,
                 );
                 return (
                   <div className="grid gap-3">
-                    <Label htmlFor={field.name}>{t('budget.edit.form.category')}</Label>
+                    <Label htmlFor={field.name}>
+                      {t('budget.edit.form.category')}
+                    </Label>
                     <Select
                       name={field.name}
                       onValueChange={(value) => field.handleChange(value)}
@@ -152,11 +166,17 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
                       required
                     >
                       <SelectTrigger className="w-full cursor-pointer">
-                        <SelectValue placeholder={t('budget.edit.form.categoryPlaceholder')} />
+                        <SelectValue
+                          placeholder={t(
+                            'budget.edit.form.categoryPlaceholder',
+                          )}
+                        />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectLabel>{t('budget.edit.form.categoryLabel')}</SelectLabel>
+                          <SelectLabel>
+                            {t('budget.edit.form.categoryLabel')}
+                          </SelectLabel>
                           {categories?.map((category) => (
                             <SelectItem
                               key={category.id}
@@ -170,7 +190,9 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
                                 })}
                               </span>
                               <div
-                                style={{ backgroundColor: category.color?.value }}
+                                style={{
+                                  backgroundColor: category.color?.value,
+                                }}
                                 className="h-3 w-3 rounded-lg"
                               ></div>
                             </SelectItem>

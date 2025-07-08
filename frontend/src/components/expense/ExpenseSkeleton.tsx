@@ -1,7 +1,7 @@
 import { Skeleton } from '../ui/skeleton';
 
 export const ExpenseSkeleton = () => {
-  return(
+  return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-3">
         <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">

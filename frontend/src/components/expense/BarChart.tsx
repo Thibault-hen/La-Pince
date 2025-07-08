@@ -1,5 +1,7 @@
+import { useSpring } from 'motion/react';
+import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   type ChartConfig,
@@ -7,11 +9,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
-import { useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useSpring } from 'motion/react';
-import { useExpenses } from '@/hooks/use-expense';
 import { useCurrency } from '@/hooks/use-currency';
+import { useExpenses } from '@/hooks/use-expense';
 
 export const description = 'An interactive bar chart';
 
@@ -23,7 +22,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 function getExpensesThisMonth<T extends { date: string; amount: number }>(
-  expenses: T[]
+  expenses: T[],
 ): { date: string; amount: number }[] {
   const date = new Date();
   const month = date.getMonth();
@@ -33,7 +32,10 @@ function getExpensesThisMonth<T extends { date: string; amount: number }>(
 
   expenses.forEach((expense) => {
     const expenseDate = new Date(expense.date);
-    if (expenseDate.getMonth() === month && expenseDate.getFullYear() === year) {
+    if (
+      expenseDate.getMonth() === month &&
+      expenseDate.getFullYear() === year
+    ) {
       const dayKey = expenseDate.toISOString().split('T')[0];
       if (!map[dayKey]) {
         map[dayKey] = {
@@ -44,22 +46,28 @@ function getExpensesThisMonth<T extends { date: string; amount: number }>(
       map[dayKey].amount += expense.amount;
     }
   });
-  return Object.values(map).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  return Object.values(map).sort(
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+  );
 }
 
 export function ChartBarInteractive() {
   const [displayTotal, setDisplayTotal] = useState<string>();
-  const [activeChart, setActiveChart] = useState<keyof typeof chartConfig>('amount');
+  const [activeChart, setActiveChart] =
+    useState<keyof typeof chartConfig>('amount');
   const { expenses } = useExpenses();
   const { formatAmount } = useCurrency();
   const { t, i18n } = useTranslation();
   const locale = i18n.language === 'en' ? 'en-US' : 'fr-FR';
-  const expensesThisMonth = useMemo(() => getExpensesThisMonth(expenses), [expenses]);
+  const expensesThisMonth = useMemo(
+    () => getExpensesThisMonth(expenses),
+    [expenses],
+  );
   const total = useMemo(
     () => ({
       amount: expensesThisMonth.reduce((acc, curr) => acc + curr.amount, 0),
     }),
-    [expenses]
+    [expensesThisMonth],
   );
   const dTotal = useSpring(0, {
     bounce: 0,
@@ -72,7 +80,7 @@ export function ChartBarInteractive() {
 
   useEffect(() => {
     dTotal.set(total.amount ?? 0);
-  }, [total.amount]);
+  }, [total.amount, dTotal]);
 
   return (
     <Card className="py-0 dark:bg-primary">
@@ -86,11 +94,14 @@ export function ChartBarInteractive() {
             return (
               <button
                 key={chart}
+                type="button"
                 data-active={activeChart === chart}
                 className="data-[active=true]:bg-muted/50 dark:bg-primary rounded-tr-lg border-r relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l sm:border-t-0 sm:border-l sm:px-8 sm:py-6"
                 onClick={() => setActiveChart(chart)}
               >
-                <span className="text-muted-foreground text-xs">{t(chartConfig[chart].label)}</span>
+                <span className="text-muted-foreground text-xs">
+                  {t(chartConfig[chart].label)}
+                </span>
                 <span className="text-lg leading-none font-bold sm:text-3xl">
                   {formatAmount(Number(displayTotal ?? 0))}
                 </span>
@@ -111,7 +122,10 @@ export function ChartBarInteractive() {
             </p>
           </div>
         ) : (
-          <ChartContainer config={chartConfig} className="aspect-auto h-[150px] w-full">
+          <ChartContainer
+            config={chartConfig}
+            className="aspect-auto h-[150px] w-full"
+          >
             <BarChart
               accessibilityLayer
               data={expensesThisMonth}

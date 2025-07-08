@@ -1,14 +1,26 @@
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from 'recharts';
-import { type ChartConfig, ChartContainer, ChartTooltip } from '@/components/ui/chart';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { useCurrency } from '@/hooks/use-currency';
 import { useTranslation } from 'react-i18next';
+import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from 'recharts';
+import {
+  type ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+} from '@/components/ui/chart';
+import { useCurrency } from '@/hooks/use-currency';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '../ui/card';
 
 interface ExpensesOverallChartProps {
   last6MonthsExpensesByMonth: Record<string, number>;
 }
 
-export const ExpensesOverallChart = ({ last6MonthsExpensesByMonth }: ExpensesOverallChartProps) => {
+export const ExpensesOverallChart = ({
+  last6MonthsExpensesByMonth,
+}: ExpensesOverallChartProps) => {
   const { t } = useTranslation();
 
   const chartConfig = {
@@ -20,7 +32,17 @@ export const ExpensesOverallChart = ({ last6MonthsExpensesByMonth }: ExpensesOve
 
   const { formatAmount } = useCurrency();
 
-  const CustomBarLabel = ({ x, y, width, value }: any) => {
+  const CustomBarLabel = ({
+    x,
+    y,
+    width,
+    value,
+  }: {
+    x: number;
+    y: number;
+    width: number;
+    value: number;
+  }) => {
     return (
       <text
         x={x + width / 2}
@@ -34,10 +56,12 @@ export const ExpensesOverallChart = ({ last6MonthsExpensesByMonth }: ExpensesOve
     );
   };
 
-  const chartData = Object.entries(last6MonthsExpensesByMonth).map(([month, value]) => ({
-    month: month,
-    amount: value,
-  }));
+  const chartData = Object.entries(last6MonthsExpensesByMonth).map(
+    ([month, value]) => ({
+      month: month,
+      amount: value,
+    }),
+  );
 
   const firstMonth = Object.keys(last6MonthsExpensesByMonth)[0];
   const lastMonth = Object.keys(last6MonthsExpensesByMonth)[5];
@@ -80,7 +104,7 @@ export const ExpensesOverallChart = ({ last6MonthsExpensesByMonth }: ExpensesOve
                 offset={12}
                 className="fill-foreground"
                 fontSize={12}
-                content={<CustomBarLabel />}
+                content={<CustomBarLabel x={0} y={0} width={0} value={0} />}
               />
             </Bar>
           </BarChart>

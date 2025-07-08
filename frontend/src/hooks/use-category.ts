@@ -1,8 +1,9 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
 import { categoryService } from '@/services/category';
 import type { CategoryWithBudget, UpdateCategory } from '@/types/category';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
-import { useTranslation } from 'react-i18next';
 import { useCurrency } from './use-currency';
 
 export const useCategories = () => {
@@ -32,14 +33,14 @@ export const useCreateCategory = () => {
   const queryClient = useQueryClient();
   const { t } = useTranslation();
 
-  const getErrorMessage = (error: any): string | null => {
-    if (!error) return null;
-
-    if (error.response?.status === 409) {
-      return t('categories.toast.categoryAlreadyExist');
-    }
-    if (error.response?.status === 429) {
-      return t('toast.tooManyAttempts');
+  const getErrorMessage = (error: unknown): string => {
+    if (error instanceof AxiosError) {
+      if (error.response?.status === 409) {
+        return t('categories.toast.categoryAlreadyExist');
+      }
+      if (error.response?.status === 429) {
+        return t('toast.tooManyAttempts');
+      }
     }
     return t('categories.toast.createError');
   };

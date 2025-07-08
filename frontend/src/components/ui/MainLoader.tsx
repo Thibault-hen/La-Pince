@@ -5,7 +5,11 @@ export const MainLoader = () => {
       {/* Logo placeholder - replace with your actual logo */}
       <div className="mb-4">
         <div className="flex items-center justify-center mt-64">
-          <img src={laPinceLogo} width={80} alt="Application chargment en cours" />
+          <img
+            src={laPinceLogo}
+            width={80}
+            alt="Application chargment en cours"
+          />
         </div>
       </div>
 

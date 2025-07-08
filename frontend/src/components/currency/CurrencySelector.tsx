@@ -1,17 +1,17 @@
+import { CloudAlert } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
   SelectContent,
   SelectGroup,
-  SelectLabel,
   SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
 } from '@/components/ui/select';
-import { useCurrency } from '@/hooks/use-currency';
-import { useTranslation } from 'react-i18next';
-import { CloudAlert } from 'lucide-react';
-import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 import { useUpdateCurrency } from '@/hooks/use-account';
+import { useCurrency } from '@/hooks/use-currency';
+import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 
 type Currency = {
   name: string;
@@ -78,9 +78,9 @@ export const CurrencySelector = () => {
             <SelectLabel className="px-3 py-2 text-sm font-semibold">
               {t('currency.select')}
             </SelectLabel>
-            {currencies?.map((currency, idx) => (
+            {currencies?.map((currency) => (
               <SelectItem
-                key={idx}
+                key={currency.code}
                 value={currency.code}
                 className="group cursor-pointer p-2 hover:bg-gradient-to-r hover:from-primary-color/10 hover:to-secondary-color/10 transition-all duration-300 hover:shadow-md border-b border-border/20 last:border-b-0 focus:bg-gradient-to-r focus:from-primary-color/15 focus:to-secondary-color/15"
               >
@@ -115,7 +115,9 @@ export const CurrencySelector = () => {
                 <CloudAlert className="h-5 w-5 text-red-500" />
               </div>
               <div className="flex-1">
-                <h4 className="text-sm font-medium">{t('currencySelector.errorTitle')}</h4>
+                <h4 className="text-sm font-medium">
+                  {t('currencySelector.errorTitle')}
+                </h4>
                 <p className="text-sm text-red-700 dark:text-red-300 mt-1">
                   {t('currencySelector.error')}
                 </p>

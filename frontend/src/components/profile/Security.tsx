@@ -1,12 +1,19 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
+/** biome-ignore-all lint/correctness/noChildrenProp: TanStack Form uses children prop pattern */
+import { useForm } from '@tanstack/react-form';
 import { Lock } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { useUpdatePassword } from '@/hooks/use-account';
+import { passwordChangeSchema } from '@/schemas/account.schema';
+import { Button } from '../ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '../ui/card';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
-import { Button } from '../ui/button';
-import { useForm } from '@tanstack/react-form';
-import { passwordChangeSchema } from '@/schemas/account.schema';
-import { useUpdatePassword } from '@/hooks/use-account';
-import { useTranslation } from 'react-i18next';
 
 export const Security = () => {
   const { mutateAsync: updatePassword } = useUpdatePassword();
@@ -43,7 +50,10 @@ export const Security = () => {
         <CardHeader className="pb-4">
           <div className="flex items-center gap-2">
             <Lock className="h-5 w-5 text-primary-color" />
-            <CardTitle className="text-xl"> {t('account.header.title')}</CardTitle>
+            <CardTitle className="text-xl">
+              {' '}
+              {t('account.header.title')}
+            </CardTitle>
           </div>
           <CardDescription> {t('account.header.subtitle')}</CardDescription>
         </CardHeader>
@@ -135,7 +145,12 @@ export const Security = () => {
             <form.Subscribe
               selector={(state) => [state.isDirty, state.isSubmitting]}
               children={([isDirty, isSubmitting]) => (
-                <Button disabled={!isDirty || isSubmitting} type="submit" size="lg" variant="blue">
+                <Button
+                  disabled={!isDirty || isSubmitting}
+                  type="submit"
+                  size="lg"
+                  variant="blue"
+                >
                   {t('account.security.form.changePasswordButton')}
                 </Button>
               )}

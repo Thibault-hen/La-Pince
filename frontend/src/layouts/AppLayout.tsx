@@ -1,14 +1,18 @@
+import { useAtomValue } from 'jotai';
+import { useTranslation } from 'react-i18next';
+import { Outlet } from 'react-router-dom';
 import { AppSidebar } from '@/components/AppSidebar';
+import { LanguageSelector } from '@/components/lang/LanguageSelector';
+import NotificationButton from '@/components/notification/NotificationButton';
 import { ProfileButton } from '@/components/profile/ProfileButton';
 import { ModeToggle } from '@/components/theme/theme-toggle';
-import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { Outlet } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { LanguageSelector } from '@/components/lang/LanguageSelector';
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from '@/components/ui/sidebar';
 import { CurrencyProvider } from '@/context/currency-context';
-import NotificationButton from '@/components/notification/NotificationButton';
 import { userAtom } from '@/stores/authStore';
-import { useAtomValue } from 'jotai';
 
 export const AppLayout = () => {
   const user = useAtomValue(userAtom);

@@ -1,3 +1,6 @@
+/** biome-ignore-all lint/correctness/noChildrenProp: TanStack Form uses children prop pattern */
+import { useForm } from '@tanstack/react-form';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -8,6 +11,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -17,13 +22,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import type { Color } from '@/types/color';
-import { useForm } from '@tanstack/react-form';
-import { createCategorySchema } from '@/schemas/category.schemas';
 import { useCreateCategory } from '@/hooks/use-category';
-import { useTranslation } from 'react-i18next';
+import { createCategorySchema } from '@/schemas/category.schemas';
+import type { Color } from '@/types/color';
 
 interface AddCategoryProps {
   open: boolean;
@@ -31,7 +32,11 @@ interface AddCategoryProps {
   colors?: Color[];
 }
 
-export const AddCategoryModal = ({ colors, open, setOpen }: AddCategoryProps) => {
+export const AddCategoryModal = ({
+  colors,
+  open,
+  setOpen,
+}: AddCategoryProps) => {
   const { mutateAsync: createCategory } = useCreateCategory();
   const { t } = useTranslation();
 
@@ -59,15 +64,21 @@ export const AddCategoryModal = ({ colors, open, setOpen }: AddCategoryProps) =>
           }}
         >
           <DialogHeader className="mb-4">
-            <DialogTitle className="font-medium text-xl">{t('categories.add.title')}</DialogTitle>
-            <DialogDescription>{t('categories.add.description')}</DialogDescription>
+            <DialogTitle className="font-medium text-xl">
+              {t('categories.add.title')}
+            </DialogTitle>
+            <DialogDescription>
+              {t('categories.add.description')}
+            </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4">
             <form.Field
               name="title"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>{t('categories.add.form.title')}</Label>
+                  <Label htmlFor={field.name}>
+                    {t('categories.add.form.title')}
+                  </Label>
                   <Input
                     id={field.name}
                     onChange={(e) => {
@@ -89,18 +100,24 @@ export const AddCategoryModal = ({ colors, open, setOpen }: AddCategoryProps) =>
               name="colorId"
               children={(field) => (
                 <div className="grid gap-3">
-                  <Label htmlFor={field.name}>{t('categories.add.form.color')}</Label>
+                  <Label htmlFor={field.name}>
+                    {t('categories.add.form.color')}
+                  </Label>
                   <Select
                     name={field.name}
                     onValueChange={(value) => field.handleChange(value)}
                     required
                   >
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder={t('categories.add.form.colorPlaceholder')} />
+                      <SelectValue
+                        placeholder={t('categories.add.form.colorPlaceholder')}
+                      />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectLabel>{t('categories.add.form.colorLabel')}</SelectLabel>
+                        <SelectLabel>
+                          {t('categories.add.form.colorLabel')}
+                        </SelectLabel>
                         {colors?.map((color) => (
                           <SelectItem
                             key={color.id}
@@ -123,7 +140,9 @@ export const AddCategoryModal = ({ colors, open, setOpen }: AddCategoryProps) =>
           </div>
           <DialogFooter className="mt-4 flex justify-between items-center">
             <DialogClose asChild>
-              <Button variant="outline">{t('categories.add.form.cancel')}</Button>
+              <Button variant="outline">
+                {t('categories.add.form.cancel')}
+              </Button>
             </DialogClose>
             <Button type="submit" variant="blue">
               {t('categories.add.form.create')}
