@@ -132,7 +132,7 @@ export const BudgetCard = ({
 					</div>
 				</CardHeader>
 
-				<CardContent className="flex flex-col">
+				<CardContent className="px-2 flex flex-col">
 					<CardDescription className="flex flex-col space-x-1 items-center">
 						<div className="flex justify-between w-full">
 							<div className="flex gap-1 items-center">

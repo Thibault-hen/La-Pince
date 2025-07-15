@@ -1,4 +1,5 @@
 import type {
+	CheckPassword,
 	PasswordChange,
 	UpdateCurrency,
 	UserAccountProfile,
@@ -25,7 +26,8 @@ export const accountService = {
 		return response.data;
 	},
 
-	async deleteAccount(): Promise<void> {
-		await api.delete('/account');
+	async deleteAccount(data: CheckPassword) {
+		await api.delete('/account', { data });
+		console.log(data);
 	},
 };

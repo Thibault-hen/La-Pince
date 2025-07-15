@@ -452,6 +452,10 @@ export const fr = {
 					'Tu veux vraiment supprimer ton compte ? Cette action est irréversible.',
 				cancel: 'Annuler',
 				confirm: 'Supprimer',
+				confirmPassword: 'Confirmer le mot de passe',
+				wrongPassword: 'Le mot de passe actuel est incorrect',
+				tooManyAttempts: 'Trop de tentatives, veuillez réessayer plus tard',
+				error: 'Une erreur est survenue lors de la suppression de ton compte',
 			},
 			header: {
 				title: 'Supprimer le compte',
