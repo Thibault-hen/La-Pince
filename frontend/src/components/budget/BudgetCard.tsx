@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useCurrency } from '@/hooks/use-currency';
 import type { Budget } from '@/types/budget';
+import { getCategoryIcon } from '@/utils/categoryIcon';
 import { getColorStatus } from '@/utils/colorStatus';
 import { getPercentage } from '@/utils/percentage';
 import { Button } from '../ui/button';
@@ -34,6 +35,7 @@ export const BudgetCard = ({
 }: BudgetProps) => {
 	const { t } = useTranslation();
 	const { formatAmount } = useCurrency();
+	const IconComponent = getCategoryIcon(budget.category.title);
 
 	const getRemainingBudget = () => {
 		if (budget.amount === undefined || budget.totalExpense === undefined) {
@@ -70,18 +72,29 @@ export const BudgetCard = ({
 				/>
 				<CardHeader className="p-0">
 					<div className="flex items-center justify-between">
-						<CardTitle
-							className="border-l-4 px-2 flex gap-2 items-center relative"
-							style={{ borderLeftColor: budget.category.color?.value }}
-						>
+						<CardTitle className="px-2 flex gap-2 items-center relative">
+							<div
+								className="w-7 h-7 rounded-full flex items-center justify-center border"
+								style={{
+									backgroundColor: `${budget.category.color?.value}10`,
+									borderColor: budget.category.color?.value,
+								}}
+							>
+								<IconComponent
+									className="w-4 h-4"
+									style={{
+										color: budget.category.color?.value,
+									}}
+								/>
+							</div>
 							{t(budget.category.title)}
-							{budget.totalExpense > (budget.amount ?? 0) && (
+							{budget.totalExpense >= (budget.amount ?? 0) && (
 								<div className="relative z-10">
 									<TriangleAlert
 										size={24}
 										className="text-red-600 dark:text-red-400 drop-shadow-sm relative z-10"
 									/>
-									<div className="absolute -inset-1 bg-red-500/20 rounded-full blur-sm z-0" />
+									<div className="absolute dark:-inset-1 bg-red-500/20 rounded-full blur-sm z-0" />
 								</div>
 							)}
 						</CardTitle>

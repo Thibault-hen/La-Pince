@@ -5,6 +5,8 @@ import {
 	type TransformedNotification,
 	useDeleteNotification,
 } from '@/hooks/use-notification';
+import { getCategoryIcon } from '@/utils/categoryIcon';
+import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 
 type NotificationProps = { notification: TransformedNotification };
@@ -13,6 +15,7 @@ export default function Notification({ notification }: NotificationProps) {
 	const { t } = useTranslation();
 	const { deleteNotification } = useDeleteNotification();
 	const { formatAmount } = useCurrency();
+	const IconComponent = getCategoryIcon(notification.budgetName);
 	return (
 		<div className="relative group">
 			<div className="flex flex-col gap-3 p-5 dark:bg-primary backdrop-blur-sm border rounded-xl shadow-sm transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-1">
@@ -29,17 +32,17 @@ export default function Notification({ notification }: NotificationProps) {
 							<div className="relative">
 								<CircleAlert
 									size={24}
-									className="text-amber-600 dark:text-amber-400 drop-shadow-sm"
+									className="text-amber-600 dark:text-amber-400"
 								/>
-								<div className="absolute -inset-1 bg-amber-500/20 rounded-full blur-sm -z-10" />
+								<div className="absolute dark:-inset-1 bg-amber-500/20 rounded-full blur-sm -z-10" />
 							</div>
 						) : (
 							<div className="relative">
 								<TriangleAlert
 									size={24}
-									className="text-red-600 dark:text-red-400 drop-shadow-sm"
+									className="text-red-600 dark:text-red-400"
 								/>
-								<div className="absolute -inset-1 bg-red-500/20 rounded-full blur-sm -z-10" />
+								<div className="absolute dark:-inset-1 bg-red-500/20 rounded-full blur-sm -z-10" />
 							</div>
 						)}
 					</div>
@@ -65,35 +68,53 @@ export default function Notification({ notification }: NotificationProps) {
 				{/* Content section */}
 				<div className="space-y-3">
 					<div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-						<Trans
-							i18nKey={`notification.${notification.notificationType}.content`}
-							values={{
-								budgetName: t(notification.budgetName),
-								budgetAmountRemaining: formatAmount(
-									notification?.budgetAmount ?? 0,
-								),
-							}}
-							components={[
-								<span
-									key="notification-color"
-									className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium text-white shadow-sm"
-									style={{
-										backgroundColor: notification.color.value,
-										boxShadow: `0 0 0 1px ${notification.color.value}20`,
-									}}
-								/>,
-								<br key="notification-break" />,
-								<span
-									key="notification-type-color"
-									className={`font-medium $
-                    {
-                    notification.notificationType === 'budgetWarning'
-                      ? 'text-amber-700 dark:text-amber-300'
-                      : 'text-red-700 dark:text-red-300'
-                  }`}
-								/>,
-							]}
-						/>
+						<div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed space-y-3">
+							<div className="space-y-3 flex flex-col">
+								<p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+									{t('notification.yourBudget')}{' '}
+									<Badge
+										className="inline-flex tracking-wide items-center capitalize gap-1.5 rounded-xl shadow-sm font-bold text-xs border mx-1 py-1"
+										style={{
+											backgroundColor: `${notification.color.value}15`,
+											color: notification.color.value,
+											borderColor: `${notification.color.value}`,
+										}}
+									>
+										<div
+											className="w-4.5 h-4.5 rounded-full flex items-center justify-center"
+											style={{ backgroundColor: notification.color.value }}
+										>
+											<IconComponent className="w-3 h-3 text-white" />
+										</div>
+										{t(notification.budgetName)}
+									</Badge>
+									{notification.notificationType === 'budgetWarning'
+										? t('notification.budgetWarning.description')
+										: t('notification.budgetExceeded.description')}{' '}
+								</p>
+								<div>
+									<span className="text-muted-foreground">
+										{t('notification.budgetWarning.remaining1')}{' '}
+									</span>
+									<span
+										className={`font-medium ${
+											notification.notificationType === 'budgetWarning'
+												? 'dark:text-amber-300 text-amber-600'
+												: 'text-red-500'
+										}`}
+									>
+										{notification.notificationType === 'budgetWarning'
+											? formatAmount(notification?.budgetAmount ?? 0)
+											: formatAmount(0)}
+									</span>
+									<span className="text-muted-foreground">
+										{' '}
+										{t('notification.budgetWarning.remaining2')}
+									</span>
+								</div>
+								{/* Le reste du composant... */}
+							</div>
+						</div>
 					</div>
 
 					<div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">

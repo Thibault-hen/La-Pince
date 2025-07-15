@@ -1,3 +1,5 @@
+import { description } from '@/components/budget/BudgetChart';
+
 export const fr = {
 	home: {
 		nav: {
@@ -545,14 +547,16 @@ export const fr = {
 		},
 		noNotification: 'Aucunes nouvelles notifications',
 		newNotification: 'Vous avez une nouvelle notification',
+		yourBudget: 'Ton budget',
 		budgetWarning: {
-			title: 'Votre budget approche de sa limite',
-			content:
-				"Votre budget <0>{{ budgetName }}</0> approche de sa limite.<1/>Il vous reste <2>{{budgetAmountRemaining}}</2> avant d'atteindre la limite.",
+			description: 'approche de sa limite',
+			title: 'Votre budget est presque dépassé',
+			remaining1: 'Tu as',
+			remaining2: 'restant',
 		},
 		budgetExceeded: {
 			title: 'Votre budget a été dépassé',
-			content: 'Votre budget <0>{{ budgetName }}</0> a été dépassé.',
+			description: 'a dépassé sa limite',
 		},
 		time: {
 			seconds_singular: 'il y a {{count}} seconde',

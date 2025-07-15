@@ -6,7 +6,6 @@ import {
 	EllipsisVertical,
 	HandCoins,
 	Pencil,
-	Receipt,
 	Tag,
 	Tags,
 	Trash2,
@@ -20,6 +19,7 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import type { Expense } from '@/hooks/use-expense';
+import { getCategoryIcon } from '@/utils/categoryIcon';
 
 export const createColumns = (
 	onEdit: (expense: Expense) => void,
@@ -34,7 +34,7 @@ export const createColumns = (
 			<div className="ml-4 -m-1 p-4">
 				<div className="flex items-center gap-3">
 					<div className="p-1.5 bg-primary-color/10 border border-primary-color/20 rounded-lg">
-						<Receipt className="w-4 h-4 text-primary-color" />
+						<Captions className="w-4 h-4 text-primary-color" />
 					</div>
 
 					<span className="font-semibold text-foreground text-xs uppercase tracking-widest">
@@ -83,33 +83,47 @@ export const createColumns = (
 			const category: { title: string; color: string } =
 				row.getValue('category');
 			const hasCategory = category?.title && category?.color;
+			const IconComponent = getCategoryIcon(category?.title);
+
+			if (!hasCategory) {
+				return (
+					<div className="flex justify-center">
+						<Badge
+							variant="outline"
+							className="
+                        border-dashed items-center capitalize min-w-26 gap-1.5 rounded-xl bg-secondary-color/20 text-secondary-color border-secondary-color
+                    shadow-sm font-bold text-xs border
+                    "
+						>
+							<div className="w-6 h-6 rounded-full flex items-center justify-center bg-secondary-color">
+								<Tag className="w-3.5 h-3.5 text-white" />
+							</div>
+							{t('expenses.uncategorized')}
+						</Badge>
+					</div>
+				);
+			}
 
 			return (
 				<div className="flex justify-center">
 					<Badge
-						className={`
-          !border align-center items-center capitalize min-w-26 gap-1.5
-          ${
-						!hasCategory
-							? 'border-dashed border-secondary-color/50 bg-secondary-color/30 dark:bg-secondary-color/20'
-							: ''
-					}
-        `}
+						className="
+                    items-center capitalize min-w-26 gap-1.5 rounded-xl
+                    shadow-sm font-bold text-xs border
+                "
 						style={{
-							background: hasCategory ? category.color : undefined,
+							backgroundColor: `${category.color}15`,
+							color: category.color,
+							borderColor: `${category.color}`,
 						}}
 					>
-						{!hasCategory && (
-							<Tag className="w-3 h-3 text-amber-600 dark:text-amber-400" />
-						)}
-						<span
-							className={`
-            font-bold text-xs
-            ${hasCategory ? 'text-white' : 'text-secondary-color'}
-          `}
+						<div
+							className="w-6 h-6 rounded-full flex items-center justify-center"
+							style={{ backgroundColor: category.color }}
 						>
-							{hasCategory ? t(category.title) : t('expenses.uncategorized')}
-						</span>
+							<IconComponent className="w-3.5 h-3.5 text-white" />
+						</div>
+						<span>{t(category.title)}</span>
 					</Badge>
 				</div>
 			);
