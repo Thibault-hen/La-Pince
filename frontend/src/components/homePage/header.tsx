@@ -73,15 +73,15 @@ export default function Header() {
 							{!user ? (
 								<>
 									<Button variant="blue" asChild>
-										<Link to="/connexion">{t('home.nav.login')}</Link>
+										<Link to="/login">{t('home.nav.login')}</Link>
 									</Button>
 									<Button asChild variant="outline">
-										<Link to="/inscription">{t('home.nav.register')}</Link>
+										<Link to="/register">{t('home.nav.register')}</Link>
 									</Button>
 								</>
 							) : (
 								<Button asChild variant="blue">
-									<Link to="/tableau-de-bord">{t('home.nav.dashboard')}</Link>
+									<Link to="/dashboard">{t('home.nav.dashboard')}</Link>
 								</Button>
 							)}
 						</div>
@@ -100,15 +100,15 @@ export default function Header() {
 							{!user ? (
 								<>
 									<Button variant="blue" asChild>
-										<Link to="/connexion">{t('home.nav.login')}</Link>
+										<Link to="/login">{t('home.nav.login')}</Link>
 									</Button>
 									<Button asChild variant="outline">
-										<Link to="/inscription">{t('home.nav.register')}</Link>
+										<Link to="/register">{t('home.nav.register')}</Link>
 									</Button>
 								</>
 							) : (
 								<Button asChild variant="blue">
-									<Link to="/tableau-de-bord">{t('home.nav.dashboard')}</Link>
+									<Link to="/dashboard">{t('home.nav.dashboard')}</Link>
 								</Button>
 							)}
 						</div>

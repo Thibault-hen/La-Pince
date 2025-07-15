@@ -532,14 +532,16 @@ export const en = {
 		},
 		noNotification: 'No new notifications',
 		newNotification: 'You have a new notification',
+		yourBudget: 'Your budget',
 		budgetWarning: {
+			description: 'is approaching its limit',
 			title: 'Your budget is almost exceeded',
-			content:
-				'Your budget <0>{{ budgetName }}</0> is approaching its limit.<1/>You have <2>{{budgetAmountRemaining}}</2> remaining.',
+			remaining1: 'You have',
+			remaining2: 'left',
 		},
 		budgetExceeded: {
 			title: 'Your budget has been exceeded',
-			content: 'Your budget <0>{{ budgetName }}</0> has been exceeded.',
+			description: 'Has been exceeded',
 		},
 		time: {
 			seconds_singular: '{{count}} second ago',

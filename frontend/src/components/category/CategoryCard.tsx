@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useCurrency } from '@/hooks/use-currency';
 import type { Budget } from '@/types/budget';
 import type { Category } from '@/types/category';
+import { getCategoryIcon } from '@/utils/categoryIcon';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import {
@@ -35,7 +36,7 @@ export const CategoryCard = ({
 }: ICategoryProps) => {
 	const { t } = useTranslation();
 	const { formatAmount } = useCurrency();
-
+	const IconComponent = getCategoryIcon(category?.title ?? '');
 	return (
 		<motion.div
 			initial={{ opacity: 0, x: -100, scale: 0.95 }}
@@ -63,13 +64,21 @@ export const CategoryCard = ({
 				/>
 				<CardHeader className="p-0">
 					<div className="flex items-center justify-between">
-						<CardTitle
-							className="border-l-4 px-2 flex gap-2 items-center"
-							style={{
-								borderLeftColor: category?.color
-									?.value as React.CSSProperties['borderLeftColor'],
-							}}
-						>
+						<CardTitle className="px-2 flex gap-2 items-center">
+							<div
+								className="w-7 h-7 rounded-full flex items-center justify-center border"
+								style={{
+									backgroundColor: `${category?.color?.value}10`,
+									borderColor: category?.color?.value,
+								}}
+							>
+								<IconComponent
+									className="w-4 h-4"
+									style={{
+										color: category?.color?.value,
+									}}
+								/>
+							</div>
 							{t(category?.title ?? 'category.defaultTitle')}
 						</CardTitle>
 						<CardDescription className="flex gap-1">
