@@ -1,5 +1,3 @@
-import { description } from '@/components/budget/BudgetChart';
-
 export const fr = {
 	home: {
 		nav: {
@@ -433,12 +431,18 @@ export const fr = {
 			newPassword: 'Nouveau mot de passe',
 			confirmPassword: 'Confirmer le mot de passe',
 			resetButton: 'Réinitialiser le mot de passe',
+			successMessage:
+				'Si cet email existe, un lien de réinitialisation a été envoyé.',
+			passwordResetSuccess:
+				'Votre mot de passe a été réinitialisé avec succès.',
 			error: {
 				default: 'Une erreur est survenue',
 				invalid: 'Adresse email invalide',
 				errorChar: 'Le mot de passe doit contenir au moins 8 caractères',
 				errorMatch: 'Les mots de passe ne correspondent pas',
+				network: 'Erreur réseau',
 			},
+			errorMatch: 'Les mots de passe ne correspondent pas',
 		},
 		sendResetPassword: {
 			title: 'Envoyer un email de réinitialisation',

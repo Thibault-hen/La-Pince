@@ -423,12 +423,16 @@ export const en = {
 			newPassword: 'New Password',
 			confirmPassword: 'Confirm Password',
 			resetButton: 'Reset Password',
+			successMessage: 'If this email exists, a reset link has been sent',
+			passwordResetSuccess: 'Your password has been reset successfully.',
 			error: {
 				default: 'An error occurred',
 				invalid: 'Invalid email address',
 				errorChar: 'Password must be at least 8 characters long',
 				errorMatch: 'Passwords do not match',
+				network: 'Network error',
 			},
+			errorMatch: 'Passwords do not match',
 		},
 		sendResetPassword: {
 			title: 'Send Reset Email',
