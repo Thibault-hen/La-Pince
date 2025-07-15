@@ -21,27 +21,27 @@ import { CurrencySelector } from './currency/CurrencySelector';
 const getItems = (t: TFunction) => [
 	{
 		title: t('sidebar.dashboard'),
-		url: '/tableau-de-bord',
+		url: '/dashboard',
 		icon: Home,
 	},
 	{
 		title: t('sidebar.budgets'),
-		url: '/tableau-de-bord/budgets',
+		url: '/dashboard/budgets',
 		icon: PiggyBank,
 	},
 	{
 		title: t('sidebar.expenses'),
-		url: '/tableau-de-bord/depenses',
+		url: '/dashboard/expenses',
 		icon: HandCoins,
 	},
 	{
 		title: t('sidebar.categories'),
-		url: '/tableau-de-bord/categories',
+		url: '/dashboard/categories',
 		icon: Tags,
 	},
 	{
 		title: t('sidebar.settings'),
-		url: '/tableau-de-bord/parametres',
+		url: '/dashboard/settings',
 		icon: Settings,
 	},
 ];
