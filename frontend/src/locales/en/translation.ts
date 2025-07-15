@@ -442,6 +442,10 @@ export const en = {
 					'Do you really want to delete your account? This action is irreversible.',
 				cancel: 'Cancel',
 				confirm: 'Delete',
+				confirmPassword: 'Confirm password',
+				wrongPassword: 'The current password is incorrect',
+				tooManyAttempts: 'Too many attempts, please try again later',
+				error: 'An error occurred while deleting your account',
 			},
 			header: {
 				title: 'Delete Account',

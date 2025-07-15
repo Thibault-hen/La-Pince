@@ -18,6 +18,7 @@ import {
 	response404,
 	response409,
 } from '../utils/openapi';
+import { deleteAccountRateLimit } from '../utils/rateLimits';
 import {
 	checkPasswordSchema,
 	updateUserCurrencySchema,
@@ -75,9 +76,7 @@ accountRouter
 				});
 
 				if (emailExist && emailExist.id !== userId) {
-					throw new HTTPException(409, {
-						res: c.json({ message: 'Email already in use.' }, 409),
-					});
+					throw new HTTPException(409, { message: 'Email already in use.' });
 				}
 			}
 			const updatedUser = await prisma.user.update({
@@ -115,10 +114,7 @@ accountRouter
 
 			if (!data.currentPassword || !data.newPassword) {
 				throw new HTTPException(400, {
-					res: c.json(
-						{ message: 'Current and new password are required.' },
-						400,
-					),
+					message: 'Current and new password are required.',
 				});
 			}
 
@@ -127,9 +123,7 @@ accountRouter
 			});
 
 			if (!user) {
-				throw new HTTPException(404, {
-					res: c.json({ message: 'User not found' }, 404),
-				});
+				throw new HTTPException(404, { message: 'User not found' });
 			}
 
 			const isPasswordValid = await argon2.verify(
@@ -138,7 +132,7 @@ accountRouter
 			);
 			if (!isPasswordValid) {
 				throw new HTTPException(400, {
-					res: c.json({ message: 'Current password is incorrect' }, 400),
+					message: 'Current password is incorrect',
 				});
 			}
 
@@ -176,9 +170,7 @@ accountRouter
 			});
 
 			if (!user) {
-				throw new HTTPException(404, {
-					res: c.json({ message: 'User not found.' }, 404),
-				});
+				throw new HTTPException(404, { message: 'User not found.' });
 			}
 
 			const updatedCurrency = await prisma.user.update({
@@ -193,6 +185,7 @@ accountRouter
 	)
 	.delete(
 		'/',
+		deleteAccountRateLimit,
 		zValidator('json', checkPasswordSchema),
 		describeRoute({
 			description: 'Delete current user account',
@@ -210,9 +203,7 @@ accountRouter
 			});
 
 			if (!user || !(await argon2.verify(user.password, data.password))) {
-				throw new HTTPException(401, {
-					res: c.json({ message: 'Wrong password' }, 401),
-				});
+				throw new HTTPException(400, { message: 'Wrong password' });
 			}
 
 			await prisma.user.delete({
