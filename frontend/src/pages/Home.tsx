@@ -6,17 +6,17 @@ import ProblemSection from '@/components/homepage/ProblemSection';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 
 const Home = () => {
-	return (
-		<DefaultWrapper>
-			<div className="w-full place-items-center ">
-				<Header />
-				<HeroSection />
-				<ProblemSection />
-				<Contact />
-				<Footer />
-			</div>
-		</DefaultWrapper>
-	);
+  return (
+    <DefaultWrapper>
+      <div className="w-full place-items-center ">
+        <Header />
+        <HeroSection />
+        <ProblemSection />
+        <Contact />
+        <Footer />
+      </div>
+    </DefaultWrapper>
+  );
 };
 
 export default Home;
