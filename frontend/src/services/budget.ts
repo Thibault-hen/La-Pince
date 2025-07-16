@@ -3,17 +3,17 @@ import type {
 	BudgetResponse,
 	CreateBudget,
 	UpdateBudget,
-} from "@/types/budget";
-import { api } from "@/utils/api";
+} from '@/types/budget';
+import { api } from '@/utils/api';
 
 export const budgetService = {
 	async getAllBudgets(): Promise<BudgetResponse> {
-		const response = await api.get<BudgetResponse>("/budget");
+		const response = await api.get<BudgetResponse>('/budget');
 		return response.data;
 	},
 
 	async createBudget(data: CreateBudget): Promise<Budget> {
-		const response = await api.post<Budget>("/budget", data);
+		const response = await api.post<Budget>('/budget', data);
 		return response.data;
 	},
 
