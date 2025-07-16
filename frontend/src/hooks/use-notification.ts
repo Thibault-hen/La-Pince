@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { notificationService } from '@/services/notification';
 import type { Color } from '@/types/color';
+import { useCurrency } from './use-currency';
 
 export type TransformedNotification = {
 	id: string;
@@ -13,6 +14,7 @@ export type TransformedNotification = {
 };
 
 export function useNotifications() {
+	const { convertFromEUR } = useCurrency();
 	const { data = [], ...others } = useQuery({
 		queryKey: ['notifications'],
 		queryFn: async () => {
@@ -25,7 +27,9 @@ export function useNotifications() {
 					notificationType: notification.notificationType,
 					createdAt: notification.createdAt,
 					budgetName: notification.budgetName,
-					budgetAmount: notification.maximumAmount - notification.totalAmount,
+					budgetAmount: convertFromEUR(
+						notification.maximumAmount - notification.totalAmount,
+					),
 					isRead: notification.isRead,
 					color: notification.color,
 				};

@@ -1,8 +1,8 @@
-import type { Color } from "@/types/color";
-import { api } from "@/utils/api";
+import type { Color } from '@/types/color';
+import { api } from '@/utils/api';
 
 export type GetNotificationResponse = {
-	notificationType: "budgetWarning" | "budgetExceeded";
+	notificationType: 'budgetWarning' | 'budgetExceeded';
 	id: string;
 	createdAt: string;
 	budgetName: string;
@@ -15,7 +15,7 @@ export type GetNotificationResponse = {
 
 export const notificationService = {
 	async getAll(): Promise<GetNotificationResponse[]> {
-		const { data } = await api.get<GetNotificationResponse[]>("/notification");
+		const { data } = await api.get<GetNotificationResponse[]>('/notification');
 		return data;
 	},
 	async delete(id: string): Promise<void> {

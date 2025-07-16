@@ -3,17 +3,17 @@ import type {
 	CategoryWithBudget,
 	CreateCategory,
 	UpdateCategory,
-} from "@/types/category";
-import { api } from "@/utils/api";
+} from '@/types/category';
+import { api } from '@/utils/api';
 
 export const categoryService = {
 	async getAll(): Promise<CategoryWithBudget[]> {
-		const response = await api.get<CategoryWithBudget[]>("/category");
+		const response = await api.get<CategoryWithBudget[]>('/category');
 		return response.data;
 	},
 
 	async createCategory(data: CreateCategory): Promise<Category> {
-		const response = await api.post<Category>("/category", data);
+		const response = await api.post<Category>('/category', data);
 		return response.data;
 	},
 
