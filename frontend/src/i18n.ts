@@ -5,22 +5,22 @@ import { en } from './locales/en/translation';
 import { fr } from './locales/fr/translation';
 
 i18n
-	.use(LanguageDetector)
-	.use(initReactI18next)
-	.init({
-		debug: false,
-		fallbackLng: 'fr',
-		interpolation: {
-			escapeValue: false,
-		},
-		resources: {
-			en: {
-				translation: en,
-			},
-			fr: {
-				translation: fr,
-			},
-		},
-	});
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    debug: false,
+    fallbackLng: 'fr',
+    interpolation: {
+      escapeValue: false,
+    },
+    resources: {
+      en: {
+        translation: en,
+      },
+      fr: {
+        translation: fr,
+      },
+    },
+  });
 
 export default i18n;

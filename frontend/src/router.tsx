@@ -18,113 +18,113 @@ const ResetPasswordPage = lazy(() => import('./pages/ResetPassword'));
 const NotFoundPage = lazy(() => import('./pages/NotFound'));
 
 const SuspenseWrapper = ({ children }: { children: React.ReactNode }) => (
-	<Suspense fallback={<MainLoader />}>{children}</Suspense>
+  <Suspense fallback={<MainLoader />}>{children}</Suspense>
 );
 
 export const router = createBrowserRouter([
-	{
-		path: '/',
-		element: <RootLayout />,
-		children: [
-			{
-				index: true,
-				element: (
-					<SuspenseWrapper>
-						<HomePage />
-					</SuspenseWrapper>
-				),
-			},
-			{
-				path: '/reset-password',
-				element: (
-					<SuspenseWrapper>
-						<ResetPasswordPage />
-					</SuspenseWrapper>
-				),
-			},
-			{
-				path: '/login',
-				element: (
-					<SuspenseWrapper>
-						<LoginPage />
-					</SuspenseWrapper>
-				),
-			},
-			{
-				path: '/register',
-				element: (
-					<SuspenseWrapper>
-						<RegisterPage />
-					</SuspenseWrapper>
-				),
-			},
-			{
-				path: '/legals',
-				element: (
-					<SuspenseWrapper>
-						<TermsPage />
-					</SuspenseWrapper>
-				),
-			},
-			{
-				path: '/dashboard',
-				element: <ProtectedRoutes />,
-				children: [
-					{
-						element: <AppLayout />,
-						children: [
-							{
-								index: true,
-								element: (
-									<SuspenseWrapper>
-										<DashboardPage />
-									</SuspenseWrapper>
-								),
-							},
-							{
-								path: 'budgets',
-								element: (
-									<SuspenseWrapper>
-										<BudgetPage />
-									</SuspenseWrapper>
-								),
-							},
-							{
-								path: 'expenses',
-								element: (
-									<SuspenseWrapper>
-										<ExpensePage />
-									</SuspenseWrapper>
-								),
-							},
-							{
-								path: 'categories',
-								element: (
-									<SuspenseWrapper>
-										<CategoryPage />
-									</SuspenseWrapper>
-								),
-							},
-							{
-								path: 'settings',
-								element: (
-									<SuspenseWrapper>
-										<SettingsPage />
-									</SuspenseWrapper>
-								),
-							},
-						],
-					},
-				],
-			},
-		],
-	},
-	{
-		path: '*',
-		element: (
-			<SuspenseWrapper>
-				<NotFoundPage />
-			</SuspenseWrapper>
-		),
-	},
+  {
+    path: '/',
+    element: <RootLayout />,
+    children: [
+      {
+        index: true,
+        element: (
+          <SuspenseWrapper>
+            <HomePage />
+          </SuspenseWrapper>
+        ),
+      },
+      {
+        path: '/reset-password',
+        element: (
+          <SuspenseWrapper>
+            <ResetPasswordPage />
+          </SuspenseWrapper>
+        ),
+      },
+      {
+        path: '/login',
+        element: (
+          <SuspenseWrapper>
+            <LoginPage />
+          </SuspenseWrapper>
+        ),
+      },
+      {
+        path: '/register',
+        element: (
+          <SuspenseWrapper>
+            <RegisterPage />
+          </SuspenseWrapper>
+        ),
+      },
+      {
+        path: '/legals',
+        element: (
+          <SuspenseWrapper>
+            <TermsPage />
+          </SuspenseWrapper>
+        ),
+      },
+      {
+        path: '/dashboard',
+        element: <ProtectedRoutes />,
+        children: [
+          {
+            element: <AppLayout />,
+            children: [
+              {
+                index: true,
+                element: (
+                  <SuspenseWrapper>
+                    <DashboardPage />
+                  </SuspenseWrapper>
+                ),
+              },
+              {
+                path: 'budgets',
+                element: (
+                  <SuspenseWrapper>
+                    <BudgetPage />
+                  </SuspenseWrapper>
+                ),
+              },
+              {
+                path: 'expenses',
+                element: (
+                  <SuspenseWrapper>
+                    <ExpensePage />
+                  </SuspenseWrapper>
+                ),
+              },
+              {
+                path: 'categories',
+                element: (
+                  <SuspenseWrapper>
+                    <CategoryPage />
+                  </SuspenseWrapper>
+                ),
+              },
+              {
+                path: 'settings',
+                element: (
+                  <SuspenseWrapper>
+                    <SettingsPage />
+                  </SuspenseWrapper>
+                ),
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: '*',
+    element: (
+      <SuspenseWrapper>
+        <NotFoundPage />
+      </SuspenseWrapper>
+    ),
+  },
 ]);

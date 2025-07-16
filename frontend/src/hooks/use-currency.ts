@@ -5,61 +5,61 @@ import { currencyService } from '@/services/currency';
 import type { CurrencyRates } from '@/types/currency';
 
 export const useCurrency = () => {
-	const { currency } = useCurrencyContext();
-	const { i18n } = useTranslation();
+  const { currency } = useCurrencyContext();
+  const { i18n } = useTranslation();
 
-	const getLocale = (): string => {
-		switch (i18n.language) {
-			case 'fr':
-				return 'fr-FR';
-			case 'en':
-				return 'en-US';
-			default:
-				return navigator.language || 'fr-FR';
-		}
-	};
+  const getLocale = (): string => {
+    switch (i18n.language) {
+      case 'fr':
+        return 'fr-FR';
+      case 'en':
+        return 'en-US';
+      default:
+        return navigator.language || 'fr-FR';
+    }
+  };
 
-	const {
-		data: rates = {},
-		error,
-		...others
-	} = useQuery<CurrencyRates>({
-		queryKey: ['currencyRates'],
-		queryFn: async () => {
-			const response = await currencyService.getCurrencyRates();
-			return response.rates;
-		},
-		refetchOnMount: false,
-		refetchOnWindowFocus: false,
-		refetchOnReconnect: false,
-		retry: false,
-		staleTime: Infinity,
+  const {
+    data: rates = {},
+    error,
+    ...others
+  } = useQuery<CurrencyRates>({
+    queryKey: ['currencyRates'],
+    queryFn: async () => {
+      const response = await currencyService.getCurrencyRates();
+      return response.rates;
+    },
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    retry: false,
+    staleTime: Infinity,
 
-		// fallback data to avoid errors in the UI
-		placeholderData: (previousData) => previousData,
-	});
+    // fallback data to avoid errors in the UI
+    placeholderData: (previousData) => previousData,
+  });
 
-	const getRate = () => rates[currency] || 1;
+  const getRate = () => rates[currency] || 1;
 
-	const convertFromEUR = (amount: number): number => amount * getRate();
-	const convertToEUR = (amount: number): number => amount / getRate();
+  const convertFromEUR = (amount: number): number => amount * getRate();
+  const convertToEUR = (amount: number): number => amount / getRate();
 
-	const formatAmount = (amount: number): string => {
-		const formattedAmount = new Intl.NumberFormat(getLocale(), {
-			style: 'currency',
-			currency: rates[currency] ? currency : 'EUR',
-			minimumFractionDigits: 2,
-			maximumFractionDigits: 2,
-		});
+  const formatAmount = (amount: number): string => {
+    const formattedAmount = new Intl.NumberFormat(getLocale(), {
+      style: 'currency',
+      currency: rates[currency] ? currency : 'EUR',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
 
-		return formattedAmount.format(amount);
-	};
+    return formattedAmount.format(amount);
+  };
 
-	return {
-		convertFromEUR,
-		convertToEUR,
-		formatAmount,
-		error,
-		...others,
-	};
+  return {
+    convertFromEUR,
+    convertToEUR,
+    formatAmount,
+    error,
+    ...others,
+  };
 };
