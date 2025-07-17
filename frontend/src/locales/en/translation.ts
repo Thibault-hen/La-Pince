@@ -175,6 +175,9 @@ export const en = {
       addButton: 'Add an expense',
       filterPlaceholder: 'Filter by title',
       noResults: 'No results.',
+      filter: {
+        category: 'Filter by category',
+      },
       columns: {
         title: 'Title',
         category: 'Category',

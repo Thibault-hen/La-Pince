@@ -1,6 +1,10 @@
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
+import { HTTPException } from 'hono/http-exception';
 import { describeRoute } from 'hono-openapi';
+import { a } from 'vitest/dist/chunks/suite.d.FvehnV49.js';
+import z from 'zod';
+import prisma from '../db/client';
 import {
   response200,
   response201,
@@ -11,11 +15,7 @@ import {
   categoryCreateOrUpdateSchema,
   categorySelectSchema,
 } from '../validators/category';
-import prisma from '../db/client';
-import { HTTPException } from 'hono/http-exception';
-import z from 'zod';
 import { paramsWithId, zodValidatorMessage } from '../validators/utils';
-import { a } from 'vitest/dist/chunks/suite.d.FvehnV49.js';
 
 const categoryRouter = new Hono();
 
@@ -51,7 +51,6 @@ categoryRouter
               userId: userId,
             },
             omit: {
-              categoryId: true,
               userId: true,
             },
           },
@@ -59,7 +58,6 @@ categoryRouter
       });
 
       const formatedBudgetAmount = categories.map((category) => {
-        const budget = category.budgets[0];
         return {
           ...category,
           budgets: category.budgets.map((budget) => ({

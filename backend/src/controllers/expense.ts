@@ -1,7 +1,9 @@
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
-import { paramsWithId, zodValidatorMessage } from '../validators/utils';
+import { HTTPException } from 'hono/http-exception';
 import { describeRoute } from 'hono-openapi';
+import prisma from '../db/client';
+import { formatDecimal } from '../utils/formatDecimal';
 import {
   response200,
   response201,
@@ -9,14 +11,12 @@ import {
   response404,
 } from '../utils/openapi';
 import {
-  ExpenseCreateOrUpdate,
+  type ExpenseCreateOrUpdate,
   expenseCreateOrUpdateSchema,
   expenseSelectSchema,
 } from '../validators/expense';
-import prisma from '../db/client';
-import { HTTPException } from 'hono/http-exception';
+import { paramsWithId, zodValidatorMessage } from '../validators/utils';
 import { tryCreateBudgetNotification } from './notification';
-import { formatDecimal } from '../utils/formatDecimal';
 
 const expenseRouter = new Hono();
 
@@ -45,7 +45,6 @@ expenseRouter
               category: {
                 omit: {
                   userId: true,
-                  id: true,
                   colorId: true,
                 },
                 include: {

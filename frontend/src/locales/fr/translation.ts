@@ -174,6 +174,9 @@ export const fr = {
       addButton: 'Ajouter une dépense',
       filterPlaceholder: 'Filter par titre',
       noResults: 'Aucun résultat.',
+      filter: {
+        category: 'Filtrer par catégorie',
+      },
       columns: {
         title: 'Titre',
         category: 'Categorie',

@@ -130,6 +130,15 @@ export const createColumns = (
         </div>
       );
     },
+    filterFn: (row, id, value) => {
+      const category = row.getValue(id) as {
+        id: string;
+        title: string;
+        color: string;
+      };
+      return category.id === value;
+    },
+    enableSorting: true,
   },
   {
     accessorKey: 'date',

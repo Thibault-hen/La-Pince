@@ -6,12 +6,13 @@ import { ExpenseSkeleton } from '@/components/expense/ExpenseSkeleton';
 import ExpenseAddModal from '@/components/expense/modals/ExpenseAddModal';
 import { ExpenseDeleteModal } from '@/components/expense/modals/ExpenseDeleteModal';
 import { ExpenseEditModal } from '@/components/expense/modals/ExpenseEditModal';
+import { createColumns } from '@/components/expense/table/ExpenseColumns';
+import { DataTable } from '@/components/expense/table/ExpenseTable';
 import { Button } from '@/components/ui/button';
+import { useCategories } from '@/hooks/use-category';
 import { useCurrency } from '@/hooks/use-currency';
 import { type Expense, useExpenses } from '@/hooks/use-expense';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
-import { createColumns } from './table/columns';
-import { DataTable } from './table/data-table';
 
 const ExpensePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,6 +22,7 @@ const ExpensePage = () => {
     undefined,
   );
   const { expenses, isLoading } = useExpenses();
+  const { data: categories } = useCategories();
   const { t, i18n } = useTranslation();
 
   const handleEdit = (expense: Expense) => {
@@ -90,7 +92,12 @@ const ExpensePage = () => {
 
         <ChartBarInteractive />
         <div className="flex flex-col gap-2 mt-6">
-          <DataTable columns={columns} data={expenses} isLoading={isLoading}>
+          <DataTable
+            columns={columns}
+            data={expenses}
+            categories={categories ?? []}
+            isLoading={isLoading}
+          >
             <Button variant="blue" onClick={() => setIsModalOpen(true)}>
               <span className="max-w-sm block text-sm m-2">
                 {t('expenses.table.addButton')}

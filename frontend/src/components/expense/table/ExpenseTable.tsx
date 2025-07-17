@@ -22,10 +22,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import type { CategoryWithBudget } from '@/types/category';
+import { CategoryFilter } from './ExpenseCategoryFilter';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  categories: CategoryWithBudget[];
   children?: React.ReactNode;
   isLoading?: boolean;
 }
@@ -33,6 +36,7 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
+  categories,
   children,
   isLoading,
 }: DataTableProps<TData, TValue>) {
@@ -55,19 +59,36 @@ export function DataTable<TData, TValue>({
 
   const skeletonId = useId();
 
+  const handleCategoryFilter = (categoryId: string) => {
+    if (categoryId === 'all') {
+      table.getColumn('category')?.setFilterValue(undefined);
+    } else {
+      table.getColumn('category')?.setFilterValue(categoryId);
+    }
+  };
   return (
     <>
-      <div className="relative flex flex-col md:flex-row justify-between items-center py-4 ">
-        <Search className="absolute left-3 top-6.5 h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder={t('expenses.table.filterPlaceholder')}
-          value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}
-          onChange={(event) =>
-            table.getColumn('title')?.setFilterValue(event.target.value)
-          }
-          className="w-full md:max-w-sm pl-10 mb-6 md:mb-0"
-        />
-        {children}
+      <div>
+        {data && data.length > 0 && (
+          <CategoryFilter
+            categories={categories}
+            onFilter={handleCategoryFilter}
+          />
+        )}
+      </div>
+      <div className="relative flex flex-col py-4">
+        <div className="flex justify-between items-center ">
+          <Search className="absolute left-3 top-6.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder={t('expenses.table.filterPlaceholder')}
+            value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}
+            onChange={(event) =>
+              table.getColumn('title')?.setFilterValue(event.target.value)
+            }
+            className="w-full md:max-w-sm pl-10 mb-6 md:mb-0"
+          />
+          {children}
+        </div>
       </div>
       <div className="rounded-md border dark:bg-primary">
         <Table>
