@@ -1,3 +1,4 @@
+import frFlag from '@/assets/flags/fr.svg';
 import { useLanguage } from '@/hooks/use-language';
 import { Button } from '../ui/button';
 import {
@@ -24,7 +25,7 @@ export const LanguageSelector = () => {
             {selectedLanguage ? selectedLanguage.name : 'Français'}
           </span>
           <img
-            src={selectedLanguage?.flag || '/flags/fr.svg'}
+            src={selectedLanguage?.flag || frFlag}
             alt="Language Flag"
             width={20}
             height={20}

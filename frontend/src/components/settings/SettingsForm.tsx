@@ -24,7 +24,7 @@ export const SettingsForm = () => {
           <Settings className="h-5 w-5 text-primary-color" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-foreground">
+          <h1 className="text-lg md:text-2xl font-bold text-foreground">
             {t('account.header.title')}
           </h1>
           <p className="text-sm text-muted-foreground">

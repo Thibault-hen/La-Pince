@@ -52,7 +52,7 @@ export const AppLayout = () => {
               </div>
             </div>
           </header>
-          <main>
+          <main className="">
             <Outlet />
           </main>
         </SidebarInset>

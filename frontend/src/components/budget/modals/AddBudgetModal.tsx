@@ -175,9 +175,11 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
               )}
             />
           </div>
-          <DialogFooter className="flex justify-between items-center mt-4">
+          <DialogFooter className="mt-4">
             <DialogClose asChild>
-              <Button variant="outline">{t('budget.add.form.cancel')}</Button>
+              <Button variant="outline" className="w-full sm:w-fit">
+                {t('budget.add.form.cancel')}
+              </Button>
             </DialogClose>
             <form.Subscribe
               selector={(state) => [state.isSubmitting]}

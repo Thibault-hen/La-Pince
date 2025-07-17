@@ -14,6 +14,7 @@ export type Expense = {
   title: string;
   budgetId?: string;
   category: {
+    id: string;
     title: string;
     color: string;
   };
@@ -34,6 +35,7 @@ export function useExpenses() {
           id: expense.id,
           title: expense.description,
           category: {
+            id: expense.category?.id,
             title: expense.category?.title,
             color: expense.category?.color.value,
           },

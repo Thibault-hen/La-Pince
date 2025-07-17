@@ -7,6 +7,7 @@ export type GetExpensesResponse = {
   date: string;
   budgetId?: string;
   category: {
+    id: string;
     title: string;
     color: {
       value: string;

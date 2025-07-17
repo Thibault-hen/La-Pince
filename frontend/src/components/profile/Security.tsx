@@ -50,12 +50,15 @@ export const Security = () => {
         <CardHeader className="pb-4">
           <div className="flex items-center gap-2">
             <Lock className="h-5 w-5 text-primary-color" />
-            <CardTitle className="text-xl">
+            <CardTitle className="text-lg md:text-xl">
               {' '}
               {t('account.header.title')}
             </CardTitle>
           </div>
-          <CardDescription> {t('account.header.subtitle')}</CardDescription>
+          <CardDescription className="text-xs md:text-sm">
+            {' '}
+            {t('account.header.subtitle')}
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
