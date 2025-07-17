@@ -171,10 +171,3 @@ body {
   scrollbar-width: thin;
   scrollbar-color: #d28f38 transparent;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-  }
-}

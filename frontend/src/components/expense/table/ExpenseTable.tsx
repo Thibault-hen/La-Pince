@@ -76,8 +76,8 @@ export function DataTable<TData, TValue>({
           />
         )}
       </div>
-      <div className="relative flex flex-col py-4">
-        <div className="flex justify-between items-center ">
+      <div className="relative flex py-4">
+        <div className="flex flex-col md:flex-row items-center md:justify-between md:items-start w-full ">
           <Search className="absolute left-3 top-6.5 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder={t('expenses.table.filterPlaceholder')}
@@ -85,7 +85,7 @@ export function DataTable<TData, TValue>({
             onChange={(event) =>
               table.getColumn('title')?.setFilterValue(event.target.value)
             }
-            className="w-full md:max-w-sm pl-10 mb-6 md:mb-0"
+            className="w-full md:max-w-sm pl-10 mb-6 md:mb-0 text-sm md:text-base"
           />
           {children}
         </div>

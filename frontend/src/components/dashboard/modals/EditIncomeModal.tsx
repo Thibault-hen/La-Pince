@@ -89,14 +89,18 @@ export const EditIncomeModal = ({ income, open, setOpen }: EditIncomeProps) => {
           </div>
           <DialogFooter className="flex justify-between items-center mt-4">
             <DialogClose asChild>
-              <Button variant="outline">
+              <Button variant="outline" className="w-full sm:w-fit">
                 {t('dashboard.edit.form.cancel')}
               </Button>
             </DialogClose>
             <form.Subscribe
               selector={(state) => [state.isSubmitting]}
               children={([isSubmiting]) => (
-                <Button type="submit" variant="blue">
+                <Button
+                  type="submit"
+                  variant="blue"
+                  className="w-full sm:w-fit"
+                >
                   {isSubmiting ? <Loader /> : t('dashboard.edit.form.update')}
                 </Button>
               )}

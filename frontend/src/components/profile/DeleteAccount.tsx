@@ -20,13 +20,11 @@ export const DeleteAccount = ({ onOpenDeleteModal }: DeleteAccountProps) => {
       <CardHeader>
         <div className="flex items-center gap-2">
           <UserRoundX className="h-5 w-5 text-primary-color" />
-          <CardTitle className="text-xl">
-            {' '}
+          <CardTitle className="text-lg md:text-xl">
             {t('account.delete.header.title')}
           </CardTitle>
         </div>
         <CardDescription>
-          {' '}
           <p>{t('account.delete.header.subtitle')}</p>
           <ul className="mt-2 space-y-1 text-sm text-muted-foreground list-inside">
             <li className="list-disc">{t('account.delete.list.item1')}</li>

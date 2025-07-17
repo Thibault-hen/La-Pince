@@ -140,11 +140,11 @@ export const AddCategoryModal = ({
           </div>
           <DialogFooter className="mt-4 flex justify-between items-center">
             <DialogClose asChild>
-              <Button variant="outline">
+              <Button variant="outline" className="w-full sm:w-fit">
                 {t('categories.add.form.cancel')}
               </Button>
             </DialogClose>
-            <Button type="submit" variant="blue">
+            <Button type="submit" variant="blue" className="w-full sm:w-fit">
               {t('categories.add.form.create')}
             </Button>
           </DialogFooter>

@@ -1,4 +1,4 @@
-import { HandCoins } from 'lucide-react';
+import { HandCoins, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChartBarInteractive } from '@/components/expense/BarChart';
@@ -81,7 +81,7 @@ const ExpensePage = () => {
             <HandCoins className="h-5 w-5 text-primary-color" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-foreground">
+            <h1 className="text-lg md:text-2xl font-bold text-foreground">
               {t('expenses.header.title')}
             </h1>
             <p className="text-sm text-muted-foreground">
@@ -91,17 +91,20 @@ const ExpensePage = () => {
         </div>
 
         <ChartBarInteractive />
-        <div className="flex flex-col gap-2 mt-6">
+        <div className="flex flex-col gap-2">
           <DataTable
             columns={columns}
             data={expenses}
             categories={categories ?? []}
             isLoading={isLoading}
           >
-            <Button variant="blue" onClick={() => setIsModalOpen(true)}>
-              <span className="max-w-sm block text-sm m-2">
-                {t('expenses.table.addButton')}
-              </span>
+            <Button
+              className="w-full md:w-fit"
+              variant="blue"
+              onClick={() => setIsModalOpen(true)}
+            >
+              <Plus />
+              {t('expenses.table.addButton')}
             </Button>
           </DataTable>
         </div>

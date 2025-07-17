@@ -214,12 +214,18 @@ export default function ExpenseAddModal({
 
           <DialogFooter className="flex justify-between items-center mt-4">
             <DialogClose asChild>
-              <Button variant="outline">{t('expenses.add.form.cancel')}</Button>
+              <Button variant="outline" className="w-full sm:w-fit">
+                {t('expenses.add.form.cancel')}
+              </Button>
             </DialogClose>
             <form.Subscribe
               selector={(state) => [state.isSubmitting]}
               children={([isSubmiting]) => (
-                <Button type="submit" variant="blue">
+                <Button
+                  type="submit"
+                  variant="blue"
+                  className="w-full sm:w-fit"
+                >
                   {isSubmiting ? <Loader /> : t('expenses.add.form.create')}
                 </Button>
               )}

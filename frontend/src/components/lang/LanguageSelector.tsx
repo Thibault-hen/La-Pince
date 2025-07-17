@@ -1,4 +1,3 @@
-import { fr } from 'date-fns/locale';
 import frFlag from '@/assets/flags/fr.svg';
 import { useLanguage } from '@/hooks/use-language';
 import { Button } from '../ui/button';

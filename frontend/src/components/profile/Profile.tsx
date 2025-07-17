@@ -64,12 +64,14 @@ export const Profile = ({ user }: ProfileProps) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <User className="h-5 w-5 text-primary-color" />
-              <CardTitle className="text-xl">
+              <CardTitle className="text-lg md:text-xl">
                 {t('account.profile.title')}
               </CardTitle>
             </div>
           </div>
-          <CardDescription>{t('account.profile.description')}</CardDescription>
+          <CardDescription className="text-xs md:text-sm">
+            {t('account.profile.description')}
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

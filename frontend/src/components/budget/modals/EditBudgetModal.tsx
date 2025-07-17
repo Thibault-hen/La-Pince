@@ -212,12 +212,18 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
           </div>
           <DialogFooter className="flex justify-between items-center mt-4">
             <DialogClose asChild>
-              <Button variant="outline">{t('budget.edit.form.cancel')}</Button>
+              <Button variant="outline" className="w-full sm:w-fit">
+                {t('budget.edit.form.cancel')}
+              </Button>
             </DialogClose>
             <form.Subscribe
               selector={(state) => [state.isSubmitting]}
               children={([isSubmiting]) => (
-                <Button type="submit" variant="blue">
+                <Button
+                  type="submit"
+                  variant="blue"
+                  className="w-full sm:w-fit"
+                >
                   {isSubmiting ? <Loader /> : t('budget.edit.form.update')}
                 </Button>
               )}
