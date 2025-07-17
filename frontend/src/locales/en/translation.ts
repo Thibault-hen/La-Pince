@@ -74,6 +74,10 @@ export const en = {
       conditions: 'Terms of Use',
     },
   },
+  date: {
+    today: 'Today',
+    yesterday: 'Yesterday',
+  },
   currencySelector: {
     errorTitle: 'Oops',
     error:

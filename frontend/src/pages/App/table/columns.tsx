@@ -1,4 +1,6 @@
 import type { ColumnDef } from '@tanstack/react-table';
+import { format, formatDistanceToNow, isToday, isYesterday } from 'date-fns';
+import { enUS, fr } from 'date-fns/locale';
 import type { TFunction } from 'i18next';
 import {
   Calendar,
@@ -146,11 +148,26 @@ export const createColumns = (
     ),
     cell: ({ row }) => {
       const date: string = row.getValue('date');
-      const formated = new Date(Date.parse(date));
+      const parsedDate = new Date(date);
+      const dateLocale = locale === 'fr-FR' ? fr : enUS;
+
+      const getRelativeDate = () => {
+        if (isToday(parsedDate)) return t('date.today');
+        if (isYesterday(parsedDate)) return t('date.yesterday');
+
+        return formatDistanceToNow(parsedDate, {
+          addSuffix: true,
+          locale: dateLocale,
+        });
+      };
+
       return (
-        <div className="flex justify-center">
-          <span className="font-bold text-xs lg:text-sm">
-            {formated.toLocaleDateString(locale)}
+        <div className="flex flex-col items-center">
+          <span className="font-bold text-xs lg:text-sm text-foreground">
+            {getRelativeDate()}
+          </span>
+          <span className="text-xs text-muted-foreground">
+            {format(parsedDate, 'dd/MM/yyyy', { locale: dateLocale })}
           </span>
         </div>
       );

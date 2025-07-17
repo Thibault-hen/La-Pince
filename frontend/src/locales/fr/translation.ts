@@ -74,6 +74,10 @@ export const fr = {
       conditions: 'Conditions d’utilisation',
     },
   },
+  date: {
+    today: 'Aujourd’hui',
+    yesterday: 'Hier',
+  },
   currencySelector: {
     errorTitle: 'Oups',
     error:
