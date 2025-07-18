@@ -74,6 +74,41 @@ export const fr = {
       conditions: 'Conditions d’utilisation',
     },
   },
+  tos: {
+    title: 'Conditions d’utilisation',
+    introduction:
+      'Bienvenue sur La Pince, une application de gestion financière personnelle. En utilisant notre service, vous acceptez les conditions suivantes.',
+    section1: {
+      title: 'Acceptation des conditions',
+      content:
+        'En accédant à notre application, vous acceptez de respecter ces conditions d’utilisation. Si vous n’acceptez pas ces conditions, veuillez ne pas utiliser notre service.',
+    },
+    section2: {
+      title: 'Utilisation du service',
+      content:
+        'La Pince vous permet de suivre vos dépenses, gérer vos budgets et recevoir des alertes. Vous êtes responsable de l’exactitude des informations que vous fournissez.',
+    },
+    section3: {
+      title: 'Comptes d\'utilisateurs',
+      content:
+        'Pour utiliser certaines fonctionnalités, vous devez créer un compte. Vous êtes responsable de la sécurité de vos identifiants et de toutes les activités effectuées sur votre compte.',
+    },
+    section4: {
+      title: 'Propriété intellectuelle',
+      content:
+        'Tous les contenus de l’application, y compris les textes, graphiques et logos, sont la propriété de La Pince ou de ses partenaires. Vous ne pouvez pas les utiliser sans autorisation.',
+    },
+    section5: {
+      title: 'Limitation de responsabilité',
+      content:
+        'La Pince ne peut être tenue responsable des pertes ou dommages résultant de l’utilisation de l’application. Nous ne garantissons pas que le service sera ininterrompu ou exempt d’erreurs.',
+    },
+    section6: {
+      title: 'Modifications des conditions',
+      content:
+        'Nous nous réservons le droit de modifier ces conditions à tout moment. Les modifications seront publiées sur cette page et entreront en vigueur immédiatement.',
+    },
+  },
   date: {
     today: 'Aujourd’hui',
     yesterday: 'Hier',

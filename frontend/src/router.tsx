@@ -13,8 +13,8 @@ const ExpensePage = lazy(() => import('./pages/App/Expense'));
 const SettingsPage = lazy(() => import('./pages/App/Settings'));
 const LoginPage = lazy(() => import('./pages/Login'));
 const RegisterPage = lazy(() => import('./pages/Register'));
-const TermsPage = lazy(() => import('./pages/Terms'));
 const ResetPasswordPage = lazy(() => import('./pages/ResetPassword'));
+const TosPage = lazy(() => import('./pages/Tos'));
 const NotFoundPage = lazy(() => import('./pages/NotFound'));
 
 const SuspenseWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -59,10 +59,10 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/legals',
+        path: '/tos',
         element: (
           <SuspenseWrapper>
-            <TermsPage />
+            <TosPage />
           </SuspenseWrapper>
         ),
       },
