@@ -1,5 +1,10 @@
 export const en = {
   home: {
+    meta: {
+      title: 'La Pince - Personal Finance Application',
+      description:
+        'La Pince is a modern personal finance application that helps you track your expenses, manage your budgets, and receive alerts before overspending. A clear and efficient app to take control of your money, starting today.',
+    },
     nav: {
       title: 'La Pince',
       contact: 'Contact Us',
@@ -75,13 +80,18 @@ export const en = {
     },
   },
   tos: {
+    meta: {
+      title: 'Terms of Service - La Pince',
+      description:
+        'Read the Terms of Service for La Pince, your personal finance management application. Understand your rights and responsibilities while using our services.',
+    },
     title: 'Terms of Service',
     introduction:
       'Welcome to La Pince! These Terms of Service govern your use of our website and services. By accessing or using La Pince, you agree to comply with these terms.',
     section1: {
       title: 'Acceptance of Terms',
       content:
-        'By using La Pince, you agree to these Terms of Service. If you do not agree with any part of these terms, you must not use our services.', 
+        'By using La Pince, you agree to these Terms of Service. If you do not agree with any part of these terms, you must not use our services.',
     },
     section2: {
       title: 'Use of Services',

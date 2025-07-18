@@ -1,5 +1,10 @@
 export const fr = {
   home: {
+    meta: {
+      title: 'La Pince - Application de gestion financière personnelle',
+      description:
+        'La Pince est une application de gestion financière personnelle qui vous aide à suivre vos dépenses, gérer vos budgets et recevoir des alertes avant les dépassements. Une application claire et efficace pour reprendre le contrôle de votre argent, dès aujourd’hui.',
+    },
     nav: {
       title: 'La Pince',
       contact: 'Nous contacter',
@@ -75,6 +80,11 @@ export const fr = {
     },
   },
   tos: {
+    meta: {
+      title: 'Conditions d’utilisation - La Pince',
+      description:
+        'Lisez les Conditions d’utilisation de La Pince, votre application de gestion financière personnelle. Comprenez vos droits et responsabilités lors de l’utilisation de nos services.',
+    },
     title: 'Conditions d’utilisation',
     introduction:
       'Bienvenue sur La Pince, une application de gestion financière personnelle. En utilisant notre service, vous acceptez les conditions suivantes.',
@@ -89,7 +99,7 @@ export const fr = {
         'La Pince vous permet de suivre vos dépenses, gérer vos budgets et recevoir des alertes. Vous êtes responsable de l’exactitude des informations que vous fournissez.',
     },
     section3: {
-      title: 'Comptes d\'utilisateurs',
+      title: "Comptes d'utilisateurs",
       content:
         'Pour utiliser certaines fonctionnalités, vous devez créer un compte. Vous êtes responsable de la sécurité de vos identifiants et de toutes les activités effectuées sur votre compte.',
     },

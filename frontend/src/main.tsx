@@ -7,6 +7,7 @@ import { RouterProvider } from 'react-router-dom';
 import { ThemeProvider } from './components/theme/theme-provider';
 import { router } from './router';
 import './i18n';
+import { HelmetProvider } from 'react-helmet-async';
 
 const queryClient = new QueryClient();
 
@@ -14,13 +15,15 @@ const rootElement = document.getElementById('root');
 if (rootElement) {
   createRoot(rootElement).render(
     <StrictMode>
-      <ThemeProvider>
-        <AnimatePresence mode="wait">
-          <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
-          </QueryClientProvider>
-        </AnimatePresence>
-      </ThemeProvider>
+      <HelmetProvider>
+        <ThemeProvider>
+          <AnimatePresence mode="wait">
+            <QueryClientProvider client={queryClient}>
+              <RouterProvider router={router} />
+            </QueryClientProvider>
+          </AnimatePresence>
+        </ThemeProvider>
+      </HelmetProvider>
     </StrictMode>,
   );
 } else {
