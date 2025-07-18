@@ -71,7 +71,42 @@ export const en = {
       links2: 'Contact',
       legal: 'Legal',
       confidentiality: 'Privacy',
-      conditions: 'Terms of Use',
+      conditions: 'Terms of Service',
+    },
+  },
+  tos: {
+    title: 'Terms of Service',
+    introduction:
+      'Welcome to La Pince! These Terms of Service govern your use of our website and services. By accessing or using La Pince, you agree to comply with these terms.',
+    section1: {
+      title: 'Acceptance of Terms',
+      content:
+        'By using La Pince, you agree to these Terms of Service. If you do not agree with any part of these terms, you must not use our services.', 
+    },
+    section2: {
+      title: 'Use of Services',
+      content:
+        'You agree to use La Pince only for lawful purposes and in a manner that does not infringe the rights of others or restrict their use and enjoyment of the services.',
+    },
+    section3: {
+      title: 'User Accounts',
+      content:
+        'To access certain features, you may need to create an account. You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account.',
+    },
+    section4: {
+      title: 'Intellectual Property',
+      content:
+        'All content on La Pince, including text, graphics, logos, and software, is the property of La Pince or its licensors. You may not use, reproduce, or distribute any content without our prior written permission.',
+    },
+    section5: {
+      title: 'Limitation of Liability',
+      content:
+        'La Pince is provided "as is" without warranties of any kind. We are not liable for any direct, indirect, incidental, or consequential damages arising from your use of our services.',
+    },
+    section6: {
+      title: 'Changes to Terms',
+      content:
+        'We reserve the right to modify these Terms of Service at any time. Changes will be effective immediately upon posting on our website. Your continued use of La Pince after changes constitutes your acceptance of the new terms.',
     },
   },
   date: {
