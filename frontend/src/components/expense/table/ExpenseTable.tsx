@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/table';
 import type { CategoryWithBudget } from '@/types/category';
 import { CategoryFilter } from './ExpenseCategoryFilter';
+import { DateFilter } from './ExpenseDateFilter';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -42,7 +43,6 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const { t } = useTranslation();
-
   const table = useReactTable({
     data,
     columns,
@@ -66,6 +66,45 @@ export function DataTable<TData, TValue>({
       table.getColumn('category')?.setFilterValue(categoryId);
     }
   };
+
+  const handleDateFilter = (date: string) => {
+    const now = new Date();
+
+    switch (date) {
+      case 'all':
+        table.getColumn('date')?.setFilterValue(undefined);
+        break;
+      case 'today':
+        table.getColumn('date')?.setFilterValue({ type: 'today' });
+        break;
+      case 'yesterday':
+        table.getColumn('date')?.setFilterValue({ type: 'yesterday' });
+        break;
+      case 'week': {
+        const start = new Date(now);
+        start.setDate(start.getDate() - start.getDay());
+
+        const end = new Date(now);
+        end.setDate(end.getDate() + (6 - end.getDay()));
+
+        table.getColumn('date')?.setFilterValue({ type: 'week', start, end });
+        break;
+      }
+      case 'month':
+        table.getColumn('date')?.setFilterValue({
+          type: 'month',
+          month: now.getMonth(),
+          year: now.getFullYear(),
+        });
+        break;
+      case 'year':
+        table.getColumn('date')?.setFilterValue({
+          type: 'year',
+          year: now.getFullYear(),
+        });
+        break;
+    }
+  };
   return (
     <>
       <div>
@@ -80,14 +119,17 @@ export function DataTable<TData, TValue>({
         <div className="flex flex-col md:flex-row items-center md:justify-between md:items-start w-full ">
           <Search className="absolute left-3 top-6.5 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder={t('expenses.table.filterPlaceholder')}
+            placeholder={t('expenses.table.searchPlaceholder')}
             value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}
             onChange={(event) =>
               table.getColumn('title')?.setFilterValue(event.target.value)
             }
             className="w-full md:max-w-sm pl-10 mb-6 md:mb-0 text-sm md:text-base"
           />
-          {children}
+          <div className="flex flex-col w-full md:w-fit sm:flex-row items-center gap-2 md:gap-2">
+            <DateFilter onFilterDate={handleDateFilter} />
+            {children}
+          </div>
         </div>
       </div>
       <div className="rounded-md border dark:bg-primary">

@@ -39,7 +39,7 @@ export const CategoryFilter = ({
           className={`${activeFilter === 'all' ? 'bg-secondary-color text-white' : ''} rounded-xl transition-colors`}
           onClick={() => handleFilter('all')}
         >
-          Toutes
+          {t('expenses.table.filter.categoryAll')}
         </Button>
         {categories.map((cat) => {
           const IconComponent = getCategoryIcon(cat.title);

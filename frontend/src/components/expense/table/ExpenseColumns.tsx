@@ -1,5 +1,11 @@
 import type { ColumnDef } from '@tanstack/react-table';
-import { format, formatDistanceToNow, isToday, isYesterday } from 'date-fns';
+import {
+  format,
+  formatDistanceToNow,
+  isSameDay,
+  isToday,
+  isYesterday,
+} from 'date-fns';
 import { enUS, fr } from 'date-fns/locale';
 import type { TFunction } from 'i18next';
 import {
@@ -111,7 +117,7 @@ export const createColumns = (
           <Badge
             className="
                     items-center capitalize min-w-26 gap-1.5 rounded-xl
-                    shadow-sm font-bold text-xs border
+                    shadow-sm font-bold text-[0.625rem] md:text-xs border
                 "
             style={{
               backgroundColor: `${category.color}15`,
@@ -180,6 +186,38 @@ export const createColumns = (
           </span>
         </div>
       );
+    },
+    filterFn: (row, id, value) => {
+      if (!value) return true;
+
+      const cellDate = new Date(row.getValue(id));
+
+      switch (value.type) {
+        case 'today':
+          return isSameDay(cellDate, new Date());
+
+        case 'yesterday': {
+          const yesterday = new Date();
+          yesterday.setDate(yesterday.getDate() - 1);
+          return isSameDay(cellDate, yesterday);
+        }
+
+        case 'week':
+          return (
+            cellDate >= new Date(value.start) && cellDate <= new Date(value.end)
+          );
+
+        case 'month':
+          return (
+            cellDate.getMonth() === value.month &&
+            cellDate.getFullYear() === value.year
+          );
+
+        case 'year':
+          return cellDate.getFullYear() === value.year;
+        default:
+          return true;
+      }
     },
   },
   {
