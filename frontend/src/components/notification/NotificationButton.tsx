@@ -28,6 +28,13 @@ export default function NotificationButton() {
       queryClient.invalidateQueries({ queryKey: ['notifications'] });
       showInfoToast(t('notification.newNotification'));
     };
+
+    if (notificationCount > 0) {
+      document.title = `(${notificationCount}) La Pince`;
+    } else {
+      document.title = 'La Pince';
+    }
+
     return () => {
       if (
         ws.readyState === WebSocket.OPEN ||
@@ -36,7 +43,7 @@ export default function NotificationButton() {
         ws.close();
       }
     };
-  }, [queryClient, t]);
+  }, [queryClient, t, notificationCount]);
 
   return (
     <Sheet>

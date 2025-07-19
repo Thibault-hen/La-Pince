@@ -218,10 +218,18 @@ export const en = {
     },
     table: {
       addButton: 'Add an expense',
-      filterPlaceholder: 'Filter by title',
+      searchPlaceholder: 'Search by title',
       noResults: 'No results.',
       filter: {
         category: 'Filter by category',
+        date: 'Filter by date',
+        all: 'All',
+        today: 'Today',
+        yesterday: 'Yesterday',
+        week: 'This week',
+        month: 'This month',
+        year: 'This year',
+        categoryAll: 'All categories',
       },
       columns: {
         title: 'Title',

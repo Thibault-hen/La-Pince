@@ -217,10 +217,18 @@ export const fr = {
     },
     table: {
       addButton: 'Ajouter une dépense',
-      filterPlaceholder: 'Filter par titre',
+      searchPlaceholder: 'Rechercher par titre',
       noResults: 'Aucun résultat.',
       filter: {
         category: 'Filtrer par catégorie',
+        date: 'Filter par date',
+        all: 'Tout temps',
+        today: 'Aujourd’hui',
+        yesterday: 'Hier',
+        week: 'Cette semaine',
+        month: 'Ce mois',
+        year: 'Cette année',
+        categoryAll: 'Toutes les catégories',
       },
       columns: {
         title: 'Titre',
