@@ -194,6 +194,46 @@ export const en = {
         'These terms are governed by the laws of [Your Country]. Any disputes arising from these terms will be subject to the exclusive jurisdiction of the courts of [Your Jurisdiction].',
     },
   },
+  faq: {
+    meta: {
+      title: 'Frequently Asked Questions - La Pince',
+      description:
+        'Find answers to the most frequently asked questions about La Pince, your personal finance management application.',
+    },
+    title: 'Frequently Asked Questions',
+    introduction:
+      'Welcome to the FAQ section of La Pince! Here you will find answers to the most common questions about our application and services.',
+    section1: {
+      title: 'What is La Pince?',
+      content:
+        'La Pince is a personal finance management application that helps you track your expenses, manage your budgets, and receive alerts before overspending.',
+    },
+    section2: {
+      title: 'How do I create an account?',
+      content:
+        'To create an account, simply click on the "Register" button on our homepage and fill out the registration form with your email, name, and password.',
+    },
+    section3: {
+      title: 'How do I reset my password?',
+      content:
+        'If you have forgotten your password, click on the "Forgot Password?" link on the login page and follow the instructions to reset it.',
+    },
+    section4: {
+      title: 'How do I add an expense?',
+      content:
+        'To add an expense, go to the "Expenses" section of the application and click on the "Add Expense" button. Fill out the form with the details of your expense and save it.',
+    },
+    section5: {
+      title: 'How do I manage my budgets?',
+      content:
+        'You can manage your budgets in the "Budgets" section of the application. Here you can create, edit, and delete budgets, as well as track your spending against them.',
+    },
+    section6: {
+      title: 'How do I contact support?',
+      content:
+        'If you have any questions or need assistance, you can contact our support team by filling out the contact form on our website or by sending an email to support@lapince.com.',
+    },
+  },
   date: {
     today: 'Today',
     yesterday: 'Yesterday',

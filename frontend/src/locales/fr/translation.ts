@@ -194,6 +194,46 @@ export const fr = {
         'Nous nous réservons le droit de modifier ces mentions légales à tout moment. Les modifications seront publiées sur cette page et entreront en vigueur immédiatement.',
     },
   },
+  faq: {
+    meta: {
+      title: 'FAQs - La Pince',
+      description:
+        'Consultez les questions fréquemment posées sur La Pince, votre application de gestion financière personnelle. Trouvez des réponses à vos questions sur nos fonctionnalités, la sécurité et plus encore.',
+    },
+    title: 'Questions Fréquemment Posées (FAQs)',
+    introduction:
+      'Bienvenue dans la section FAQ de La Pince. Ici, vous trouverez des réponses aux questions les plus courantes concernant notre application de gestion financière personnelle.',
+    section1: {
+      title: 'Comment créer un compte sur La Pince ?',
+      content:
+        'Pour créer un compte, cliquez sur le bouton "Inscription" sur la page d’accueil, remplissez le formulaire avec vos informations et validez votre inscription.',
+    },
+    section2: {
+      title: 'Comment puis-je suivre mes dépenses ?',
+      content:
+        'Une fois connecté, vous pouvez ajouter vos dépenses dans la section "Dépenses". Vous pouvez également catégoriser vos dépenses pour une meilleure gestion.',
+    },
+    section3: {
+      title: 'Comment gérer mes budgets ?',
+      content:
+        'Dans la section "Budgets", vous pouvez créer des budgets mensuels, définir des limites et suivre vos dépenses par rapport à ces budgets.',
+    },
+    section4: {
+      title: 'Comment recevoir des alertes de dépassement de budget ?',
+      content:
+        'Vous pouvez activer les alertes dans les paramètres de votre compte. Vous recevrez des notifications lorsque vous approchez ou dépassez vos limites de budget.',
+    },
+    section5: {
+      title: 'Comment sécuriser mes données personnelles ?',
+      content:
+        'La Pince utilise des protocoles de sécurité avancés pour protéger vos données. Nous ne partageons pas vos informations personnelles avec des tiers sans votre consentement.',
+    },
+    section6: {
+      title: 'Comment contacter le support client ?',
+      content:
+        'Si vous avez des questions ou des problèmes, vous pouvez nous contacter via le formulaire de contact sur notre site ou par email à support@lapince.com.',
+    },
+  },
   date: {
     today: 'Aujourd’hui',
     yesterday: 'Hier',
