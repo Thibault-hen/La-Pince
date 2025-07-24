@@ -126,7 +126,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <div className="flex gap-2 mt-2">
                 <p className="mb-1">© 2025 La Pince</p>
                 <p className="mb-1">-</p>
-                <NavLink to="/terms" className="hover:underline">
+                <NavLink to="/legal-notice" className="hover:underline">
                   {t('sidebar.legalNotice')}
                 </NavLink>
               </div>

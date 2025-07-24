@@ -119,6 +119,81 @@ export const en = {
         'We reserve the right to modify these Terms of Service at any time. Changes will be effective immediately upon posting on our website. Your continued use of La Pince after changes constitutes your acceptance of the new terms.',
     },
   },
+  privacy: {
+    meta: {
+      title: 'Privacy Policy - La Pince',
+      description:
+        'Read the Privacy Policy for La Pince, your personal finance management application. Understand how we collect, use, and protect your personal information.',
+    },
+    title: 'Privacy Policy',
+    introduction:
+      'Welcome to La Pince! This Privacy Policy explains how we collect, use, and protect your personal information when you use our services.',
+    section1: {
+      title: 'Information We Collect',
+      content:
+        'We collect personal information that you provide to us when you create an account, such as your name, email address, and financial data. We also collect information about your usage of our services.',
+    },
+    section2: {
+      title: 'How We Use Your Information',
+      content:
+        'We use your information to provide and improve our services, communicate with you, and personalize your experience. We may also use your information for research and analytics purposes.',
+    },
+    section3: {
+      title: 'Data Security',
+      content:
+        'We take the security of your personal information seriously and implement appropriate technical and organizational measures to protect it against unauthorized access, loss, or misuse.',
+    },
+    section4: {
+      title: 'Sharing Your Information',
+      content:
+        'We do not sell or rent your personal information to third parties. We may share your information with trusted service providers who assist us in operating our services, subject to strict confidentiality obligations.',
+    },
+    section5: {
+      title: 'Your Rights',
+      content:
+        'You have the right to access, correct, or delete your personal information. You can also object to the processing of your data or request that we restrict its use. To exercise these rights, please contact us.',
+    },
+    section6: {
+      title: 'Changes to This Policy',
+      content:
+        'We may update this Privacy Policy from time to time. We will notify you of any significant changes by posting a notice on our website or sending you an email. Your continued use of La Pince after changes constitutes your acceptance of the new policy.',
+    },
+  },
+  legal: {
+    meta: {
+      title: 'Legal Notice - La Pince',
+      description:
+        'Read the Legal Notice for La Pince, your personal finance management application. Understand the legal information and terms of use of our services.',
+    },
+    title: 'Legal Notice',
+    introduction:
+      'Welcome to La Pince! This Legal Notice provides important information about our company and the terms of use of our services.',
+    section1: {
+      title: 'Company Information',
+      content:
+        'La Pince is a company registered in [Your Country] with the registration number [Your Registration Number]. Our registered office is located at [Your Address].',
+    },
+    section2: {
+      title: 'Terms of Use',
+      content:
+        'By using La Pince, you agree to comply with these terms. If you do not agree with any part of these terms, you must not use our services.',
+    },
+    section3: {
+      title: 'Intellectual Property',
+      content:
+        'All content on La Pince, including text, graphics, logos, and software, is the property of La Pince or its licensors. You may not use, reproduce, or distribute any content without our prior written permission.',
+    },
+    section4: {
+      title: 'Limitation of Liability',
+      content:
+        'La Pince is provided "as is" without warranties of any kind. We are not liable for any direct, indirect, incidental, or consequential damages arising from your use of our services.',
+    },
+    section5: {
+      title: 'Governing Law',
+      content:
+        'These terms are governed by the laws of [Your Country]. Any disputes arising from these terms will be subject to the exclusive jurisdiction of the courts of [Your Jurisdiction].',
+    },
+  },
   date: {
     today: 'Today',
     yesterday: 'Yesterday',

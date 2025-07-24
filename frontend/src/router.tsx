@@ -15,6 +15,8 @@ const LoginPage = lazy(() => import('./pages/Login'));
 const RegisterPage = lazy(() => import('./pages/Register'));
 const ResetPasswordPage = lazy(() => import('./pages/ResetPassword'));
 const TosPage = lazy(() => import('./pages/Tos'));
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicy'));
+const LegalNoticePage = lazy(() => import('./pages/LegalNotice'));
 const NotFoundPage = lazy(() => import('./pages/NotFound'));
 
 const SuspenseWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -59,10 +61,26 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: '/privacy-policy',
+        element: (
+          <SuspenseWrapper>
+            <PrivacyPolicyPage />
+          </SuspenseWrapper>
+        ),
+      },
+      {
         path: '/tos',
         element: (
           <SuspenseWrapper>
             <TosPage />
+          </SuspenseWrapper>
+        ),
+      },
+      {
+        path: '/legal-notice',
+        element: (
+          <SuspenseWrapper>
+            <LegalNoticePage />
           </SuspenseWrapper>
         ),
       },

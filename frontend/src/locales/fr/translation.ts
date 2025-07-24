@@ -119,6 +119,81 @@ export const fr = {
         'Nous nous réservons le droit de modifier ces conditions à tout moment. Les modifications seront publiées sur cette page et entreront en vigueur immédiatement.',
     },
   },
+  privacy: {
+    meta: {
+      title: 'Politique de confidentialité - La Pince',
+      description:
+        'Découvrez comment La Pince collecte, utilise et protège vos données personnelles. Votre vie privée est notre priorité.',
+    },
+    title: 'Politique de confidentialité',
+    introduction:
+      'Chez La Pince, nous prenons la protection de vos données personnelles très au sérieux. Cette politique explique comment nous collectons, utilisons et protégeons vos informations.',
+    section1: {
+      title: 'Collecte des données',
+      content:
+        'Nous collectons des informations lorsque vous créez un compte, utilisez nos services ou interagissez avec notre application. Les données collectées peuvent inclure votre nom, email, préférences et transactions financières.',
+    },
+    section2: {
+      title: 'Utilisation des données',
+      content:
+        'Les données collectées sont utilisées pour fournir et améliorer nos services, personnaliser votre expérience et vous envoyer des notifications importantes.',
+    },
+    section3: {
+      title: 'Partage des données',
+      content:
+        'Nous ne vendons ni ne louons vos données personnelles à des tiers. Vos informations peuvent être partagées avec des partenaires de confiance pour améliorer nos services, mais toujours dans le respect de votre vie privée.',
+    },
+    section4: {
+      title: 'Sécurité des données',
+      content:
+        'Nous mettons en œuvre des mesures de sécurité pour protéger vos informations contre tout accès non autorisé ou divulgation. Cependant, aucune méthode de transmission sur Internet n’est totalement sécurisée.',
+    },
+    section5: {
+      title: 'Vos droits',
+      content:
+        'Vous avez le droit d’accéder à vos données personnelles, de les corriger ou de demander leur suppression. Vous pouvez également vous opposer à certaines utilisations de vos informations.',
+    },
+    section6: {
+      title: 'Modifications de la politique',
+      content:
+        'Nous pouvons mettre à jour cette politique de confidentialité. Les modifications seront publiées sur cette page et entreront en vigueur immédiatement.',
+    },
+  },
+  legal: {
+    meta: {
+      title: 'Mentions légales - La Pince',
+      description:
+        "Découvrez les mentions légales de La Pince, votre application de gestion financière personnelle. Comprenez vos droits et responsabilités lors de l'utilisation de nos services.",
+    },
+    title: 'Mentions légales',
+    introduction:
+      'Bienvenue sur La Pince ! Ces mentions légales régissent votre utilisation de notre site Web et de nos services. En accédant ou en utilisant La Pince, vous acceptez de vous conformer à ces mentions.',
+    section1: {
+      title: 'Informations légales',
+      content:
+        "La Pince est une application de gestion financière personnelle développée par [Nom de l'entreprise]. Siège social : [Adresse de l'entreprise].",
+    },
+    section2: {
+      title: 'Propriété intellectuelle',
+      content:
+        'Tous les contenus présents sur La Pince, y compris les textes, graphiques, logos et images, sont la propriété de La Pince ou de ses partenaires. Toute reproduction ou utilisation sans autorisation est interdite.',
+    },
+    section3: {
+      title: 'Responsabilité',
+      content:
+        "La Pince s'efforce de fournir des informations précises et à jour, mais ne peut garantir l'exactitude ou l'exhaustivité des contenus. L'utilisation de La Pince se fait à vos propres risques.",
+    },
+    section4: {
+      title: 'Liens externes',
+      content:
+        "La Pince peut contenir des liens vers des sites tiers. Nous ne sommes pas responsables du contenu de ces sites et leur inclusion n'implique pas notre approbation.",
+    },
+    section5: {
+      title: 'Modifications des mentions légales',
+      content:
+        'Nous nous réservons le droit de modifier ces mentions légales à tout moment. Les modifications seront publiées sur cette page et entreront en vigueur immédiatement.',
+    },
+  },
   date: {
     today: 'Aujourd’hui',
     yesterday: 'Hier',
