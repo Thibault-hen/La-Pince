@@ -51,19 +51,25 @@ export const en = {
       sendButton: 'Send',
       subject1: {
         title: 'Technical problem',
-        value: 'issue',
+        value: 'Technical problem',
       },
       subject2: {
         title: 'Feedbacks',
-        value: 'feedback',
+        value: 'Feedbacks',
       },
       subject3: {
         title: 'Budget question',
-        value: 'issue',
+        value: 'Budget question',
       },
       subject4: {
         title: 'Notification or alert',
-        value: 'alert',
+        value: 'Notification or alert',
+      },
+      success: {
+        EMAIL_SENT: 'Your message has been sent successfully.',
+      },
+      error: {
+        EMAIL_FAILED: 'An error occurred while sending your message.',
       },
     },
     footer: {
