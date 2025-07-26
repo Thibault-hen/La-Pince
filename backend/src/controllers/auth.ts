@@ -27,8 +27,8 @@ import {
   generateTokenCSRF,
   generateTokenJWT,
 } from '../lib/tokens';
+import { sendMail } from '../services/mailer';
 import { getEnv } from '../utils/env';
-import { sendMail } from '../utils/mailer';
 import {
   loginRateLimit,
   registerRateLimit,

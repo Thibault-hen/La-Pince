@@ -1,17 +1,17 @@
-import { Hono } from 'hono';
-import router from './router';
-import { openAPISpecs } from 'hono-openapi';
-import { Scalar } from '@scalar/hono-api-reference';
-import { cors } from 'hono/cors';
-import { getEnv } from './utils/env';
-import { HTTPException } from 'hono/http-exception';
-import { ZodError } from 'zod';
 import { createNodeWebSocket } from '@hono/node-ws';
+import { Scalar } from '@scalar/hono-api-reference';
+import { Hono } from 'hono';
 import { getSignedCookie } from 'hono/cookie';
-import { authentify } from './middlewares/auth.middleware';
-import { notifiableUsers } from './websockets/notifiableUsers';
-import { initRedis } from './utils/redis';
+import { cors } from 'hono/cors';
+import { HTTPException } from 'hono/http-exception';
 import { secureHeaders } from 'hono/secure-headers';
+import { openAPISpecs } from 'hono-openapi';
+import { ZodError } from 'zod';
+import { authentify } from './middlewares/auth.middleware';
+import router from './router';
+import { getEnv } from './utils/env';
+import { initRedis } from './utils/redis';
+import { notifiableUsers } from './websockets/notifiableUsers';
 
 const app = new Hono();
 const { injectWebSocket, upgradeWebSocket } = createNodeWebSocket({ app });

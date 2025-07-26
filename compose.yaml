@@ -2,7 +2,7 @@ services:
   redis:
     image: redis:8-alpine
     ports:
-      - '6379:6379'
+      - '65000:6379'
     command: redis-server --appendonly yes
     volumes:
       - redis_data:/data
@@ -22,6 +22,9 @@ services:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
 
+    env_file:
+      - ./backend/.env # Charge les variables d'environnement depuis le fichier .env
+
     # Volume local vers conteneur pour rechargement automatique (live reload)
     volumes:
       - ./backend:/app # Code local monté dans le conteneur
@@ -30,6 +33,7 @@ services:
     # Attend que la base de données soit prête avant de lancer
     depends_on:
       - db
+      - redis
     command: sh -c "npx prisma generate && npx prisma migrate reset --force && npx tsx src/db/seeding.ts && npm run dev"
 
   db:

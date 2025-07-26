@@ -51,19 +51,25 @@ export const fr = {
       sendButton: 'Envoyer',
       subject1: {
         title: 'Problème technique',
-        value: 'issue',
+        value: 'Problème technique',
       },
       subject2: {
         title: 'Feedbacks',
-        value: 'feedback',
+        value: 'Feedbacks',
       },
       subject3: {
         title: 'Question sur les budgets',
-        value: 'issue',
+        value: 'Question sur les budgets',
       },
       subject4: {
         title: 'Notification ou alertes',
-        value: 'alert',
+        value: 'Notification ou alertes',
+      },
+      success: {
+        EMAIL_SENT: 'Votre message a été envoyé avec succès.',
+      },
+      error: {
+        EMAIL_FAILED: "Une erreur est survenue lors de l'envoi du message.",
       },
     },
     footer: {

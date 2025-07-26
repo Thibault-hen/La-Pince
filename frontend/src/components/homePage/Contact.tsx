@@ -1,5 +1,6 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
@@ -22,6 +23,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { sendContactEmail } from '@/services/contact';
 
 const formSchema = z.object({
   firstName: z.string().min(2, { message: 'Nom requis' }).max(255),
@@ -33,6 +35,9 @@ const formSchema = z.object({
 
 export default function Contact() {
   const { t } = useTranslation();
+  const [status, setStatus] = useState<{ success?: string; error?: string }>(
+    {},
+  );
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -62,13 +67,31 @@ export default function Contact() {
     },
   ];
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    const { firstName, lastName, email, subject, message } = values;
-
-    const mailToLink = `mailto:leomirandadev@gmail.com?subject=${subject}&body=Hello I am ${firstName} ${lastName}, my Email is ${email}. %0D%0A${message}`;
-
-    window.location.href = mailToLink;
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const res = await sendContactEmail(values);
+      setStatus({
+        success: t(`home.contact.success.${res.message}`),
+        error: '',
+      });
+      form.reset();
+    } catch (err: unknown) {
+      let errorMessage = 'EMAIL_FAILED';
+      if (
+        typeof err === 'object' &&
+        err !== null &&
+        'message' in err &&
+        typeof (err as { message?: unknown }).message === 'string'
+      ) {
+        errorMessage = (err as { message: string }).message;
+      }
+      setStatus({
+        success: '',
+        error: t(`home.contact.error.${errorMessage}`),
+      });
+    }
   }
+
   return (
     <section
       id="contact"
@@ -86,6 +109,12 @@ export default function Contact() {
           </h2>
           <CardHeader className="text-primary text-2xl"> </CardHeader>
           <CardContent>
+            {status.success && (
+              <p className="text-green-500 mb-4">{status.success}</p>
+            )}
+            {status.error && (
+              <p className="text-red-500 mb-4">{status.error}</p>
+            )}
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -167,8 +196,8 @@ export default function Contact() {
                           <SelectContent>
                             {subjets.map((subject) => (
                               <SelectItem
-                                key={subject.value}
-                                value={subject.value}
+                                key={t(subject.value)}
+                                value={t(subject.value)}
                               >
                                 {t(subject.title)}
                               </SelectItem>
