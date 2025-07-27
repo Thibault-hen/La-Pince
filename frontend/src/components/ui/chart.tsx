@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/security/noDangerouslySetInnerHtml: <explanation> */
+/** biome-ignore-all lint/security/noDangerouslySetInnerHtml: Safe because HTML is sanitized before rendering */
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import * as RechartsPrimitive from 'recharts';

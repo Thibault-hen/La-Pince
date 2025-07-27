@@ -1,5 +1,5 @@
 import { CircleAlert, Trash2, TriangleAlert } from 'lucide-react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useCurrency } from '@/hooks/use-currency';
 import {
   type TransformedNotification,

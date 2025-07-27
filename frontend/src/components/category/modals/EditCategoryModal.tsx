@@ -59,7 +59,7 @@ export const EditCategoryModal = ({
     },
   });
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Dependencies are intentionally excluded to prevent infinite loop
   useEffect(() => {
     form.reset();
   }, [category, form]);

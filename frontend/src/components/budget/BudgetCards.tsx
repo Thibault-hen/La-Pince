@@ -1,10 +1,10 @@
-import { useCurrency } from '@/hooks/use-currency';
-import { getColorStatus } from '@/utils/colorStatus';
-import { getPercentage } from '@/utils/percentage';
 import { Euro, Hash, TrendingUp } from 'lucide-react';
 import { useSpring } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useCurrency } from '@/hooks/use-currency';
+import { getColorStatus } from '@/utils/colorStatus';
+import { getPercentage } from '@/utils/percentage';
 import { Progress } from '../ui/progress';
 
 type BudgetCardsProps = {

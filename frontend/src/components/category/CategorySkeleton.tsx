@@ -24,7 +24,7 @@ export const CategorySkeleton = () => {
           {Array.from({ length: 6 }).map((_, index) => (
             <Skeleton
               key={`${skeletonId}-${
-                // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                // biome-ignore lint/suspicious/noArrayIndexKey: Keys based on index are safe here because the list is static
                 index
               }`}
               className="h-[100px]"
