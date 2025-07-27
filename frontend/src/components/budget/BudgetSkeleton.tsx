@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
+/** biome-ignore-all lint/suspicious/noArrayIndexKey: Index key is safe here because list order never changes */
 import { Skeleton } from '../ui/skeleton';
 
 export const BudgetSkeleton = () => {

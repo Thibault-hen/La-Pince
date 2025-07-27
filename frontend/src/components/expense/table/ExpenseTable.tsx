@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
+/** biome-ignore-all lint/suspicious/noArrayIndexKey: Keys based on index are safe here because the list is static */
 import {
   type ColumnDef,
   type ColumnFiltersState,

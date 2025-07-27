@@ -22,7 +22,7 @@ interface DeleteAccountProps {
 }
 
 export const DeleteAccountModal = ({ open, setOpen }: DeleteAccountProps) => {
-  const { mutateAsync: deleteAccount, error } = useDeleteAccount();
+  const { mutateAsync: deleteAccount } = useDeleteAccount();
   const { t } = useTranslation();
 
   const form = useForm({

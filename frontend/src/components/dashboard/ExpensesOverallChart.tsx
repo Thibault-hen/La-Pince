@@ -1,11 +1,11 @@
 import { Calendar, TrendingUp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import type { TooltipProps } from 'recharts';
 import {
   Bar,
   BarChart,
   CartesianGrid,
   LabelList,
-  ResponsiveContainer,
   XAxis,
   YAxis,
 } from 'recharts';
@@ -84,13 +84,18 @@ export const ExpensesOverallChart = ({
     );
   };
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({
+    active,
+    payload,
+    label,
+  }: TooltipProps<number, string>) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-background/95 backdrop-blur-sm border border-border rounded-lg p-3 shadow-xl">
           <p className="font-semibold text-foreground">{label}</p>
           <p className="text-sm text-muted-foreground">
-            {t('dashboard.chart.expenses')}: {formatAmount(payload[0].value)}
+            {t('dashboard.chart.expenses')}:{' '}
+            {formatAmount(payload[0].value as number)}
           </p>
         </div>
       );
