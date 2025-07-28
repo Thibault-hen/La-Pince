@@ -4,12 +4,11 @@
 	"scripts": {
 		"dev": "tsx watch src/index.ts",
 		"build:app": "esbuild --bundle --outfile=./dist/index.js --platform=node --target=node20 --format=esm ./src/index.ts",
-		"build:seeds": "esbuild --bundle --outfile=./dist/colorSeeding.js --platform=node --target=node20 --format=esm ./src/db/colorSeeding.ts",
 		"start": "node dist/index.js",
 		"start:prod": "npm run db:deploy && npm run db:seed-colors && npm run start",
 		"db:deploy": "npx prisma migrate deploy && npx prisma generate",
 		"db:seed": "tsx src/db/seeding.ts",
-		"db:seed-colors": "node dist/colorSeeding.js",
+		"db:seed-colors": "tsx src/db/colorSeeding.ts",
 		"test": "vitest",
 		"test:watch": "vitest --watch",
 		"coverage": "vitest run --coverage",
@@ -24,11 +23,11 @@
 		"esbuild": "^0.25.5",
 		"npm-run-all2": "^6.2.0",
 		"prisma": "^6.9.0",
-		"tsx": "^4.19.4",
 		"typescript": "^5.8.3",
 		"vitest": "^3.2.3"
 	},
 	"dependencies": {
+		"tsx": "^4.19.4",
 		"@hono/node-server": "^1.14.3",
 		"@hono/node-ws": "^1.1.7",
 		"@hono/zod-validator": "^0.4.3",

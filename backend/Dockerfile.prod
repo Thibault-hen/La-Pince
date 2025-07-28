@@ -13,7 +13,7 @@ COPY . .
 
 # Générer Prisma et build
 RUN npx prisma generate
-RUN npm run build:app && npm run build:seeds
+RUN npm run build:app
 
 # Exposer le port
 EXPOSE 3000
