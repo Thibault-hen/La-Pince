@@ -65,16 +65,16 @@ export async function generateTokenCSRF(c: Context): Promise<string> {
 }
 
 export function deleteUserCookie(c: Context) {
-	const { COOKIE_SECURE } = getEnv();
-
+	const { NODE_ENV } = getEnv();
+	const isProduction = NODE_ENV === "production";
 	deleteCookie(c, getEnv().TOKEN_JWT_NAME, {
 		path: "/",
-		secure: COOKIE_SECURE,
+		secure: isProduction,
 	});
 
 	deleteCookie(c, getEnv().TOKEN_CSRF_NAME, {
 		path: "/",
-		secure: COOKIE_SECURE,
+		secure: isProduction,
 	});
 }
 
