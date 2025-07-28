@@ -7,8 +7,6 @@ FROM node:22-alpine AS base
 # Répertoire de travail dans le conteneur
 WORKDIR /app
 
-
-
 # Copier les fichiers de dépendances uniquement (meilleur cache)
 COPY package.json package-lock.json ./
 
@@ -23,6 +21,3 @@ RUN npx prisma generate
 
 # Port exposé
 EXPOSE 3000
-
-# Commande de lancement de l'app
-CMD ["npm", "run", "start"]
