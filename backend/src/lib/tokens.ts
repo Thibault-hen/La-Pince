@@ -10,7 +10,7 @@ export async function generateTokenJWT(
 	isAlertActive: boolean,
 	c: Context,
 ): Promise<string> {
-	const { SECRET_JWT, TOKEN_JWT_NAME, NODE_ENV } = getEnv();
+	const { SECRET_JWT, TOKEN_JWT_NAME, NODE_ENV, DOMAIN_NAME } = getEnv();
 
 	// 7 days expiration for JWT
 	const AUTH_EXPIRATION_DAYS = 7;
@@ -38,13 +38,14 @@ export async function generateTokenJWT(
 		sameSite: isProduction ? "none" : "lax",
 		expires: new Date(Date.now() + AUTH_EXPIRATION_MS),
 		path: "/",
+		domain: isProduction ? DOMAIN_NAME : undefined,
 	});
 
 	return token;
 }
 
 export async function generateTokenCSRF(c: Context): Promise<string> {
-	const { TOKEN_CSRF_NAME, NODE_ENV } = getEnv();
+	const { TOKEN_CSRF_NAME, NODE_ENV, DOMAIN_NAME } = getEnv();
 	const csrfToken = generateRandomString();
 
 	//1 hour expiration for CSRF token
@@ -59,22 +60,25 @@ export async function generateTokenCSRF(c: Context): Promise<string> {
 		sameSite: isProduction ? "none" : "lax",
 		expires: new Date(Date.now() + AUTH_EXPIRATION_MS),
 		path: "/",
+		domain: isProduction ? DOMAIN_NAME : undefined,
 	});
 
 	return csrfToken;
 }
 
 export function deleteUserCookie(c: Context) {
-	const { NODE_ENV } = getEnv();
+	const { NODE_ENV, DOMAIN_NAME } = getEnv();
 	const isProduction = NODE_ENV === "production";
 	deleteCookie(c, getEnv().TOKEN_JWT_NAME, {
 		path: "/",
 		secure: isProduction,
+		domain: isProduction ? DOMAIN_NAME : undefined,
 	});
 
 	deleteCookie(c, getEnv().TOKEN_CSRF_NAME, {
 		path: "/",
 		secure: isProduction,
+		domain: isProduction ? DOMAIN_NAME : undefined,
 	});
 }
 
