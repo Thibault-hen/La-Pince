@@ -1,12 +1,13 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import heroImage from '@/assets/home-page/hero_img1.png';
 import { Button } from '@/components/ui/button';
 
 export default function Hero05() {
   const { t } = useTranslation();
-
+  const navigate = useNavigate();
   return (
     <section className="relative flex items-center pb-20 pt-20 px-4 md:pb-32 md:pt-28 overflow-hidden">
       <div className="absolute top-1 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-gradient-to-r from-primary-color/8 via-primary-color/12 to-primary-color/8 rounded-full blur-3xl" />
@@ -40,7 +41,11 @@ export default function Hero05() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <Button variant="blue" size="lg">
+              <Button
+                variant="blue"
+                size="lg"
+                onClick={() => navigate('/register')}
+              >
                 {t('home.hero.cta')}
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
