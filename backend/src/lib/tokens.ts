@@ -70,11 +70,13 @@ export function deleteUserCookie(c: Context) {
 	deleteCookie(c, getEnv().TOKEN_JWT_NAME, {
 		path: "/",
 		secure: isProduction,
+		sameSite: isProduction ? "none" : "lax",
 	});
 
 	deleteCookie(c, getEnv().TOKEN_CSRF_NAME, {
 		path: "/",
 		secure: isProduction,
+		sameSite: isProduction ? "none" : "lax",
 	});
 }
 
