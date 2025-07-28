@@ -22,6 +22,7 @@ export const en = {
         'With La Pince, track your expenses, manage your budgets, and receive alerts before overspending. A clear and efficient app to take control of your money, starting today. Create a free account and start saving.',
     },
     card: {
+      discover: 'Discover our solutions',
       mainTitle: 'Take back control of your spending',
       mainDescription:
         'Hundreds of users trust La Pince to better manage their budget',
@@ -34,6 +35,11 @@ export const en = {
       title3: 'Applications too complex',
       description3:
         'Many financial tools are overloaded with features, discouraging users from using them daily.',
+    },
+    notFound: {
+      title: 'Page Not Found',
+      description: 'The page you are looking for does not exist.',
+      backToHome: 'Back to Home',
     },
     contact: {
       message: 'A question about our solution or our company?',

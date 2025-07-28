@@ -34,14 +34,14 @@ export default function Header() {
       <div className="absolute inset-0 bg-white dark:bg-primary border-b border-border/50" />
 
       {/* Main container */}
-      <div className="relative container mx-auto px-4 lg:px-4 xl:px-6 2xl:px-16">
+      <div className="relative px-4 lg:px-8 xl:px-12 2xl:px-24">
         <nav className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo Section */}
           <Link to="/" className="flex items-center gap-3">
             <div className="relative">
               <img src={laPinceLogo} width={48} height={48} alt="Logo" />
             </div>
-            <span className="text-xl lg:text-2xl font-bold">
+            <span className="hidden sm:flex md:text-xl lg:text-2xl font-bold">
               {t('home.nav.title')}
             </span>
           </Link>

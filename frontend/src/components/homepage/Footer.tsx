@@ -25,8 +25,8 @@ const socialLinks = [
 export default function Footer01() {
   const { t } = useTranslation();
   return (
-    <footer id="footer" className="container px-0 pt-20 md:pt-10 pb-10">
-      <div className="px-10 bg-primary-color rounded-lg md:bg-primary-color py-0">
+    <footer id="footer" className="w-full">
+      <div className="px-32 py-6 bg-primary-color md:bg-primary-color">
         <div className="flex flex-col md:py-12">
           <div className="flex flex-col gap-6 md:flex-row md:justify-between">
             <div className="space-y-4">

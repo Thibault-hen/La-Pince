@@ -99,15 +99,16 @@ export default function Contact() {
     >
       <div className="align-middle grid grid-cols-1 p-10 lg:grid-cols-2 gap-8">
         <div className="mt-auto mb-auto pb-8 space-y-4 text-center">
-          <h2 className="text-3xl font-bold sm:text-5xl tracking-tight">
+          <h1 className="bg-gradient-to-r from-primary-color via-primary-color to-foreground bg-clip-text text-transparent font-bold text-2xl md:text-3xl xl:text-4xl tracking-tight leading-tight text-center md:text-left">
             {t('home.contact.message')}
-          </h2>
+          </h1>
         </div>
-        <Card className="dark:bg-primary  shadow-md">
-          <h2 className=" mt-1 font-bold tracking-wider text-primary-color text-lg text-center">
-            {t('home.contact.title')}
-          </h2>
-          <CardHeader className="text-primary text-2xl"> </CardHeader>
+        <Card className="dark:bg-primary shadow-md">
+          <CardHeader className="text-primary text-2xl mb-4">
+            <h3 className="mt-1 font-bold tracking-wider text-primary-color text-center">
+              {t('home.contact.title')}
+            </h3>
+          </CardHeader>
           <CardContent>
             {status.success && (
               <p className="text-green-500 mb-4">{status.success}</p>

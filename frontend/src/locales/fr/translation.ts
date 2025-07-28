@@ -22,6 +22,7 @@ export const fr = {
         'Avec La Pince, suivez vos dépenses, gérez vos budgets et recevez des alertes avant les dépassements. Une application claire et efficace pour reprendre le contrôle de votre argent, dès aujourd’hui. Créez un compte gratuitement et commencez à économiser.',
     },
     card: {
+      discover: 'Découvrez nos solutions',
       mainTitle: 'Reprenez le contrôle de vos dépenses',
       mainDescription:
         'Des centaines d’utilisateurs font confiance à La Pince pour mieux gérer leur budget',
@@ -34,6 +35,11 @@ export const fr = {
       title3: 'Applications trop complexes',
       description3:
         'Beaucoup d’outils financiers sont surchargés de fonctionnalités, ce qui décourage les utilisateurs à les utiliser au quotidien.',
+    },
+    notFound: {
+      title: 'Page non trouvée',
+      description: 'La page que vous recherchez n’existe pas.',
+      backToHome: 'Retour à l’accueil',
     },
     contact: {
       message: 'Une question sur notre solution ou notre entreprise ?',
