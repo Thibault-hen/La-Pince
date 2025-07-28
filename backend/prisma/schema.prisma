@@ -1,0 +1,152 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  @@map("user")
+  
+  id              String   @id @default(cuid())
+  name            String
+  email           String   @unique
+  password        String
+  currency        String
+  alert           Boolean  @default(true)
+
+  createdAt DateTime @default(now())   @map("created_at")
+  updatedAt DateTime @updatedAt        @map("updated_at")
+
+  budgets           Budget[]
+  expenses          Expense[]
+  incomes           Income[]
+  notifications     Notification[]
+  categories        Category[]
+}
+
+model Color {
+  @@map("color")
+  
+  id          String   @id @default(cuid())
+  name        String    @unique
+  value       String    @unique
+
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt      @map("updated_at")
+
+  categories  Category[]
+}
+
+model Category {
+  @@map("category")
+
+  id               String   @id @default(cuid())
+  title            String
+  userId           String   @map("user_id")
+  colorId          String   @map("color_id")
+
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  color            Color    @relation(fields: [colorId], references: [id], onDelete: Cascade)
+
+  budgets          Budget[]
+  
+  @@unique([title, userId])
+}
+
+model Budget {
+  @@map("budget")
+
+  id               String   @id @default(cuid())    
+  amount           Decimal  @db.Decimal(10, 2)
+  limitAlert       Decimal  @db.Decimal(10, 2)    @map("limit_alert")
+  month            Int
+  year             Int
+  categoryId       String     @map("category_id")
+  userId           String     @map("user_id")
+
+  createdAt        DateTime   @default(now()) @map("created_at")
+  updatedAt        DateTime   @updatedAt @map("updated_at")
+  
+  user             User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category         Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  expenses         Expense[]
+  notifications    Notification[]
+
+  @@unique([month, year, categoryId, userId])
+}
+
+model Expense {
+  @@map("expense")
+
+  id               String   @id @default(cuid())
+  description      String
+  amount           Decimal  @db.Decimal(10, 2) 
+  date             DateTime
+  budgetId         String?   @map("budget_id")
+  userId           String    @map("user_id")
+
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  budget           Budget?  @relation(fields: [budgetId], references: [id], onDelete: SetNull)
+}
+
+model Notification {
+  @@map("notification")
+
+  id               String   @id @default(cuid())
+  userId           String   @map("user_id")
+  notificationType String   @map("notification_type")
+  budgetId         String   @map("budget_id")
+  maximumAmount    Decimal  @db.Decimal(10, 2) @map("maximum_amount")
+  totalAmount      Decimal  @db.Decimal(10, 2) @map("total_amount")
+  isRead           Boolean  @default(false) @map("is_read")
+
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  budget           Budget   @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+}
+
+model Income {
+  @@map("income")
+
+  id               String   @id @default(cuid())
+  value            Decimal  @db.Decimal(10, 2)
+  month            Int
+  year             Int
+  userId           String   @map("user_id")
+
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+  
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model resetPassword {
+  @@map("reset_password")
+  
+  id               String   @id @default(cuid())
+  userId           String   @map("user_id")
+  token            String
+  expiredAt        DateTime @map("expired_at")
+
+  createdAt        DateTime @default(now()) @map("created_at")
+  @@unique([userId])
+}
