@@ -29,7 +29,7 @@ const Login = () => {
             </div>
           </div>
         </div>
-        <div className="border-l border-l-primary-color hidden xl:block min-h-screen">
+        <div className="border-l border-l-primary-color hidden xl:block min-h-screen bg-primary">
           <div className="relative w-full h-full grid place-items-center">
             <img src={preview} width={480} alt="Application La Pince" />
           </div>
