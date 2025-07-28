@@ -44,6 +44,7 @@ export const useCurrency = () => {
   };
 
   return {
+    rates,
     convertFromEUR,
     convertToEUR,
     formatAmount,

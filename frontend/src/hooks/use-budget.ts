@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
+import { useCurrencyContext } from '@/context/currency-context';
 import { budgetService } from '@/services/budget';
 import type {
   Budget,
@@ -12,7 +13,8 @@ import type {
 import { useCurrency } from './use-currency';
 
 export const useBudgets = () => {
-  const { convertFromEUR, currency } = useCurrency();
+  const { convertFromEUR } = useCurrency();
+  const { currency } = useCurrencyContext();
   return useQuery<BudgetResponse>({
     queryKey: ['budgets', currency],
     queryFn: budgetService.getAllBudgets,

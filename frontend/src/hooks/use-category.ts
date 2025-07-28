@@ -2,12 +2,14 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
+import { useCurrencyContext } from '@/context/currency-context';
 import { categoryService } from '@/services/category';
 import type { CategoryWithBudget, UpdateCategory } from '@/types/category';
 import { useCurrency } from './use-currency';
 
 export const useCategories = () => {
-  const { currency, convertFromEUR } = useCurrency();
+  const { convertFromEUR } = useCurrency();
+  const { currency } = useCurrencyContext();
   const { data, ...others } = useQuery<CategoryWithBudget[]>({
     queryKey: ['categories', currency],
     queryFn: categoryService.getAll,
