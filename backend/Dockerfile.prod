@@ -12,11 +12,10 @@ RUN npm ci --only=production
 COPY . .
 
 # Générer Prisma et build
-RUN npx prisma generate
-RUN npm run build:app
+RUN npm run build
 
 # Exposer le port
 EXPOSE 3000
 
 # Démarrer l'application
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "start"]
