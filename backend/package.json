@@ -3,8 +3,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "tsx watch src/index.ts",
-		"build:app": "esbuild --bundle --outfile=./dist/index.js --platform=node --target=node20 ./src/index.ts",
-		"build:seeds": "esbuild --bundle --outfile=./dist/colorSeeding.js --platform=node --target=node20 ./src/db/colorSeeding.ts",
+		"build:app": "esbuild --bundle --outfile=./dist/index.js --platform=node --target=node20 --format=esm ./src/index.ts",
+		"build:seeds": "esbuild --bundle --outfile=./dist/colorSeeding.js --platform=node --target=node20 --format=esm ./src/db/colorSeeding.ts",
 		"start": "node dist/index.js",
 		"start:prod": "npm run db:deploy && npm run db:seed-colors && npm run start",
 		"db:deploy": "npx prisma migrate deploy && npx prisma generate",
