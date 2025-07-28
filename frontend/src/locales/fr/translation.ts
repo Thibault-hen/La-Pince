@@ -36,6 +36,11 @@ export const fr = {
       description3:
         'Beaucoup d’outils financiers sont surchargés de fonctionnalités, ce qui décourage les utilisateurs à les utiliser au quotidien.',
     },
+    notFound: {
+      title: 'Page non trouvée',
+      description: 'La page que vous recherchez n’existe pas.',
+      backToHome: 'Retour à l’accueil',
+    },
     contact: {
       message: 'Une question sur notre solution ou notre entreprise ?',
       title: 'Contactez-nous',

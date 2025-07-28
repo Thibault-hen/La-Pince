@@ -36,6 +36,11 @@ export const en = {
       description3:
         'Many financial tools are overloaded with features, discouraging users from using them daily.',
     },
+    notFound: {
+      title: 'Page Not Found',
+      description: 'The page you are looking for does not exist.',
+      backToHome: 'Back to Home',
+    },
     contact: {
       message: 'A question about our solution or our company?',
       title: 'Contact Us',
