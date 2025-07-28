@@ -8,13 +8,13 @@ export default function Hero05() {
   const { t } = useTranslation();
 
   return (
-    <section className="relative min-h-screen flex items-center pb-20 pt-20 px-4 md:pb-32 md:pt-28 overflow-hidden">
-      <div className="absolute top-1 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-primary-color/8 via-primary-color/12 to-primary-color/8 rounded-full blur-3xl" />
+    <section className="relative flex items-center pb-20 pt-20 px-4 md:pb-32 md:pt-28 overflow-hidden">
+      <div className="absolute top-1 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-gradient-to-r from-primary-color/8 via-primary-color/12 to-primary-color/8 rounded-full blur-3xl" />
 
-      <div className="container mx-auto sm:px-6 lg:px-8">
-        <div className="grid items-center grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
+      <div className="sm:px-6 lg:px-16">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-16 relative z-10">
           <motion.div
-            className="relative flex flex-col gap-8 items-center xl:items-start"
+            className="relative flex flex-col gap-8 items-center lg:items-start"
             initial={{ opacity: 0, x: -600 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{
@@ -31,11 +31,11 @@ export default function Hero05() {
               {t('home.hero.badge')}
             </div>
 
-            <h1 className="bg-gradient-to-r from-primary-color via-primary-color to-foreground bg-clip-text text-transparent font-bold text-4xl md:text-5xl xl:text-6xl tracking-tight leading-tight text-center xl:text-left">
+            <h1 className="bg-gradient-to-r from-primary-color via-primary-color to-foreground bg-clip-text text-transparent font-bold text-3xl md:text-4xl xl:text-5xl tracking-tight leading-tight text-center md:text-left">
               {t('home.hero.title')}
             </h1>
 
-            <p className="text-muted-foreground text-center md:text-left text-sm md:text-base xl:text-xl leading-relaxed max-w-2xl">
+            <p className="text-muted-foreground text-center lg:text-left text-sm md:text-base xl:text-lg leading-relaxed tracking-wider max-w-2xl">
               {t('home.hero.description')}
             </p>
 
