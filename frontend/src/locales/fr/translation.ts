@@ -5,6 +5,9 @@ export const fr = {
       description:
         'La Pince est une application de gestion financière personnelle qui vous aide à suivre vos dépenses, gérer vos budgets et recevoir des alertes avant les dépassements. Une application claire et efficace pour reprendre le contrôle de votre argent, dès aujourd’hui.',
     },
+    banner: {
+      info: '👀 Cette application est à des fins éducatives et sert de démonstration pour le passage du Titre Pro CDA.',
+    },
     nav: {
       title: 'La Pince',
       contact: 'Nous contacter',
