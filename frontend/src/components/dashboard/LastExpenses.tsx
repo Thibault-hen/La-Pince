@@ -126,7 +126,7 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
               <Button
                 className="w-full"
                 variant="blue"
-                onClick={() => navigate('/tableau-de-bord/depenses')}
+                onClick={() => navigate('/dashboard/expenses')}
               >
                 {t('dashboard.last10Expenses.seeMore')}
               </Button>
