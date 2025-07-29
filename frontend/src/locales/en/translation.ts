@@ -5,6 +5,9 @@ export const en = {
       description:
         'La Pince is a modern personal finance application that helps you track your expenses, manage your budgets, and receive alerts before overspending. A clear and efficient app to take control of your money, starting today.',
     },
+    banner: {
+      info: '👀 This application is for educational purposes and serves as a demonstration',
+    },
     nav: {
       title: 'La Pince',
       contact: 'Contact Us',

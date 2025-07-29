@@ -26,7 +26,7 @@ export const BudgetHeader = ({
       <div>
         <Button
           variant="blue"
-          className="w-full text-xxs"
+          className="w-full text-xxs text-white"
           onClick={onOpenAddModal}
         >
           <Plus />
