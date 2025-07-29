@@ -18,7 +18,7 @@ export default function Notification({ notification }: NotificationProps) {
   const IconComponent = getCategoryIcon(notification.budgetName);
   return (
     <div className="relative group">
-      <div className="flex flex-col gap-3 p-5 dark:bg-primary backdrop-blur-sm border rounded-xl shadow-sm transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-1">
+      <div className="flex flex-col gap-3 p-5 dark:bg-primary backdrop-blur-sm border rounded-xl shadow-sm transition-all duration-300 ease-out">
         <div
           className="absolute top-0 left-0 w-full h-1.5 rounded-t-full opacity-60"
           style={{
@@ -26,7 +26,7 @@ export default function Notification({ notification }: NotificationProps) {
           }}
         />
 
-        <div className="flex items-start gap-3">
+        <div className="flex items-center gap-3">
           <div className="flex-shrink-0 relative">
             {notification.notificationType === 'budgetWarning' ? (
               <div className="relative">
@@ -70,8 +70,8 @@ export default function Notification({ notification }: NotificationProps) {
           <div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
             <div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed space-y-3">
               <div className="space-y-3 flex flex-col">
-                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed flex items-center">
-                  {t('notification.yourBudget')}{' '}
+                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                  <span>{t('notification.yourBudget')}</span>
                   <Badge
                     className="inline-flex tracking-wide items-center capitalize gap-1.5 rounded-xl shadow-sm font-bold text-xs border mx-1 py-1"
                     style={{
@@ -88,9 +88,11 @@ export default function Notification({ notification }: NotificationProps) {
                     </div>
                     {t(notification.budgetName)}
                   </Badge>
-                  {notification.notificationType === 'budgetWarning'
-                    ? t('notification.budgetWarning.description')
-                    : t('notification.budgetExceeded.description')}{' '}
+                  <span>
+                    {notification.notificationType === 'budgetWarning'
+                      ? t('notification.budgetWarning.description')
+                      : t('notification.budgetExceeded.description')}
+                  </span>
                 </p>
                 <div>
                   <span className="text-muted-foreground">
