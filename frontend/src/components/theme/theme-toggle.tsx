@@ -15,7 +15,7 @@ export function ModeToggle() {
     <DropdownMenu>
       <DropdownMenuTrigger
         asChild
-        className="shadow-none dark:bg-primary cursor-pointer hover:bg-secondary-color dark:hover:bg-secondary-color border focus:outline-none focus-visible:ring-2"
+        className="shadow-none bg-primary dark:bg-primary cursor-pointer hover:bg-secondary-color dark:hover:bg-secondary-color border focus:outline-none focus-visible:ring-2"
       >
         <Button variant="outline" size="icon">
           <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />

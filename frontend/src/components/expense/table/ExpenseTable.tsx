@@ -124,7 +124,7 @@ export function DataTable<TData, TValue>({
             onChange={(event) =>
               table.getColumn('title')?.setFilterValue(event.target.value)
             }
-            className="w-full md:max-w-sm pl-10 mb-6 md:mb-0 text-sm md:text-base"
+            className="w-full md:max-w-sm pl-10 mb-6 md:mb-0 text-sm md:text-base bg-primary"
           />
           <div className="flex flex-col w-full md:w-fit sm:flex-row items-center gap-2 md:gap-2">
             <DateFilter onFilterDate={handleDateFilter} />
@@ -132,7 +132,7 @@ export function DataTable<TData, TValue>({
           </div>
         </div>
       </div>
-      <div className="rounded-md border dark:bg-primary">
+      <div className="rounded-md border bg-primary">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

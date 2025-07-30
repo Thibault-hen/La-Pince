@@ -49,7 +49,7 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
   );
 
   return (
-    <div className="w-full md:max-w-xl shadow-xl dark:bg-primary rounded-lg border">
+    <div className="w-full md:max-w-xl bg-primary rounded-lg border">
       <div className="text-white relative overflow-hidden px-8 py-4">
         <div className="relative z-10">
           <div className="flex items-center justify-between">

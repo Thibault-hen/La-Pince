@@ -33,7 +33,7 @@ export const DateFilter = ({
       onValueChange={handleDateFilter}
       defaultValue={datesOptions[0].value}
     >
-      <SelectTrigger className="w-full sm:w-[220px]">
+      <SelectTrigger className="w-full sm:w-[220px] bg-primary">
         <div className="flex items-center gap-2">
           <Calendar />
           <SelectValue placeholder="Select a timezone" />

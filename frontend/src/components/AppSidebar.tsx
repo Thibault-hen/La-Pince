@@ -53,7 +53,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const items = getItems(t);
   return (
     <Sidebar {...props}>
-      <SidebarHeader className="flex items-center justify-center p-3">
+      <SidebarHeader className="flex justify-between py-3 px-6">
         {open || openMobile ? (
           <NavLink
             to="/"

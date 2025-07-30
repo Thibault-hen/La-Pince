@@ -23,7 +23,10 @@ export default function Problem01() {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-primary-color w-full py-26">
+    <section
+      id="features"
+      className="relative overflow-hidden bg-primary-color w-full py-26"
+    >
       {/* Background Effects */}
 
       {/* Animated Gradient Orbs */}
