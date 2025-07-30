@@ -2,8 +2,12 @@ import { z } from "zod";
 
 const envSchema = z.object({
 	NODE_ENV: z
-		.union([z.literal("development"), z.literal("production")])
-		.default("production"),
+		.union([
+			z.literal("development"),
+			z.literal("production"),
+			z.literal("test"),
+		])
+		.default("development"),
 	SECRET_JWT: z.string().min(32),
 	PORT: z.coerce.number().positive().int().default(3000),
 	DOMAIN_NAME: z.string().default("localhost"),
