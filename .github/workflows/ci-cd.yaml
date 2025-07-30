@@ -33,7 +33,7 @@ jobs:
       - run: npm ci
       - run: npm run test
       - name: Install Railway CLI
-        run: npm install -g railway
+        run: npm install -g @railway/cli
       - name: Deploy to Railway
         if: github.ref == 'refs/heads/main' && success() && steps.changes_backend.outputs.backend_changed == 'true'
         env:

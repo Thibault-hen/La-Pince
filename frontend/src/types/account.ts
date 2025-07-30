@@ -3,5 +3,5 @@ export type UserAccount = {
   name: string;
   alert: boolean;
   currency: string;
-  avatar_color: string;
+  avatar_color?: string;
 };

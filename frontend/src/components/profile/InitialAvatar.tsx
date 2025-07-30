@@ -1,7 +1,5 @@
 import { cn } from '@/lib/utils';
 
-const colors = ['#328bf0', '#eb8c34', '#32f091'] as string[];
-
 export const InitialAvatar = ({
   name,
   className,
