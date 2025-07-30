@@ -13,7 +13,7 @@ jobs:
     name: Backend CI & Deploy
     runs-on: ubuntu-latest
     env:
-      SECRET_JWT: "test-jwt-secret-key-for-ci"
+      SECRET_JWT: "my-super-veeery-secret-test-jwt-secret-key-for-ci"
     defaults:
       run:
         working-directory: backend
