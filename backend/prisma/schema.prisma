@@ -22,6 +22,7 @@ model User {
   password        String
   currency        String
   alert           Boolean  @default(true)
+  avatar_color    String   @default("#4D96FF")
 
   createdAt DateTime @default(now())   @map("created_at")
   updatedAt DateTime @updatedAt        @map("updated_at")

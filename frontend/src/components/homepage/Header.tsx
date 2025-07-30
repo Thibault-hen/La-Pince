@@ -1,6 +1,6 @@
 import { useAtomValue } from 'jotai';
 import { Menu } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import laPinceLogo from '@/assets/logo.png';
@@ -19,14 +19,23 @@ import { userAtom } from '@/stores/authStore';
 import { LanguageSelector } from '../lang/LanguageSelector';
 
 const TopMenu = [
-  { name: 'home.nav.contact', to: '#contact' },
-  { name: 'home.nav.features', to: '#features' },
+  { name: 'home.nav.contact', to: '/#contact' },
+  { name: 'home.nav.features', to: '/#features' },
 ];
 
 export default function Header() {
   const { t } = useTranslation();
   const user = useAtomValue(userAtom);
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  });
 
   return (
     <header className="sticky top-0 z-50 w-full">
