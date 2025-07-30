@@ -2,9 +2,11 @@ name: CI/CD
 
 on:
   push:
-    branches: [main]
+    branches: 
+      - main
   pull_request:
-    branches: [main]
+    branches: 
+      - main
 
 jobs:
   backend:
@@ -15,6 +17,14 @@ jobs:
         working-directory: backend
     steps:
       - uses: actions/checkout@v4
+      - name: Check for backend changes
+        id: changes_backend
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            backend_changed:
+              - 'backend/**'
+    
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -36,6 +46,14 @@ jobs:
         working-directory: frontend
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - name: Check for frontend changes
+        id: changes_frontend
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            frontend_changed:
+              - 'frontend/**'
       - uses: actions/setup-node@v4
         with:
           node-version: 22
