@@ -252,7 +252,7 @@ export const createColumns = (
           <DropdownMenu>
             <DropdownMenuTrigger
               asChild
-              className="bg-transparent cursor-pointer hover:bg-secondary-color dark:hover:bg-secondary-color border-none  focus:outline-none focus:ring-0 focus:ring-transparent
+              className="!bg-transparent cursor-pointer hover:bg-secondary-color dark:hover:bg-secondary-color border-none focus:outline-none focus:ring-0 focus:ring-transparent
              focus-visible:outline-none focus-visible:ring-0
              data-[highlighted]:bg-transparent data-[state=open]:bg-transparent
              shadow-none focus:shadow-none focus-visible:shadow-none"
