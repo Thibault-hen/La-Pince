@@ -57,7 +57,7 @@ export function SendResetPasswordEmailForm({
   return (
     <form
       className={cn(
-        'flex flex-col gap-6 dark:bg-primary rounded-md border p-6 sm:p-16 shadow',
+        'flex flex-col gap-6 bg-primary rounded-md border p-6 sm:p-16',
         className,
       )}
       {...props}

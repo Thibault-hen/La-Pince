@@ -91,7 +91,7 @@ export const ExpensesOverallChart = ({
   }: TooltipProps<number, string>) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-background/95 backdrop-blur-sm border border-border rounded-lg p-3 shadow-xl">
+        <div className="bg-background/95 backdrop-blur-sm border border-border rounded-lg p-3">
           <p className="font-semibold text-foreground">{label}</p>
           <p className="text-sm text-muted-foreground">
             {t('dashboard.chart.expenses')}:{' '}
@@ -104,7 +104,7 @@ export const ExpensesOverallChart = ({
   };
 
   return (
-    <Card className="w-full h-full dark:bg-primary border shadow-lg overflow-hidden">
+    <Card className="w-full h-full dark:bg-primary border overflow-hidden">
       <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">

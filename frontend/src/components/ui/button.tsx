@@ -10,20 +10,20 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 transition-colors duration-300',
+          'bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-300',
         destructive:
-          'bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
+          'bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
         outline:
-          'border bg-background shadow-xs hover:bg-secondary-color cursor-pointer hover:text-accent-foreground dark:border-input transition-colors duration-300 disabled:opacity-100 disabled:cursor-not-allowed',
+          'border dark:bg-background hover:bg-secondary-color dark:hover:bg-secondary-color cursor-pointer hover:text-accent-foreground dark:border-input transition-colors duration-300 disabled:opacity-100 disabled:cursor-not-allowed',
         secondary:
-          'bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80',
+          'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         ghost:
           'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
         link: 'text-primary underline-offset-4 hover:underline',
-        blue: 'bg-primary-color text-white shadow-xs hover:bg-secondary-color transition-colors duration-300 cursor-pointer disabled:opacity-100 disabled:cursor-not-allowed',
+        blue: 'bg-primary-color text-white hover:bg-secondary-color transition-colors duration-300 cursor-pointer disabled:opacity-100 disabled:cursor-not-allowed',
         orange:
-          'bg-secondary-color text-white shadow-xs hover:bg-primary-color transition-colors duration-300 cursor-pointer disabled:opacity-100 disabled:cursor-not-allowed',
-        red: 'bg-red-500 text-white shadow-xs transition-colors duration-300 cursor-pointer disabled:opacity-100 disabled:cursor-not-allowed',
+          'bg-secondary-color text-white hover:bg-primary-color transition-colors duration-300 cursor-pointer disabled:opacity-100 disabled:cursor-not-allowed',
+        red: 'bg-red-500 text-white transition-colors duration-300 cursor-pointer disabled:opacity-100 disabled:cursor-not-allowed',
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',

@@ -16,7 +16,7 @@ const Register = () => {
           <div className="flex gap-2 justify-start">
             <NavLink
               to="/"
-              className="flex items-center gap-2 border dark:bg-primary rounded-md p-2 text-sm hover:bg-secondary-color dark:hover:bg-secondary-color transition-colors duration-300 tracking-wide"
+              className="flex items-center gap-2 border bg-primary rounded-md p-2 text-sm hover:bg-secondary-color dark:hover:bg-secondary-color transition-colors duration-300 tracking-wide"
             >
               <House size={18} />
             </NavLink>

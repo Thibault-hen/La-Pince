@@ -12,7 +12,7 @@ export const FinanceCard = ({ title, amount, icon }: FinanceCardProps) => {
   const { formatAmount } = useCurrency();
 
   return (
-    <Card className="w-full shadow-md hover:shadow-lg transition-all duration-300 dark:bg-primary">
+    <Card className="w-full transition-all duration-300 dark:bg-primary">
       <CardContent className="h-full flex flex-col justify-between gap-2 xl:p-6">
         <div className="flex justify-between items-start">
           <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
