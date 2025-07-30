@@ -1,5 +1,5 @@
-import { getConnInfo } from '@hono/node-server/conninfo';
-import { rateLimiter } from 'hono-rate-limiter';
+import { getConnInfo } from "@hono/node-server/conninfo";
+import { rateLimiter } from "hono-rate-limiter";
 
 export const RATE_LIMITS = {
 	// Auth limits
@@ -17,15 +17,19 @@ const createRateLimit = (max: number, windowMs: number) => {
 		windowMs,
 		limit: max,
 		keyGenerator: (c) => {
-			const userId = c.get('jwtPayload')?.userId;
+			if (process.env.NODE_ENV === "test" || process.env.VITEST === "true") {
+				return "test-key";
+			}
+
+			const userId = c.get("jwtPayload")?.userId;
 			if (userId) return `user:${userId}`;
 
 			const ip = getConnInfo(c);
 			return (
-				c.req.header('x-forwarded-for') ||
-				c.req.header('x-real-ip') ||
+				c.req.header("x-forwarded-for") ||
+				c.req.header("x-real-ip") ||
 				ip.remote.address ||
-				'anonymous'
+				"anonymous"
 			);
 		},
 	});

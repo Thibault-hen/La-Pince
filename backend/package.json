@@ -9,7 +9,7 @@
 		"db:deploy": "npx prisma migrate deploy && npx prisma generate",
 		"db:seed": "tsx src/db/seeding.ts",
 		"db:seed-colors": "tsx src/db/colorSeeding.ts",
-		"test": "vitest"
+		"test": "NODE_ENV=test vitest"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
