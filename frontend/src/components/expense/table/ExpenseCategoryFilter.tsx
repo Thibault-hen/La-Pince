@@ -21,7 +21,7 @@ export const CategoryFilter = ({
   };
 
   return (
-    <div className="flex flex-col gap-2 mb-4 p-4 border shadow-sm dark:bg-primary rounded-lg">
+    <div className="flex flex-col gap-2 mb-4 p-4 border bg-primary rounded-lg">
       <div>
         <div className="flex items-center gap-3 mb-2">
           <div className="p-1.5 bg-primary-color/10 border border-primary-color/20 rounded-lg">

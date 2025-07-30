@@ -25,7 +25,7 @@ export const AppLayout = () => {
           <AppSidebar collapsible="icon" />
         </aside>
         <SidebarInset>
-          <header className="flex h-16 shrink-0 items-center gap-2 border-b">
+          <header className="flex h-16 shrink-0 items-center gap-2 border-b dark:border-neutral-700 bg-primary">
             <div className="w-full flex items-center gap-2 px-3 justify-between">
               <div className="flex items-center gap-2">
                 <SidebarTrigger className="cursor-pointer hover:bg-secondary-color dark:hover:bg-secondary-color" />

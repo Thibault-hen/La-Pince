@@ -33,7 +33,7 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
 
   return (
     <div className="flex justify-around items-center w-full min-h-[400px]">
-      <Card className="dark:bg-primary flex overflow-hidden shadow-lg w-full h-full flex-col">
+      <Card className="dark:bg-primary flex overflow-hidden w-full h-full flex-col">
         <CardHeader className="items-center pb-0 text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
