@@ -17,7 +17,7 @@ const createRateLimit = (max: number, windowMs: number) => {
 		windowMs,
 		limit: max,
 		keyGenerator: (c) => {
-			if (process.env.NODE_ENV === "test") {
+			if (process.env.NODE_ENV === "test" || process.env.VITEST === "true") {
 				return "test-key";
 			}
 
