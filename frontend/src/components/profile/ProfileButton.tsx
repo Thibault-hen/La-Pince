@@ -26,7 +26,7 @@ export const ProfileButton = () => {
       <DropdownMenuTrigger>
         <InitialAvatar
           className="h-8 w-8 cursor-pointer"
-          name={user?.name || ':)'}
+          name={user?.name || 'La Pince'}
         />
       </DropdownMenuTrigger>
 
