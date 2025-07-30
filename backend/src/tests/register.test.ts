@@ -97,7 +97,7 @@ describe("Auth Router - Register", () => {
 		});
 	});
 
-	it("should return 400 if user already exists", async () => {
+	it("should return 409 if user already exists", async () => {
 		mockFindUnique.mockResolvedValue({
 			id: "user-exists",
 			email: "exists@example.com",
@@ -115,7 +115,7 @@ describe("Auth Router - Register", () => {
 			headers: { "Content-Type": "application/json" },
 		});
 
-		expect(res.status).toBe(400);
+		expect(res.status).toBe(409);
 
 		const json = await res.json();
 
