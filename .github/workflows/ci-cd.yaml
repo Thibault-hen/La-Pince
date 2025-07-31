@@ -62,6 +62,8 @@ jobs:
         with:
           node-version: 22
       - run: npm ci --legacy-peer-deps
+      - name: Lint frontend
+        run: npm run lint
       - run: npm run test
       - name: Deploy to Vercel
         if: github.ref == 'refs/heads/main' && success() && steps.changes_frontend.outputs.frontend_changed == 'true'
