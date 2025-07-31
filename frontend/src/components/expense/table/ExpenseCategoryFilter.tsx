@@ -36,7 +36,8 @@ export const CategoryFilter = ({
       <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
         <Button
           variant="outline"
-          className={`${activeFilter === 'all' ? 'bg-secondary-color text-white' : ''} rounded-xl transition-colors`}
+          className={`${activeFilter === 'all' ? '!bg-secondary-color text-white' : ''} transition-colors items-center min-w-26 gap-1.5 rounded-xl`}
+          size={'sm'}
           onClick={() => handleFilter('all')}
         >
           {t('expenses.table.filter.categoryAll')}
@@ -45,12 +46,13 @@ export const CategoryFilter = ({
           const IconComponent = getCategoryIcon(cat.title);
           return (
             <div className="flex justify-center" key={cat.id}>
-              <Badge
+              <Button
                 variant={activeFilter === cat.id ? 'default' : 'outline'}
                 className="
                     items-center capitalize min-w-26 gap-1.5 rounded-xl
-                    shadow-sm font-bold text-xs border cursor-pointer
+                   font-bold
                 "
+                size={'sm'}
                 style={{
                   backgroundColor:
                     activeFilter === cat.id
@@ -68,7 +70,7 @@ export const CategoryFilter = ({
                   <IconComponent className="w-3.5 h-3.5 text-white" />
                 </div>
                 <span>{t(cat.title)}</span>
-              </Badge>
+              </Button>
             </div>
           );
         })}

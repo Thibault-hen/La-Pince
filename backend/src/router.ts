@@ -16,6 +16,9 @@ import { apiRateLimit } from './utils/rateLimits';
 const router = new Hono();
 
 router.use('/api/*', apiRateLimit);
+router.get('/api/v1/health', (ctx) => {
+  return ctx.json({ status: 'ok', message: 'API is running' }, 200);
+});
 router.route('/api/v1', authRouter);
 router.route('/api/v1/', contactController);
 
