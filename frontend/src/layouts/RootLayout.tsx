@@ -1,11 +1,16 @@
 import { BellRing, Check, CircleX } from 'lucide-react';
 import { Outlet } from 'react-router-dom';
 import { Toaster } from '@/components/ui/sonner';
+import { useHealth } from '@/hooks/use-health';
 import { AuthProvider } from '@/providers/AuthProvider';
+import { ServerErrorBanner } from './ServerErrorBanner';
 
 export const RootLayout = () => {
+  const { error } = useHealth();
+
   return (
     <AuthProvider>
+      {error && <ServerErrorBanner />}
       <Outlet />
       <Toaster
         icons={{

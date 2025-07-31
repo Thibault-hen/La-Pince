@@ -7,6 +7,8 @@ export const fr = {
     },
     banner: {
       info: '👀 Cette application est à des fins éducatives et sert de démonstration pour le passage du Titre Pro CDA.',
+      serverError:
+        '🚨 Les services de La Pince sont actuellement indisponibles. Veuillez réessayer plus tard.',
     },
     nav: {
       title: 'La Pince',
@@ -43,6 +45,13 @@ export const fr = {
       title: 'Page non trouvée',
       description: 'La page que vous recherchez n’existe pas.',
       backToHome: 'Retour à l’accueil',
+      back: 'Retour',
+    },
+    serverError: {
+      title: 'Erreur du serveur',
+      description:
+        'Les services de La Pince sont indisponibles. Une erreur est survenue sur le serveur. Veuillez réessayer plus tard.',
+      refresh: 'Rafraîchir la page',
     },
     contact: {
       message: 'Une question sur notre solution ou notre entreprise ?',

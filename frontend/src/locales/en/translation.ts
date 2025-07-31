@@ -7,6 +7,8 @@ export const en = {
     },
     banner: {
       info: '👀 This application is for educational purposes and serves as a demonstration',
+      serverError:
+        "🚨 La Pince's services are currently unavailable. Please try again later.",
     },
     nav: {
       title: 'La Pince',
@@ -43,6 +45,13 @@ export const en = {
       title: 'Page Not Found',
       description: 'The page you are looking for does not exist.',
       backToHome: 'Back to Home',
+      back: 'Go Back',
+    },
+    serverError: {
+      title: 'Server Error',
+      description:
+        "La Pince's services are unavailable. An error occurred on the server. Please try again later.",
+      refresh: 'Refresh the page',
     },
     contact: {
       message: 'A question about our solution or our company?',
