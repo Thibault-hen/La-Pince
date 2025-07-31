@@ -1,17 +1,13 @@
-import { ArrowLeft, Home } from 'lucide-react';
+import { RefreshCcw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import laPinceLogo from '@/assets/logo.webp';
 import { Button } from '@/components/ui/button';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 
-const NotFound = () => {
+const ServerError = () => {
   const location = useLocation();
   const { t } = useTranslation();
-
-  const handleGoHome = () => {
-    window.location.href = '/';
-  };
 
   return (
     <DefaultWrapper key={location.pathname}>
@@ -28,12 +24,12 @@ const NotFound = () => {
           <div className="mb-12 relative">
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-[12rem] md:text-[16rem] font-black text-primary-color/5 select-none">
-                404
+                500
               </div>
             </div>
             <div className="relative z-10">
               <div className="text-7xl md:text-8xl font-black text-primary-color mb-4">
-                4<span className="text-secondary-color animate-pulse">0</span>4
+                5<span className="text-secondary-color animate-pulse">0</span>0
               </div>
               <div className="h-1 w-24 bg-gradient-to-r from-primary-color to-secondary-color mx-auto rounded-full"></div>
             </div>
@@ -41,11 +37,11 @@ const NotFound = () => {
 
           <div className="mb-12 space-y-6">
             <h1 className="text-4xl md:text-5xl font-bold text-secondary-color mb-6 leading-tight">
-              {t('home.notFound.title')}
+              {t('home.serverError.title')}
             </h1>
             <div className="max-w-lg mx-auto">
               <p className="text-xl text-muted-foreground leading-relaxed mb-6">
-                {t('home.notFound.description')}
+                {t('home.serverError.description')}
               </p>
             </div>
           </div>
@@ -56,17 +52,8 @@ const NotFound = () => {
               onClick={() => window.history.back()}
               className="flex items-center gap-2 px-6 py-3"
             >
-              <ArrowLeft className="w-5 h-5" />
-              {t('home.notFound.back')}
-            </Button>
-
-            <Button
-              variant="outline"
-              onClick={handleGoHome}
-              className="flex items-center gap-2 px-6 py-3"
-            >
-              <Home className="w-5 h-5" />
-              {t('home.notFound.backToHome')}
+              <RefreshCcw className="w-5 h-5" />
+              {t('home.serverError.refresh')}
             </Button>
           </div>
         </div>
@@ -75,4 +62,5 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default ServerError;
+//
