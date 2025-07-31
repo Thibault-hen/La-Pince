@@ -1,7 +1,6 @@
 import { t } from 'i18next';
 import { Tags } from 'lucide-react';
 import { useState } from 'react';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import type { Category } from '@/types/category';
 import { getCategoryIcon } from '@/utils/categoryIcon';
