@@ -1,5 +1,6 @@
 /** biome-ignore-all lint/correctness/noChildrenProp: TanStack Form uses children prop pattern */
 import { useForm } from '@tanstack/react-form';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import {
@@ -38,6 +39,7 @@ export default function ExpenseAddModal({
   isModalOpen,
   handleClose,
 }: ExpenseAddModalProps) {
+  const [savedCategory, setSavedCategory] = useState<string | null>(null);
   const { data: { budgets = [] } = {} } = useBudgets();
   const hadBudgets = budgets.length > 0;
   const { mutateAsync: createExpense } = useCreateExpense();
@@ -50,14 +52,15 @@ export default function ExpenseAddModal({
     },
     defaultValues: {
       description: '',
-      budgetId: hadBudgets ? budgets[0].id : '',
+      budgetId: savedCategory ? savedCategory : hadBudgets ? budgets[0].id : '',
       amount: 0,
       date: new Date().toISOString(),
     },
     async onSubmit({ value }) {
       const expense = createExpenseSchema.parse(value);
       await createExpense(expense);
-      handleClose();
+      setSavedCategory(value.budgetId);
+      form.reset();
     },
   });
 
@@ -121,6 +124,7 @@ export default function ExpenseAddModal({
                     placeholder={t('expenses.add.form.amountPlaceholder')}
                     type="number"
                     required
+                    value={field.state.value}
                     onChange={(e) => {
                       field.handleChange(Number(e.target.value));
                     }}
