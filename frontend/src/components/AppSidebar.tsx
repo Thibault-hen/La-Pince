@@ -46,7 +46,9 @@ const getItems = (t: TFunction) => [
   },
 ];
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export const AppSidebar = ({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) => {
   const location = useLocation();
   const { open, openMobile, setOpenMobile } = useSidebar();
   const { t } = useTranslation();
@@ -139,4 +141,4 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarRail />
     </Sidebar>
   );
-}
+};

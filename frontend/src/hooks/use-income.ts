@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'sonner';
 import { type UpdateIncome, updateIncomeSchema } from '@/schemas/income.schema';
 import { incomeService } from '@/services/income';
+import { showErrorToast, showSuccessToast } from '@/utils/toasts';
 import { useCurrency } from './use-currency';
 
 export const useUpdateIncome = () => {
@@ -17,11 +17,11 @@ export const useUpdateIncome = () => {
       });
     },
     onSuccess: (data) => {
-      toast.success(t('income.toast.updated', { value: data.value }));
+      showSuccessToast(t('income.toast.updated', { value: data.value }));
       queryClient.invalidateQueries({ queryKey: ['dashboard'] });
     },
     onError: (_error) => {
-      toast.error(t('income.toast.error'));
+      showErrorToast(t('income.toast.error'));
     },
   });
 };

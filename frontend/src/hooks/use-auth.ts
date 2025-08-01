@@ -4,17 +4,20 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '@/services/auth';
 import { authLoadingAtom, csrfTokenAtom, userAtom } from '@/stores/authStore';
+import { currencyAtom } from '@/stores/currencyStore';
 
 export const useLogin = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const setUser = useSetAtom(userAtom);
   const setCsrfToken = useSetAtom(csrfTokenAtom);
+  const setCurrency = useSetAtom(currencyAtom);
   return useMutation({
     mutationFn: authService.login,
     onSuccess: (data) => {
       setUser(data.user);
       setCsrfToken(data.token);
+      setCurrency(data.user.currency);
       queryClient.setQueryData(['authUser'], data);
       navigate('/dashboard');
     },
@@ -58,7 +61,7 @@ export const useAuthUser = () => {
   const setUser = useSetAtom(userAtom);
   const setCsrfToken = useSetAtom(csrfTokenAtom);
   const setAuthLoading = useSetAtom(authLoadingAtom);
-
+  const setCurrency = useSetAtom(currencyAtom);
   const {
     data: authUser,
     error,
@@ -80,8 +83,9 @@ export const useAuthUser = () => {
     if (authUser) {
       setUser(authUser.user);
       setCsrfToken(authUser.token);
+      setCurrency(authUser.user.currency);
     }
-  }, [authUser, setUser, setCsrfToken]);
+  }, [authUser, setUser, setCsrfToken, setCurrency]);
 
   useEffect(() => {
     if (error) {

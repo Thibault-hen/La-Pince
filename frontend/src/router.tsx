@@ -1,7 +1,6 @@
-import { lazy, Suspense } from 'react';
+import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { ProtectedRoutes } from './components/auth/ProtectedRoutes';
-import { MainLoader } from './components/ui/MainLoader';
 import { AppLayout } from './layouts/AppLayout';
 import { RootLayout } from './layouts/RootLayout';
 
@@ -20,10 +19,6 @@ const LegalNoticePage = lazy(() => import('./pages/LegalNotice'));
 const FaqPage = lazy(() => import('./pages/Faq'));
 const NotFoundPage = lazy(() => import('./pages/NotFound'));
 
-const SuspenseWrapper = ({ children }: { children: React.ReactNode }) => (
-  <Suspense fallback={<MainLoader />}>{children}</Suspense>
-);
-
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -31,67 +26,35 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          <SuspenseWrapper>
-            <HomePage />
-          </SuspenseWrapper>
-        ),
+        element: <HomePage />,
       },
       {
         path: '/reset-password',
-        element: (
-          <SuspenseWrapper>
-            <ResetPasswordPage />
-          </SuspenseWrapper>
-        ),
+        element: <ResetPasswordPage />,
       },
       {
         path: '/login',
-        element: (
-          <SuspenseWrapper>
-            <LoginPage />
-          </SuspenseWrapper>
-        ),
+        element: <LoginPage />,
       },
       {
         path: '/register',
-        element: (
-          <SuspenseWrapper>
-            <RegisterPage />
-          </SuspenseWrapper>
-        ),
+        element: <RegisterPage />,
       },
       {
         path: '/privacy-policy',
-        element: (
-          <SuspenseWrapper>
-            <PrivacyPolicyPage />
-          </SuspenseWrapper>
-        ),
+        element: <PrivacyPolicyPage />,
       },
       {
         path: '/tos',
-        element: (
-          <SuspenseWrapper>
-            <TosPage />
-          </SuspenseWrapper>
-        ),
+        element: <TosPage />,
       },
       {
         path: '/legal-notice',
-        element: (
-          <SuspenseWrapper>
-            <LegalNoticePage />
-          </SuspenseWrapper>
-        ),
+        element: <LegalNoticePage />,
       },
       {
         path: '/faq',
-        element: (
-          <SuspenseWrapper>
-            <FaqPage />
-          </SuspenseWrapper>
-        ),
+        element: <FaqPage />,
       },
       {
         path: '/dashboard',
@@ -102,43 +65,23 @@ export const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: (
-                  <SuspenseWrapper>
-                    <DashboardPage />
-                  </SuspenseWrapper>
-                ),
+                element: <DashboardPage />,
               },
               {
                 path: 'budgets',
-                element: (
-                  <SuspenseWrapper>
-                    <BudgetPage />
-                  </SuspenseWrapper>
-                ),
+                element: <BudgetPage />,
               },
               {
                 path: 'expenses',
-                element: (
-                  <SuspenseWrapper>
-                    <ExpensePage />
-                  </SuspenseWrapper>
-                ),
+                element: <ExpensePage />,
               },
               {
                 path: 'categories',
-                element: (
-                  <SuspenseWrapper>
-                    <CategoryPage />
-                  </SuspenseWrapper>
-                ),
+                element: <CategoryPage />,
               },
               {
                 path: 'settings',
-                element: (
-                  <SuspenseWrapper>
-                    <SettingsPage />
-                  </SuspenseWrapper>
-                ),
+                element: <SettingsPage />,
               },
             ],
           },
@@ -148,10 +91,6 @@ export const router = createBrowserRouter([
   },
   {
     path: '*',
-    element: (
-      <SuspenseWrapper>
-        <NotFoundPage />
-      </SuspenseWrapper>
-    ),
+    element: <NotFoundPage />,
   },
 ]);
