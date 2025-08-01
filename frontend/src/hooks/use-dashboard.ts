@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { dashboardService } from '@/services/dashboard';
 import type { DashboardData } from '@/types/dashboard';
+import { delay } from '@/utils/delay';
 import { useCurrency } from './use-currency';
 
 export function useDashboard() {
@@ -22,6 +23,7 @@ export function useDashboard() {
   return useQuery<DashboardData>({
     queryKey: ['dashboard'],
     queryFn: async () => {
+      await delay(3000); // Simulate loading delay
       const response = await dashboardService.getDashboard();
       return response;
     },

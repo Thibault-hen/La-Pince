@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { categoryService } from '@/services/category';
 import { currencyAtom } from '@/stores/currencyStore';
 import type { CategoryWithBudget, UpdateCategory } from '@/types/category';
+import { delay } from '@/utils/delay';
 import { showErrorToast, showSuccessToast } from '@/utils/toasts';
 import { useCurrency } from './use-currency';
 
@@ -13,7 +14,10 @@ export const useCategories = () => {
   const currency = useAtomValue(currencyAtom);
   const { data, ...others } = useQuery<CategoryWithBudget[]>({
     queryKey: ['categories', currency],
-    queryFn: categoryService.getAll,
+    queryFn: async () => {
+      await delay(3000);
+      return categoryService.getAll();
+    },
     select: (data) =>
       data.map((category) => ({
         ...category,

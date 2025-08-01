@@ -17,30 +17,21 @@ export const DasboardSkeleton = () => {
         <Skeleton className="h-10 w-24 rounded-md" />
       </div>
 
-      {/* Enhanced Inline Dashboard Skeleton */}
       <div className="space-y-6">
-        {/* First Row: Main metrics inline */}
         <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {/* Revenue Card */}
-          <Skeleton className="h-[140px] rounded-xl bg-gradient-to-br from-gray-100 to-blue-100 dark:from-gray-700 dark:to-blue-800" />
-          {/* Budget Card */}
-          <Skeleton className="h-[140px] rounded-xl bg-gradient-to-br from-gray-100 to-green-100 dark:from-gray-700 dark:to-green-800" />
-          {/* Remaining Card */}
-          <Skeleton className="h-[140px] rounded-xl bg-gradient-to-br from-gray-100 to-purple-100 dark:from-gray-700 dark:to-purple-800" />
-          {/* Current Month Expenses - Compact Card */}
+          <Skeleton className="h-[150px] md:h-[250px] rounded-xl bg-gradient-to-br from-gray-100 to-blue-100 dark:from-gray-700 dark:to-blue-800" />
+          <Skeleton className="h-[150px] md:h-[250px] rounded-xl bg-gradient-to-br from-gray-100 to-green-100 dark:from-gray-700 dark:to-green-800" />
+          <Skeleton className="h-[150px] md:h-[250px] rounded-xl bg-gradient-to-br from-gray-100 to-purple-100 dark:from-gray-700 dark:to-purple-800" />
           <div className="lg:col-span-3 xl:col-span-1">
-            <Skeleton className="h-[140px] rounded-xl bg-gradient-to-br from-gray-100 to-red-100 dark:from-gray-700 dark:to-red-800" />
+            <Skeleton className="h-[150px] md:h-[250px] rounded-xl bg-gradient-to-br from-gray-100 to-red-100 dark:from-gray-700 dark:to-red-800" />
           </div>
         </div>
 
-        {/* Second Row: Charts and detailed stats */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Monthly Chart */}
           <div className="lg:col-span-1">
             <Skeleton className="h-[280px] rounded-xl" />
           </div>
 
-          {/* Quick Stats Grid */}
           <div className="grid grid-cols-2 gap-4">
             <Skeleton className="h-[130px] rounded-lg" />
             <Skeleton className="h-[130px] rounded-lg" />
@@ -50,7 +41,6 @@ export const DasboardSkeleton = () => {
         </div>
       </div>
 
-      {/* Last Expenses Skeleton */}
       <div className="relative group">
         <Skeleton className="h-[500px] w-full rounded-xl" />
       </div>
