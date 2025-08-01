@@ -11,8 +11,9 @@ import { DataTable } from '@/components/expense/table/ExpenseTable';
 import { Button } from '@/components/ui/button';
 import { useCategories } from '@/hooks/use-category';
 import { useCurrency } from '@/hooks/use-currency';
-import { type Expense, useExpenses } from '@/hooks/use-expense';
+import { useExpenses } from '@/hooks/use-expense';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
+import type { Expense } from '@/types/expense';
 
 const ExpensePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

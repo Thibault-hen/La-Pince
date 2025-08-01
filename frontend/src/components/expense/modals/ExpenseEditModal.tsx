@@ -27,8 +27,9 @@ import {
 } from '@/components/ui/select';
 import { useBudgets } from '@/hooks/use-budget';
 import { useCurrency } from '@/hooks/use-currency';
-import { type Expense, useUpdateExpense } from '@/hooks/use-expense';
+import { useUpdateExpense } from '@/hooks/use-expense';
 import { updateExpenseSchema } from '@/schemas/expense.schemas';
+import type { Expense } from '@/types/expense';
 import { DatePicker } from '../DatePicker';
 
 interface ExpenseEditModalProps {

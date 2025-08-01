@@ -9,7 +9,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { type Expense, useDeleteExpense } from '@/hooks/use-expense';
+import { useDeleteExpense } from '@/hooks/use-expense';
+import type { Expense } from '@/types/expense';
 
 interface DeleteBudgetProps {
   open: boolean;
