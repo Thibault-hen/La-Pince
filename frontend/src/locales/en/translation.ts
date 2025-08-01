@@ -83,12 +83,8 @@ export const en = {
         title: 'Notification or alert',
         value: 'Notification or alert',
       },
-      success: {
-        EMAIL_SENT: 'Your message has been sent successfully.',
-      },
-      error: {
-        EMAIL_FAILED: 'An error occurred while sending your message.',
-      },
+      success: 'Your message has been sent successfully.',
+      error: 'An error occurred while sending your message.',
     },
     footer: {
       title: 'La Pince',

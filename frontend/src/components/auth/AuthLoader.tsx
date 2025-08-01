@@ -2,11 +2,11 @@ import type { ReactNode } from 'react';
 import { MainLoader } from '@/components/ui/MainLoader';
 import { useAuthUser } from '@/hooks/use-auth';
 
-interface AuthProviderProps {
+interface AuthLoaderProps {
   children: ReactNode;
 }
 
-export const AuthProvider = ({ children }: AuthProviderProps) => {
+export const AuthLoader = ({ children }: AuthLoaderProps) => {
   const { isLoading } = useAuthUser();
 
   if (isLoading) {
