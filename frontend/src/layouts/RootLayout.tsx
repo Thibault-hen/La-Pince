@@ -1,17 +1,17 @@
 import { BellRing, Check, CircleX } from 'lucide-react';
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
+import { AuthLoader } from '@/components/auth/AuthLoader';
 import { Toaster } from '@/components/ui/sonner';
 import { useHealth } from '@/hooks/use-health';
 import { usePageProgress } from '@/hooks/use-progress-bar';
-import { AuthProvider } from '@/providers/AuthProvider';
 import { ServerErrorBanner } from './ServerErrorBanner';
 
 export const RootLayout = () => {
   const { error } = useHealth();
   usePageProgress();
   return (
-    <AuthProvider>
+    <AuthLoader>
       {error && <ServerErrorBanner />}
       <Suspense fallback={null}>
         <Outlet />
@@ -24,6 +24,6 @@ export const RootLayout = () => {
         }}
         duration={6000}
       />
-    </AuthProvider>
+    </AuthLoader>
   );
 };
