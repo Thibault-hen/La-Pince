@@ -26,7 +26,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import type { Expense } from '@/hooks/use-expense';
+import type { Expense } from '@/types/expense';
 import { getCategoryIcon } from '@/utils/categoryIcon';
 
 export const createColumns = (
