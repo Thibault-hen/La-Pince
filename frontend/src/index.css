@@ -171,3 +171,35 @@ body {
   scrollbar-width: thin;
   scrollbar-color: #d28f38 transparent;
 }
+
+#nprogress {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 2147483647 !important; 
+  pointer-events: none !important;
+}
+#nprogress .bar {
+  background-color:  oklch(0.702 0.1289 69.51) !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 4px !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px oklch(58.5% 0.233 277.117), 0 0 5px oklch(58.5% 0.233 277.117) !important;
+  z-index: 99999 !important;
+}
+
+
+.dark #nprogress .bar {
+  background-color:  oklch(58.5% 0.233 277.117) !important;
+    height: 3px !important;
+}
+
+.dark #nprogress .peg {
+  box-shadow: 0 0 10px oklch(0.702 0.1289 69.51), 0 0 5px oklch(0.702 0.1289 69.51) !important;
+  } 

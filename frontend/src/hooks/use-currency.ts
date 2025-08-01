@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { useCurrencyContext } from '@/context/currency-context';
+import { useAtomValue } from 'jotai';
 import { currencyService } from '@/services/currency';
+import { currencyAtom } from '@/stores/currencyStore';
 import type { CurrencyRates } from '@/types/currency';
 import { getLocale } from '@/utils/getLocale';
 
 export const useCurrency = () => {
-  const { currency } = useCurrencyContext();
+  const currency = useAtomValue(currencyAtom);
 
   const {
     data: rates = {},

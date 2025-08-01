@@ -1,17 +1,21 @@
 import { BellRing, Check, CircleX } from 'lucide-react';
+import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Toaster } from '@/components/ui/sonner';
 import { useHealth } from '@/hooks/use-health';
+import { usePageProgress } from '@/hooks/use-progress-bar';
 import { AuthProvider } from '@/providers/AuthProvider';
 import { ServerErrorBanner } from './ServerErrorBanner';
 
 export const RootLayout = () => {
   const { error } = useHealth();
-
+  usePageProgress();
   return (
     <AuthProvider>
       {error && <ServerErrorBanner />}
-      <Outlet />
+      <Suspense fallback={null}>
+        <Outlet />
+      </Suspense>
       <Toaster
         icons={{
           success: <Check size={15} className="text-green-500" />,

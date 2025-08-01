@@ -1,15 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { useAtomValue } from 'jotai';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'sonner';
-import { useCurrencyContext } from '@/context/currency-context';
 import { categoryService } from '@/services/category';
+import { currencyAtom } from '@/stores/currencyStore';
 import type { CategoryWithBudget, UpdateCategory } from '@/types/category';
+import { showErrorToast, showSuccessToast } from '@/utils/toasts';
 import { useCurrency } from './use-currency';
 
 export const useCategories = () => {
   const { convertFromEUR } = useCurrency();
-  const { currency } = useCurrencyContext();
+  const currency = useAtomValue(currencyAtom);
   const { data, ...others } = useQuery<CategoryWithBudget[]>({
     queryKey: ['categories', currency],
     queryFn: categoryService.getAll,
@@ -50,11 +51,11 @@ export const useCreateCategory = () => {
   return useMutation({
     mutationFn: categoryService.createCategory,
     onSuccess: (data) => {
-      toast.success(t('categories.toast.created', { title: t(data.title) }));
+      showSuccessToast(t('categories.toast.created', { title: t(data.title) }));
       queryClient.invalidateQueries({ queryKey: ['categories'] });
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error));
+      showErrorToast(getErrorMessage(error));
     },
   });
 };
@@ -66,12 +67,12 @@ export const useUpdateCategory = () => {
     mutationFn: ({ id, data }: { id: string; data: UpdateCategory }) =>
       categoryService.updateCategory(id, data),
     onSuccess: (data) => {
-      toast.success(t('categories.toast.updated', { title: data.title }));
+      showSuccessToast(t('categories.toast.updated', { title: data.title }));
       queryClient.invalidateQueries({ queryKey: ['categories'] });
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
     },
     onError: (_data) => {
-      toast.error(t('categories.toast.updateError'));
+      showErrorToast(t('categories.toast.updateError'));
     },
   });
 };
@@ -82,13 +83,13 @@ export const useDeleteCategory = () => {
   return useMutation({
     mutationFn: categoryService.deleteCategory,
     onSuccess: (_data) => {
-      toast.success(t('categories.toast.deleted'));
+      showSuccessToast(t('categories.toast.deleted'));
       queryClient.invalidateQueries({ queryKey: ['categories'] });
       queryClient.invalidateQueries({ queryKey: ['expenses'] });
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
     },
     onError: (_data) => {
-      toast.error(t('categories.toast.deleteError'));
+      showErrorToast(t('categories.toast.deleteError'));
     },
   });
 };

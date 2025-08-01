@@ -1,34 +1,20 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'sonner';
 import {
   type CreateExpense,
   type EditExpense,
   expenseService,
 } from '@/services/expenses';
+import type { Expense } from '@/types/expense';
+import { showErrorToast, showSuccessToast } from '@/utils/toasts';
 import { useCurrency } from './use-currency';
 
-export type Expense = {
-  id: string;
-  title: string;
-  budgetId?: string;
-  category: {
-    id: string;
-    title: string;
-    color: string;
-  };
-  amount: number;
-  date: string;
-};
-
-export function useExpenses() {
+export const useExpenses = () => {
   const { convertFromEUR } = useCurrency();
   const { data = [], isLoading } = useQuery({
     queryKey: ['expenses'],
-    queryFn: async () => {
-      return expenseService.getAll();
-    },
+    queryFn: expenseService.getAll,
     select: (data) => {
       return data.map<Expense>((expense) => {
         return {
@@ -53,9 +39,9 @@ export function useExpenses() {
     expenses: data,
     isLoading: isLoading,
   };
-}
+};
 
-export function useCreateExpense() {
+export const useCreateExpense = () => {
   const queryClient = useQueryClient();
   const { t } = useTranslation();
   const { convertToEUR } = useCurrency();
@@ -80,7 +66,7 @@ export function useCreateExpense() {
         amount: convertToEUR(data.amount),
       }),
     onSuccess: (expense) => {
-      toast.success(
+      showSuccessToast(
         t('expenses.toast.created', { title: expense.description }),
       );
       queryClient.invalidateQueries({ queryKey: ['expenses'] });
@@ -88,14 +74,14 @@ export function useCreateExpense() {
       queryClient.invalidateQueries({ queryKey: ['dashboard'] });
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error));
+      showErrorToast(getErrorMessage(error));
     },
   });
 
   return mutation;
-}
+};
 
-export function useUpdateExpense() {
+export const useUpdateExpense = () => {
   const queryClient = useQueryClient();
   const { t } = useTranslation();
   const { convertToEUR } = useCurrency();
@@ -120,33 +106,33 @@ export function useUpdateExpense() {
         amount: convertToEUR(data.amount),
       }),
     onSuccess: () => {
-      toast.success(t('expenses.toast.updated'));
+      showSuccessToast(t('expenses.toast.updated'));
       queryClient.invalidateQueries({ queryKey: ['expenses'] });
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
       queryClient.invalidateQueries({ queryKey: ['dashboard'] });
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error));
+      showErrorToast(getErrorMessage(error));
     },
   });
   return mutation;
-}
+};
 
-export function useDeleteExpense() {
+export const useDeleteExpense = () => {
   const queryClient = useQueryClient();
   const { t } = useTranslation();
   const mutation = useMutation({
     mutationKey: ['expenses'],
     mutationFn: (id: string) => expenseService.delete(id),
     onSuccess: () => {
-      toast.success(t('expenses.toast.deleted'));
+      showSuccessToast(t('expenses.toast.deleted'));
       queryClient.invalidateQueries({ queryKey: ['expenses'] });
       queryClient.invalidateQueries({ queryKey: ['budgets'] });
       queryClient.invalidateQueries({ queryKey: ['dashboard'] });
     },
     onError: () => {
-      toast.error(t('expenses.toast.deleteError'));
+      showErrorToast(t('expenses.toast.deleteError'));
     },
   });
   return mutation;
-}
+};

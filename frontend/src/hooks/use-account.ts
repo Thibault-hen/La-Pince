@@ -2,21 +2,21 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useSetAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'sonner';
-import { useCurrencyContext } from '@/context/currency-context';
 import {
   type UpdateCurrency,
   updateCurrencySchema,
 } from '@/schemas/account.schema';
 import { accountService } from '@/services/account';
 import { csrfTokenAtom, userAtom } from '@/stores/authStore';
+import { currencyAtom } from '@/stores/currencyStore';
 import type { UserAccount } from '@/types/account';
+import { showErrorToast, showSuccessToast } from '@/utils/toasts';
 
 export const useUpdateUserProfile = () => {
   const queryClient = useQueryClient();
   const { t } = useTranslation();
   const setUser = useSetAtom(userAtom);
-  const { setCurrency } = useCurrencyContext();
+  const setCurrency = useSetAtom(currencyAtom);
 
   const getErrorMessage = (error: unknown): string => {
     if (error instanceof AxiosError) {
@@ -33,13 +33,13 @@ export const useUpdateUserProfile = () => {
   return useMutation({
     mutationFn: (data: UserAccount) => accountService.updateUserProfile(data),
     onSuccess: (data) => {
-      toast.success(t('account.toast.updated'));
+      showSuccessToast(t('account.toast.updated'));
       queryClient.invalidateQueries({ queryKey: ['account'] });
       setCurrency(data.currency);
       setUser(data);
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error));
+      showErrorToast(getErrorMessage(error));
     },
   });
 };
@@ -63,11 +63,11 @@ export const useUpdatePassword = () => {
   return useMutation({
     mutationFn: accountService.updateUserPassword,
     onSuccess: (_data) => {
-      toast.success(t('account.toast.passwordUpdated'));
+      showSuccessToast(t('account.toast.passwordUpdated'));
       queryClient.invalidateQueries({ queryKey: ['account'] });
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error));
+      showErrorToast(getErrorMessage(error));
     },
   });
 };
@@ -76,6 +76,7 @@ export const useUpdateCurrency = () => {
   const queryClient = useQueryClient();
   const { t } = useTranslation();
   const setUser = useSetAtom(userAtom);
+  const setCurrency = useSetAtom(currencyAtom);
   return useMutation({
     mutationFn: async (currency: UpdateCurrency) => {
       updateCurrencySchema.parse(currency);
@@ -83,12 +84,15 @@ export const useUpdateCurrency = () => {
       return response;
     },
     onSuccess: (data) => {
-      toast.success(t('currency.toast.updated', { currency: data.currency }));
+      showSuccessToast(
+        t('currency.toast.updated', { currency: data.currency }),
+      );
       queryClient.invalidateQueries({ queryKey: ['account'] });
       setUser((prev) => (prev ? { ...prev, currency: data.currency } : prev));
+      setCurrency(data.currency);
     },
     onError: (_error) => {
-      toast.error(t('currency.toast.error'));
+      showErrorToast(t('currency.toast.error'));
     },
   });
 };
@@ -114,13 +118,13 @@ export const useDeleteAccount = () => {
   return useMutation({
     mutationFn: accountService.deleteAccount,
     onSuccess: () => {
-      toast.success(t('account.toast.deleted'));
+      showSuccessToast(t('account.toast.deleted'));
       queryClient.clear();
       setUser(null);
       setCsrfToken(null);
     },
     onError: (error) => {
-      toast.error(getErrorMessage(error));
+      showErrorToast(getErrorMessage(error));
     },
   });
 };
