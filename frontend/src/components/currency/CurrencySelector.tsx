@@ -1,3 +1,4 @@
+import { useAtom } from 'jotai';
 import { CloudAlert } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -9,10 +10,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useCurrencyContext } from '@/context/currency-context';
 import { useUpdateCurrency } from '@/hooks/use-account';
 import { useCurrency } from '@/hooks/use-currency';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
+import { currencyAtom } from '@/stores/currencyStore';
 
 type Currency = {
   name: string;
@@ -44,7 +45,7 @@ export const currencies = [
 ] as Currency[];
 
 export const CurrencySelector = () => {
-  const { currency, setCurrency } = useCurrencyContext();
+  const [currency, setCurrency] = useAtom(currencyAtom);
   const { error, isLoading } = useCurrency();
   const { t } = useTranslation();
   const { mutateAsync: updateCurrency } = useUpdateCurrency();
