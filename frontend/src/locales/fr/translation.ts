@@ -1,5 +1,10 @@
 export const fr = {
+  button: {
+    profile: 'Profil',
+    logout: 'Déconnexion',
+  },
   home: {
+    logout: 'Vous avez été déconnecté avec succès.',
     meta: {
       title: 'La Pince - Application de gestion financière personnelle',
       description:
@@ -603,6 +608,7 @@ export const fr = {
   },
   register: {
     title: 'Inscription',
+    successMessage: 'Compte créé avec succès',
     form: {
       email: 'Email',
       name: 'Nom',

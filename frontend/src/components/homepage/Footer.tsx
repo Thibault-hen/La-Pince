@@ -4,18 +4,6 @@ import { Link } from 'react-router-dom';
 import laPinceLogo from '@/assets/logo.png';
 import { Separator } from '@/components/ui/separator';
 
-const footerLinks = {
-  product: [
-    { name: 'home.footer.productFonctionalities', href: '#features' },
-    { name: 'home.footer.faqs', href: '/faq' },
-  ],
-  company: [{ name: 'home.footer.links2', href: '#contact' }],
-  legal: [
-    { name: 'home.footer.confidentiality', href: '/privacy-policy' },
-    { name: 'home.footer.conditions', href: '/tos' },
-  ],
-};
-
 const socialLinks = [
   { icon: Twitter, name: 'Twitter', href: '#' },
   { icon: Instagram, name: 'Instagram', href: '#' },
@@ -48,16 +36,22 @@ export default function Footer01() {
                   {t('home.footer.product')}
                 </h4>
                 <ul className="space-y-2">
-                  {footerLinks.product.map((link) => (
-                    <li key={link.name}>
-                      <a
-                        href={link.href}
-                        className="text-sm text-white hover:text-foreground"
-                      >
-                        {t(link.name)}
-                      </a>
-                    </li>
-                  ))}
+                  <li>
+                    <a
+                      href="#features"
+                      className="text-sm text-white hover:text-foreground"
+                    >
+                      {t('home.footer.productFonctionalities')}
+                    </a>
+                  </li>
+                  <li>
+                    <Link
+                      to="/faq"
+                      className="text-sm text-white hover:text-foreground"
+                    >
+                      {t('home.footer.faqs')}
+                    </Link>
+                  </li>
                 </ul>
               </div>
               <div className="space-y-3">
@@ -65,16 +59,14 @@ export default function Footer01() {
                   {t('home.footer.links')}
                 </h4>
                 <ul className="space-y-2">
-                  {footerLinks.company.map((link) => (
-                    <li key={link.name}>
-                      <a
-                        href={link.href}
-                        className="text-sm text-white hover:text-foreground"
-                      >
-                        {t(link.name)}
-                      </a>
-                    </li>
-                  ))}
+                  <li>
+                    <a
+                      href="/#contact"
+                      className="text-sm text-white hover:text-foreground"
+                    >
+                      {t('home.footer.links2')}
+                    </a>
+                  </li>
                 </ul>
               </div>
               <div className="space-y-3">
@@ -82,16 +74,22 @@ export default function Footer01() {
                   {t('home.footer.legal')}
                 </h4>
                 <ul className="space-y-2">
-                  {footerLinks.legal.map((link) => (
-                    <li key={link.name}>
-                      <Link
-                        to={link.href}
-                        className="text-sm text-white hover:text-foreground"
-                      >
-                        {t(link.name)}
-                      </Link>
-                    </li>
-                  ))}
+                  <li>
+                    <Link
+                      to="/privacy-policy"
+                      className="text-sm text-white hover:text-foreground"
+                    >
+                      {t('home.footer.confidentiality')}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/tos"
+                      className="text-sm text-white hover:text-foreground"
+                    >
+                      {t('home.footer.conditions')}
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </div>

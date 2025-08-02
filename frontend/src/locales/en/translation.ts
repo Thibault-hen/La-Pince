@@ -1,5 +1,10 @@
 export const en = {
+  button: {
+    profile: 'Profile',
+    logout: 'Logout',
+  },
   home: {
+    logout: 'You have been logged out successfully.',
     meta: {
       title: 'La Pince - Personal Finance Application',
       description:
@@ -596,6 +601,7 @@ export const en = {
   },
   register: {
     title: 'Register',
+    successMessage: 'Account created successfully',
     form: {
       email: 'Email',
       name: 'Name',

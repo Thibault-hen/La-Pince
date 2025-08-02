@@ -18,11 +18,9 @@ const Dashboard = () => {
 
   if (isLoading) {
     return (
-      <DefaultWrapper>
-        <div className="3xl:py-4 3xl:px-26 space-y-6 p-6">
-          <DasboardSkeleton />
-        </div>
-      </DefaultWrapper>
+      <div className="3xl:py-4 3xl:px-26 space-y-6 p-6">
+        <DasboardSkeleton />
+      </div>
     );
   }
 

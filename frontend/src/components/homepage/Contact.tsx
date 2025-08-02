@@ -57,8 +57,8 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="sm:px-6 xl:px-36 py-24 container mx-auto">
-      <div className="align-middle grid grid-cols-1 p-10 lg:grid-cols-2 gap-8">
+    <section id="contact" className="xl:px-36 py-16 bg-background">
+      <div className="align-middle grid grid-cols-1 py-19 px-4 lg:grid-cols-2 gap-8">
         <div className="mt-auto mb-auto pb-8 space-y-4">
           <h1 className="bg-gradient-to-r from-primary-color via-primary-color to-foreground bg-clip-text text-transparent font-bold text-2xl md:text-3xl xl:text-4xl tracking-tight leading-tight text-center lg:text-left">
             {t('home.contact.message')}
