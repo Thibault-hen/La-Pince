@@ -1,3 +1,5 @@
+import { description } from '@/components/budget/BudgetChart';
+
 export const en = {
   home: {
     meta: {
@@ -344,8 +346,10 @@ export const en = {
     },
     chart: {
       header: {
-        title: 'Your expenses this month',
+        title: 'Your expenses',
         totalAmount: 'Total amount',
+        description: 'All your expenses for the current month',
+        highestExpense: 'Highest expense on a single day',
       },
       noExpensesThisMonth1: 'Cannot find any expenses this month',
       noExpensesThisMonth2:
