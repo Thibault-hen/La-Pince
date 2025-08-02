@@ -1,5 +1,10 @@
 export const fr = {
+  button: {
+    profile: 'Profil',
+    logout: 'Déconnexion',
+  },
   home: {
+    logout: 'Vous avez été déconnecté avec succès.',
     meta: {
       title: 'La Pince - Application de gestion financière personnelle',
       description:
@@ -347,7 +352,7 @@ export const fr = {
         title: 'Tes dépenses',
         totalAmount: 'Montant total',
         description: 'Toutes tes dépenses pour le mois en cours',
-        highestExpense: 'Total dépense la plus élevée en un jour',
+        highestExpense: 'Total dépense la plus élevée sur un jour',
       },
       noExpensesThisMonth1: 'Aucune dépense enregistrée ce mois-ci',
       noExpensesThisMonth2: 'Ajoute-en une pour suivre ta progression',
@@ -603,6 +608,7 @@ export const fr = {
   },
   register: {
     title: 'Inscription',
+    successMessage: 'Compte créé avec succès',
     form: {
       email: 'Email',
       name: 'Nom',

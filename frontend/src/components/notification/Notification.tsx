@@ -70,7 +70,7 @@ export default function Notification({ notification }: NotificationProps) {
           <div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
             <div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed space-y-3">
               <div className="space-y-3 flex flex-col">
-                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                <div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                   <span>{t('notification.yourBudget')}</span>
                   <Badge
                     className="inline-flex tracking-wide items-center capitalize gap-1.5 rounded-xl shadow-sm font-bold text-xs border mx-1 py-1"
@@ -93,7 +93,7 @@ export default function Notification({ notification }: NotificationProps) {
                       ? t('notification.budgetWarning.description')
                       : t('notification.budgetExceeded.description')}
                   </span>
-                </p>
+                </div>
                 <div>
                   <span className="text-muted-foreground">
                     {t('notification.budgetWarning.remaining1')}{' '}

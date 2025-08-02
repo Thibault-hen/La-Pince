@@ -1,10 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSetAtom } from 'jotai';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '@/services/auth';
 import { authLoadingAtom, csrfTokenAtom, userAtom } from '@/stores/authStore';
 import { currencyAtom } from '@/stores/currencyStore';
+import { showSuccessToast } from '@/utils/toasts';
 
 export const useLogin = () => {
   const queryClient = useQueryClient();
@@ -26,13 +28,14 @@ export const useLogin = () => {
 
 export const useRegister = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   return useMutation({
     mutationFn: authService.register,
     onSuccess: (data) => {
       navigate('/login', {
         state: {
           messages: {
-            successMessage: 'Compte créé avec succès',
+            successMessage: t('register.successMessage'),
             email: data.user.email,
           },
         },
@@ -46,6 +49,7 @@ export const useLogout = () => {
   const navigate = useNavigate();
   const setUser = useSetAtom(userAtom);
   const setCsrfToken = useSetAtom(csrfTokenAtom);
+  const { t } = useTranslation();
   return useMutation({
     mutationFn: authService.logout,
     onSuccess: () => {
@@ -53,6 +57,7 @@ export const useLogout = () => {
       setCsrfToken(null);
       queryClient.clear();
       navigate('/', { replace: true });
+      showSuccessToast(t('home.logout'));
     },
   });
 };

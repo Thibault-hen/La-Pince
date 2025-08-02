@@ -36,7 +36,7 @@ export default function Hero05() {
               {t('home.hero.title')}
             </h1>
 
-            <p className="text-muted-foreground text-center lg:text-left text-sm md:text-base xl:text-lg leading-relaxed tracking-wider max-w-2xl">
+            <p className="text-muted-foreground text-center lg:text-left text-sm md:text-base xl:text-lg leading-relaxed max-w-2xl">
               {t('home.hero.description')}
             </p>
 

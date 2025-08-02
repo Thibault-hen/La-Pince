@@ -1,5 +1,6 @@
 import { useAtomValue } from 'jotai';
 import { CircleUserRound, LogOutIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import {
   DropdownMenu,
@@ -16,6 +17,7 @@ import { InitialAvatar } from './InitialAvatar';
 export const ProfileButton = () => {
   const naviguate = useNavigate();
   const user = useAtomValue(userAtom);
+  const { t } = useTranslation();
   const { mutateAsync: logout } = useLogout();
 
   const handleLogout = async () => {
@@ -56,7 +58,7 @@ export const ProfileButton = () => {
           className="cursor-pointer transition-all duration-150 ease-in-out"
         >
           <CircleUserRound className="hover:text-white" />
-          Profil
+          {t('button.profile')}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
@@ -64,7 +66,7 @@ export const ProfileButton = () => {
           className="cursor-pointer transition-all duration-150 ease-in-out"
         >
           <LogOutIcon className="hover:text-white" />
-          Déconnexion
+          {t('button.logout')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
