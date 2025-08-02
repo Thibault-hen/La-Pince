@@ -1,5 +1,10 @@
 export const en = {
+  button: {
+    profile: 'Profile',
+    logout: 'Logout',
+  },
   home: {
+    logout: 'You have been logged out successfully.',
     meta: {
       title: 'La Pince - Personal Finance Application',
       description:
@@ -344,8 +349,10 @@ export const en = {
     },
     chart: {
       header: {
-        title: 'Your expenses this month',
+        title: 'Your expenses',
         totalAmount: 'Total amount',
+        description: 'All your expenses for the current month',
+        highestExpense: 'Highest expense on a single day',
       },
       noExpensesThisMonth1: 'Cannot find any expenses this month',
       noExpensesThisMonth2:
@@ -594,6 +601,7 @@ export const en = {
   },
   register: {
     title: 'Register',
+    successMessage: 'Account created successfully',
     form: {
       email: 'Email',
       name: 'Name',

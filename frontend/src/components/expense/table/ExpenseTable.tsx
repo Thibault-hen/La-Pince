@@ -107,14 +107,6 @@ export function DataTable<TData, TValue>({
   };
   return (
     <>
-      <div>
-        {data && data.length > 0 && (
-          <CategoryFilter
-            categories={categories}
-            onFilter={handleCategoryFilter}
-          />
-        )}
-      </div>
       <div className="relative flex py-4">
         <div className="flex flex-col md:flex-row items-center md:justify-between md:items-start w-full ">
           <Search className="absolute left-3 top-6.5 h-4 w-4 text-muted-foreground" />
@@ -127,6 +119,12 @@ export function DataTable<TData, TValue>({
             className="w-full md:max-w-sm pl-10 mb-6 md:mb-0 text-sm md:text-base bg-primary"
           />
           <div className="flex flex-col w-full md:w-fit sm:flex-row items-center gap-2 md:gap-2">
+            {data && data.length > 0 && (
+              <CategoryFilter
+                categories={categories}
+                onFilter={handleCategoryFilter}
+              />
+            )}
             <DateFilter onFilterDate={handleDateFilter} />
             {children}
           </div>
@@ -203,10 +201,10 @@ export function DataTable<TData, TValue>({
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2">
             <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
-              <BanknoteArrowDown className="w-4 h-4 text-primary-color" />
+              <BanknoteArrowDown className="w-3.5 h-3.5 text-primary-color" />
             </div>
-            <span>{filteredItems}</span>
-            <span className="text-muted-foreground font-bold">
+            <span className="text-xs sm:text-sm">{filteredItems}</span>
+            <span className="text-muted-foreground font-bold text-xs sm:text-sm">
               {filteredItems === 1
                 ? t('expenses.table.singularCount')
                 : t('expenses.table.pluralCount')}
@@ -216,6 +214,7 @@ export function DataTable<TData, TValue>({
 
         <div className="flex items-center gap-2">
           <Button
+            className="text-[0.425rem] py-1 sm:text-[0.625rem]"
             variant="blue"
             size="sm"
             onClick={() => table.previousPage()}
@@ -224,6 +223,7 @@ export function DataTable<TData, TValue>({
             {t('expenses.table.previous')}
           </Button>
           <Button
+            className="text-[0.425rem] py-1 sm:text-[0.625rem]"
             variant="blue"
             size="sm"
             onClick={() => table.nextPage()}

@@ -6,7 +6,7 @@ const { REDIS_URL, NODE_ENV } = getEnv();
 const redis = createClient({
   url: REDIS_URL,
   socket: {
-    reconnectStrategy: (retries) => {
+    reconnectStrategy: (_retries) => {
       if (NODE_ENV === 'development') return false;
       return 60;
     },

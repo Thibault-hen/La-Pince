@@ -2,7 +2,13 @@ import { useSpring } from 'motion/react';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import {
   type ChartConfig,
   ChartContainer,
@@ -24,12 +30,16 @@ const chartConfig = {
 function getExpensesThisMonth<T extends { date: string; amount: number }>(
   expenses: T[],
 ): { date: string; amount: number }[] {
-  const date = new Date();
-  const month = date.getMonth();
-  const year = date.getFullYear();
+  const today = new Date();
+  const month = today.getMonth();
+  const year = today.getFullYear();
 
-  const map: { [date: string]: { date: string; amount: number } } = {};
+  // Get the number of days in the current month
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
 
+  const expenseMap: { [date: string]: number } = {};
+
+  // Populate the map with actual expenses
   expenses.forEach((expense) => {
     const expenseDate = new Date(expense.date);
     if (
@@ -37,23 +47,27 @@ function getExpensesThisMonth<T extends { date: string; amount: number }>(
       expenseDate.getFullYear() === year
     ) {
       const dayKey = expenseDate.toISOString().split('T')[0];
-      if (!map[dayKey]) {
-        map[dayKey] = {
-          date: dayKey,
-          amount: 0,
-        };
-      }
-      map[dayKey].amount += expense.amount;
+      expenseMap[dayKey] = (expenseMap[dayKey] || 0) + expense.amount;
     }
   });
-  return Object.values(map).sort(
-    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-  );
+
+  const allDays: { date: string; amount: number }[] = [];
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dayKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+    allDays.push({
+      date: dayKey,
+      amount: expenseMap[dayKey] || 0,
+    });
+  }
+
+  return allDays;
 }
 
 export function ChartBarInteractive() {
   const [displayTotal, setDisplayTotal] = useState<string>();
-  const [activeChart, setActiveChart] =
+  const [activeChart, _setActiveChart] =
     useState<keyof typeof chartConfig>('amount');
   const { expenses } = useExpenses();
   const { formatAmount } = useCurrency();
@@ -74,6 +88,11 @@ export function ChartBarInteractive() {
     duration: 1000,
   });
 
+  const highestExpense = useMemo(
+    () => Math.max(...expensesThisMonth.map((expense) => expense.amount), 0),
+    [expensesThisMonth],
+  );
+
   dTotal.on('change', (value) => {
     setDisplayTotal(value.toFixed(2));
   });
@@ -86,39 +105,41 @@ export function ChartBarInteractive() {
     <Card className="py-0 dark:bg-primary">
       <CardHeader className="flex flex-col items-stretch border-b !p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 pt-4 pb-3 sm:!py-0">
-          <CardTitle>{t('expenses.chart.header.title')}</CardTitle>
+          <CardTitle className="text-xs md:text-sm">
+            {t('expenses.chart.header.title')}
+          </CardTitle>
+          <CardDescription className="text-xs md:text-sm">
+            {t('expenses.chart.header.description')}
+          </CardDescription>
         </div>
-        <div className="flex">
-          {Object.keys(chartConfig).map((key) => {
-            const chart = key as keyof typeof chartConfig;
-            return (
-              <button
-                key={chart}
-                type="button"
-                data-active={activeChart === chart}
-                className="data-[active=true]:bg-muted/50 dark:bg-primary rounded-tr-lg border-r relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l sm:border-t-0 sm:border-l sm:px-8 sm:py-6"
-                onClick={() => setActiveChart(chart)}
-              >
-                <span className="text-muted-foreground text-xs">
-                  {t(chartConfig[chart].label)}
-                </span>
-                <span className="text-lg leading-none font-bold sm:text-3xl">
-                  {formatAmount(Number(displayTotal ?? 0))}
-                </span>
-              </button>
-            );
-          })}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col justify-center gap-1 px-6 py-4 text-left even:border-l border-t sm:border-t-0 sm:border-l sm:px-8 sm:py-6">
+            <span className="text-muted-foreground text-[.625rem] md:text-xs">
+              {t('expenses.chart.header.highestExpense')}
+            </span>
+            <span className="text-lg leading-none font-bold md:text-2xl">
+              {formatAmount(Number(highestExpense ?? 0))}
+            </span>
+          </div>
+
+          <div className="md:rounded-tr-lg flex flex-1 flex-col justify-center gap-1 px-6 py-4 text-left border-t sm:border-t-0 sm:border-l sm:px-8 sm:py-6">
+            <span className="text-muted-foreground text-[.625rem] md:text-xs">
+              {t('expenses.chart.header.totalAmount')}
+            </span>
+            <span className="text-lg leading-none font-bold md:text-2xl">
+              {formatAmount(Number(displayTotal ?? 0))}
+            </span>
+          </div>
         </div>
       </CardHeader>
       <CardContent className="px-2 sm:p-6">
-        {expensesThisMonth.length === 0 ? (
+        {expensesThisMonth.some((expense) => expense.amount > 0) === false ? (
           <div className="bg-secondary-color/10 border border-secondary-color p-4 rounded-md text-center w-5/6 xl:w-1/2 mx-auto mb-6">
-            <p className="text-secondary-color text-xs lg:text-sm">
+            <p className="flex flex-col text-secondary-color text-xs lg:text-sm">
               <span className="font-semibold text-secondary-color">
                 {t('expenses.chart.noExpensesThisMonth1')}
               </span>
-              .<br />
-              {t('expenses.chart.noExpensesThisMonth2')}
+              <span>{t('expenses.chart.noExpensesThisMonth2')}</span>
             </p>
           </div>
         ) : (
@@ -134,13 +155,13 @@ export function ChartBarInteractive() {
                 right: 12,
               }}
             >
-              <CartesianGrid vertical={true} />
+              <CartesianGrid vertical={false} />
               <XAxis
                 dataKey="date"
-                tickLine={false}
-                axisLine={false}
+                tickLine={true}
+                axisLine={true}
                 tickMargin={8}
-                minTickGap={32}
+                minTickGap={12}
                 tickFormatter={(value) => {
                   const date = new Date(value);
                   return date.toLocaleDateString(locale, {

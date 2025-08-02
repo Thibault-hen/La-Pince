@@ -75,8 +75,10 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.553 0.013 58.071);
 }
+
 @theme {
   --breakpoint-3xl: 120rem;
+  --font-size-xxs: 0.500rem;
 }
 
 @theme inline {
