@@ -22,8 +22,6 @@ export const useCategories = () => {
           amount: convertFromEUR(budget.amount),
         })),
       })),
-    staleTime: 1000 * 60 * 5,
-    retry: false,
   });
 
   return {

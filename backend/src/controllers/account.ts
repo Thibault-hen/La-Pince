@@ -6,214 +6,218 @@ import { describeRoute } from 'hono-openapi';
 import z from 'zod';
 import prisma from '../db/client';
 import {
-	deleteUserCookie,
-	generateTokenCSRF,
-	generateTokenJWT,
+  deleteUserCookie,
+  generateTokenCSRF,
+  generateTokenJWT,
 } from '../lib/tokens';
 import { updateJWTPayload } from '../middlewares/auth.middleware';
 import {
-	response200,
-	response204,
-	response400,
-	response404,
-	response409,
+  response200,
+  response204,
+  response400,
+  response404,
+  response409,
 } from '../utils/openapi';
 import { deleteAccountRateLimit } from '../utils/rateLimits';
 import {
-	checkPasswordSchema,
-	updateUserCurrencySchema,
-	updateUserPasswordSchema,
-	updateUserSchema,
-	userSelectSchema,
+  checkPasswordSchema,
+  updateUserCurrencySchema,
+  updateUserPasswordSchema,
+  updateUserSchema,
+  userSelectSchema,
 } from '../validators/user';
 
 const accountRouter = new Hono();
 
 accountRouter
-	.basePath('/account')
-	.get(
-		'/me',
-		describeRoute({
-			description: 'Get current user',
-			tags: ['account'],
-			responses: {
-				200: response200(userSelectSchema),
-			},
-		}),
-		async (c) => {
-			const userId = c.get('jwtPayload').userId;
+  .basePath('/account')
+  .get(
+    '/me',
+    describeRoute({
+      description: 'Get current user',
+      tags: ['account'],
+      responses: {
+        200: response200(userSelectSchema),
+      },
+    }),
+    async (c) => {
+      const userId = c.get('jwtPayload').userId;
 
-			const user = await prisma.user.findUnique({
-				where: { id: userId },
-				omit: {
-					password: true,
-				},
-			});
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        omit: {
+          password: true,
+        },
+      });
 
-			const tokenCSRF = await generateTokenCSRF(c);
+      if (!user) {
+        throw new HTTPException(404, { message: 'User not found.' });
+      }
 
-			return c.json({ user: user, token: tokenCSRF }, 200);
-		},
-	)
-	.patch(
-		'/',
-		describeRoute({
-			description: 'Update current user info',
-			tags: ['account'],
-			responses: {
-				200: response200(userSelectSchema),
-				409: response409(z.literal('Email already in use.')),
-			},
-		}),
-		zValidator('json', updateUserSchema),
-		async (c) => {
-			const userId = c.get('jwtPayload').userId;
-			const data = c.req.valid('json');
+      const tokenCSRF = await generateTokenCSRF(c);
 
-			if (data.email) {
-				const emailExist = await prisma.user.findUnique({
-					where: { email: data.email },
-				});
+      return c.json({ user: user, token: tokenCSRF }, 200);
+    },
+  )
+  .patch(
+    '/',
+    describeRoute({
+      description: 'Update current user info',
+      tags: ['account'],
+      responses: {
+        200: response200(userSelectSchema),
+        409: response409(z.literal('Email already in use.')),
+      },
+    }),
+    zValidator('json', updateUserSchema),
+    async (c) => {
+      const userId = c.get('jwtPayload').userId;
+      const data = c.req.valid('json');
 
-				if (emailExist && emailExist.id !== userId) {
-					throw new HTTPException(409, { message: 'Email already in use.' });
-				}
-			}
-			const updatedUser = await prisma.user.update({
-				where: { id: userId },
-				data,
-			});
+      if (data.email) {
+        const emailExist = await prisma.user.findUnique({
+          where: { email: data.email },
+        });
 
-			await generateTokenJWT(updatedUser.id, updatedUser.alert, c);
-			await updateJWTPayload(c);
-			const { password: _, ...safeUser } = updatedUser;
+        if (emailExist && emailExist.id !== userId) {
+          throw new HTTPException(409, { message: 'Email already in use.' });
+        }
+      }
+      const updatedUser = await prisma.user.update({
+        where: { id: userId },
+        data,
+      });
 
-			return c.json(safeUser, 200);
-		},
-	)
-	.patch(
-		'/reset-password',
-		describeRoute({
-			description: 'Update current user password',
-			tags: ['account'],
-			responses: {
-				200: response200(updateUserPasswordSchema),
-				400: response400(
-					z.union([
-						z.literal('Current and new password are required.'),
-						z.literal('Current password is incorrect.'),
-					]),
-				),
-				404: response404(z.literal('User not found.')),
-			},
-		}),
-		zValidator('json', updateUserPasswordSchema),
-		async (c) => {
-			const userId = c.get('jwtPayload').userId;
-			const data = c.req.valid('json');
+      await generateTokenJWT(updatedUser.id, updatedUser.alert, c);
+      await updateJWTPayload(c);
+      const { password: _, ...safeUser } = updatedUser;
 
-			if (!data.currentPassword || !data.newPassword) {
-				throw new HTTPException(400, {
-					message: 'Current and new password are required.',
-				});
-			}
+      return c.json(safeUser, 200);
+    },
+  )
+  .patch(
+    '/reset-password',
+    describeRoute({
+      description: 'Update current user password',
+      tags: ['account'],
+      responses: {
+        200: response200(updateUserPasswordSchema),
+        400: response400(
+          z.union([
+            z.literal('Current and new password are required.'),
+            z.literal('Current password is incorrect.'),
+          ]),
+        ),
+        404: response404(z.literal('User not found.')),
+      },
+    }),
+    zValidator('json', updateUserPasswordSchema),
+    async (c) => {
+      const userId = c.get('jwtPayload').userId;
+      const data = c.req.valid('json');
 
-			const user = await prisma.user.findUnique({
-				where: { id: userId },
-			});
+      if (!data.currentPassword || !data.newPassword) {
+        throw new HTTPException(400, {
+          message: 'Current and new password are required.',
+        });
+      }
 
-			if (!user) {
-				throw new HTTPException(404, { message: 'User not found' });
-			}
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
 
-			const isPasswordValid = await argon2.verify(
-				user.password,
-				data.currentPassword,
-			);
-			if (!isPasswordValid) {
-				throw new HTTPException(400, {
-					message: 'Current password is incorrect',
-				});
-			}
+      if (!user) {
+        throw new HTTPException(404, { message: 'User not found' });
+      }
 
-			const hashedNewPassword = await argon2.hash(data.newPassword);
+      const isPasswordValid = await argon2.verify(
+        user.password,
+        data.currentPassword,
+      );
+      if (!isPasswordValid) {
+        throw new HTTPException(400, {
+          message: 'Current password is incorrect',
+        });
+      }
 
-			const updatedUser = await prisma.user.update({
-				where: { id: userId },
-				data: {
-					password: hashedNewPassword,
-				},
-			});
+      const hashedNewPassword = await argon2.hash(data.newPassword);
 
-			const { password: _, ...safeUser } = updatedUser;
+      const updatedUser = await prisma.user.update({
+        where: { id: userId },
+        data: {
+          password: hashedNewPassword,
+        },
+      });
 
-			return c.json(safeUser, 200);
-		},
-	)
-	.patch(
-		'/currency',
-		describeRoute({
-			description: 'Update currency',
-			tags: ['account'],
-			responses: {
-				200: response200(updateUserCurrencySchema),
-				404: response404(z.literal('User not found.')),
-			},
-		}),
-		zValidator('json', updateUserCurrencySchema),
-		async (c) => {
-			const userId = c.get('jwtPayload').userId;
-			const data = c.req.valid('json');
+      const { password: _, ...safeUser } = updatedUser;
 
-			const user = await prisma.user.findUnique({
-				where: { id: userId },
-			});
+      return c.json(safeUser, 200);
+    },
+  )
+  .patch(
+    '/currency',
+    describeRoute({
+      description: 'Update currency',
+      tags: ['account'],
+      responses: {
+        200: response200(updateUserCurrencySchema),
+        404: response404(z.literal('User not found.')),
+      },
+    }),
+    zValidator('json', updateUserCurrencySchema),
+    async (c) => {
+      const userId = c.get('jwtPayload').userId;
+      const data = c.req.valid('json');
 
-			if (!user) {
-				throw new HTTPException(404, { message: 'User not found.' });
-			}
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
 
-			const updatedCurrency = await prisma.user.update({
-				where: { id: userId },
-				data,
-			});
+      if (!user) {
+        throw new HTTPException(404, { message: 'User not found.' });
+      }
 
-			const { password: _, ...safeUser } = updatedCurrency;
+      const updatedCurrency = await prisma.user.update({
+        where: { id: userId },
+        data,
+      });
 
-			return c.json(safeUser, 200);
-		},
-	)
-	.delete(
-		'/',
-		deleteAccountRateLimit,
-		zValidator('json', checkPasswordSchema),
-		describeRoute({
-			description: 'Delete current user account',
-			tags: ['account'],
-			responses: {
-				204: response204(),
-			},
-		}),
-		async (c) => {
-			const userId = c.get('jwtPayload').userId;
-			const data = c.req.valid('json');
+      const { password: _, ...safeUser } = updatedCurrency;
 
-			const user = await prisma.user.findUnique({
-				where: { id: userId },
-			});
+      return c.json(safeUser, 200);
+    },
+  )
+  .delete(
+    '/',
+    deleteAccountRateLimit,
+    zValidator('json', checkPasswordSchema),
+    describeRoute({
+      description: 'Delete current user account',
+      tags: ['account'],
+      responses: {
+        204: response204(),
+      },
+    }),
+    async (c) => {
+      const userId = c.get('jwtPayload').userId;
+      const data = c.req.valid('json');
 
-			if (!user || !(await argon2.verify(user.password, data.password))) {
-				throw new HTTPException(400, { message: 'Wrong password' });
-			}
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
 
-			await prisma.user.delete({
-				where: { id: userId },
-			});
+      if (!user || !(await argon2.verify(user.password, data.password))) {
+        throw new HTTPException(400, { message: 'Wrong password' });
+      }
 
-			deleteUserCookie(c);
+      await prisma.user.delete({
+        where: { id: userId },
+      });
 
-			return c.body(null, 204);
-		},
-	);
+      deleteUserCookie(c);
+
+      return c.body(null, 204);
+    },
+  );
 
 export default accountRouter;

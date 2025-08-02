@@ -62,6 +62,7 @@ export const useAuthUser = () => {
   const setCsrfToken = useSetAtom(csrfTokenAtom);
   const setAuthLoading = useSetAtom(authLoadingAtom);
   const setCurrency = useSetAtom(currencyAtom);
+
   const {
     data: authUser,
     error,
@@ -70,9 +71,7 @@ export const useAuthUser = () => {
   } = useQuery({
     queryKey: ['authUser'],
     queryFn: authService.me,
-    retry: false,
-    staleTime: 1000 * 60 * 2,
-    refetchOnWindowFocus: false,
+    refetchInterval: 1000 * 60 * 5,
   });
 
   useEffect(() => {
@@ -80,7 +79,7 @@ export const useAuthUser = () => {
   }, [isLoading, setAuthLoading]);
 
   useEffect(() => {
-    if (authUser) {
+    if (authUser?.user) {
       setUser(authUser.user);
       setCsrfToken(authUser.token);
       setCurrency(authUser.user.currency);

@@ -9,7 +9,20 @@ import { router } from './router';
 import './i18n';
 import { HelmetProvider } from 'react-helmet-async';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: true,
+      refetchOnMount: false,
+      retry: false,
+      staleTime: 1000 * 60 * 5,
+    },
+    mutations: {
+      retry: false,
+    },
+  },
+});
 
 const rootElement = document.getElementById('root');
 if (rootElement) {
