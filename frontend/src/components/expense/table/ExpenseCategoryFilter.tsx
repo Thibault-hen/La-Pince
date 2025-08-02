@@ -1,7 +1,6 @@
 import { t } from 'i18next';
-import { Check, SquareStack, Tags } from 'lucide-react';
+import { SquareStack } from 'lucide-react';
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
