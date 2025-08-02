@@ -347,7 +347,7 @@ export const fr = {
         title: 'Tes dépenses',
         totalAmount: 'Montant total',
         description: 'Toutes tes dépenses pour le mois en cours',
-        highestExpense: 'Total dépense la plus élevée en un jour',
+        highestExpense: 'Total dépense la plus élevée sur un jour',
       },
       noExpensesThisMonth1: 'Aucune dépense enregistrée ce mois-ci',
       noExpensesThisMonth2: 'Ajoute-en une pour suivre ta progression',

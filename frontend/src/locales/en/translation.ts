@@ -1,5 +1,3 @@
-import { description } from '@/components/budget/BudgetChart';
-
 export const en = {
   home: {
     meta: {

@@ -201,10 +201,10 @@ export function DataTable<TData, TValue>({
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2">
             <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
-              <BanknoteArrowDown className="w-4 h-4 text-primary-color" />
+              <BanknoteArrowDown className="w-3.5 h-3.5 text-primary-color" />
             </div>
-            <span>{filteredItems}</span>
-            <span className="text-muted-foreground font-bold">
+            <span className="text-xs sm:text-sm">{filteredItems}</span>
+            <span className="text-muted-foreground font-bold text-xs sm:text-sm">
               {filteredItems === 1
                 ? t('expenses.table.singularCount')
                 : t('expenses.table.pluralCount')}
@@ -214,6 +214,7 @@ export function DataTable<TData, TValue>({
 
         <div className="flex items-center gap-2">
           <Button
+            className="text-[0.425rem] py-1 sm:text-[0.625rem]"
             variant="blue"
             size="sm"
             onClick={() => table.previousPage()}
@@ -222,6 +223,7 @@ export function DataTable<TData, TValue>({
             {t('expenses.table.previous')}
           </Button>
           <Button
+            className="text-[0.425rem] py-1 sm:text-[0.625rem]"
             variant="blue"
             size="sm"
             onClick={() => table.nextPage()}

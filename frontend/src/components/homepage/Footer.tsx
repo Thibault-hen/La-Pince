@@ -25,7 +25,7 @@ const socialLinks = [
 export default function Footer01() {
   const { t } = useTranslation();
   return (
-    <footer id="footer" className="w-full">
+    <footer id="footer" className="w-full bottom-0">
       <div className="px-16 lg:px-32 xl:px-64 py-6 bg-primary-color md:bg-primary-color">
         <div className="flex flex-col md:py-12">
           <div className="flex flex-col gap-6 md:flex-row md:justify-between">

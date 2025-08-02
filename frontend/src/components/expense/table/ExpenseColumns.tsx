@@ -45,7 +45,7 @@ export const createColumns = (
             <Captions className="w-4 h-4 text-primary-color" />
           </div>
 
-          <span className="font-semibold text-foreground text-xs uppercase tracking-widest">
+          <span className="font-semibold text-foreground text-[0.625rem] md:text-xs uppercase tracking-widest">
             {t('expenses.table.columns.title')}
           </span>
         </div>
@@ -81,7 +81,7 @@ export const createColumns = (
             <Tags className="w-4 h-4 text-primary-color" />
           </div>
 
-          <span className="font-semibold text-foreground text-xs uppercase tracking-widest">
+          <span className="font-semibold text-foreground text-[0.625rem] md:text-xs uppercase tracking-widest">
             {t('expenses.table.columns.category')}
           </span>
         </div>
@@ -155,7 +155,7 @@ export const createColumns = (
             <Calendar className="w-4 h-4 text-primary-color" />
           </div>
 
-          <span className="font-semibold text-foreground text-xs uppercase tracking-widest">
+          <span className="font-semibold text-foreground text-[0.625rem] md:text-xs uppercase tracking-widest">
             {t('expenses.table.columns.date')}
           </span>
         </div>
@@ -229,7 +229,7 @@ export const createColumns = (
             <HandCoins className="w-4 h-4 text-primary-color" />
           </div>
 
-          <span className="font-semibold text-foreground text-xs uppercase tracking-widest">
+          <span className="font-semibold text-foreground text-[0.625rem] md:text-xs uppercase tracking-widest">
             {t('expenses.table.columns.amount')}
           </span>
         </div>
