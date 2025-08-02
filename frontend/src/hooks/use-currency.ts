@@ -18,10 +18,6 @@ export const useCurrency = () => {
       const response = await currencyService.getCurrencyRates();
       return response.rates;
     },
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-    retry: false,
     staleTime: Infinity,
 
     // fallback data to avoid errors in the UI

@@ -107,14 +107,6 @@ export function DataTable<TData, TValue>({
   };
   return (
     <>
-      <div>
-        {data && data.length > 0 && (
-          <CategoryFilter
-            categories={categories}
-            onFilter={handleCategoryFilter}
-          />
-        )}
-      </div>
       <div className="relative flex py-4">
         <div className="flex flex-col md:flex-row items-center md:justify-between md:items-start w-full ">
           <Search className="absolute left-3 top-6.5 h-4 w-4 text-muted-foreground" />
@@ -127,6 +119,12 @@ export function DataTable<TData, TValue>({
             className="w-full md:max-w-sm pl-10 mb-6 md:mb-0 text-sm md:text-base bg-primary"
           />
           <div className="flex flex-col w-full md:w-fit sm:flex-row items-center gap-2 md:gap-2">
+            {data && data.length > 0 && (
+              <CategoryFilter
+                categories={categories}
+                onFilter={handleCategoryFilter}
+              />
+            )}
             <DateFilter onFilterDate={handleDateFilter} />
             {children}
           </div>

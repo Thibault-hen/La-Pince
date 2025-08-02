@@ -58,7 +58,5 @@ export function useDashboard() {
         amount: convertFromEUR(expense.amount),
       })),
     }),
-    staleTime: 1000 * 60 * 5,
-    retry: false,
   });
 }

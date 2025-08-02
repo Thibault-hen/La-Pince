@@ -30,8 +30,6 @@ export const useBudgets = () => {
       budgetTotal: convertFromEUR(data.budgetTotal),
       budgetRemaining: convertFromEUR(data.budgetRemaining),
     }),
-    staleTime: 1000 * 60 * 5,
-    retry: false,
   });
 };
 
