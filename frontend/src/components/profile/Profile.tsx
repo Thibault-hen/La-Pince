@@ -153,19 +153,19 @@ export const Profile = ({ user }: ProfileProps) => {
                         <SelectItem
                           key={currencies[idx].code}
                           value={currency.code}
-                          className="group cursor-pointer p-2 hover:bg-gradient-to-r hover:from-primary-color/10 hover:to-secondary-color/10 transition-all duration-300 hover:shadow-md border-b border-border/20 last:border-b-0 focus:bg-gradient-to-r focus:from-primary-color/15 focus:to-secondary-color/15"
+                          className="group cursor-pointer p-2 hover:bg-gradient-to-r transition-all duration-300 hover:shadow-md border-b border-border/20 last:border-b-0 focus:bg-primary-color/20"
                         >
                           <div className="flex items-center gap-3 w-full">
                             <div className="relative">
-                              <div className="w-10 h-7 bg-gradient-to-br from-secondary-color to-secondary-color/80 border-2 border-secondary-color/60 rounded-lg flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:scale-105 transition-all duration-300">
-                                <span className="text-white font-bold text-sm drop-shadow-sm">
+                              <div className="w-10 h-7 border-1 bg-secondary-color/10 border-secondary-color/20 rounded-lg flex items-center justify-center transition-all duration-300">
+                                <span className="text-secondary-color font-bold text-sm drop-shadow-sm">
                                   {currency.symbol}
                                 </span>
                               </div>
                             </div>
 
                             <div className="flex flex-col flex-1 min-w-0">
-                              <span className="font-bold text-foreground group-hover:text-secondary-color transition-colors duration-300">
+                              <span className="font-bold text-foreground transition-colors duration-300">
                                 {currency.code}
                               </span>
                               <span className="text-xs text-muted-foreground group-hover:text-muted-foreground/80 transition-colors duration-300 truncate">

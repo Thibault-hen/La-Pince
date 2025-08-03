@@ -26,7 +26,7 @@ const Faq = () => {
             <h1 className="text-xl md:text-2xl font-bold mb-4">
               {t('faq.title')}
             </h1>
-            <p className="text-gray-300 mb-4 text-sm md:text-base">
+            <p className="text-muted-foreground mb-4 text-sm md:text-base">
               {t('faq.introduction')}
             </p>
             <section>
