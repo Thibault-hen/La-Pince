@@ -1,7 +1,7 @@
 import { useSpring } from 'motion/react';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
+import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from 'recharts';
 import {
   Card,
   CardContent,
@@ -23,7 +23,6 @@ export const description = 'An interactive bar chart';
 const chartConfig = {
   amount: {
     label: 'expenses.chart.header.totalAmount',
-    color: 'var(--chart-2)',
   },
 } satisfies ChartConfig;
 
@@ -105,7 +104,7 @@ export function ChartBarInteractive() {
     <Card className="py-0 dark:bg-primary">
       <CardHeader className="flex flex-col items-stretch border-b !p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 pt-4 pb-3 sm:!py-0">
-          <CardTitle className="text-xs md:text-sm">
+          <CardTitle className="text-sm md:text-base">
             {t('expenses.chart.header.title')}
           </CardTitle>
           <CardDescription className="text-xs md:text-sm">
@@ -147,21 +146,14 @@ export function ChartBarInteractive() {
             config={chartConfig}
             className="aspect-auto h-[150px] w-full"
           >
-            <BarChart
-              accessibilityLayer
-              data={expensesThisMonth}
-              margin={{
-                left: 12,
-                right: 12,
-              }}
-            >
+            <BarChart accessibilityLayer data={expensesThisMonth}>
               <CartesianGrid vertical={false} />
               <XAxis
                 dataKey="date"
                 tickLine={true}
                 axisLine={true}
-                tickMargin={8}
-                minTickGap={12}
+                tickMargin={12}
+                minTickGap={32}
                 tickFormatter={(value) => {
                   const date = new Date(value);
                   return date.toLocaleDateString(locale, {
@@ -182,11 +174,21 @@ export function ChartBarInteractive() {
                         year: 'numeric',
                       });
                     }}
-                    formatter={(value) => formatAmount(Number(value))}
+                    formatter={(value) => (
+                      <>
+                        <div className="bg-primary-color w-3 h-3 rounded-full" />
+                        {formatAmount(Number(value))}
+                      </>
+                    )}
                   />
                 }
               />
-              <Bar dataKey={activeChart} fill={'var(--color-primary-color)'} />
+              <Bar
+                dataKey={activeChart}
+                fill={'var(--color-primary-color)'}
+                radius={[6, 6, 0, 0]}
+                strokeOpacity={0.5}
+              />
             </BarChart>
           </ChartContainer>
         )}

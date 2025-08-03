@@ -93,10 +93,10 @@ export const DashboardCounts = ({
   return (
     <div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
       {/* Revenue Card */}
-      <div className="bg-gradient-to-br from-white to-blue-50 dark:from-primary dark:via-primary dark:to-blue-900/20 p-6 rounded-xl border">
+      <div className="bg-gradient-to-br from-white to-primary-color/5 dark:from-primary dark:via-primary dark:to-primary-color/20 p-6 rounded-xl border">
         <div className="flex items-center justify-between mb-4">
           <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
-            <Euro className="h-5 w-5 text-blue-500" />
+            <Euro className="h-5 w-5 text-primary-color" />
           </div>
           <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
             {t('dashboard.cards.income')}
@@ -113,7 +113,7 @@ export const DashboardCounts = ({
       </div>
 
       {/* Budget Card */}
-      <div className="bg-gradient-to-br from-white to-green-50 dark:from-primary dark:via-primary dark:to-green-900/20 p-6 rounded-xl border">
+      <div className="bg-gradient-to-br from-white to-green-100/60 dark:from-primary dark:via-primary dark:to-green-900/20 p-6 rounded-xl border">
         <div className="flex items-center justify-between mb-4">
           <div className="p-2 bg-green-500/10 border border-green-500/20 rounded-lg">
             <Calculator className="h-5 w-5 text-green-500" />
@@ -133,7 +133,7 @@ export const DashboardCounts = ({
       </div>
 
       {/* Remaining Card */}
-      <div className="bg-gradient-to-br from-white to-purple-50 dark:from-primary dark:via-primary dark:to-purple-900/20 p-6 rounded-xl border">
+      <div className="bg-gradient-to-br from-white to-purple-100 dark:from-primary dark:via-primary dark:to-purple-900/20 p-6 rounded-xl border">
         <div className="flex items-center justify-between mb-4">
           <div className="p-2 bg-purple-500/10 border border-purple-500/20 rounded-lg">
             <TrendingUp className="h-5 w-5 text-purple-500" />
@@ -153,7 +153,7 @@ export const DashboardCounts = ({
       </div>
 
       {/* Current Month Expenses */}
-      <div className="xl:col-span-3 2xl:col-span-1 bg-gradient-to-br from-white to-red-50 dark:from-primary dark:via-primary dark:to-red-900/20 rounded-xl border">
+      <div className="xl:col-span-3 2xl:col-span-1 bg-gradient-to-br from-white to-red-100 dark:from-primary dark:via-primary dark:to-red-900/20 rounded-xl border">
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="p-2 bg-red-500/10 border border-red-500/20 rounded-lg">

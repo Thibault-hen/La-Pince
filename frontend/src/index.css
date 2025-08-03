@@ -1,4 +1,4 @@
-@import url(https://fonts.bunny.net/css?family=albert-sans:300);
+@import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,300;1,200..900&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -7,13 +7,13 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --background: oklch(0.9784 0.0011 197.14);
   --foreground: oklch(0.147 0.004 49.25);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.147 0.004 49.25);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.147 0.004 49.25);
-  --primary: oklch(100 0 0);
+  --primary: oklch(1 0 0);
   --primary2: oklch(96.8% 0.007 247.896);
   --primary-foreground: oklch(0.985 0.001 106.423);
   --secondary: oklch(0.97 0.001 106.424);
@@ -26,12 +26,12 @@
   --border: oklch(0.923 0.003 48.717);
   --input: oklch(0.923 0.003 48.717);
   --ring: oklch(0.702 0.1289 69.51);
-  --chart-1: oklch(0.702 0.1289 69.51);
+  --chart-1: oklch(58.5% 0.233 277.117);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0.001 106.423);
+  --sidebar: oklch(1 0 0);
   --sidebar-foreground: oklch(0.147 0.004 49.25);
   --sidebar-primary: oklch(0.216 0.006 56.043);
   --sidebar-primary-foreground: oklch(0.985 0.001 106.423);
@@ -61,7 +61,7 @@
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.702 0.1289 69.51);
-  --chart-1: oklch(0.702 0.1289 69.51);
+  --chart-1: oklch(58.5% 0.233 277.117);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
@@ -97,7 +97,7 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
+  --color-muted: oklch(0.585 0.233 277.117 / 28.47%);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);

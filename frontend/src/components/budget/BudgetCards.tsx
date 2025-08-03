@@ -64,18 +64,18 @@ export const BudgetCards = ({
   return (
     <div className="flex flex-col gap-4 w-full xl:max-w-xl">
       <div className="relative group">
-        <div className="relative bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
+        <div className="relative bg-gradient-to-br from-white to-primary-color/10 dark:from-primary dark:via-primary dark:to-primary-color/20 p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
-            <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
+            <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg shadow-lg">
               <Euro className="h-5 w-5 text-primary-color" />
             </div>
-            <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            <div className="font-bold text-primary-color uppercase tracking-wider bg-primary-color/10 border border-primary-color text-[0.625rem] p-1.5 rounded-xl shadow-sm">
               {t('budget.cards.totalBudget').toUpperCase()}
             </div>
           </div>
 
           <div className="space-y-1">
-            <div className="text-xl md:text-3xl font-bold text-gray-900 dark:text-white">
+            <div className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">
               {formatAmount(Number(displayTotal))}
             </div>
             <p className="text-sm text-muted-foreground">
@@ -86,18 +86,18 @@ export const BudgetCards = ({
       </div>
 
       <div className="relative group">
-        <div className="relative bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
+        <div className="relative bg-gradient-to-br from-white to-primary-color/10 dark:from-primary dark:via-primary dark:to-primary-color/20 p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
-            <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
+            <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg shadow-lg">
               <Hash className="h-5 w-5 text-primary-color" />
             </div>
-            <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            <div className="font-bold text-primary-color uppercase tracking-wider bg-primary-color/10 border border-primary-color text-[0.625rem] p-1.5 rounded-xl shadow-sm">
               {t('budget.cards.activeBudgets').toUpperCase()}
             </div>
           </div>
 
           <div className="space-y-1">
-            <div className="text-xl md:text-3xl font-bold"> {displayCount}</div>
+            <div className="text-xl md:text-2xl font-bold"> {displayCount}</div>
             <p className="text-sm text-muted-foreground">
               {t('budget.cards.activeBudgets')}
             </p>
@@ -106,18 +106,18 @@ export const BudgetCards = ({
       </div>
 
       <div className="relative group">
-        <div className="relative bg-white dark:bg-primary p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
+        <div className="relative bg-gradient-to-br from-white to-secondary-color/15 dark:from-primary dark:via-primary dark:to-secondary-color/20 p-6 rounded-xl border hover:shadow-xl transition-all duration-300">
           <div className="flex items-center justify-between mb-4">
-            <div className="p-2 bg-secondary-color/10 border border-secondary-color/20 rounded-lg">
+            <div className="p-2 bg-secondary-color/10 border border-secondary-color/20 rounded-lg shadow-lg">
               <TrendingUp className="h-5 w-5 text-secondary-color" />
             </div>
-            <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            <div className="font-bold text-secondary-color uppercase tracking-wider bg-secondary-color/10 border border-secondary-color text-[0.625rem] p-1.5 rounded-xl shadow-sm">
               {t('budget.cards.remainingBudget').toUpperCase()}
             </div>
           </div>
 
           <div className="space-y-1">
-            <div className="text-xl md:text-3xl font-bold ">
+            <div className="text-xl md:text-2xl font-bold">
               <span> {formatAmount(Number(displayRemaining))}</span>
             </div>
             <p className="text-sm text-muted-foreground">
