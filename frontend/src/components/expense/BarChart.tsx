@@ -1,7 +1,7 @@
 import { useSpring } from 'motion/react';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from 'recharts';
+import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 import {
   Card,
   CardContent,
