@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,300;1,200..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,300;1,200..900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -78,7 +78,7 @@
 
 @theme {
   --breakpoint-3xl: 120rem;
-  --font-size-xxs: 0.500rem;
+  --font-size-xxs: 0.5rem;
 }
 
 @theme inline {
@@ -179,11 +179,11 @@ body {
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
-  z-index: 2147483647 !important; 
+  z-index: 2147483647 !important;
   pointer-events: none !important;
 }
 #nprogress .bar {
-  background-color:  oklch(0.702 0.1289 69.51) !important;
+  background-color: oklch(0.702 0.1289 69.51) !important;
   position: absolute !important;
   top: 0 !important;
   left: 0 !important;
@@ -192,16 +192,19 @@ body {
 }
 
 #nprogress .peg {
-  box-shadow: 0 0 10px oklch(58.5% 0.233 277.117), 0 0 5px oklch(58.5% 0.233 277.117) !important;
+  box-shadow:
+    0 0 10px oklch(58.5% 0.233 277.117),
+    0 0 5px oklch(58.5% 0.233 277.117) !important;
   z-index: 99999 !important;
 }
 
-
 .dark #nprogress .bar {
-  background-color:  oklch(58.5% 0.233 277.117) !important;
-    height: 3px !important;
+  background-color: oklch(58.5% 0.233 277.117) !important;
+  height: 3px !important;
 }
 
 .dark #nprogress .peg {
-  box-shadow: 0 0 10px oklch(0.702 0.1289 69.51), 0 0 5px oklch(0.702 0.1289 69.51) !important;
-  } 
+  box-shadow:
+    0 0 10px oklch(0.702 0.1289 69.51),
+    0 0 5px oklch(0.702 0.1289 69.51) !important;
+}
