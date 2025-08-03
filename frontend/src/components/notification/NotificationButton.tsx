@@ -62,24 +62,24 @@ export default function NotificationButton() {
         </Button>
       </SheetTrigger>
       <SheetContent>
-        <SheetHeader>
+        <SheetHeader className="border-b">
           <SheetTitle>
             <div className="flex items-center gap-3">
               <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
                 <Bell className="h-5 w-5 text-primary-color" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-foreground">
+                <p className="text-base md:text-xl font-bold text-foreground">
                   Notifications
                 </p>
-                <SheetDescription className="text-sm text-muted-foreground">
+                <SheetDescription className="text-xs md:text-sm text-muted-foreground">
                   {t('notification.header.subtitle')}
                 </SheetDescription>
               </div>
             </div>
           </SheetTitle>
         </SheetHeader>
-        <div className="flex flex-col  gap-2 overflow-auto mb-2 shadow-inner shadow-20  px-2 rounded-md ">
+        <div className="flex flex-col  gap-2 overflow-auto mb-2 shadow-20  px-2 rounded-md ">
           {notifications.length === 0 ? (
             <div className="mt-3 text-center text-muted-foreground">
               {t('notification.noNotification')}

@@ -476,6 +476,7 @@ export const en = {
       totalLabel: 'Total Budget',
       noBudgets1: 'Cannot find any budgets',
       noBudgets2: 'Create your first budget to start',
+      subTitle: 'Where is your money going?',
     },
     add: {
       title: 'Create a new budget',

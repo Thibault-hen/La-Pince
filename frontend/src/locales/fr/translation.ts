@@ -529,6 +529,7 @@ export const fr = {
       totalLabel: 'Budget total',
       noBudgets1: 'Aucune budget trouvée',
       noBudgets2: 'Ajoute-en un pour commencer',
+      subTitle: 'Où va ton argent ?',
     },
   },
   categories: {

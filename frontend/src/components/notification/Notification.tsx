@@ -48,7 +48,7 @@ export default function Notification({ notification }: NotificationProps) {
           </div>
 
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm leading-tight">
+            <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-xs md:text-sm leading-tight">
               {t(`notification.${notification.notificationType}.title`)}
             </h3>
           </div>
@@ -67,13 +67,13 @@ export default function Notification({ notification }: NotificationProps) {
 
         {/* Content section */}
         <div className="space-y-3">
-          <div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-            <div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed space-y-3">
+          <div className="text-sm leading-relaxed">
+            <div className="text-sm leading-relaxed space-y-3">
               <div className="space-y-3 flex flex-col">
-                <div className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                <div className="md:text-sm leading-relaxed text-xs">
                   <span>{t('notification.yourBudget')}</span>
                   <Badge
-                    className="inline-flex tracking-wide items-center capitalize gap-1.5 rounded-xl shadow-sm font-bold text-xs border mx-1 py-1"
+                    className="inline-flex tracking-wide items-center capitalize gap-1.5 rounded-xl shadow-sm font-bold md:text-xs text-[0.625rem] border mx-1 py-1"
                     style={{
                       backgroundColor: `${notification.color.value}15`,
                       color: notification.color.value,
@@ -94,9 +94,9 @@ export default function Notification({ notification }: NotificationProps) {
                       : t('notification.budgetExceeded.description')}
                   </span>
                 </div>
-                <div>
+                <div className="text-xs md:text-sm gap-1 flex">
                   <span className="text-muted-foreground">
-                    {t('notification.budgetWarning.remaining1')}{' '}
+                    {t('notification.budgetWarning.remaining1')}
                   </span>
                   <span
                     className={`font-medium ${
@@ -110,11 +110,9 @@ export default function Notification({ notification }: NotificationProps) {
                       : formatAmount(0)}
                   </span>
                   <span className="text-muted-foreground">
-                    {' '}
                     {t('notification.budgetWarning.remaining2')}
                   </span>
                 </div>
-                {/* Le reste du composant... */}
               </div>
             </div>
           </div>

@@ -21,10 +21,7 @@ export function useDashboard() {
 
   return useQuery<DashboardData>({
     queryKey: ['dashboard'],
-    queryFn: async () => {
-      const response = await dashboardService.getDashboard();
-      return response;
-    },
+    queryFn: dashboardService.getDashboard,
     select: (data) => ({
       ...data,
       currentMonthExpenses: convertFromEUR(data.currentMonthExpenses),

@@ -19,11 +19,11 @@ export const DasboardSkeleton = () => {
 
       <div className="space-y-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          <Skeleton className="h-[150px] md:h-[250px] rounded-xl bg-gradient-to-br from-gray-100 to-blue-100 dark:from-gray-700 dark:to-blue-800" />
-          <Skeleton className="h-[150px] md:h-[250px] rounded-xl bg-gradient-to-br from-gray-100 to-green-100 dark:from-gray-700 dark:to-green-800" />
-          <Skeleton className="h-[150px] md:h-[250px] rounded-xl bg-gradient-to-br from-gray-100 to-purple-100 dark:from-gray-700 dark:to-purple-800" />
+          <Skeleton className="h-[150px] md:h-[250px] rounded-xl bg-gradient-to-br from-gray-100 to-primary/10 dark:from-primary dark:to-primary/20" />
+          <Skeleton className="h-[150px] md:h-[250px] rounded-xl bg-gradient-to-br from-gray-100 to-green-50 dark:from-primary dark:to-green-900/20" />
+          <Skeleton className="h-[150px] md:h-[250px] rounded-xl bg-gradient-to-br from-gray-100 to-purple-50 dark:from-primary dark:to-purple-800/20" />
           <div className="lg:col-span-3 xl:col-span-1">
-            <Skeleton className="h-[150px] md:h-[250px] rounded-xl bg-gradient-to-br from-gray-100 to-red-100 dark:from-gray-700 dark:to-red-800" />
+            <Skeleton className="h-[150px] md:h-[250px] rounded-xl bg-gradient-to-br from-gray-100 to-red-50 dark:from-primary dark:to-red-800/20" />
           </div>
         </div>
 
