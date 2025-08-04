@@ -5,25 +5,25 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
+	Dialog,
+	DialogClose,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Loader } from '@/components/ui/loader';
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectLabel,
+	SelectTrigger,
+	SelectValue,
 } from '@/components/ui/select';
 import { useBudgets } from '@/hooks/use-budget';
 import { useCurrency } from '@/hooks/use-currency';
@@ -33,214 +33,214 @@ import type { Expense } from '@/types/expense';
 import { DatePicker } from '../DatePicker';
 
 interface ExpenseEditModalProps {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-  expense?: Expense;
+	open: boolean;
+	setOpen: (open: boolean) => void;
+	expense?: Expense;
 }
 
 export const ExpenseEditModal = ({
-  expense,
-  open,
-  setOpen,
+	expense,
+	open,
+	setOpen,
 }: ExpenseEditModalProps) => {
-  const { data: { budgets = [] } = {} } = useBudgets();
-  const { mutateAsync: updateExpense } = useUpdateExpense();
-  const { t } = useTranslation();
-  const { formatAmount } = useCurrency();
+	const { data: { budgets = [] } = {} } = useBudgets();
+	const { mutateAsync: updateExpense } = useUpdateExpense();
+	const { t } = useTranslation();
+	const { formatAmount } = useCurrency();
 
-  useEffect(() => {
-    form.reset();
-  }, [expense]);
+	useEffect(() => {
+		form.reset();
+	}, [expense]);
 
-  const form = useForm({
-    defaultValues: {
-      description: expense?.title ?? '',
-      amount: expense?.amount ?? 0,
-      budgetId: expense?.budgetId ?? '',
-      date: expense?.date ?? '',
-    },
-    validators: {
-      onSubmit: updateExpenseSchema,
-    },
-    async onSubmit({ value }) {
-      if (!expense?.id) return;
-      await updateExpense({ id: expense?.id, data: { ...value } });
-      setOpen(false);
-    },
-  });
+	const form = useForm({
+		defaultValues: {
+			description: expense?.title ?? '',
+			amount: expense?.amount ?? 0,
+			budgetId: expense?.budgetId ?? '',
+			date: expense?.date ?? '',
+		},
+		validators: {
+			onSubmit: updateExpenseSchema,
+		},
+		async onSubmit({ value }) {
+			if (!expense?.id) return;
+			await updateExpense({ id: expense?.id, data: { ...value } });
+			setOpen(false);
+		},
+	});
 
-  if (!expense) return null;
+	if (!expense) return null;
 
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[425px]">
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault();
-            form.handleSubmit();
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle className="font-medium text-xl">
-              {t('expenses.edit.title', { title: expense?.title })}
-            </DialogTitle>
-            <DialogDescription>
-              {t('expenses.edit.description')}
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4">
-            <form.Field
-              name="description"
-              children={(field) => (
-                <div className="grid gap-3">
-                  <Label htmlFor={field.name}>
-                    {t('expenses.edit.form.title')}
-                  </Label>
-                  <Input
-                    id={field.name}
-                    placeholder={t('expenses.edit.form.titlePlaceholder')}
-                    type="text"
-                    required
-                    value={field.state.value}
-                    onChange={(e) => {
-                      field.handleChange(e.target.value);
-                    }}
-                  />
-                  {field.state.meta.errors.length > 0 && (
-                    <span className="text-red-500 text-sm">
-                      {field.state.meta.errors[0]?.message}
-                    </span>
-                  )}
-                </div>
-              )}
-            />
-            <form.Field
-              name="amount"
-              children={(field) => (
-                <div className="grid gap-3">
-                  <Label htmlFor={field.name}>
-                    {t('expenses.edit.form.amount')}
-                  </Label>
-                  <Input
-                    id={field.name}
-                    placeholder={t('expenses.edit.form.amountPlaceholder')}
-                    type="number"
-                    required
-                    step={0.01}
-                    value={field.state.value.toFixed(2) || ''}
-                    onChange={(e) => {
-                      field.handleChange(Number(e.target.value));
-                    }}
-                  />
-                  {field.state.meta.errors.length > 0 && (
-                    <span className="text-red-500 text-sm">
-                      {field.state.meta.errors[0]?.message}
-                    </span>
-                  )}
-                </div>
-              )}
-            />
-            <form.Field
-              name="budgetId"
-              children={(field) => {
-                return (
-                  <div className="grid gap-3">
-                    <Label htmlFor={field.name}>
-                      {t('expenses.edit.form.budget')}
-                    </Label>
-                    <Select
-                      name={field.name}
-                      onValueChange={(value) => field.handleChange(value)}
-                      value={budgets.length ? field.state.value : ''}
-                      required
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue
-                          placeholder={t(
-                            'expenses.edit.form.budgetPlaceholder',
-                          )}
-                        />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>
-                            {t('expenses.edit.form.budgetLabel')}
-                          </SelectLabel>
-                          {budgets?.map((budget) => (
-                            <SelectItem
-                              key={budget.id}
-                              value={budget.id}
-                              className="cursor-pointer"
-                            >
-                              {t(budget.category.title)} -{' '}
-                              {formatAmount(budget.amount)}
-                              <div
-                                style={{
-                                  backgroundColor:
-                                    budget?.category.color?.value,
-                                }}
-                                className="h-3 w-3 rounded-lg"
-                              ></div>
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    {field.state.meta.errors.length > 0 && (
-                      <span className="text-red-500 text-sm">
-                        {field.state.meta.errors[0]?.message}
-                      </span>
-                    )}
-                  </div>
-                );
-              }}
-            />
-            <form.Field
-              name="date"
-              children={(field) => (
-                <div className="grid gap-3">
-                  <Label htmlFor={field.name}>
-                    {t('expenses.edit.form.date')}
-                  </Label>
-                  <DatePicker
-                    name={field.name}
-                    required
-                    value={new Date(field.state.value)}
-                    onChange={(date) => {
-                      const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}T12:00:00.000Z`;
-                      field.handleChange(dateString);
-                    }}
-                  />
-                  {field.state.meta.errors.length > 0 && (
-                    <span className="text-red-500 text-sm">
-                      {field.state.meta.errors[0]?.message}
-                    </span>
-                  )}
-                </div>
-              )}
-            />
-          </div>
-          <DialogFooter className="flex justify-between items-center mt-4">
-            <DialogClose asChild>
-              <Button variant="outline" className="w-full sm:w-fit">
-                {t('expenses.edit.form.cancel')}
-              </Button>
-            </DialogClose>
-            <form.Subscribe
-              selector={(state) => [state.isSubmitting]}
-              children={([isSubmiting]) => (
-                <Button
-                  type="submit"
-                  variant="blue"
-                  className="w-full sm:w-fit"
-                >
-                  {isSubmiting ? <Loader /> : t('expenses.edit.form.update')}
-                </Button>
-              )}
-            />
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
-  );
+	return (
+		<Dialog open={open} onOpenChange={setOpen}>
+			<DialogContent className="sm:max-w-[425px]">
+				<form
+					onSubmit={async (e) => {
+						e.preventDefault();
+						form.handleSubmit();
+					}}
+				>
+					<DialogHeader>
+						<DialogTitle className="font-medium text-xl">
+							{t('expenses.edit.title', { title: expense?.title })}
+						</DialogTitle>
+						<DialogDescription>
+							{t('expenses.edit.description')}
+						</DialogDescription>
+					</DialogHeader>
+					<div className="grid gap-4">
+						<form.Field
+							name="description"
+							children={(field) => (
+								<div className="grid gap-3">
+									<Label htmlFor={field.name}>
+										{t('expenses.edit.form.title')}
+									</Label>
+									<Input
+										id={field.name}
+										placeholder={t('expenses.edit.form.titlePlaceholder')}
+										type="text"
+										required
+										value={field.state.value}
+										onChange={(e) => {
+											field.handleChange(e.target.value);
+										}}
+									/>
+									{field.state.meta.errors.length > 0 && (
+										<span className="text-red-500 text-sm">
+											{field.state.meta.errors[0]?.message}
+										</span>
+									)}
+								</div>
+							)}
+						/>
+						<form.Field
+							name="amount"
+							children={(field) => (
+								<div className="grid gap-3">
+									<Label htmlFor={field.name}>
+										{t('expenses.edit.form.amount')}
+									</Label>
+									<Input
+										id={field.name}
+										placeholder={t('expenses.edit.form.amountPlaceholder')}
+										type="number"
+										required
+										step={0.01}
+										value={field.state.value.toFixed(2) || ''}
+										onChange={(e) => {
+											field.handleChange(Number(e.target.value));
+										}}
+									/>
+									{field.state.meta.errors.length > 0 && (
+										<span className="text-red-500 text-sm">
+											{field.state.meta.errors[0]?.message}
+										</span>
+									)}
+								</div>
+							)}
+						/>
+						<form.Field
+							name="budgetId"
+							children={(field) => {
+								return (
+									<div className="grid gap-3">
+										<Label htmlFor={field.name}>
+											{t('expenses.edit.form.budget')}
+										</Label>
+										<Select
+											name={field.name}
+											onValueChange={(value) => field.handleChange(value)}
+											value={budgets.length ? field.state.value : ''}
+											required
+										>
+											<SelectTrigger className="w-full">
+												<SelectValue
+													placeholder={t(
+														'expenses.edit.form.budgetPlaceholder',
+													)}
+												/>
+											</SelectTrigger>
+											<SelectContent>
+												<SelectGroup>
+													<SelectLabel>
+														{t('expenses.edit.form.budgetLabel')}
+													</SelectLabel>
+													{budgets?.map((budget) => (
+														<SelectItem
+															key={budget.id}
+															value={budget.id}
+															className="cursor-pointer"
+														>
+															{t(budget.category.title)} -{' '}
+															{formatAmount(budget.amount)}
+															<div
+																style={{
+																	backgroundColor:
+																		budget?.category.color?.value,
+																}}
+																className="h-3 w-3 rounded-lg"
+															></div>
+														</SelectItem>
+													))}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+										{field.state.meta.errors.length > 0 && (
+											<span className="text-red-500 text-sm">
+												{field.state.meta.errors[0]?.message}
+											</span>
+										)}
+									</div>
+								);
+							}}
+						/>
+						<form.Field
+							name="date"
+							children={(field) => (
+								<div className="grid gap-3">
+									<Label htmlFor={field.name}>
+										{t('expenses.edit.form.date')}
+									</Label>
+									<DatePicker
+										name={field.name}
+										required
+										value={new Date(field.state.value)}
+										onChange={(date) => {
+											const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}T12:00:00.000Z`;
+											field.handleChange(dateString);
+										}}
+									/>
+									{field.state.meta.errors.length > 0 && (
+										<span className="text-red-500 text-sm">
+											{field.state.meta.errors[0]?.message}
+										</span>
+									)}
+								</div>
+							)}
+						/>
+					</div>
+					<DialogFooter className="flex justify-between items-center mt-4">
+						<DialogClose asChild>
+							<Button variant="outline" className="w-full sm:w-fit">
+								{t('expenses.edit.form.cancel')}
+							</Button>
+						</DialogClose>
+						<form.Subscribe
+							selector={(state) => [state.isSubmitting]}
+							children={([isSubmiting]) => (
+								<Button
+									type="submit"
+									variant="blue"
+									className="w-full sm:w-fit"
+								>
+									{isSubmiting ? <Loader /> : t('expenses.edit.form.update')}
+								</Button>
+							)}
+						/>
+					</DialogFooter>
+				</form>
+			</DialogContent>
+		</Dialog>
+	);
 };

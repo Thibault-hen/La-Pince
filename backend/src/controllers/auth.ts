@@ -35,6 +35,7 @@ import {
   registerRateLimit,
   resetPasswordRateLimit,
 } from '../utils/rateLimits';
+import { createIncome } from './income';
 
 const authRouter = new Hono();
 
@@ -301,19 +302,6 @@ async function createListCategories(userId: string) {
   );
 }
 
-async function createIncome(userId: string) {
-  const now = new Date();
-
-  await prisma.income.create({
-    data: {
-      userId,
-      value: 0,
-      month: now.getMonth() + 1,
-      year: now.getFullYear(),
-    },
-  });
-}
-
-export { createListCategories, createIncome };
+export { createListCategories };
 
 export default authRouter;

@@ -8,24 +8,24 @@ import { PageMeta } from '@/components/PageMeta';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 
 const Home = () => {
-  return (
-    <>
-      <PageMeta
-        titleKey="home.meta.title"
-        descriptionKey="home.meta.description"
-      />
-      <DefaultWrapper>
-        <div className="w-full place-items-center ">
-          <EducationalBanner />
-          <Header />
-          <HeroSection />
-          <ProblemSection />
-          <Contact />
-          <Footer />
-        </div>
-      </DefaultWrapper>
-    </>
-  );
+	return (
+		<>
+			<PageMeta
+				titleKey="home.meta.title"
+				descriptionKey="home.meta.description"
+			/>
+			<DefaultWrapper>
+				<div className="w-full place-items-center ">
+					<EducationalBanner />
+					<Header />
+					<HeroSection />
+					<ProblemSection />
+					<Contact />
+					<Footer />
+				</div>
+			</DefaultWrapper>
+		</>
+	);
 };
 
 export default Home;
