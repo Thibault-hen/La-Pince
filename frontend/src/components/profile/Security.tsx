@@ -49,14 +49,14 @@ export const Security = () => {
       <Card className="dark:bg-primary">
         <CardHeader className="pb-4">
           <div className="flex items-center gap-2">
-            <Lock className="h-5 w-5 text-primary-color" />
-            <CardTitle className="text-lg md:text-xl">
-              {' '}
+            <div className="p-1.5 bg-primary-color/10 border border-primary-color/20 rounded-lg">
+              <Lock className="h-4 w-4 text-primary-color" />
+            </div>
+            <CardTitle className="text-base md:text-lg">
               {t('account.header.title')}
             </CardTitle>
           </div>
           <CardDescription className="text-xs md:text-sm">
-            {' '}
             {t('account.header.subtitle')}
           </CardDescription>
         </CardHeader>
@@ -153,6 +153,7 @@ export const Security = () => {
                   type="submit"
                   size="lg"
                   variant="blue"
+                  className="w-full sm:w-auto"
                 >
                   {t('account.security.form.changePasswordButton')}
                 </Button>

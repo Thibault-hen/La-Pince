@@ -76,7 +76,6 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
           </div>
         ) : (
           <CardContent className="flex flex-col md:flex-row lg:flex-col xl:flex-row items-center justify-center gap-8 p-6">
-            {/* Chart Section */}
             <div className="relative">
               <ChartContainer
                 config={chartConfig}
@@ -91,8 +90,8 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
                     data={chartData}
                     dataKey="amount"
                     nameKey="translatedTitle"
-                    innerRadius={isMobile ? 60 : 70} // 👈 adapte ici aussi
-                    outerRadius={isMobile ? 100 : 110} // 👈 réduit proportionnellement
+                    innerRadius={isMobile ? 60 : 70}
+                    outerRadius={isMobile ? 100 : 110}
                     strokeWidth={4}
                     stroke="rgba(255,255,255,0.1)"
                     paddingAngle={2}

@@ -75,7 +75,7 @@ export const BudgetCards = ({
           </div>
 
           <div className="space-y-1">
-            <div className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">
+            <div className="text-xl md:text-2xl font-bold">
               {formatAmount(Number(displayTotal))}
             </div>
             <p className="text-sm text-muted-foreground">
@@ -125,7 +125,7 @@ export const BudgetCards = ({
             </p>
 
             <div className="mt-3">
-              <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
+              <div className="flex items-center justify-between text-xs text-muted-foreground font-bold mb-1">
                 <span>{t('budget.cards.used')}</span>
                 <span>
                   {remainingBudget === totalBudget

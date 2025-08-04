@@ -63,8 +63,10 @@ export const Profile = ({ user }: ProfileProps) => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <User className="h-5 w-5 text-primary-color" />
-              <CardTitle className="text-lg md:text-xl">
+              <div className="p-1.5 bg-primary-color/10 border border-primary-color/20 rounded-lg">
+                <User className="h-4 w-4 text-primary-color" />
+              </div>
+              <CardTitle className="text-base md:text-lg">
                 {t('account.profile.title')}
               </CardTitle>
             </div>
@@ -215,6 +217,7 @@ export const Profile = ({ user }: ProfileProps) => {
                   type="submit"
                   size="lg"
                   variant="blue"
+                  className="w-full sm:w-auto"
                 >
                   {t('account.profile.form.saveButton')}
                 </Button>
