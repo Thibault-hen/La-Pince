@@ -38,7 +38,9 @@ jobs:
         if: github.ref == 'refs/heads/main' && success() && steps.changes_backend.outputs.backend_changed == 'true'
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway up
+        run: |
+          echo "$RAILWAY_TOKEN" | railway login --token
+          railway up
     outputs:
       backend_changed: ${{ steps.changes_backend.outputs.backend_changed }}
 
