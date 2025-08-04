@@ -5,16 +5,16 @@ import type { ContactMail } from '@/types/contact';
 import { showErrorToast, showSuccessToast } from '@/utils/toasts';
 
 export const useContactEmail = () => {
-  const { t } = useTranslation();
-  return useMutation({
-    mutationFn: async (data: ContactMail) => {
-      await contactService.sendContactEmail(data);
-    },
-    onSuccess: () => {
-      showSuccessToast(t('home.contact.success'));
-    },
-    onError: () => {
-      showErrorToast(t('home.contact.error'));
-    },
-  });
+	const { t } = useTranslation();
+	return useMutation({
+		mutationFn: async (data: ContactMail) => {
+			await contactService.sendContactEmail(data);
+		},
+		onSuccess: () => {
+			showSuccessToast(t('home.contact.success'));
+		},
+		onError: () => {
+			showErrorToast(t('home.contact.error'));
+		},
+	});
 };

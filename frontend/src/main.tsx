@@ -10,35 +10,35 @@ import { router } from './router';
 import './i18n';
 
 const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: true,
-      refetchOnMount: true,
-      retry: false,
-      staleTime: 1000 * 60 * 5,
-    },
-    mutations: {
-      retry: false,
-    },
-  },
+	defaultOptions: {
+		queries: {
+			refetchOnWindowFocus: false,
+			refetchOnReconnect: true,
+			refetchOnMount: true,
+			retry: false,
+			staleTime: 1000 * 60 * 5,
+		},
+		mutations: {
+			retry: false,
+		},
+	},
 });
 
 const rootElement = document.getElementById('root');
 if (rootElement) {
-  createRoot(rootElement).render(
-    <StrictMode>
-      <HelmetProvider>
-        <ThemeProvider>
-          <AnimatePresence mode="wait">
-            <QueryClientProvider client={queryClient}>
-              <RouterProvider router={router} />
-            </QueryClientProvider>
-          </AnimatePresence>
-        </ThemeProvider>
-      </HelmetProvider>
-    </StrictMode>,
-  );
+	createRoot(rootElement).render(
+		<StrictMode>
+			<HelmetProvider>
+				<ThemeProvider>
+					<AnimatePresence mode="wait">
+						<QueryClientProvider client={queryClient}>
+							<RouterProvider router={router} />
+						</QueryClientProvider>
+					</AnimatePresence>
+				</ThemeProvider>
+			</HelmetProvider>
+		</StrictMode>,
+	);
 } else {
-  console.error('Root element not found');
+	console.error('Root element not found');
 }
