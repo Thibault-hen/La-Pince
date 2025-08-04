@@ -20,77 +20,77 @@ const FaqPage = lazy(() => import('./pages/Faq'));
 const NotFoundPage = lazy(() => import('./pages/NotFound'));
 
 export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <RootLayout />,
-    children: [
-      {
-        index: true,
-        element: <HomePage />,
-      },
-      {
-        path: '/reset-password',
-        element: <ResetPasswordPage />,
-      },
-      {
-        path: '/login',
-        element: <LoginPage />,
-      },
-      {
-        path: '/register',
-        element: <RegisterPage />,
-      },
-      {
-        path: '/privacy-policy',
-        element: <PrivacyPolicyPage />,
-      },
-      {
-        path: '/tos',
-        element: <TosPage />,
-      },
-      {
-        path: '/legal-notice',
-        element: <LegalNoticePage />,
-      },
-      {
-        path: '/faq',
-        element: <FaqPage />,
-      },
-      {
-        path: '/dashboard',
-        element: <ProtectedRoutes />,
-        children: [
-          {
-            element: <AppLayout />,
-            children: [
-              {
-                index: true,
-                element: <DashboardPage />,
-              },
-              {
-                path: 'budgets',
-                element: <BudgetPage />,
-              },
-              {
-                path: 'expenses',
-                element: <ExpensePage />,
-              },
-              {
-                path: 'categories',
-                element: <CategoryPage />,
-              },
-              {
-                path: 'settings',
-                element: <SettingsPage />,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    path: '*',
-    element: <NotFoundPage />,
-  },
+	{
+		path: '/',
+		element: <RootLayout />,
+		children: [
+			{
+				index: true,
+				element: <HomePage />,
+			},
+			{
+				path: '/reset-password',
+				element: <ResetPasswordPage />,
+			},
+			{
+				path: '/login',
+				element: <LoginPage />,
+			},
+			{
+				path: '/register',
+				element: <RegisterPage />,
+			},
+			{
+				path: '/privacy-policy',
+				element: <PrivacyPolicyPage />,
+			},
+			{
+				path: '/tos',
+				element: <TosPage />,
+			},
+			{
+				path: '/legal-notice',
+				element: <LegalNoticePage />,
+			},
+			{
+				path: '/faq',
+				element: <FaqPage />,
+			},
+			{
+				path: '/dashboard',
+				element: <ProtectedRoutes />,
+				children: [
+					{
+						element: <AppLayout />,
+						children: [
+							{
+								index: true,
+								element: <DashboardPage />,
+							},
+							{
+								path: 'budgets',
+								element: <BudgetPage />,
+							},
+							{
+								path: 'expenses',
+								element: <ExpensePage />,
+							},
+							{
+								path: 'categories',
+								element: <CategoryPage />,
+							},
+							{
+								path: 'settings',
+								element: <SettingsPage />,
+							},
+						],
+					},
+				],
+			},
+		],
+	},
+	{
+		path: '*',
+		element: <NotFoundPage />,
+	},
 ]);

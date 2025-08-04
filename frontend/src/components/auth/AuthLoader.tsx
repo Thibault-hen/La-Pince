@@ -3,19 +3,19 @@ import { MainLoader } from '@/components/ui/MainLoader';
 import { useAuthUser } from '@/hooks/use-auth';
 
 interface AuthLoaderProps {
-  children: ReactNode;
+	children: ReactNode;
 }
 
 export const AuthLoader = ({ children }: AuthLoaderProps) => {
-  const { isLoading } = useAuthUser();
+	const { isLoading } = useAuthUser();
 
-  if (isLoading) {
-    return (
-      <div className="dark:bg-primary min-h-screen ">
-        <MainLoader />
-      </div>
-    );
-  }
+	if (isLoading) {
+		return (
+			<div className="dark:bg-primary min-h-screen ">
+				<MainLoader />
+			</div>
+		);
+	}
 
-  return <>{children}</>;
+	return <>{children}</>;
 };
