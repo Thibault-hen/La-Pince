@@ -39,7 +39,7 @@ jobs:
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
-          echo "$RAILWAY_TOKEN" | railway login --token
+          railway login -t $RAILWAY_TOKEN
           railway up
     outputs:
       backend_changed: ${{ steps.changes_backend.outputs.backend_changed }}
