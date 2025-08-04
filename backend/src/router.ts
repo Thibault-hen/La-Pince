@@ -17,11 +17,10 @@ const router = new Hono();
 
 router.use('/api/*', apiRateLimit);
 router.get('/api/v1/health', (ctx) => {
-  return ctx.json({ status: 'ok', message: 'API is running' }, 200);
+	return ctx.json({ status: 'ok', message: 'API is running' }, 200);
 });
 router.route('/api/v1', authRouter);
 router.route('/api/v1/', contactController);
-
 router.use('/api/v1/*', isAuthenticated);
 router.route('/api/v1', accountRouter);
 router.route('/api/v1', exchangeRateRouter);

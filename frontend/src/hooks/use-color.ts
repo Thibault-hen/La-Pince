@@ -3,8 +3,8 @@ import { colorService } from '@/services/color';
 import type { Color } from '@/types/color';
 
 export const useColors = () => {
-  return useQuery<Color[]>({
-    queryKey: ['color'],
-    queryFn: colorService.getAllColors,
-  });
+	return useQuery<Color[]>({
+		queryKey: ['color'],
+		queryFn: colorService.getAllColors,
+	});
 };
