@@ -113,7 +113,7 @@ export function ChartBarInteractive() {
         </div>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-col justify-center gap-1 px-6 py-4 text-left even:border-l border-t sm:border-t-0 sm:border-l sm:px-8 sm:py-6">
-            <span className="text-muted-foreground text-[.625rem] md:text-xs">
+            <span className="text-muted-foreground text-[0.625rem] uppercase font-bold">
               {t('expenses.chart.header.highestExpense')}
             </span>
             <span className="text-lg leading-none font-bold md:text-2xl">
@@ -122,7 +122,7 @@ export function ChartBarInteractive() {
           </div>
 
           <div className="md:rounded-tr-lg flex flex-1 flex-col justify-center gap-1 px-6 py-4 text-left border-t sm:border-t-0 sm:border-l sm:px-8 sm:py-6">
-            <span className="text-muted-foreground text-[.625rem] md:text-xs">
+            <span className="text-muted-foreground text-[0.625rem] uppercase font-bold">
               {t('expenses.chart.header.totalAmount')}
             </span>
             <span className="text-lg leading-none font-bold md:text-2xl">

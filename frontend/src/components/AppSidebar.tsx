@@ -66,7 +66,7 @@ export const AppSidebar = ({
             >
               <NavLink
                 to="/"
-                className="flex items-center gap-3 transition-all duration-300"
+                className="items-center gap-3 transition-all duration-300 max-w-fit"
               >
                 <div className="relative flex-shrink-0">
                   <img

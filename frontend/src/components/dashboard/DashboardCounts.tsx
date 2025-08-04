@@ -29,7 +29,6 @@ export const DashboardCounts = ({
 }: DashboardCountsProps) => {
   const { formatAmount } = useCurrency();
   const { t } = useTranslation();
-
   const [displayIncome, setDisplayIncome] = useState<string>('0.00');
   const [displayBudget, setDisplayBudget] = useState<string>('0.00');
   const [displayRemaining, setDisplayRemaining] = useState<string>('0.00');
@@ -98,7 +97,7 @@ export const DashboardCounts = ({
           <div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
             <Euro className="h-5 w-5 text-primary-color" />
           </div>
-          <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+          <div className="font-bold text-primary-color uppercase tracking-wider bg-primary-color/10 border border-primary-color text-[0.625rem] p-1.5 rounded-xl shadow-sm">
             {t('dashboard.cards.income')}
           </div>
         </div>
@@ -118,7 +117,7 @@ export const DashboardCounts = ({
           <div className="p-2 bg-green-500/10 border border-green-500/20 rounded-lg">
             <Calculator className="h-5 w-5 text-green-500" />
           </div>
-          <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+          <div className="font-bold text-green-500 uppercase tracking-wider bg-green-500/10 border border-green-500 text-[0.625rem] p-1.5 rounded-xl shadow-sm">
             {t('dashboard.cards.totalBudget')}
           </div>
         </div>
@@ -138,7 +137,10 @@ export const DashboardCounts = ({
           <div className="p-2 bg-purple-500/10 border border-purple-500/20 rounded-lg">
             <TrendingUp className="h-5 w-5 text-purple-500" />
           </div>
-          <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+          <div
+            className="font-bold text-purple-500 uppercase tracking-wider bg-purple-500/10 border border-purple-500
+           text-[0.625rem] p-1.5 rounded-xl shadow-sm"
+          >
             {t('dashboard.cards.remaining2')}
           </div>
         </div>
@@ -153,13 +155,13 @@ export const DashboardCounts = ({
       </div>
 
       {/* Current Month Expenses */}
-      <div className="xl:col-span-3 2xl:col-span-1 bg-gradient-to-br from-white to-red-100 dark:from-primary dark:via-primary dark:to-red-900/20 rounded-xl border">
+      <div className="xl:col-span-3 2xl:col-span-1 bg-gradient-to-br from-white to-secondary-color/10 dark:from-primary dark:via-primary dark:to-secondary-color/20 rounded-xl border">
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
-            <div className="p-2 bg-red-500/10 border border-red-500/20 rounded-lg">
-              <TrendingDown className="h-5 w-5 text-red-500" />
+            <div className="p-2 bg-secondary-color/10 border border-secondary-color/20 rounded-lg">
+              <TrendingDown className="h-5 w-5 text-secondary-color" />
             </div>
-            <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            <div className="font-bold text-secondary-color uppercase tracking-wider bg-secondary-color/10 border border-secondary-color text-[0.625rem] p-1.5 rounded-xl shadow-sm">
               {t('dashboard.cards.expenses')}
             </div>
           </div>

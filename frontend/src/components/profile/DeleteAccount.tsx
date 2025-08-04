@@ -19,8 +19,10 @@ export const DeleteAccount = ({ onOpenDeleteModal }: DeleteAccountProps) => {
     <Card className="dark:bg-primary">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <UserRoundX className="h-5 w-5 text-primary-color" />
-          <CardTitle className="text-lg md:text-xl">
+          <div className="p-1.5 bg-primary-color/10 border border-primary-color/20 rounded-lg">
+            <UserRoundX className="h-4 w-4 text-primary-color" />
+          </div>
+          <CardTitle className="text-base md:text-lg">
             {t('account.delete.header.title')}
           </CardTitle>
         </div>
@@ -40,6 +42,7 @@ export const DeleteAccount = ({ onOpenDeleteModal }: DeleteAccountProps) => {
             size="lg"
             variant="red"
             onClick={onOpenDeleteModal}
+            className="w-full sm:w-auto"
           >
             {t('account.delete.button')}
           </Button>

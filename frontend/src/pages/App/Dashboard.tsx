@@ -35,14 +35,12 @@ const Dashboard = () => {
         <DashboardHeader onOpenEditModal={() => setOpenEditIncome(true)} />
 
         <div className="space-y-6">
-          {/* Second Row: Charts and detailed stats */}
           <DashboardCounts
             currentMonthBudget={dashboardData?.currentMonthBudget}
             currentMonthExpenses={dashboardData?.currentMonthExpenses}
             currentMonthRevenue={dashboardData?.currentMonthRevenue}
           />
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-            {/* Monthly Chart */}
             <div className="lg:col-span-1">
               <ExpensesOverallChart
                 last6MonthsExpensesByMonth={
@@ -50,7 +48,6 @@ const Dashboard = () => {
                 }
               />
             </div>
-            {/* Quick Stats Grid */}
             <div className="grid grid-cols-2 gap-4">
               <FinanceCard
                 title={t('dashboard.overallCards.spentToday')}

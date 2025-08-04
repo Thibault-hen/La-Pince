@@ -363,7 +363,7 @@ export const fr = {
       noResults: 'Aucun résultat.',
       filter: {
         category: 'Filtrer par catégorie',
-        date: 'Filter par date',
+        date: 'Filtrer par date',
         all: 'Tout temps',
         today: 'Aujourd’hui',
         yesterday: 'Hier',

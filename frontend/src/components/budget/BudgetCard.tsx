@@ -140,7 +140,7 @@ export const BudgetCard = ({
                   {t('budget.card.spent')}
                 </span>
                 <span
-                  className="text-xs"
+                  className="text-xs font-bold"
                   style={
                     {
                       color: getColorStatus(budget.totalExpense, budget.amount),

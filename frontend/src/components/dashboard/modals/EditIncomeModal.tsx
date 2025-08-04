@@ -35,7 +35,7 @@ export const EditIncomeModal = ({ income, open, setOpen }: EditIncomeProps) => {
       onSubmit: updateIncomeSchema,
     },
     async onSubmit({ value }) {
-      await updateIncome({ id: income?.id ?? '', value: value });
+      await updateIncome({ income: value });
       setOpen(false);
     },
   });
