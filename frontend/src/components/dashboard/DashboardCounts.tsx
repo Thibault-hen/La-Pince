@@ -32,7 +32,7 @@ export const DashboardCounts = ({
 	const currency = useAtomValue(currencyAtom);
 
 	return (
-		<div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+		<div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-4 gap-6">
 			{/* Revenue Card */}
 			<div className="bg-gradient-to-br from-white to-primary-color/5 dark:from-primary dark:via-primary dark:to-primary-color/20 p-6 rounded-xl border">
 				<div className="flex items-center justify-between mb-4">
@@ -139,7 +139,7 @@ export const DashboardCounts = ({
 			</div>
 
 			{/* Current Month Expenses */}
-			<div className="xl:col-span-3 2xl:col-span-1 bg-gradient-to-br from-white to-secondary-color/10 dark:from-primary dark:via-primary dark:to-secondary-color/20 rounded-xl border">
+			<div className="bg-gradient-to-br from-white to-secondary-color/10 dark:from-primary dark:via-primary dark:to-secondary-color/20 rounded-xl border">
 				<div className="p-6">
 					<div className="flex items-center justify-between mb-4">
 						<div className="p-2 bg-secondary-color/10 border border-secondary-color/20 rounded-lg">
@@ -152,7 +152,7 @@ export const DashboardCounts = ({
 
 					<div className="space-y-4">
 						<div className="space-y-1">
-							<div className="text-xl md:text-2xl font-bold text-foreground">
+							<div className="text-foreground flex items-center gap-2">
 								<NumberFlow
 									plugins={[continuous]}
 									value={currentMonthExpenses ?? 0}
@@ -164,6 +164,21 @@ export const DashboardCounts = ({
 									transformTiming={{ duration: 750, easing: 'linear' }}
 									spinTiming={{ duration: 750, easing: 'linear' }}
 									opacityTiming={{ duration: 350, easing: 'ease-out' }}
+									className={`${(currentMonthExpenses ?? 0) > (currentMonthRevenue?.value ?? 0) ? 'text-red-500' : ''} text-xl md:text-2xl font-bold `}
+								/>
+								<span className="text-xl md:text-2xl font-bold">/</span>
+								<NumberFlow
+									plugins={[continuous]}
+									value={currentMonthRevenue?.value ?? 0}
+									format={{
+										style: 'currency',
+										currency: currency,
+									}}
+									locales={getLocale()}
+									transformTiming={{ duration: 750, easing: 'linear' }}
+									spinTiming={{ duration: 750, easing: 'linear' }}
+									opacityTiming={{ duration: 350, easing: 'ease-out' }}
+									className="text-xs md:text-sm mt-2 dark:text-muted-foreground font-bold"
 								/>
 							</div>
 							<p className="text-sm text-muted-foreground">
