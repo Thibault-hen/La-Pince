@@ -1,3 +1,5 @@
+import NumberFlow, { continuous } from '@number-flow/react';
+import { useAtomValue } from 'jotai';
 import {
 	AlertCircle,
 	Calculator,
@@ -6,11 +8,10 @@ import {
 	TrendingDown,
 	TrendingUp,
 } from 'lucide-react';
-import { useSpring } from 'motion/react';
-import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useCurrency } from '@/hooks/use-currency';
+import { currencyAtom } from '@/stores/currencyStore';
 import { ColorPercentage, getColorStatus } from '@/utils/colorStatus';
+import { getLocale } from '@/utils/getLocale';
 import { getPercentage, getPercentageRaw } from '@/utils/percentage';
 import { Progress } from '../ui/progress';
 
@@ -27,70 +28,11 @@ export const DashboardCounts = ({
 	currentMonthBudget,
 	currentMonthExpenses,
 }: DashboardCountsProps) => {
-	const { formatAmount } = useCurrency();
 	const { t } = useTranslation();
-	const [displayIncome, setDisplayIncome] = useState<string>('0.00');
-	const [displayBudget, setDisplayBudget] = useState<string>('0.00');
-	const [displayRemaining, setDisplayRemaining] = useState<string>('0.00');
-	const [displayExpenses, setDisplayExpenses] = useState<string>('0.00');
-
-	const income = useSpring(0, {
-		bounce: 0,
-		duration: 1500,
-	});
-
-	const budget = useSpring(0, {
-		bounce: 0,
-		duration: 1500,
-	});
-
-	const remaining = useSpring(0, {
-		bounce: 0,
-		duration: 1500,
-	});
-
-	const expenses = useSpring(0, {
-		bounce: 0,
-		duration: 1500,
-	});
-
-	income.on('change', (value) => {
-		setDisplayIncome(value.toFixed(2));
-	});
-
-	budget.on('change', (value) => {
-		setDisplayBudget(value.toFixed(2));
-	});
-
-	remaining.on('change', (value) => {
-		setDisplayRemaining(value.toFixed(2));
-	});
-
-	expenses.on('change', (value) => {
-		setDisplayExpenses(value.toFixed(2));
-	});
-
-	useEffect(() => {
-		income.set(currentMonthRevenue?.value ?? 0);
-		budget.set(currentMonthBudget ?? 0);
-		expenses.set(currentMonthExpenses ?? 0);
-		remaining.set(
-			(currentMonthRevenue?.value ?? 0) - (currentMonthExpenses ?? 0) <= 0
-				? 0
-				: (currentMonthRevenue?.value ?? 0) - (currentMonthExpenses ?? 0),
-		);
-	}, [
-		currentMonthRevenue,
-		income,
-		budget,
-		expenses,
-		remaining,
-		currentMonthExpenses,
-		currentMonthBudget,
-	]);
+	const currency = useAtomValue(currencyAtom);
 
 	return (
-		<div className="grid grid-cols-1 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+		<div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-4 gap-6">
 			{/* Revenue Card */}
 			<div className="bg-gradient-to-br from-white to-primary-color/5 dark:from-primary dark:via-primary dark:to-primary-color/20 p-6 rounded-xl border">
 				<div className="flex items-center justify-between mb-4">
@@ -103,7 +45,18 @@ export const DashboardCounts = ({
 				</div>
 				<div className="space-y-1">
 					<div className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">
-						{formatAmount(Number(displayIncome))}
+						<NumberFlow
+							plugins={[continuous]}
+							value={currentMonthRevenue?.value ?? 0}
+							format={{
+								style: 'currency',
+								currency: currency,
+							}}
+							locales={getLocale()}
+							transformTiming={{ duration: 750, easing: 'linear' }}
+							spinTiming={{ duration: 750, easing: 'linear' }}
+							opacityTiming={{ duration: 350, easing: 'ease-out' }}
+						/>
 					</div>
 					<p className="text-sm text-muted-foreground">
 						{t('dashboard.cards.totalIncome')}
@@ -123,7 +76,18 @@ export const DashboardCounts = ({
 				</div>
 				<div className="space-y-1">
 					<div className="text-xl md:text-2xl font-bold">
-						{formatAmount(Number(displayBudget))}
+						<NumberFlow
+							plugins={[continuous]}
+							value={currentMonthBudget ?? 0}
+							format={{
+								style: 'currency',
+								currency: currency,
+							}}
+							locales={getLocale()}
+							transformTiming={{ duration: 750, easing: 'linear' }}
+							spinTiming={{ duration: 750, easing: 'linear' }}
+							opacityTiming={{ duration: 350, easing: 'ease-out' }}
+						/>
 					</div>
 					<p className="text-sm text-muted-foreground">
 						{t('dashboard.cards.totalBudgets')}
@@ -146,7 +110,27 @@ export const DashboardCounts = ({
 				</div>
 				<div className="space-y-1">
 					<div className="text-xl md:text-2xl font-bold">
-						<span>{formatAmount(Number(displayRemaining))}</span>
+						<span>
+							<NumberFlow
+								plugins={[continuous]}
+								value={
+									(currentMonthRevenue?.value ?? 0) -
+										(currentMonthExpenses ?? 0) <=
+									0
+										? 0
+										: (currentMonthRevenue?.value ?? 0) -
+											(currentMonthExpenses ?? 0)
+								}
+								format={{
+									style: 'currency',
+									currency: currency,
+								}}
+								locales={getLocale()}
+								transformTiming={{ duration: 750, easing: 'linear' }}
+								spinTiming={{ duration: 750, easing: 'linear' }}
+								opacityTiming={{ duration: 350, easing: 'ease-out' }}
+							/>
+						</span>
 					</div>
 					<p className="text-sm text-muted-foreground">
 						{t('dashboard.cards.remaining')}
@@ -155,7 +139,7 @@ export const DashboardCounts = ({
 			</div>
 
 			{/* Current Month Expenses */}
-			<div className="xl:col-span-3 2xl:col-span-1 bg-gradient-to-br from-white to-secondary-color/10 dark:from-primary dark:via-primary dark:to-secondary-color/20 rounded-xl border">
+			<div className="bg-gradient-to-br from-white to-secondary-color/10 dark:from-primary dark:via-primary dark:to-secondary-color/20 rounded-xl border">
 				<div className="p-6">
 					<div className="flex items-center justify-between mb-4">
 						<div className="p-2 bg-secondary-color/10 border border-secondary-color/20 rounded-lg">
@@ -168,8 +152,34 @@ export const DashboardCounts = ({
 
 					<div className="space-y-4">
 						<div className="space-y-1">
-							<div className="text-xl md:text-2xl font-bold text-foreground">
-								{formatAmount(Number(displayExpenses))}
+							<div className="text-foreground flex items-center gap-2">
+								<NumberFlow
+									plugins={[continuous]}
+									value={currentMonthExpenses ?? 0}
+									format={{
+										style: 'currency',
+										currency: currency,
+									}}
+									locales={getLocale()}
+									transformTiming={{ duration: 750, easing: 'linear' }}
+									spinTiming={{ duration: 750, easing: 'linear' }}
+									opacityTiming={{ duration: 350, easing: 'ease-out' }}
+									className={`${(currentMonthExpenses ?? 0) > (currentMonthRevenue?.value ?? 0) ? 'text-red-500' : ''} text-xl md:text-2xl font-bold `}
+								/>
+								<span className="text-xl md:text-2xl font-bold">/</span>
+								<NumberFlow
+									plugins={[continuous]}
+									value={currentMonthRevenue?.value ?? 0}
+									format={{
+										style: 'currency',
+										currency: currency,
+									}}
+									locales={getLocale()}
+									transformTiming={{ duration: 750, easing: 'linear' }}
+									spinTiming={{ duration: 750, easing: 'linear' }}
+									opacityTiming={{ duration: 350, easing: 'ease-out' }}
+									className="text-xs md:text-sm mt-2 dark:text-muted-foreground font-bold"
+								/>
 							</div>
 							<p className="text-sm text-muted-foreground">
 								{t('dashboard.overallCard.totalSpent')}

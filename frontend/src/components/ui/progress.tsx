@@ -19,7 +19,7 @@ function Progress({
 		>
 			<ProgressPrimitive.Indicator
 				data-slot="progress-indicator"
-				className="bg-primary h-full w-full flex-1 transition-all"
+				className="bg-primary h-full w-full flex-1 transition-all duration-[1200ms] ease-out will-change-transform data-[state=indeterminate]:animate-progress-indeterminate"
 				style={{
 					transform: `translateX(-${100 - ((value || 0) / (props.max || 100)) * 100}%)`,
 				}}

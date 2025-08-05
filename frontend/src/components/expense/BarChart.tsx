@@ -1,5 +1,6 @@
-import { useSpring } from 'motion/react';
-import { useEffect, useMemo, useState } from 'react';
+import NumberFlow, { continuous } from '@number-flow/react';
+import { useAtomValue } from 'jotai';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 import {
@@ -17,6 +18,8 @@ import {
 } from '@/components/ui/chart';
 import { useCurrency } from '@/hooks/use-currency';
 import { useExpenses } from '@/hooks/use-expense';
+import { currencyAtom } from '@/stores/currencyStore';
+import { getLocale } from '@/utils/getLocale';
 
 export const description = 'An interactive bar chart';
 
@@ -65,13 +68,14 @@ function getExpensesThisMonth<T extends { date: string; amount: number }>(
 }
 
 export function ChartBarInteractive() {
-	const [displayTotal, setDisplayTotal] = useState<string>();
+	const currency = useAtomValue(currencyAtom);
 	const [activeChart, _setActiveChart] =
 		useState<keyof typeof chartConfig>('amount');
 	const { expenses } = useExpenses();
 	const { formatAmount } = useCurrency();
 	const { t, i18n } = useTranslation();
 	const locale = i18n.language === 'en' ? 'en-US' : 'fr-FR';
+
 	const expensesThisMonth = useMemo(
 		() => getExpensesThisMonth(expenses),
 		[expenses],
@@ -82,23 +86,11 @@ export function ChartBarInteractive() {
 		}),
 		[expensesThisMonth],
 	);
-	const dTotal = useSpring(0, {
-		bounce: 0,
-		duration: 1000,
-	});
 
 	const highestExpense = useMemo(
 		() => Math.max(...expensesThisMonth.map((expense) => expense.amount), 0),
 		[expensesThisMonth],
 	);
-
-	dTotal.on('change', (value) => {
-		setDisplayTotal(value.toFixed(2));
-	});
-
-	useEffect(() => {
-		dTotal.set(total.amount ?? 0);
-	}, [total.amount, dTotal]);
 
 	return (
 		<Card className="py-0 dark:bg-primary">
@@ -117,7 +109,15 @@ export function ChartBarInteractive() {
 							{t('expenses.chart.header.highestExpense')}
 						</span>
 						<span className="text-lg leading-none font-bold md:text-2xl">
-							{formatAmount(Number(highestExpense ?? 0))}
+							<NumberFlow
+								plugins={[continuous]}
+								value={highestExpense ?? 0}
+								format={{
+									style: 'currency',
+									currency: currency,
+								}}
+								locales={getLocale()}
+							/>
 						</span>
 					</div>
 
@@ -126,7 +126,18 @@ export function ChartBarInteractive() {
 							{t('expenses.chart.header.totalAmount')}
 						</span>
 						<span className="text-lg leading-none font-bold md:text-2xl">
-							{formatAmount(Number(displayTotal ?? 0))}
+							<NumberFlow
+								plugins={[continuous]}
+								value={total.amount ?? 0}
+								format={{
+									style: 'currency',
+									currency: currency,
+								}}
+								locales={getLocale()}
+								transformTiming={{ duration: 750, easing: 'linear' }}
+								spinTiming={{ duration: 750, easing: 'linear' }}
+								opacityTiming={{ duration: 350, easing: 'ease-out' }}
+							/>
 						</span>
 					</div>
 				</div>

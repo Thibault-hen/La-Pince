@@ -75,7 +75,10 @@ incomeRouter
 			});
 
 			if (!income) {
-				const createdIncome = await createIncome(c.get('jwtPayload').userId);
+				const createdIncome = await createIncome(
+					c.get('jwtPayload').userId,
+					data.value,
+				);
 				return c.json(
 					{
 						...createdIncome,
@@ -139,13 +142,13 @@ incomeRouter
 		},
 	);
 
-async function createIncome(userId: string): Promise<Income> {
+async function createIncome(userId: string, value?: number): Promise<Income> {
 	const now = new Date();
 
 	const createdIncome = await prisma.income.create({
 		data: {
 			userId,
-			value: 0,
+			value: value ?? 0,
 			month: now.getMonth() + 1,
 			year: now.getFullYear(),
 		},

@@ -11,6 +11,7 @@ import expenseRouter from './controllers/expense';
 import incomeRouter from './controllers/income';
 import notificationRouter from './controllers/notification';
 import { isAuthenticated } from './middlewares/auth.middleware';
+import { loggerMiddleware } from './middlewares/loggerMiddleware';
 import { apiRateLimit } from './utils/rateLimits';
 
 const router = new Hono();
@@ -22,6 +23,7 @@ router.get('/api/v1/health', (ctx) => {
 router.route('/api/v1', authRouter);
 router.route('/api/v1/', contactController);
 router.use('/api/v1/*', isAuthenticated);
+router.use('/api/v1/*', loggerMiddleware);
 router.route('/api/v1', accountRouter);
 router.route('/api/v1', exchangeRateRouter);
 router.route('/api/v1', budgetRouter);
