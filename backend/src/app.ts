@@ -9,7 +9,6 @@ import { secureHeaders } from 'hono/secure-headers';
 import { openAPISpecs } from 'hono-openapi';
 import { ZodError } from 'zod';
 import { authentify } from './middlewares/auth.middleware';
-import { loggerMiddleware } from './middlewares/loggerMiddleware';
 import router from './router';
 import { getEnv } from './utils/env';
 import { logger } from './utils/logger';
@@ -27,7 +26,6 @@ app.use('*', async (c: Context, next) => {
 	c.set('log', logger);
 	await next();
 });
-app.use('*', loggerMiddleware);
 
 app.use(
 	secureHeaders({
@@ -35,6 +33,7 @@ app.use(
 		referrerPolicy: 'strict-origin-when-cross-origin',
 	}),
 );
+
 app.use(
 	'*',
 	cors({

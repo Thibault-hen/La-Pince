@@ -1,9 +1,10 @@
+import NumberFlow, { continuous } from '@number-flow/react';
+import { useAtomValue } from 'jotai';
 import { Euro, Hash, TrendingUp } from 'lucide-react';
-import { useSpring } from 'motion/react';
-import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useCurrency } from '@/hooks/use-currency';
+import { currencyAtom } from '@/stores/currencyStore';
 import { getColorStatus } from '@/utils/colorStatus';
+import { getLocale } from '@/utils/getLocale';
 import { getPercentage } from '@/utils/percentage';
 import { Progress } from '../ui/progress';
 
@@ -18,48 +19,8 @@ export const BudgetCards = ({
 	activeBudget,
 	remainingBudget,
 }: BudgetCardsProps) => {
-	const { formatAmount } = useCurrency();
-	const [displayTotal, setDisplayTotal] = useState<string>('0.00');
-	const [displayCount, setDisplayCount] = useState<string>('0');
-	const [displayRemaining, setDisplayRemaining] = useState<string>('0.00');
+	const currency = useAtomValue(currencyAtom);
 	const { t } = useTranslation();
-
-	const total = useSpring(0, {
-		bounce: 0,
-		duration: 2000,
-	});
-
-	const count = useSpring(0, {
-		bounce: 0,
-		duration: 2000,
-	});
-
-	const remaining = useSpring(0, {
-		bounce: 0,
-		duration: 2000,
-	});
-
-	total.on('change', (value) => {
-		setDisplayTotal(value.toFixed(2));
-	});
-
-	count.on('change', (value) => {
-		setDisplayCount(value.toFixed(0));
-	});
-
-	remaining.on('change', (value) => {
-		setDisplayRemaining(value < 0 ? '0' : value.toFixed(2));
-	});
-
-	useEffect(() => {
-		total.set(totalBudget ?? 0);
-		count.set(activeBudget ?? 0);
-		remaining.set(remainingBudget ?? 0);
-
-		if (remainingBudget === 0) {
-			setDisplayRemaining('0.00');
-		}
-	}, [totalBudget, activeBudget, remainingBudget, count, remaining, total]);
 
 	return (
 		<div className="flex flex-col gap-4 w-full xl:max-w-xl">
@@ -76,7 +37,18 @@ export const BudgetCards = ({
 
 					<div className="space-y-1">
 						<div className="text-xl md:text-2xl font-bold">
-							{formatAmount(Number(displayTotal))}
+							<NumberFlow
+								plugins={[continuous]}
+								value={totalBudget ?? 0}
+								format={{
+									style: 'currency',
+									currency: currency,
+								}}
+								locales={getLocale()}
+								transformTiming={{ duration: 750, easing: 'linear' }}
+								spinTiming={{ duration: 750, easing: 'linear' }}
+								opacityTiming={{ duration: 350, easing: 'ease-out' }}
+							/>
 						</div>
 						<p className="text-sm text-muted-foreground">
 							{t('budget.cards.totalBudget')}
@@ -97,7 +69,15 @@ export const BudgetCards = ({
 					</div>
 
 					<div className="space-y-1">
-						<div className="text-xl md:text-2xl font-bold"> {displayCount}</div>
+						<div className="text-xl md:text-2xl font-bold">
+							<NumberFlow
+								plugins={[continuous]}
+								value={activeBudget ?? 0}
+								transformTiming={{ duration: 750, easing: 'linear' }}
+								spinTiming={{ duration: 750, easing: 'linear' }}
+								opacityTiming={{ duration: 350, easing: 'ease-out' }}
+							/>
+						</div>
 						<p className="text-sm text-muted-foreground">
 							{t('budget.cards.activeBudgets')}
 						</p>
@@ -118,7 +98,17 @@ export const BudgetCards = ({
 
 					<div className="space-y-1">
 						<div className="text-xl md:text-2xl font-bold">
-							<span> {formatAmount(Number(displayRemaining))}</span>
+							<span>
+								<NumberFlow
+									plugins={[continuous]}
+									value={remainingBudget ?? 0}
+									format={{
+										style: 'currency',
+										currency: currency,
+									}}
+									locales={getLocale()}
+								/>
+							</span>
 						</div>
 						<p className="text-sm text-muted-foreground">
 							{t('budget.cards.remainingBudget')}
