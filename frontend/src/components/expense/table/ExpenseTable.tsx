@@ -116,7 +116,7 @@ export function DataTable<TData, TValue>({
 						onChange={(event) =>
 							table.getColumn('title')?.setFilterValue(event.target.value)
 						}
-						className="w-full xl:max-w-sm pl-10 !text-[0.625rem] uppercase bg-primary"
+						className="w-full xl:max-w-sm pl-10 bg-primary"
 					/>
 					<div className="flex flex-col justify-between w-full md:flex-row gap-2">
 						<div className="flex flex-col sm:flex-row xl:ml-auto items-center gap-2">
