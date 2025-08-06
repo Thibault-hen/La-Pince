@@ -1,6 +1,7 @@
 import { AnimatePresence } from 'motion/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import { BudgetCard } from '@/components/budget/BudgetCard';
 import { BudgetCards } from '@/components/budget/BudgetCards';
 import { BudgetChart } from '@/components/budget/BudgetChart';
@@ -21,6 +22,13 @@ const BudgetPage = () => {
 
 	const { data: budgets, isLoading } = useBudgets();
 	const { t } = useTranslation();
+	const location = useLocation();
+
+	useEffect(() => {
+		if (location.state?.openAddModal) {
+			setOpenAddBudget(true);
+		}
+	}, [location.state]);
 
 	if (isLoading) {
 		return (

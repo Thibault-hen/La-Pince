@@ -1,5 +1,5 @@
 import type { TFunction } from 'i18next';
-import { HandCoins, Home, PiggyBank, Settings, Tags } from 'lucide-react';
+import { Gauge, HandCoins, PiggyBank, Settings, Tags } from 'lucide-react';
 import type * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useLocation } from 'react-router-dom';
@@ -22,7 +22,7 @@ const getItems = (t: TFunction) => [
 	{
 		title: t('sidebar.dashboard'),
 		url: '/dashboard',
-		icon: Home,
+		icon: Gauge,
 	},
 	{
 		title: t('sidebar.budgets'),
@@ -50,44 +50,46 @@ export const AppSidebar = ({
 	...props
 }: React.ComponentProps<typeof Sidebar>) => {
 	const location = useLocation();
-	const { openMobile, setOpenMobile } = useSidebar();
+	const { openMobile, setOpenMobile, isMobile } = useSidebar();
 	const { t } = useTranslation();
 	const items = getItems(t);
 
 	return (
-		<Sidebar {...props} className="group">
-			<SidebarHeader className="p-0">
+		<Sidebar {...props}>
+			<SidebarHeader
+				className={`${isMobile ? 'mb-4 mx-2 border-b' : 'mx-8'} flex group-data-[collapsible=icon]:mx-0`}
+			>
 				<SidebarMenu>
 					<SidebarMenuItem>
-						<SidebarMenuButton
-							asChild
-							size="lg"
-							className="group-data-[state=collapsed]:mx-2 mx-4 my-3"
-						>
+						<SidebarMenuButton asChild size="lg" className="!p-0">
 							<NavLink
 								to="/"
-								className="items-center gap-3 transition-all duration-300 max-w-fit"
+								className="flex items-center gap-3 px-2 py-1 group"
+								tabIndex={0}
 							>
-								<div className="relative flex-shrink-0">
-									<img
-										src={laPinceLogo}
-										className="transition-all duration-300 w-12 h-12 group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:h-8"
-										alt="Application logo"
-									/>
-								</div>
-								<span className="text-lg font-bold">{t('home.nav.title')}</span>
+								<img
+									src={laPinceLogo}
+									className="w-12 h-12 rounded-lg transition-transform duration-200 hover:scale-110"
+									alt="La Pince logo"
+									draggable={false}
+								/>
+								<span className="text-xl font-semibold tracking-tight transition-colors duration-200">
+									La Pince
+								</span>
 							</NavLink>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 				</SidebarMenu>
 			</SidebarHeader>
-			<SidebarContent>
+			<SidebarContent
+				className={`${isMobile ? 'justify-start' : 'justify-center'} flex`}
+			>
 				<SidebarGroup>
-					<SidebarMenu>
+					<SidebarMenu className="flex gap-8">
 						{items.map((item) => {
 							const isActive: boolean = item.url === location.pathname;
 							return (
-								<SidebarMenuItem key={item.title} className="my-1">
+								<SidebarMenuItem key={item.title}>
 									<SidebarMenuButton
 										asChild
 										isActive={isActive}
@@ -95,14 +97,14 @@ export const AppSidebar = ({
 									>
 										<NavLink
 											to={item.url}
-											className="p-1"
+											className="p-1 group-data-[collapsible=icon]:p-2 flex items-center gap-3"
 											onClick={() => {
 												if (openMobile) {
 													setOpenMobile(false);
 												}
 											}}
 										>
-											<item.icon />
+											<item.icon className="!w-7 !h-7" strokeWidth={1.2} />
 											<span>{item.title}</span>
 										</NavLink>
 									</SidebarMenuButton>

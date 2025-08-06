@@ -208,3 +208,14 @@ body {
 		0 0 10px oklch(0.702 0.1289 69.51),
 		0 0 5px oklch(0.702 0.1289 69.51) !important;
 }
+@keyframes skeleton-shimmer {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(100%);
+	}
+}
+.animate-skeleton-shimmer {
+	animation: skeleton-shimmer 1.2s infinite;
+}

@@ -332,7 +332,7 @@ export const fr = {
 		},
 		last10Expenses: {
 			title: 'Dernières dépenses',
-			subTitle: 'Vos 10 dernières dépenses',
+			subTitle: 'Tes 10 dernières dépenses',
 			totalExpense: 'Dépenses totales',
 			today: 'Aujourd’hui',
 			isYesterday: 'Hier',
@@ -401,6 +401,8 @@ export const fr = {
 				date: 'Date',
 				cancel: 'Annuler',
 				create: 'Créer',
+				noBudgets:
+					'Aucun budget trouvé, <budgetsLink>créez-en un premier</budgetsLink>',
 			},
 		},
 		edit: {

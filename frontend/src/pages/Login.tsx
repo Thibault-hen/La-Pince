@@ -1,13 +1,20 @@
+import { useAtomValue } from 'jotai';
 import { House } from 'lucide-react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { Navigate, NavLink, useLocation } from 'react-router-dom';
 import preview from '@/assets/home-page/hero_img1.png';
 import { LoginForm } from '@/components/auth/LoginForm';
 import { LanguageSelector } from '@/components/lang/LanguageSelector';
 import { ModeToggle } from '@/components/theme/theme-toggle';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
+import { isAuthenticatedAtom } from '@/stores/authStore';
 
 const Login = () => {
 	const location = useLocation();
+	const isAuthenticated = useAtomValue(isAuthenticatedAtom);
+
+	if (isAuthenticated) {
+		return <Navigate to="/dashboard" replace />;
+	}
 
 	return (
 		<DefaultWrapper key={location.pathname}>
