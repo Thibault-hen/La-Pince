@@ -28,7 +28,7 @@ export const CategoryFilter = ({
 
 	return (
 		<Select onValueChange={handleFilter} defaultValue="all">
-			<SelectTrigger className="w-full sm:w-[220px] bg-primary">
+			<SelectTrigger className="w-full md:w-[220px] bg-primary">
 				<SelectValue placeholder="Select a fruit" />
 			</SelectTrigger>
 			<SelectContent>

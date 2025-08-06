@@ -78,7 +78,7 @@ export default function Header() {
 										'relative px-4 py-2 text-xs lg:text-sm font-medium transition-all duration-300',
 										'hover:text-primary-color',
 										'before:absolute before:inset-x-0 before:bottom-0 before:h-0.5',
-										'before:bg-gradient-to-r before:from-primary-color before:to-secondary-color',
+										'before:bg-primary-color before:origin-left before:scale-x-0',
 										'before:scale-x-0 before:transition-transform before:duration-300',
 										'hover:before:scale-x-100',
 									)}
@@ -172,7 +172,7 @@ export default function Header() {
 							</SheetTrigger>
 							<SheetContent
 								side="right"
-								className="w-full sm:w-80 bg-gradient-to-br from-background via-background/95 to-background/90 backdrop-blur-xl border-l border-border/50"
+								className="w-full sm:w-80 bg-primary backdrop-blur-xl"
 							>
 								<SheetHeader className="p-2 border-b">
 									<SheetTitle className="flex items-center justify-center gap-3">

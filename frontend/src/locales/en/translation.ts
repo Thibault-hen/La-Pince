@@ -402,6 +402,8 @@ export const en = {
 				date: 'Date',
 				cancel: 'Cancel',
 				create: 'Create',
+				noBudgets:
+					'No budgets available, <budgetsLink>create your first one</budgetsLink>',
 			},
 		},
 		edit: {
