@@ -32,6 +32,7 @@ export function DatePicker({
 			<Popover>
 				<PopoverTrigger asChild>
 					<Button
+						aria-label="Open calendar"
 						type="button"
 						variant="outline"
 						className="w-full justify-start text-center font-normal dark:bg-primary"

@@ -85,7 +85,7 @@ export const AppSidebar = ({
 				className={`${isMobile ? 'justify-start' : 'justify-center'} flex`}
 			>
 				<SidebarGroup>
-					<SidebarMenu className="flex gap-8">
+					<SidebarMenu className="flex gap-4 lg:gap-8">
 						{items.map((item) => {
 							const isActive: boolean = item.url === location.pathname;
 							return (
