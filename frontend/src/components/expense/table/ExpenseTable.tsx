@@ -108,7 +108,7 @@ export function DataTable<TData, TValue>({
 	return (
 		<>
 			<div className="relative flex py-4">
-				<div className="flex flex-col md:flex-row items-center md:justify-between md:items-start w-full ">
+				<div className="flex flex-col xl:flex-row items-center md:justify-between md:items-start w-full gap-2">
 					<Search className="absolute left-3 top-6.5 h-4 w-4 text-muted-foreground" />
 					<Input
 						placeholder={t('expenses.table.searchPlaceholder')}
@@ -116,17 +116,19 @@ export function DataTable<TData, TValue>({
 						onChange={(event) =>
 							table.getColumn('title')?.setFilterValue(event.target.value)
 						}
-						className="w-full md:max-w-sm pl-10 mb-6 md:mb-0 !text-[0.625rem] uppercase bg-primary"
+						className="w-full xl:max-w-sm pl-10 !text-[0.625rem] uppercase bg-primary"
 					/>
-					<div className="flex flex-col w-full md:w-fit sm:flex-row items-center gap-2 md:gap-2">
-						{data && data.length > 0 && (
-							<CategoryFilter
-								categories={categories}
-								onFilter={handleCategoryFilter}
-							/>
-						)}
-						<DateFilter onFilterDate={handleDateFilter} />
-						{children}
+					<div className="flex flex-col justify-between w-full md:flex-row gap-2">
+						<div className="flex flex-col sm:flex-row xl:ml-auto items-center gap-2">
+							{data && data.length > 0 && (
+								<CategoryFilter
+									categories={categories}
+									onFilter={handleCategoryFilter}
+								/>
+							)}
+							<DateFilter onFilterDate={handleDateFilter} />
+						</div>
+						<div>{children}</div>
 					</div>
 				</div>
 			</div>

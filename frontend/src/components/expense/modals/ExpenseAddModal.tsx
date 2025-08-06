@@ -1,7 +1,9 @@
 /** biome-ignore-all lint/correctness/noChildrenProp: TanStack Form uses children prop pattern */
 import { useForm } from '@tanstack/react-form';
+import { CircleAlert } from 'lucide-react';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import {
 	Dialog,
@@ -41,7 +43,7 @@ export default function ExpenseAddModal({
 }: ExpenseAddModalProps) {
 	const [savedCategory, setSavedCategory] = useState<string | null>(null);
 	const { data: { budgets = [] } = {} } = useBudgets();
-	const hadBudgets = budgets.length > 0;
+	const hasBudgets = budgets.length > 0;
 	const { mutateAsync: createExpense } = useCreateExpense();
 	const { t } = useTranslation();
 	const { formatAmount } = useCurrency();
@@ -52,7 +54,7 @@ export default function ExpenseAddModal({
 		},
 		defaultValues: {
 			description: '',
-			budgetId: savedCategory ? savedCategory : hadBudgets ? budgets[0].id : '',
+			budgetId: savedCategory ? savedCategory : hasBudgets ? budgets[0].id : '',
 			amount: 0,
 			date: new Date().toISOString(),
 		},
@@ -146,7 +148,7 @@ export default function ExpenseAddModal({
 										{t('expenses.add.form.budget')}
 									</Label>
 									<Select
-										disabled={!hadBudgets}
+										disabled={!hasBudgets}
 										name={field.name}
 										value={field.state.value || ''}
 										onValueChange={field.handleChange}
@@ -181,6 +183,25 @@ export default function ExpenseAddModal({
 											</SelectGroup>
 										</SelectContent>
 									</Select>
+									{!hasBudgets && (
+										<span className="bg-red-500/10 border gap-1 border-red-500 rounded-lg py-1 px-2 flex items-center text-red-500 text-xs">
+											<CircleAlert size={16} className="mr-2" />
+											<Trans
+												i18nKey="expenses.add.form.noBudgets"
+												components={{
+													budgetsLink: (
+														<Link
+															to="/dashboard/budgets"
+															state={{ openAddModal: true }}
+															className="underline"
+														>
+															{t('expenses.add.form.noBudgetsLink')}
+														</Link>
+													),
+												}}
+											/>
+										</span>
+									)}
 									{field.state.meta.errors.length > 0 && (
 										<span className="text-red-500 text-sm">
 											{field.state.meta.errors[0]?.message}
@@ -226,6 +247,7 @@ export default function ExpenseAddModal({
 							selector={(state) => [state.isSubmitting]}
 							children={([isSubmiting]) => (
 								<Button
+									disabled={!hasBudgets}
 									type="submit"
 									variant="blue"
 									className="w-full sm:w-fit"

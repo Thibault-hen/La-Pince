@@ -98,7 +98,7 @@ const ExpensePage = () => {
 						isLoading={isLoading}
 					>
 						<Button
-							className="w-full sm:w-fit"
+							className="w-full md:w-fit"
 							variant="blue"
 							onClick={() => setIsModalOpen(true)}
 						>
