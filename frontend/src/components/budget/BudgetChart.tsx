@@ -41,7 +41,7 @@ export const BudgetChart = ({ budgets }: BudgetChartProps) => {
 
 	return (
 		<div className="flex justify-around items-center w-full min-h-[400px]">
-			<Card className="bg-gradient-to-br from-white to-primary-color/5 dark:from-primary dark:via-primary dark:to-primary-color/20 flex overflow-hidden w-full h-full flex-col">
+			<Card className="bg-gradient-to-br from-white to-primary-color/10 dark:from-primary dark:via-primary dark:to-primary-color/20 flex overflow-hidden w-full h-full flex-col">
 				<CardHeader className="items-center pb-0 text-center relative overflow-hidden border-b">
 					<div className="flex items-center justify-center gap-4">
 						<div className="relative p-2 bg-primary-color/10 border border-primary-color/30 rounded-lg shadow-lg">

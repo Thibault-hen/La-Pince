@@ -26,7 +26,11 @@ import type { CategoryWithBudget } from '@/types/category';
 import { CategoryFilter } from './ExpenseCategoryFilter';
 import { DateFilter } from './ExpenseDateFilter';
 
-interface DataTableProps<TData, TValue> {
+interface RowWithId {
+	id: string;
+}
+
+interface DataTableProps<TData extends RowWithId, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
 	categories: CategoryWithBudget[];
@@ -34,7 +38,7 @@ interface DataTableProps<TData, TValue> {
 	isLoading?: boolean;
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowWithId, TValue>({
 	columns,
 	data,
 	categories,
@@ -42,15 +46,21 @@ export function DataTable<TData, TValue>({
 	isLoading,
 }: DataTableProps<TData, TValue>) {
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+	const [rowSelection, setRowSelection] = useState({}); // Assuming you have a state for row selection
 	const { t } = useTranslation();
 	const table = useReactTable({
 		data,
 		columns,
+		enableRowSelection: true,
+		onRowSelectionChange: setRowSelection, // Assuming you have a state for rowSelection
+		getRowId: (row) => row.id,
+		filterFromLeafRows: true,
 		getCoreRowModel: getCoreRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		state: {
 			columnFilters,
+			rowSelection,
 		},
 		onColumnFiltersChange: setColumnFilters,
 	});

@@ -34,7 +34,7 @@ export const DashboardCounts = ({
 	return (
 		<div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-4 gap-6">
 			{/* Revenue Card */}
-			<div className="bg-gradient-to-br from-white to-primary-color/5 dark:from-primary dark:via-primary dark:to-primary-color/20 p-6 rounded-xl border">
+			<div className="bg-gradient-to-br from-white to-primary-color/10 dark:from-primary dark:via-primary dark:to-primary-color/20 p-6 rounded-xl border">
 				<div className="flex items-center justify-between mb-4">
 					<div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
 						<Euro className="h-5 w-5 text-primary-color" />

@@ -6,14 +6,7 @@ import { useNotifications } from '@/hooks/use-notification';
 import { showInfoToast } from '@/utils/toasts';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
-import {
-	Sheet,
-	SheetContent,
-	SheetDescription,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from '../ui/sheet';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import Notification from './Notification';
 
 export default function NotificationButton() {
@@ -46,42 +39,54 @@ export default function NotificationButton() {
 	}, [queryClient, t, notificationCount]);
 
 	return (
-		<Sheet>
-			<SheetTrigger asChild>
-				<Button
-					variant="outline"
-					size="icon"
-					className="relative shadow-none dark:bg-primary cursor-pointer hover:bg-secondary-color dark:hover:bg-secondary-color border"
-				>
+		<Popover>
+			<PopoverTrigger className="relative" asChild>
+				<div>
+					<Button
+						variant="outline"
+						size="icon"
+						className="relative shadow-none dark:bg-primary cursor-pointer hover:bg-secondary-color dark:hover:bg-secondary-color border"
+					>
+						<Bell />
+					</Button>
 					{notificationCount > 0 && (
 						<Badge className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-secondary-color font-bold text-xs text-white border border-black/50">
 							{notificationCount}
 						</Badge>
 					)}
-					<Bell />
-				</Button>
-			</SheetTrigger>
-			<SheetContent>
-				<SheetHeader className="border-b">
-					<SheetTitle>
-						<div className="flex items-center gap-3">
-							<div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
-								<Bell className="h-5 w-5 text-primary-color" />
-							</div>
-							<div>
-								<p className="text-base md:text-xl font-bold text-foreground">
-									Notifications
-								</p>
-								<SheetDescription className="text-xs md:text-sm text-muted-foreground">
-									{t('notification.header.subtitle')}
-								</SheetDescription>
-							</div>
+				</div>
+			</PopoverTrigger>
+			<PopoverContent
+				align="end"
+				className="p-0 min-w-[380px] max-h-[550px] overflow-auto"
+			>
+				<div className="flex items-center gap-3 border-b pb-2 mb-2 p-3 justify-between">
+					<div className="flex gap-2 items-center">
+						<div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
+							<Bell className="h-5 w-5 text-primary-color" />
 						</div>
-					</SheetTitle>
-				</SheetHeader>
-				<div className="flex flex-col  gap-2 overflow-auto mb-2 shadow-20  px-2 rounded-md ">
+						<div>
+							<h4 className="text-sm md:text-base font-bold text-foreground">
+								Notifications
+							</h4>
+							<span className="text-xs text-muted-foreground">
+								{t('notification.header.subtitle')}
+							</span>
+						</div>
+					</div>
+					<div>
+						{/* <Button
+							variant="blue"
+							size="sm"
+							disabled={notifications.length === 0}
+						>
+							Tout supprimer
+						</Button> */}
+					</div>
+				</div>
+				<div className="flex flex-col gap-2 overflow-auto rounded-md">
 					{notifications.length === 0 ? (
-						<div className="mt-3 text-center text-muted-foreground">
+						<div className="p-8 text-center text-muted-foreground text-sm ">
 							{t('notification.noNotification')}
 						</div>
 					) : (
@@ -95,7 +100,7 @@ export default function NotificationButton() {
 						})
 					)}
 				</div>
-			</SheetContent>
-		</Sheet>
+			</PopoverContent>
+		</Popover>
 	);
 }
