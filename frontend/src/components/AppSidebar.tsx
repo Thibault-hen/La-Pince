@@ -55,9 +55,9 @@ export const AppSidebar = ({
 	const items = getItems(t);
 
 	return (
-		<Sidebar {...props}>
+		<Sidebar {...props} className="dark:border-neutral-700">
 			<SidebarHeader
-				className={`${isMobile ? 'mb-4 mx-2 border-b' : 'mx-8'} flex group-data-[collapsible=icon]:mx-0`}
+				className={`${isMobile ? 'mb-4 mx-4 border-b' : 'mx-8'} flex group-data-[collapsible=icon]:mx-0 `}
 			>
 				<SidebarMenu>
 					<SidebarMenuItem>

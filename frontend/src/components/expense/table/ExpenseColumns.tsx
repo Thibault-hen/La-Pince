@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -37,9 +38,27 @@ export const createColumns = (
 	formatAmount: (amount: number) => string,
 ): ColumnDef<Expense>[] => [
 	{
+		id: 'select', // Unique ID for the selection column
+		header: ({ table }) => (
+			<Checkbox
+				type="checkbox"
+				checked={table.getIsAllRowsSelected()}
+				onChange={table.getToggleAllRowsSelectedHandler()}
+			/>
+		),
+		cell: ({ row }) => (
+			<Checkbox
+				type="checkbox"
+				checked={row.getIsSelected()}
+				onChange={row.getToggleSelectedHandler()}
+				disabled={!row.getCanSelect()} // Optional: disable if row can't be selected
+			/>
+		),
+	},
+	{
 		accessorKey: 'title',
 		header: () => (
-			<div className="ml-4 -m-1 p-4">
+			<div className="py-3">
 				<div className="flex items-center gap-3">
 					<div className="p-1.5 bg-primary-color/10 border border-primary-color/20 rounded-lg">
 						<Captions className="w-4 h-4 text-primary-color" />
@@ -59,7 +78,7 @@ export const createColumns = (
 			};
 
 			return (
-				<div className="font-medium text-xs lg:text-sm -m-4 p-4 h-full w-full flex items-center ml-4">
+				<div className="font-medium text-xs lg:text-sm  h-full w-full flex items-center">
 					<div
 						className="w-1 h-5 rounded-full mr-2"
 						style={{
@@ -75,7 +94,7 @@ export const createColumns = (
 	{
 		accessorKey: 'category',
 		header: () => (
-			<div className="ml-4 -m-1 p-4">
+			<div className="">
 				<div className="flex justify-center items-center gap-3">
 					<div className="p-1.5 bg-primary-color/10 border border-primary-color/20 rounded-lg">
 						<Tags className="w-4 h-4 text-primary-color" />
@@ -149,7 +168,7 @@ export const createColumns = (
 	{
 		accessorKey: 'date',
 		header: () => (
-			<div className="ml-4 -m-1 p-4">
+			<div className="">
 				<div className="flex justify-center items-center gap-3">
 					<div className="p-1.5 bg-primary-color/10 border border-primary-color/20 rounded-lg">
 						<Calendar className="w-4 h-4 text-primary-color" />
@@ -223,7 +242,7 @@ export const createColumns = (
 	{
 		accessorKey: 'amount',
 		header: () => (
-			<div className="ml-4 -m-1 p-4">
+			<div className="">
 				<div className="flex justify-end items-center gap-3">
 					<div className="p-1.5 bg-primary-color/10 border border-primary-color/20 rounded-lg">
 						<HandCoins className="w-4 h-4 text-primary-color" />

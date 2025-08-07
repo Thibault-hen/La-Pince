@@ -93,7 +93,7 @@ export function ChartBarInteractive() {
 	);
 
 	return (
-		<Card className="py-0 dark:bg-primary">
+		<Card className="py-0 bg-gradient-to-br from-white to-primary-color/10 dark:from-primary dark:via-primary dark:to-primary-color/20">
 			<CardHeader className="flex flex-col items-stretch border-b !p-0 sm:flex-row">
 				<div className="flex flex-1 flex-col justify-center gap-1 px-6 pt-4 pb-3 sm:!py-0">
 					<CardTitle className="text-sm md:text-base">

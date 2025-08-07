@@ -7,7 +7,8 @@
 
 :root {
 	--radius: 0.625rem;
-	--background: oklch(0.9784 0.0011 197.14);
+	/* --background: oklch(0.9784 0.0011 197.14); */
+	--background: oklch(1 0 0);
 	--foreground: oklch(0.147 0.004 49.25);
 	--card: oklch(1 0 0);
 	--card-foreground: oklch(0.147 0.004 49.25);
@@ -42,7 +43,8 @@
 }
 
 .dark {
-	--background: oklch(0.2338 0.0019 286.23);
+	/* --background: oklch(0.2338 0.0019 286.23); */
+	--background: oklch(0.2046 0 0);
 	--foreground: oklch(0.985 0.001 106.423);
 	--card: oklch(0.216 0.006 56.043);
 	--card-foreground: oklch(0.985 0.001 106.423);
@@ -128,7 +130,7 @@
 	}
 
 	body {
-		@apply bg-background text-foreground;
+		@apply bg-background text-foreground rounded-md;
 	}
 }
 
@@ -218,4 +220,20 @@ body {
 }
 .animate-skeleton-shimmer {
 	animation: skeleton-shimmer 1.2s infinite;
+}
+
+input[type="checkbox"] {
+	position: relative;
+}
+
+input[type="checkbox"]:checked::after {
+	content: "";
+	position: absolute;
+	top: 2px;
+	left: 5px;
+	width: 4px;
+	height: 10px;
+	border: solid white;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
 }
