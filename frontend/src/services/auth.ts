@@ -86,12 +86,6 @@ api.interceptors.response.use(
 			if (authPages.some((page) => currentPath.includes(page))) {
 				window.location.href = '/login';
 			}
-
-			// Log errors in dev only
-		}
-
-		if (error.response?.status === 404 || error.response?.status === 401) {
-			return Promise.resolve({ data: null, error: true });
 		}
 
 		return Promise.reject(error);
