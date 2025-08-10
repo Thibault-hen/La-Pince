@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import heroImage from '@/assets/home-page/hero_img1.png';
+import heroImage from '@/assets/home-page/hero_img.webp';
 import { Button } from '@/components/ui/button';
 
 export default function Hero05() {

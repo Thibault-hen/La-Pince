@@ -13,7 +13,7 @@ export const InitialAvatar = ({
 	return (
 		<div
 			className={cn(
-				'text-shadow-lg rounded-full text-white font-bold flex p-3 items-center border justify-center text-xs',
+				'text-shadow-lg rounded-full text-white font-bold flex p-3 items-center border justify-center text-xs truncate',
 				className,
 			)}
 			style={{

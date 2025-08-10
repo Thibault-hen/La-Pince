@@ -86,7 +86,14 @@ api.interceptors.response.use(
 			if (authPages.some((page) => currentPath.includes(page))) {
 				window.location.href = '/login';
 			}
+
+			// Log errors in dev only
 		}
+
+		if (import.meta.env.DEV) {
+			console.error('API error:', error);
+		}
+
 		return Promise.reject(error);
 	},
 );

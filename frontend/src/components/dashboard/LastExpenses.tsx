@@ -50,34 +50,29 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
 
 	return (
 		<div className="w-full md:max-w-xl bg-primary rounded-lg border">
-			<div className="text-white relative overflow-hidden px-8 py-4">
-				<div className="relative z-10">
-					<div className="flex items-center justify-between">
-						<div className="flex items-center gap-4">
-							<div className="p-2 bg-secondary-color/10 border border-secondary-color/20 rounded-lg">
-								<TrendingDown className="h-5 w-5 text-secondary-color" />
-							</div>
-							<div>
-								<h2 className="text-sm lg:text-lg font-bold mb-1 text-black dark:text-white">
-									{t('dashboard.last10Expenses.title')}
-								</h2>
-								<p className="text-xs font-medium text-muted-foreground tracking-wide truncate">
-									{t('dashboard.last10Expenses.subTitle')}
-								</p>
-							</div>
-						</div>
-						<div className="text-right justify-end">
-							<div className="flex items-center gap-2 bg-secondary-color/10 border mb-1 border-secondary-color/20 rounded-lg p-2">
-								<p className="text-sm md:text-base font-bold text-secondary-color">
-									{totalAmount ? '-' : ''}
-									{formatAmount(totalAmount ?? 0)}
-								</p>
-							</div>
-							<p className="text-xs font-medium text-muted-foreground tracking-wide truncate">
-								{t('dashboard.last10Expenses.totalExpense')}
-							</p>
-						</div>
+			<div className="flex items-center justify-between p-6 flex-col gap-4 sm:flex-row sm:gap-0">
+				<div className="flex items-center gap-4">
+					<div className="p-2 bg-secondary-color/10 border border-secondary-color/20 rounded-lg">
+						<TrendingDown className="h-5 w-5 text-secondary-color" />
 					</div>
+					<div>
+						<h2 className="text-sm lg:text-lg font-bold mb-1 text-black dark:text-white">
+							{t('dashboard.last10Expenses.title')}
+						</h2>
+						<p className="text-xs font-medium text-muted-foreground tracking-wide truncate">
+							{t('dashboard.last10Expenses.subTitle')}
+						</p>
+					</div>
+				</div>
+				<div className="flex justify-center flex-col text-center">
+					<p className="text-xs md:text-base font-bold text-secondary-color bg-secondary-color/10 border mb-1 border-secondary-color/20 rounded-lg p-2">
+						{totalAmount ? '-' : ''}
+						{formatAmount(totalAmount ?? 0)}
+					</p>
+
+					<p className="text-xs font-medium text-muted-foreground tracking-wide truncate">
+						{t('dashboard.last10Expenses.totalExpense')}
+					</p>
 				</div>
 			</div>
 

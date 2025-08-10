@@ -62,7 +62,7 @@ export function RegisterForm({
 			<div className="flex flex-col items-center gap-2 text-center">
 				<img src={laPinceLogo} width={100} alt="Application logo" />
 			</div>
-			<div className="grid gap-6">
+			<div className="grid gap-4">
 				<h1 className="text-xl md:text-2xl font-semibold text-center md:text-left">
 					{t('register.title')}
 				</h1>

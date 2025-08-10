@@ -1,4 +1,7 @@
 export const fr = {
+	common: {
+		home: 'Accueil',
+	},
 	button: {
 		profile: 'Profil',
 		logout: 'Déconnexion',
@@ -300,6 +303,7 @@ export const fr = {
 			},
 		},
 		overallCard: {
+			progressExpenses: 'Barre de progression pour les dépenses totales',
 			totalSpent: 'Dépenses totales ce mois-ci',
 			ok: 'Tes dépenses sont sous contrôle',
 			careful: 'Attention à tes dépenses',
@@ -362,6 +366,8 @@ export const fr = {
 			searchPlaceholder: 'Rechercher par titre',
 			noResults: 'Aucun résultat.',
 			filter: {
+				dateSelect: 'Sélectionner une date',
+				categorySelect: 'Sélectionner une catégorie',
 				category: 'Filtrer par catégorie',
 				date: 'Filtrer par date',
 				all: 'Tout temps',
@@ -461,6 +467,9 @@ export const fr = {
 			addButton: 'Ajouter un budget',
 		},
 		card: {
+			actions: 'Actions des boutons de budget',
+			progressRemaining: 'Barre de progression pour le budget restant',
+			progress: 'Barre de progression pour {{budget}}',
 			spent: 'Dépensé',
 			remaining: 'Restant',
 			alert: 'Alerte à',
@@ -592,6 +601,10 @@ export const fr = {
 		},
 	},
 	login: {
+		meta: {
+			title: 'La Pince - Connexion',
+			description: 'Connectez-vous à votre compte La Pince',
+		},
 		title: 'Connexion',
 		form: {
 			email: 'Email',
@@ -610,6 +623,10 @@ export const fr = {
 		},
 	},
 	register: {
+		meta: {
+			title: 'La Pince - Inscription',
+			description: 'Créez un nouveau compte sur La Pince',
+		},
 		title: 'Inscription',
 		successMessage: 'Compte créé avec succès',
 		form: {

@@ -41,20 +41,20 @@ export default function NotificationButton() {
 	return (
 		<Popover>
 			<PopoverTrigger className="relative" asChild>
-				<div>
-					<Button
-						variant="outline"
-						size="icon"
-						className="relative shadow-none dark:bg-primary cursor-pointer hover:bg-secondary-color dark:hover:bg-secondary-color border"
-					>
-						<Bell />
-					</Button>
+				<Button
+					aria-haspopup="dialog"
+					aria-label="Notifications"
+					variant="outline"
+					size="icon"
+					className="relative shadow-none dark:bg-primary cursor-pointer hover:bg-secondary-color dark:hover:bg-secondary-color border"
+				>
+					<Bell />
 					{notificationCount > 0 && (
 						<Badge className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-secondary-color font-bold text-xs text-white border border-black/50">
 							{notificationCount}
 						</Badge>
 					)}
-				</div>
+				</Button>
 			</PopoverTrigger>
 			<PopoverContent
 				align="end"

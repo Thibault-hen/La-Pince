@@ -36,7 +36,7 @@ export const BudgetCard = ({
 	const { t } = useTranslation();
 	const { formatAmount } = useCurrency();
 	const IconComponent = getCategoryIcon(budget.category.title);
-
+	const budgetTitle = t(budget.category.title);
 	const getRemainingBudget = () => {
 		if (budget.amount === undefined || budget.totalExpense === undefined) {
 			return 0;
@@ -107,7 +107,11 @@ export const BudgetCard = ({
              data-[highlighted]:bg-transparent data-[state=open]:bg-transparent
              shadow-none focus:shadow-none focus-visible:shadow-none"
 								>
-									<Button variant="outline" size="icon">
+									<Button
+										variant="outline"
+										size="icon"
+										aria-label={t('budget.card.actions')}
+									>
 										<EllipsisVertical />
 									</Button>
 								</DropdownMenuTrigger>
@@ -162,6 +166,9 @@ export const BudgetCard = ({
 						</div>
 						<div className="flex w-full flex-col">
 							<Progress
+								aria-label={t('budget.card.progress', {
+									budget: budgetTitle,
+								})}
 								value={
 									budget.totalExpense > budget.amount
 										? budget.amount

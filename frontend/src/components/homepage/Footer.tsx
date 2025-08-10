@@ -5,9 +5,14 @@ import laPinceLogo from '@/assets/logo.png';
 import { Separator } from '@/components/ui/separator';
 
 const socialLinks = [
-	{ icon: Twitter, name: 'Twitter', href: '#' },
-	{ icon: Instagram, name: 'Instagram', href: '#' },
-	{ icon: Youtube, name: 'YouTube', href: '#' },
+	{ icon: Twitter, name: 'Twitter', href: '#', aria_label: 'Twitter page' },
+	{
+		icon: Instagram,
+		name: 'Instagram',
+		href: '#',
+		aria_label: 'Instagram page',
+	},
+	{ icon: Youtube, name: 'YouTube', href: '#', aria_label: 'YouTube page' },
 ];
 
 export default function Footer01() {
@@ -32,9 +37,9 @@ export default function Footer01() {
 						</div>
 						<div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
 							<div className="space-y-3">
-								<h4 className="text-white font-semibold">
+								<h3 className="text-white font-semibold">
 									{t('home.footer.product')}
-								</h4>
+								</h3>
 								<ul className="space-y-2">
 									<li>
 										<a
@@ -99,9 +104,10 @@ export default function Footer01() {
 						<p className="text-sm text-white">{t('home.footer.copyright')}</p>
 						<div className="flex items-center space-x-4">
 							<ul className="flex items-center gap-4">
-								{socialLinks.map(({ icon: Icon, href }, idx) => (
+								{socialLinks.map(({ icon: Icon, href, aria_label }, idx) => (
 									<li key={socialLinks[idx].name}>
 										<a
+											aria-label={aria_label}
 											href={href}
 											className="group inline-flex cursor-pointer items-center justify-start gap-1 text-white duration-200 hover:text-foreground hover:opacity-90"
 										>

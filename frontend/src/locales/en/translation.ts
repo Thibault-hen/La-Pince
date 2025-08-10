@@ -1,4 +1,7 @@
 export const en = {
+	common: {
+		home: 'Home',
+	},
 	button: {
 		profile: 'Profile',
 		logout: 'Logout',
@@ -300,6 +303,7 @@ export const en = {
 			},
 		},
 		overallCard: {
+			progressExpenses: 'Progress bar for total expenses',
 			totalSpent: 'Total expenses spent this month',
 			ok: 'Your expenses are under control',
 			careful: 'Careful on your spending',
@@ -363,6 +367,8 @@ export const en = {
 			searchPlaceholder: 'Search by title',
 			noResults: 'No results.',
 			filter: {
+				dateSelect: 'Select a date',
+				categorySelect: 'Select a category',
 				category: 'Filter by category',
 				date: 'Filter by date',
 				all: 'All',
@@ -461,6 +467,9 @@ export const en = {
 			addButton: 'Add a budget',
 		},
 		card: {
+			actions: 'Budget buttons actions',
+			progressRemaining: 'Progress bar for remaining budget',
+			progress: 'Progress bar for {{budget}}',
 			spent: 'Spent',
 			remaining: 'Remaining',
 			alert: 'Alert at',
@@ -585,6 +594,10 @@ export const en = {
 		},
 	},
 	login: {
+		meta: {
+			title: 'La Pince - Login',
+			description: 'Login to your La Pince account',
+		},
 		title: 'Login',
 		form: {
 			email: 'Email',
@@ -603,6 +616,10 @@ export const en = {
 		},
 	},
 	register: {
+		meta: {
+			title: 'La Pince - Register',
+			description: 'Create a new account on La Pince',
+		},
 		title: 'Register',
 		successMessage: 'Account created successfully',
 		form: {
