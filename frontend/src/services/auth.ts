@@ -90,8 +90,8 @@ api.interceptors.response.use(
 			// Log errors in dev only
 		}
 
-		if (import.meta.env.DEV) {
-			console.error('API error:', error);
+		if (error.response?.status === 404 || error.response?.status === 401) {
+			return Promise.resolve({ data: null, error: true });
 		}
 
 		return Promise.reject(error);
