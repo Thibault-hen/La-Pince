@@ -66,9 +66,9 @@ export default function Contact() {
 				</div>
 				<Card className="dark:bg-primary shadow-md">
 					<CardHeader className="text-primary text-2xl mb-4">
-						<h3 className="mt-1 font-bold tracking-wider text-primary-color text-center">
+						<h2 className="mt-1 font-bold tracking-wider text-primary-color text-center">
 							{t('home.contact.title')}
-						</h3>
+						</h2>
 					</CardHeader>
 					<CardContent>
 						<form
@@ -158,7 +158,10 @@ export default function Contact() {
 												required
 												value={field.state.value}
 											>
-												<SelectTrigger className="w-full">
+												<SelectTrigger
+													className="w-full"
+													aria-label={t('home.contact.subjectPlaceholder')}
+												>
 													<SelectValue
 														placeholder={t('home.contact.subjectPlaceholder')}
 													/>

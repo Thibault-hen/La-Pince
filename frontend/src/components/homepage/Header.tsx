@@ -9,7 +9,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import laPinceLogo from '@/assets/logo.png';
+import laPinceLogo from '@/assets/logo.webp';
 import { ModeToggle } from '@/components/theme/theme-toggle.tsx';
 import { Button } from '@/components/ui/button';
 import {
@@ -92,13 +92,21 @@ export default function Header() {
 						<div className="flex items-center gap-3">
 							{!user ? (
 								<>
-									<Button variant="blue" asChild>
+									<Button
+										variant="blue"
+										asChild
+										aria-label={t('home.nav.login')}
+									>
 										<Link to="/login">
 											<LogIn />
 											{t('home.nav.login')}
 										</Link>
 									</Button>
-									<Button asChild variant="outline">
+									<Button
+										asChild
+										variant="outline"
+										aria-label={t('home.nav.register')}
+									>
 										<Link to="/register">
 											<UserRoundPlus />
 											{t('home.nav.register')}
@@ -107,13 +115,21 @@ export default function Header() {
 								</>
 							) : (
 								<>
-									<Button asChild variant="blue">
+									<Button
+										asChild
+										variant="blue"
+										aria-label={t('home.nav.dashboard')}
+									>
 										<Link to="/dashboard">
 											<PanelsTopLeft />
 											{t('home.nav.dashboard')}
 										</Link>
 									</Button>
-									<Button variant="blue" onClick={async () => handleLogout()}>
+									<Button
+										variant="blue"
+										onClick={async () => handleLogout()}
+										aria-label={t('home.nav.logout')}
+									>
 										<LogOut />
 									</Button>
 								</>
@@ -131,12 +147,20 @@ export default function Header() {
 						<div className="flex items-center gap-2">
 							{!user ? (
 								<>
-									<Button variant="blue" asChild>
+									<Button
+										variant="blue"
+										asChild
+										aria-label={t('home.nav.login')}
+									>
 										<Link to="/login">
 											<LogIn />
 										</Link>
 									</Button>
-									<Button asChild variant="outline">
+									<Button
+										asChild
+										variant="outline"
+										aria-label={t('home.nav.register')}
+									>
 										<Link to="/register">
 											<UserRoundPlus />
 										</Link>
@@ -144,7 +168,12 @@ export default function Header() {
 								</>
 							) : (
 								<>
-									<Button asChild variant="blue" className="text-[0.500rem]">
+									<Button
+										asChild
+										variant="blue"
+										className="text-[0.500rem]"
+										aria-label={t('home.nav.dashboard')}
+									>
 										<Link to="/dashboard">
 											<PanelsTopLeft /> {t('home.nav.dashboard')}
 										</Link>
@@ -153,6 +182,7 @@ export default function Header() {
 										variant="blue"
 										className="text-[0.500rem]"
 										onClick={async () => handleLogout()}
+										aria-label={t('home.nav.logout')}
 									>
 										<LogOut />
 									</Button>
@@ -198,13 +228,23 @@ export default function Header() {
 									<div className="flex flex-col items-center gap-2 py-2 px-6">
 										{!user ? (
 											<>
-												<Button variant="blue" asChild className="w-full">
+												<Button
+													variant="blue"
+													asChild
+													className="w-full"
+													aria-label={t('home.nav.login')}
+												>
 													<Link to="/login">
 														<LogIn />
 														{t('home.nav.login')}
 													</Link>
 												</Button>
-												<Button asChild variant="outline" className="w-full">
+												<Button
+													asChild
+													variant="outline"
+													className="w-full"
+													aria-label={t('home.nav.register')}
+												>
 													<Link to="/register">
 														<UserRoundPlus />
 														{t('home.nav.register')}
@@ -213,7 +253,12 @@ export default function Header() {
 											</>
 										) : (
 											<>
-												<Button asChild variant="blue" className="w-full">
+												<Button
+													asChild
+													variant="blue"
+													className="w-full"
+													aria-label={t('home.nav.dashboard')}
+												>
 													<Link to="/dashboard">
 														<PanelsTopLeft />
 														{t('home.nav.dashboard')}
@@ -223,6 +268,7 @@ export default function Header() {
 													variant="blue"
 													className="w-full"
 													onClick={async () => handleLogout()}
+													aria-label={t('home.nav.logout')}
 												>
 													<LogOut /> {t('button.logout')}
 												</Button>

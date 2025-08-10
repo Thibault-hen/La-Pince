@@ -55,7 +55,8 @@ export const ExpensesOverallChart = ({
 
 	// Calculer les stats
 	const totalExpenses = chartData.reduce((sum, item) => sum + item.amount, 0);
-	const averageExpenses = totalExpenses / chartData.length;
+	const averageExpenses =
+		totalExpenses / chartData.filter((expense) => expense.amount > 0).length;
 
 	const CustomBarLabel = ({
 		x,
@@ -78,6 +79,7 @@ export const ExpensesOverallChart = ({
 				fontSize={11}
 				fontWeight="500"
 				textAnchor="middle"
+				className="hidden sm:block"
 			>
 				{formatAmount(value)}
 			</text>
@@ -106,16 +108,16 @@ export const ExpensesOverallChart = ({
 	return (
 		<Card className="w-full h-full dark:bg-primary border overflow-hidden">
 			<CardHeader className="pb-4">
-				<div className="flex items-center justify-between">
+				<div className="flex items-center justify-between flex-col sm:flex-row gap-2 sm:gap-0">
 					<div className="flex items-center gap-3">
 						<div className="p-2 bg-primary-color/10 border border-primary-color/20 rounded-lg">
 							<TrendingUp className="h-5 w-5 text-primary-color" />
 						</div>
 						<div>
-							<CardTitle className="text-sm xl:text-base font-bold text-foreground">
+							<CardTitle className="flex text-xs xl:text-sm font-bold text-foreground">
 								{t('dashboard.chart.title')}
 							</CardTitle>
-							<CardDescription className="flex items-center gap-2 text-sm">
+							<CardDescription className="flex items-center gap-2 text-xs">
 								<Calendar className="h-4 w-4" />
 								{firstMonth} - {lastMonth} {year}
 							</CardDescription>
@@ -123,10 +125,10 @@ export const ExpensesOverallChart = ({
 					</div>
 
 					<div className="text-right">
-						<div className="text-sm text-muted-foreground">
+						<div className="text-xs lg:text-sm text-muted-foreground">
 							{t('dashboard.chart.average')}
 						</div>
-						<div className="text-lg font-bold text-foreground">
+						<div className="text-sm xl:text-lg font-bold text-foreground">
 							{formatAmount(averageExpenses)}
 						</div>
 					</div>
@@ -195,7 +197,7 @@ export const ExpensesOverallChart = ({
 				</ChartContainer>
 
 				<div className="mt-4 p-3 border dark:bg-background rounded-lg">
-					<div className="flex items-center justify-between text-sm">
+					<div className="flex items-center justify-between text-xs lg:text-sm">
 						<span className="text-muted-foreground">
 							{t('dashboard.chart.total')}
 						</span>

@@ -33,10 +33,13 @@ export const DateFilter = ({
 			onValueChange={handleDateFilter}
 			defaultValue={datesOptions[0].value}
 		>
-			<SelectTrigger className="w-full md:w-[220px] bg-primary">
+			<SelectTrigger
+				className="w-full md:w-[220px] bg-primary"
+				aria-label={t('expenses.table.filter.dateSelect')}
+			>
 				<div className="flex items-center gap-2">
 					<Calendar />
-					<SelectValue placeholder="Select a timezone" />
+					<SelectValue placeholder={t('expenses.table.filter.dateSelect')} />
 				</div>
 			</SelectTrigger>
 			<SelectContent>

@@ -28,8 +28,11 @@ export const CategoryFilter = ({
 
 	return (
 		<Select onValueChange={handleFilter} defaultValue="all">
-			<SelectTrigger className="w-full md:w-[220px] bg-primary">
-				<SelectValue placeholder="Select a fruit" />
+			<SelectTrigger
+				className="w-full md:w-[220px] bg-primary"
+				aria-label={t('expenses.table.filter.categorySelect')}
+			>
+				<SelectValue placeholder={t('expenses.table.filter.categorySelect')} />
 			</SelectTrigger>
 			<SelectContent>
 				<SelectGroup className="flex flex-col gap-1">

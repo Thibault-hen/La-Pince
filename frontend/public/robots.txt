@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /dashboard
+Allow: /
+
+Sitemap: https://la-pince-sigma.vercel.app/sitemap.xml

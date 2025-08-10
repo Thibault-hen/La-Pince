@@ -145,8 +145,11 @@ export const Profile = ({ user }: ProfileProps) => {
 									onValueChange={field.handleChange}
 									defaultValue={field.state.value}
 								>
-									<SelectTrigger className="w-full h-12 border-border/50 hover:border-secondary-color transition-all duration-300 focus:border-secondary-color disabled:opacity-50 disabled:cursor-not-allowed">
-										<SelectValue placeholder="" />
+									<SelectTrigger
+										aria-label={t('currency.select')}
+										className="w-full h-12 border-border/50 hover:border-secondary-color transition-all duration-300 focus:border-secondary-color disabled:opacity-50 disabled:cursor-not-allowed"
+									>
+										<SelectValue placeholder={t('currency.select')} />
 									</SelectTrigger>
 									<SelectContent className="bg-background/95 backdrop-blur-xl border-2 border-border/50">
 										<SelectGroup>
@@ -192,15 +195,16 @@ export const Profile = ({ user }: ProfileProps) => {
 										<Bell className="h-4 w-4 text-secondary-color" />
 									</div>
 									<div>
-										<h4 className="font-medium text-foreground text-sm md:text-base">
+										<span className="font-medium text-foreground text-sm md:text-base">
 											{t('account.profile.form.alert')}
-										</h4>
+										</span>
 										<p className="text-xs md:text-sm text-muted-foreground">
 											{t('account.profile.form.alertDescription')}
 										</p>
 									</div>
 								</div>
 								<Switch
+									aria-label={t('account.profile.form.alert')}
 									checked={field.state.value}
 									onCheckedChange={field.handleChange}
 									className="data-[state=checked]:bg-primary-color cursor-pointer"

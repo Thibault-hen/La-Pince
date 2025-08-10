@@ -127,6 +127,7 @@ export const BudgetCards = ({
 								</span>
 							</div>
 							<Progress
+								aria-label={t('budget.card.progressRemaining')}
 								value={(totalBudget ?? 0) - (remainingBudget ?? 0)}
 								max={totalBudget}
 								className="w-full border [&>*]:bg-[var(--bg-color)] h-3 mt-2"
