@@ -1,9 +1,11 @@
 import { useAtomValue } from 'jotai';
 import { House } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Navigate, NavLink, useLocation } from 'react-router-dom';
-import preview from '@/assets/home-page/hero_img1.png';
+import preview from '@/assets/home-page/hero_img.webp';
 import { LoginForm } from '@/components/auth/LoginForm';
 import { LanguageSelector } from '@/components/lang/LanguageSelector';
+import { PageMeta } from '@/components/PageMeta';
 import { ModeToggle } from '@/components/theme/theme-toggle';
 import { DefaultWrapper } from '@/layouts/DefaultWrapper';
 import { isAuthenticatedAtom } from '@/stores/authStore';
@@ -11,38 +13,46 @@ import { isAuthenticatedAtom } from '@/stores/authStore';
 const Login = () => {
 	const location = useLocation();
 	const isAuthenticated = useAtomValue(isAuthenticatedAtom);
+	const { t } = useTranslation();
 
 	if (isAuthenticated) {
 		return <Navigate to="/dashboard" replace />;
 	}
 
 	return (
-		<DefaultWrapper key={location.pathname}>
-			<div className="grid min-h-svh xl:grid-cols-2">
-				<div className="flex flex-col gap-4 p-6 md:p-10">
-					<div className="flex gap-2 justify-start">
-						<NavLink
-							to="/"
-							className="flex items-center gap-2 border bg-primary rounded-md p-2 text-sm hover:bg-secondary-color dark:hover:bg-secondary-color transition-colors duration-300 tracking-wide"
-						>
-							<House size={18} />
-						</NavLink>
-						<LanguageSelector />
-						<ModeToggle />
+		<>
+			<PageMeta
+				titleKey="login.meta.title"
+				descriptionKey="login.meta.description"
+			/>
+			<DefaultWrapper key={location.pathname}>
+				<div className="grid min-h-svh xl:grid-cols-2">
+					<div className="flex flex-col gap-4 p-6 md:p-10">
+						<div className="flex gap-2 justify-start">
+							<NavLink
+								aria-label={t('common.home')}
+								to="/"
+								className="flex items-center gap-2 border bg-primary rounded-md p-2 text-sm hover:bg-secondary-color dark:hover:bg-secondary-color transition-colors duration-300 tracking-wide"
+							>
+								<House size={18} />
+							</NavLink>
+							<LanguageSelector />
+							<ModeToggle />
+						</div>
+						<div className="flex flex-1 items-center justify-center">
+							<div className="w-full max-w-lg">
+								<LoginForm />
+							</div>
+						</div>
 					</div>
-					<div className="flex flex-1 items-center justify-center">
-						<div className="w-full max-w-lg">
-							<LoginForm />
+					<div className="border-l border-l-primary-color hidden xl:block min-h-screen bg-primary">
+						<div className="relative w-full h-full grid place-items-center">
+							<img src={preview} width={480} alt="Application La Pince" />
 						</div>
 					</div>
 				</div>
-				<div className="border-l border-l-primary-color hidden xl:block min-h-screen bg-primary">
-					<div className="relative w-full h-full grid place-items-center">
-						<img src={preview} width={480} alt="Application La Pince" />
-					</div>
-				</div>
-			</div>
-		</DefaultWrapper>
+			</DefaultWrapper>
+		</>
 	);
 };
 

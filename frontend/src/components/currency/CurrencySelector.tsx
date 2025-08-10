@@ -64,7 +64,10 @@ export const CurrencySelector = () => {
 				value={currency}
 				onValueChange={(value) => handleUpdateCurrency(value)}
 			>
-				<SelectTrigger className="w-full h-12 border-border/50 hover:border-secondary-color transition-all duration-300 focus:border-secondary-color disabled:opacity-50 disabled:cursor-not-allowed">
+				<SelectTrigger
+					aria-label={t('currency.select')}
+					className="w-full h-12 border-border/50 hover:border-secondary-color transition-all duration-300 focus:border-secondary-color disabled:opacity-50 disabled:cursor-not-allowed"
+				>
 					<SelectValue
 						placeholder={
 							<div className="flex items-center gap-2 text-muted-foreground">

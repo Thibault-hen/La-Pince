@@ -237,6 +237,7 @@ export const DashboardCounts = ({
 								</div>
 
 								<Progress
+									aria-label={t('dashboard.overallCard.progressExpenses')}
 									value={Math.min(
 										currentMonthExpenses ?? 0,
 										currentMonthRevenue?.value ?? 0,
