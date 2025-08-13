@@ -114,6 +114,7 @@ export const useUpdateBudget = () => {
 			);
 			queryClient.invalidateQueries({ queryKey: ['budgets'] });
 			queryClient.invalidateQueries({ queryKey: ['dashboard'] });
+			queryClient.invalidateQueries({ queryKey: ['categories'] });
 		},
 		onError: (error) => {
 			showErrorToast(getErrorMessage(error));

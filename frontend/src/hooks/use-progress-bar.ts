@@ -1,6 +1,6 @@
 import { useIsFetching } from '@tanstack/react-query';
 import NProgress from 'nprogress';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import 'nprogress/nprogress.css';
 
 NProgress.configure({
@@ -11,8 +11,6 @@ NProgress.configure({
 });
 
 export const usePageProgress = () => {
-	const timeoutRef = useRef<NodeJS.Timeout>(null);
-
 	const isFetching = useIsFetching({
 		predicate: (query) =>
 			query.state.fetchStatus === 'fetching' &&
@@ -21,26 +19,14 @@ export const usePageProgress = () => {
 	});
 
 	useEffect(() => {
-		if (timeoutRef.current) {
-			clearTimeout(timeoutRef.current);
-		}
-
 		if (isFetching > 0) {
 			if (!NProgress.isStarted()) {
 				NProgress.start();
 			}
 		} else {
-			timeoutRef.current = setTimeout(() => {
-				if (NProgress.isStarted()) {
-					NProgress.done();
-				}
-			}, 200);
-		}
-
-		return () => {
-			if (timeoutRef.current) {
-				clearTimeout(timeoutRef.current);
+			if (NProgress.isStarted()) {
+				NProgress.done();
 			}
-		};
+		}
 	}, [isFetching]);
 };

@@ -83,28 +83,31 @@ export const LastExpenses = ({ lastExpensesData }: LastExpensesProps) => {
 						return (
 							<div
 								key={expense.date}
-								className="relative p-2 px-6 dark:bg-primary transition-all duration-300 cursor-pointer"
+								className="relative p-2 px-6 dark:bg-primary transition-all duration-300 border-t last:border-b"
+								style={{
+									background: `linear-gradient(260deg, ${expense.budget?.category.color?.value}30, transparent 80%)`,
+								}}
 							>
-								<div
-									className="absolute top-0 left-0 w-full h-1 opacity-60"
-									style={{
-										background: `linear-gradient(90deg, ${expense.budget?.category.color?.value}, transparent 70%)`,
-									}}
-								/>
+								<div className="absolute top-0 left-0 w-full h-1 opacity-60" />
 								<div className="flex items-center gap-4">
 									{/* Content */}
 									<div className="flex-1 min-w-0">
 										<div className="flex items-center justify-between">
-											<h3 className="font-semibold truncate text-xs md:text-sm">
+											<h3
+												className="truncate text-xs md:text-sm font-bold tracking-wide"
+												style={{
+													color: expense.budget?.category.color?.value,
+												}}
+											>
 												{expense.description}
 											</h3>
-											<span className="text-xs md:text-sm text-red-500 py-0.5 px-2 bg-red-500/5 border border-red-500/20 rounded-lg">
-												-{formatAmount(expense.amount)}
+											<span className="text-xs md:text-sm text-red-500 py-0.5 px-2 bg-red-500/20 font-bold border border-red-500/20 rounded-lg">
+												<code>-{formatAmount(expense.amount)}</code>
 											</span>
 										</div>
-										<div className="flex items-center gap-2 text-sm text-gray-500">
+										<div className="flex items-center gap-2 text-sm">
 											<Calendar className="h-3 w-3" />
-											<span className="text-xs md:text-sm">
+											<span className="text-xs md:text-xs font-bold">
 												{formatDate(expense.date)}
 											</span>
 											<div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">

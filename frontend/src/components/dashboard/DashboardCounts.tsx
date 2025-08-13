@@ -256,7 +256,7 @@ export const DashboardCounts = ({
 							</div>
 						) : (
 							<div className="bg-secondary-color/10 border border-secondary-color p-3 rounded-md text-center">
-								<span className="text-secondary-color text-xs font-medium">
+								<span className="text-secondary-color text-xs font-bold">
 									{t('dashboard.overallCard.updateYourIncome')}
 								</span>
 							</div>

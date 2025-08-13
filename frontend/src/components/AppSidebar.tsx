@@ -81,11 +81,9 @@ export const AppSidebar = ({
 					</SidebarMenuItem>
 				</SidebarMenu>
 			</SidebarHeader>
-			<SidebarContent
-				className={`${isMobile ? 'justify-start' : 'justify-center'} flex`}
-			>
+			<SidebarContent className="flex mt-4">
 				<SidebarGroup>
-					<SidebarMenu className="flex gap-4 lg:gap-8">
+					<SidebarMenu className="flex gap-4 lg:gap-4">
 						{items.map((item) => {
 							const isActive: boolean = item.url === location.pathname;
 							return (
@@ -93,18 +91,18 @@ export const AppSidebar = ({
 									<SidebarMenuButton
 										asChild
 										isActive={isActive}
-										className="py-5 px-6 duration-300 transition-all"
+										className="px-6 group-data-[collapsible=icon]:!px-4  duration-300 transition-all"
 									>
 										<NavLink
 											to={item.url}
-											className="p-1 group-data-[collapsible=icon]:p-2 flex items-center gap-3"
+											className="!p-5.5 flex items-center gap-3"
 											onClick={() => {
 												if (openMobile) {
 													setOpenMobile(false);
 												}
 											}}
 										>
-											<item.icon className="!w-7 !h-7" strokeWidth={1.2} />
+											<item.icon className="!w-7 !h-7" strokeWidth={1.3} />
 											<span>{item.title}</span>
 										</NavLink>
 									</SidebarMenuButton>

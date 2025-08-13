@@ -34,6 +34,7 @@ export const EducationalBanner = () => {
 				{t('home.banner.info')}
 			</span>
 			<Button
+				aria-label="Dismiss educational banner"
 				className="relative"
 				variant="blue"
 				size={'sm'}
