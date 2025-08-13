@@ -27,14 +27,10 @@ export default function Problem01() {
 			id="features"
 			className="relative overflow-hidden bg-primary-color w-full py-26"
 		>
-			{/* Animated Gradient Orbs */}
-			<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-secondary-color/30 to-primary-color/20 rounded-full blur-3xl animate-pulse"></div>
-			<div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-primary-color/20 to-secondary-color/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
-
 			<div className="relative z-10 px-6 md:px-12 lg:px-16 xl:px-24">
 				{/* Header Section */}
 				<div className="text-center space-y-6 pb-20 mx-auto max-w-4xl">
-					<div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary-color/10 border border-secondary-color text-secondary-color font-medium text-sm">
+					<div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary-color/40 border border-secondary-color text-white font-medium text-sm">
 						<Sparkles className="w-4 h-4 text-secondary-color" />
 						{t('home.card.discover')}
 					</div>

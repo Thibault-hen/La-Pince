@@ -47,17 +47,17 @@ export async function authentify(
 	}
 
 	if (['POST', 'DELETE', 'PATCH', 'PUT'].includes(c.req.method)) {
-		const csrfTokeFromHeader = c.req.header('csrf_token');
+		const csrfTokenFromHeader = c.req.header('csrf_token');
 
 		const csrfTokenFromCookie = getCookie(c, TOKEN_CSRF_NAME);
 
-		if (!csrfTokeFromHeader) {
+		if (!csrfTokenFromHeader) {
 			throw new HTTPException(401, {
 				message: 'Missing CSRF token.',
 			});
 		}
 
-		if (csrfTokeFromHeader !== csrfTokenFromCookie) {
+		if (csrfTokenFromHeader !== csrfTokenFromCookie) {
 			// If the CSRF token is not present or does not match, throw an error
 			throw new HTTPException(401, {
 				message: 'Invalid CSRF token.',

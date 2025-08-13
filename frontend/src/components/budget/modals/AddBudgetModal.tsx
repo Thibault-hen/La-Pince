@@ -1,6 +1,8 @@
 /** biome-ignore-all lint/correctness/noChildrenProp: TanStack Form uses children prop pattern */
 import { useForm } from '@tanstack/react-form';
-import { useTranslation } from 'react-i18next';
+import { CircleAlert } from 'lucide-react';
+import { Trans, useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import {
 	Dialog,
@@ -36,6 +38,10 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
 	const { data: categories } = useCategories();
 	const { mutateAsync: createBudget } = useCreateBudget();
 	const { t } = useTranslation();
+	const hasCategories = categories && categories.length > 0;
+	const isAllCategoriesActive = categories?.every(
+		(category) => (category.budgets?.length ?? 0) > 0,
+	);
 
 	const form = useForm({
 		defaultValues: {
@@ -129,6 +135,7 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
 										name={field.name}
 										onValueChange={(value) => field.handleChange(value)}
 										required
+										disabled={!hasCategories || isAllCategoriesActive}
 									>
 										<SelectTrigger className="w-full cursor-pointer">
 											<SelectValue
@@ -166,6 +173,24 @@ export const AddBudgetModal = ({ open, setOpen }: AddBudgetProps) => {
 											</SelectGroup>
 										</SelectContent>
 									</Select>
+									{!hasCategories ||
+										(isAllCategoriesActive && (
+											<span className="bg-red-500/10 border gap-1 border-red-500 rounded-lg py-1 px-2 flex items-center text-red-500 text-xs">
+												<CircleAlert size={16} className="mr-2" />
+												<Trans
+													i18nKey="budget.add.form.noCategories"
+													components={{
+														categoriesLink: (
+															<Link
+																to="/dashboard/categories"
+																state={{ openAddModal: true }}
+																className="underline"
+															/>
+														),
+													}}
+												/>
+											</span>
+										))}
 									{field.state.meta.errors.length > 0 && (
 										<span className="text-red-500 text-sm">
 											{field.state.meta.errors[0]?.message}

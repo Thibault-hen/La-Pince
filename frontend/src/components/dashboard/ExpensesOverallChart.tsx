@@ -55,9 +55,13 @@ export const ExpensesOverallChart = ({
 
 	// Calculer les stats
 	const totalExpenses = chartData.reduce((sum, item) => sum + item.amount, 0);
-	const averageExpenses =
-		totalExpenses / chartData.filter((expense) => expense.amount > 0).length;
+	const averageExpensesFiltered = chartData.filter(
+		(expense) => expense.amount > 0,
+	).length;
 
+	const averageExpenses =
+		averageExpensesFiltered > 0 ? totalExpenses / averageExpensesFiltered : 0;
+	console.log(averageExpenses);
 	const CustomBarLabel = ({
 		x,
 		y,
