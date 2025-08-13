@@ -25,7 +25,7 @@ export const FinanceCard = ({ title, amount, icon }: FinanceCardProps) => {
 				</div>
 
 				<div className="space-y-1">
-					<h3 className="text-xs font-medium text-muted-foreground tracking-wide truncate">
+					<h3 className="text-xs md:text-sm font-medium text-muted-foreground tracking-wide truncate">
 						{title}
 					</h3>
 					<p className="text-base md:text-lg font-bold text-foreground tracking-tight">

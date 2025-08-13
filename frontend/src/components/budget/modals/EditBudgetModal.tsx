@@ -39,7 +39,13 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
 	const { data: categories } = useCategories();
 	const { mutateAsync: updateBudget } = useUpdateBudget();
 	const { t } = useTranslation();
-
+	const availableCategories = categories?.filter(
+		(category) =>
+			category.id === budget?.categoryId ||
+			((category.budgets?.length ?? 0) === 0 &&
+				category.id !== budget?.categoryId),
+	);
+	console.log(availableCategories);
 	const form = useForm({
 		defaultValues: {
 			amount: budget?.amount ?? 0,
@@ -177,7 +183,7 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
 													<SelectLabel>
 														{t('budget.edit.form.categoryLabel')}
 													</SelectLabel>
-													{categories?.map((category) => (
+													{availableCategories?.map((category) => (
 														<SelectItem
 															key={category.id}
 															value={category.id}

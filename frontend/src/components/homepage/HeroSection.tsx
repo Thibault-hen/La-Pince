@@ -27,7 +27,7 @@ export default function Hero05() {
 							delay: 0.3,
 						}}
 					>
-						<div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-color/10 border border-primary-color/20 text-primary-color font-medium text-sm">
+						<div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-color/10 border border-primary-color/20 text-primary-color font-bold dark:font-medium text-sm">
 							<Sparkles className="w-4 h-4" />
 							{t('home.hero.badge')}
 						</div>
@@ -69,7 +69,7 @@ export default function Hero05() {
 						<div className="absolute right-8 backdrop-blur-sm flex items-center gap-2 p-2 bg-secondary-color/10 border border-secondary-color/20 rounded-full">
 							<div className="w-3 h-3 bg-secondary-color animate-pulse rounded-full" />
 							<div>
-								<div className="text-xs text-secondary-color uppercase tracking-widest">
+								<div className="text-xs text-secondary-color uppercase tracking-widest font-bold">
 									{t('home.hero.preview')}
 								</div>
 							</div>

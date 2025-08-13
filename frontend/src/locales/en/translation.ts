@@ -502,6 +502,8 @@ export const en = {
 				categoryLabel: 'Categories',
 				cancel: 'Cancel',
 				create: 'Create',
+				noCategories:
+					'No categories available, <categoriesLink>create your category</categoriesLink>',
 			},
 		},
 		edit: {

@@ -1,5 +1,6 @@
 import { AnimatePresence } from 'motion/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { CategoryCard } from '@/components/category/CategoryCard';
 import { CategoryHeader } from '@/components/category/CategoryHeader';
 import { CategorySkeleton } from '@/components/category/CategorySkeleton';
@@ -16,11 +17,17 @@ const CategoryPage = () => {
 	const [openEditCategory, setOpenEditCategory] = useState(false);
 	const [openDeleteCategory, setOpenDeleteCategory] = useState(false);
 	const [selectedCategory, setSelectedCategory] = useState<Category>();
-
+	const location = useLocation();
 	const { data: categories, isLoading: isCategoriesLoading } = useCategories();
 	const { data: colors, isLoading: isColorsLoading } = useColors();
 
 	const isLoading = isCategoriesLoading || isColorsLoading;
+
+	useEffect(() => {
+		if (location.state?.openAddModal) {
+			setOpenAddCategory(true);
+		}
+	}, [location.state]);
 
 	if (isLoading) {
 		return (

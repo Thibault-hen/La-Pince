@@ -75,7 +75,7 @@ export default function Header() {
 									key={menu.name}
 									href={menu.to}
 									className={cn(
-										'relative px-4 py-2 text-xs lg:text-sm font-medium transition-all duration-300',
+										'relative px-4 py-2 text-xs lg:text-sm font-medium transition-all duration-300 tracking-wider',
 										'hover:text-primary-color',
 										'before:absolute before:inset-x-0 before:bottom-0 before:h-0.5',
 										'before:bg-primary-color before:origin-left before:scale-x-0',

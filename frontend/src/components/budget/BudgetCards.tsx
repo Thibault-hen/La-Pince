@@ -129,7 +129,7 @@ export const BudgetCards = ({
 							<Progress
 								aria-label={t('budget.card.progressRemaining')}
 								value={(totalBudget ?? 0) - (remainingBudget ?? 0)}
-								max={totalBudget}
+								max={totalBudget && totalBudget > 0 ? totalBudget : 100}
 								className="w-full border [&>*]:bg-[var(--bg-color)] h-3 mt-2"
 								style={
 									{

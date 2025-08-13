@@ -495,6 +495,8 @@ export const fr = {
 				categoryLabel: 'Catégories',
 				cancel: 'Annuler',
 				create: 'Créer',
+				noCategories:
+					'Aucune catégorie disponible, <categoriesLink>crée ta catégorie</categoriesLink>',
 			},
 		},
 		edit: {
