@@ -45,7 +45,6 @@ export const EditBudgetModal = ({ budget, open, setOpen }: AddBudgetProps) => {
 			((category.budgets?.length ?? 0) === 0 &&
 				category.id !== budget?.categoryId),
 	);
-	console.log(availableCategories);
 	const form = useForm({
 		defaultValues: {
 			amount: budget?.amount ?? 0,
