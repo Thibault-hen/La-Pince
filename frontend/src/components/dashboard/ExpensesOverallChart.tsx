@@ -61,7 +61,6 @@ export const ExpensesOverallChart = ({
 
 	const averageExpenses =
 		averageExpensesFiltered > 0 ? totalExpenses / averageExpensesFiltered : 0;
-	console.log(averageExpenses);
 	const CustomBarLabel = ({
 		x,
 		y,
