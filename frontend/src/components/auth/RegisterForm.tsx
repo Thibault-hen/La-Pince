@@ -49,10 +49,7 @@ export function RegisterForm({
 
 	return (
 		<form
-			className={cn(
-				'flex flex-col gap-6 bg-primary rounded-md border p-6 sm:p-16',
-				className,
-			)}
+			className={cn('flex flex-col gap-6 rounded-md p-6 sm:p-16', className)}
 			{...props}
 			onSubmit={async (e) => {
 				e.preventDefault();
@@ -126,7 +123,7 @@ export function RegisterForm({
 						<div className="relative grid gap-3">
 							<Label htmlFor={field.name}>{t('register.form.password')}</Label>
 
-							<Lock className="absolute left-3 top-10 h-4 w-4 text-muted-foreground" />
+							<Lock className="absolute left-3 top-9 h-4 w-4 text-muted-foreground" />
 							<Input
 								className="pl-10"
 								id={field.name}

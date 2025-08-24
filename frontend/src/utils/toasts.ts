@@ -1,20 +1,15 @@
 import { toast } from 'sonner';
 
 export const showSuccessToast = (message: string) => {
-	toast.success(message, {
-		closeButton: true,
-	});
+	toast.success(message);
 };
 
 export const showErrorToast = (message: string) => {
-	toast.error(message, {
-		closeButton: true,
-	});
+	toast.error(message);
 };
 
 export const showInfoToast = (message: string) => {
 	toast.info(message, {
 		position: 'top-center',
-		closeButton: true,
 	});
 };

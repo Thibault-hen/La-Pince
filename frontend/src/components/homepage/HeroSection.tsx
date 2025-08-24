@@ -9,8 +9,8 @@ export default function Hero05() {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 	return (
-		<section className="relative flex items-center pb-20 pt-20 px-4 md:pb-32 md:pt-28 overflow-hidden">
-			<div className="absolute top-1 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-gradient-to-r from-primary-color/8 via-primary-color/12 to-primary-color/8 rounded-full blur-3xl" />
+		<section className="relative flex items-center pb-20 pt-20 px-4 md:pb-32 lg:pt-16 xl:pt-0 overflow-hidden">
+			<div className="absolute top-1 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-gradient-to-r from-primary-color/8 via-primary-color/12 to-primary-color/8 rounded-full blur-3xl" />
 
 			<div className="sm:px-6 lg:px-16">
 				<div className="flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-16 relative z-10">
@@ -66,7 +66,7 @@ export default function Hero05() {
 							delay: 0.3,
 						}}
 					>
-						<div className="absolute right-8 backdrop-blur-sm flex items-center gap-2 p-2 bg-secondary-color/10 border border-secondary-color/20 rounded-full">
+						<div className="absolute top-10 right-8 backdrop-blur-sm flex items-center gap-2 p-2 bg-secondary-color/10 border border-secondary-color/20 rounded-full">
 							<div className="w-3 h-3 bg-secondary-color animate-pulse rounded-full" />
 							<div>
 								<div className="text-xs text-secondary-color uppercase tracking-widest font-bold">

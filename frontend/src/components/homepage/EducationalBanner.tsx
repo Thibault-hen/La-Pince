@@ -29,15 +29,14 @@ export const EducationalBanner = () => {
 	}
 
 	return (
-		<div className="flex flex-col md:flex-row justify-center items-center gap-3 bg-gradient-to-r from-primary-color/5 via-primary-color/20 to-primary-color/50 border-b border-primary-color text-sm text-center p-1 w-full">
-			<span className="dark:text-white text-primary-color font-bold dark:font-normal">
+		<div className="flex flex-col md:flex-row justify-center items-center gap-3 font-bold bg-gradient-to-r from-primary-color/5 via-primary-color/20 to-primary-color/50 border-b border-primary-color text-xs text-center p-1 w-full">
+			<span className="dark:text-white text-primary-color">
 				{t('home.banner.info')}
 			</span>
 			<Button
 				aria-label="Dismiss educational banner"
-				className="relative"
+				className="relative max-h-[22px] max-w-[22px] p-0"
 				variant="blue"
-				size={'sm'}
 				onClick={handleDismiss}
 			>
 				<Check />
