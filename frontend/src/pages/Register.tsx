@@ -32,7 +32,7 @@ const Register = () => {
 							<NavLink
 								aria-label={t('common.home')}
 								to="/"
-								className="flex items-center gap-2 border bg-primary rounded-md p-2 text-sm hover:bg-secondary-color dark:hover:bg-secondary-color transition-colors duration-300 tracking-wide"
+								className="hover:text-white flex items-center gap-2 border bg-primary rounded-md p-2 text-sm hover:bg-secondary-color dark:hover:bg-secondary-color transition-colors duration-300 tracking-wide"
 							>
 								<House size={18} />
 							</NavLink>
@@ -45,7 +45,7 @@ const Register = () => {
 							</div>
 						</div>
 					</div>
-					<div className="border-l border-l-secondary-color hidden xl:block min-h-screen bg-primary">
+					<div className="border-l hidden xl:block min-h-screen bg-primary">
 						<div className="relative w-full h-full grid place-items-center">
 							<img src={preview} width={480} alt="Application La Pince" />
 						</div>
