@@ -54,7 +54,7 @@ export default function Header() {
 		<header className="sticky top-0 z-50 w-full">
 			<div className="absolute inset-0 bg-white dark:bg-primary border-b border-neutral-500/40" />
 			{/* Main container */}
-			<div className="relative px-4 lg:px-8 xl:px-12 2xl:px-24">
+			<div className="relative px-4 xl:px-8 2xl:px-60">
 				<nav className="flex items-center justify-between h-16 lg:h-20">
 					{/* Logo Section */}
 					<Link to="/" className="flex items-center gap-3">

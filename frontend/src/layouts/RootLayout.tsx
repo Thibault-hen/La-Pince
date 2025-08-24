@@ -8,9 +8,16 @@ import { usePageProgress } from '@/hooks/use-progress-bar';
 import { ServerErrorBanner } from './ServerErrorBanner';
 
 const TOAST_CONFIG = {
-	success: <Check size={15} className="text-green-500" />,
-	error: <CircleX size={15} className="text-red-500" />,
-	info: <BellRing size={15} className="text-primary-color" />,
+	icons: {
+		success: <Check size={15} className="text-green-500" strokeWidth={2} />,
+		error: <CircleX size={15} className="text-red-500" strokeWidth={2} />,
+		info: <BellRing size={15} className="text-primary-color" strokeWidth={2} />,
+	},
+	classNames: {
+		success: '!border-l-4 !border-l-green-500 !rounded',
+		error: '!border-l-4 !border-l-red-500 !rounded',
+		info: '!border-l-4 !border-l-indigo-500 !rounded',
+	},
 };
 
 export const RootLayout = () => {
@@ -29,7 +36,12 @@ export const RootLayout = () => {
 			<Suspense fallback={null}>
 				<Outlet />
 			</Suspense>
-			<Toaster icons={TOAST_CONFIG} duration={6000} />
+			<Toaster
+				closeButton={true}
+				icons={TOAST_CONFIG.icons}
+				duration={6000}
+				toastOptions={{ classNames: TOAST_CONFIG.classNames }}
+			/>
 		</AuthLoader>
 	);
 };

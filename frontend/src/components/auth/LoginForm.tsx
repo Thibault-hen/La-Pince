@@ -64,10 +64,7 @@ export function LoginForm({
 
 	return (
 		<form
-			className={cn(
-				'flex flex-col gap-6 bg-primary rounded-md border p-6 sm:p-16',
-				className,
-			)}
+			className={cn('flex flex-col gap-6 rounded-md p-6 sm:p-16', className)}
 			{...props}
 			onSubmit={async (e) => {
 				e.preventDefault();

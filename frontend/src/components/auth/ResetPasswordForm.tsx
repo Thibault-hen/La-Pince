@@ -66,7 +66,7 @@ export function ResetPasswordForm({
 	return (
 		<form
 			className={cn(
-				'flex flex-col gap-6 bg-primary rounded-md border p-6 sm:p-16 max-w-md mx-auto',
+				'flex flex-col gap-6 rounded-md p-6 sm:p-16 max-w-md mx-auto',
 				className,
 			)}
 			{...props}
