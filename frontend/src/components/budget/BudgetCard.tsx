@@ -42,7 +42,7 @@ export const BudgetCard = ({
 			return 0;
 		}
 		const remaining = budget.amount - budget.totalExpense;
-		return remaining < 0 ? '0' : remaining.toFixed(2);
+		return remaining < 0 ? formatAmount(0) : formatAmount(remaining);
 	};
 
 	return (
@@ -186,8 +186,7 @@ export const BudgetCard = ({
 								}
 							/>
 							<span className="flex self-end p-1 text-xs text-muted-foreground font-bold">
-								{formatAmount(Number(getRemainingBudget()))}{' '}
-								{t('budget.card.remaining')}
+								{getRemainingBudget()} {t('budget.card.remaining')}
 							</span>
 						</div>
 					</CardDescription>
