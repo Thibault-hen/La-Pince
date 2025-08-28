@@ -80,9 +80,9 @@ app.get(
 	openAPISpecs(app, {
 		documentation: {
 			info: {
-				title: 'App Atelier API',
+				title: 'La Pince API',
 				version: '1.0.0',
-				description: 'Greeting API',
+				description: '',
 			},
 			servers: [{ url: 'http://localhost:3000', description: 'Local Server' }],
 		},
@@ -93,7 +93,7 @@ app.get(
 	'/docs',
 	Scalar({
 		url: '/openapi',
-		theme: 'saturn',
+		theme: 'deepSpace',
 	}),
 );
 

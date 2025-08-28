@@ -12,6 +12,9 @@ jobs:
   backend:
     name: Backend CI & Deploy
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
     env:
       SECRET_JWT: "my-super-veeery-secret-test-jwt-secret-key-for-ci"
     defaults:
@@ -46,6 +49,9 @@ jobs:
   frontend:
     name: Frontend CI & Deploy
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
     defaults:
       run:
         working-directory: frontend
