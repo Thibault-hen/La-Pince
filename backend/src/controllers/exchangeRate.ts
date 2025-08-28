@@ -1,4 +1,6 @@
 import { Hono } from 'hono';
+import { HTTPException } from 'hono/http-exception';
+import type { ContentfulStatusCode } from 'hono/utils/http-status';
 import { describeRoute } from 'hono-openapi';
 import { response200 } from '../utils/openapi';
 import { redisClient } from '../utils/redis';
@@ -24,10 +26,9 @@ exchangeRateRouter.basePath('/exchange-rate').get(
 
 		const response = await fetch('https://open.er-api.com/v6/latest/EUR');
 		if (!response.ok) {
-			return c.json(
-				{ message: 'Failed to fetch exchange rates public API' },
-				500,
-			);
+			throw new HTTPException(response.status as ContentfulStatusCode, {
+				message: 'Failed to fetch exchange rates public API',
+			});
 		}
 		const rates = await response.json();
 
@@ -35,7 +36,7 @@ exchangeRateRouter.basePath('/exchange-rate').get(
 			EX: 60 * 60,
 		});
 
-		return c.json(rates, 200);
+		return c.json(rates, 500);
 	},
 );
 

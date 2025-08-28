@@ -19,8 +19,6 @@ export const useCurrency = () => {
 			return response.rates;
 		},
 		staleTime: Infinity,
-
-		// fallback data to avoid errors in the UI
 		placeholderData: (previousData) => previousData,
 	});
 
