@@ -36,7 +36,7 @@ exchangeRateRouter.basePath('/exchange-rate').get(
 			EX: 60 * 60,
 		});
 
-		return c.json(rates, 500);
+		return c.json(rates, 200);
 	},
 );
 
