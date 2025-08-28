@@ -42,7 +42,7 @@ jobs:
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
-          railway up
+          railway up --service La-Pince
     outputs:
       backend_changed: ${{ steps.changes_backend.outputs.backend_changed }}
 
