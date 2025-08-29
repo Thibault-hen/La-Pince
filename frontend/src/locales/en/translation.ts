@@ -96,7 +96,7 @@ export const en = {
 		},
 		footer: {
 			title: 'La Pince',
-			copyright: '© 2024 La Pince. All rights reserved.',
+			copyright: '© {{year}} La Pince. All rights reserved.',
 			product: 'Product',
 			productFonctionalities: 'Features',
 			faqs: 'FAQs',

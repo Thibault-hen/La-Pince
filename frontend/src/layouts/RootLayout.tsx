@@ -5,6 +5,7 @@ import { AuthLoader } from '@/components/auth/AuthLoader';
 import { Toaster } from '@/components/ui/sonner';
 import { useHealth } from '@/hooks/use-health';
 import { usePageProgress } from '@/hooks/use-progress-bar';
+import { EducationalBanner } from './EducationalBanner';
 import { ServerErrorBanner } from './ServerErrorBanner';
 
 const TOAST_CONFIG = {
@@ -33,6 +34,7 @@ export const RootLayout = () => {
 	return (
 		<AuthLoader>
 			{error && <ServerErrorBanner />}
+			<EducationalBanner />
 			<Suspense fallback={null}>
 				<Outlet />
 			</Suspense>
