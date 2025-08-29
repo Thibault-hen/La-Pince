@@ -1,5 +1,5 @@
-import { getConnInfo } from "@hono/node-server/conninfo";
-import { rateLimiter } from "hono-rate-limiter";
+import { getConnInfo } from '@hono/node-server/conninfo';
+import { rateLimiter } from 'hono-rate-limiter';
 
 export const RATE_LIMITS = {
 	// Auth limits
@@ -8,7 +8,7 @@ export const RATE_LIMITS = {
 	RESET_PASSWORD: { requests: 3, window: 60 * 60 * 1000 }, // 3/1h
 	DELETE_ACCOUNT: { requests: 5, window: 24 * 60 * 60 * 1000 }, // 1/24h
 
-	// API genral
+	// API genEral
 	API_GENERAL: { requests: 100, window: 60 * 1000 }, // 100/min
 } as const;
 
@@ -17,19 +17,19 @@ const createRateLimit = (max: number, windowMs: number) => {
 		windowMs,
 		limit: max,
 		keyGenerator: (c) => {
-			if (process.env.NODE_ENV === "test" || process.env.VITEST === "true") {
-				return "test-key";
+			if (process.env.NODE_ENV === 'test' || process.env.VITEST === 'true') {
+				return 'test-key';
 			}
 
-			const userId = c.get("jwtPayload")?.userId;
+			const userId = c.get('jwtPayload')?.userId;
 			if (userId) return `user:${userId}`;
 
 			const ip = getConnInfo(c);
 			return (
-				c.req.header("x-forwarded-for") ||
-				c.req.header("x-real-ip") ||
+				c.req.header('x-forwarded-for') ||
+				c.req.header('x-real-ip') ||
 				ip.remote.address ||
-				"anonymous"
+				'anonymous'
 			);
 		},
 	});
