@@ -1,4 +1,4 @@
-import { Instagram, Twitter, Youtube } from 'lucide-react';
+import { Instagram, Twitter } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import laPinceLogo from '@/assets/logo.png';
@@ -12,7 +12,6 @@ const socialLinks = [
 		href: '#',
 		aria_label: 'Instagram page',
 	},
-	{ icon: Youtube, name: 'YouTube', href: '#', aria_label: 'YouTube page' },
 ];
 
 export default function Footer01() {
@@ -101,7 +100,9 @@ export default function Footer01() {
 					</div>
 					<Separator className="my-8 bg-accent" />
 					<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-						<p className="text-sm text-white">{t('home.footer.copyright')}</p>
+						<p className="text-sm text-white">
+							{t('home.footer.copyright', { year: new Date().getFullYear() })}
+						</p>
 						<div className="flex items-center space-x-4">
 							<ul className="flex items-center gap-4">
 								{socialLinks.map(({ icon: Icon, href, aria_label }, idx) => (
