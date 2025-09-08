@@ -2,7 +2,6 @@
 
 ## 🌍 Live Demo
 🔗 [la-pince-sigma.vercel.app](https://la-pince-sigma.vercel.app)  
-🔗 API docs: [https://la-pince-api.railway.app/docs](https://la-pince-api.railway.app/docs) *(replace with your real link)*  
 
 ---
 
@@ -15,7 +14,7 @@
 
 ## 🚀 Installation
 ```bash
-git clone https://github.com/your-repo/la-pince.git
+git clone https://github.com/Thibault-hen/La-Pince.git
 cd la-pince
 
 # Build and start backend + PostgreSQL + redis
